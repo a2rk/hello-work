@@ -71,7 +71,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func refresh() {
         state.recompute()
         updateCountdownItem()
-        toggleMenuItem?.title = toggleTitle()
+        refreshMenuTitles()
 
         if !state.enabled {
             for w in overlayWindows.values { w.orderOut(nil) }
@@ -115,19 +115,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Status bar
 
+    private var openMenuItem: NSMenuItem?
+    private var graceMenuItem: NSMenuItem?
+    private var quitMenuItem: NSMenuItem?
+
     private func setupStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         item.button?.image = MenuBarIcon.make()
 
         let menu = NSMenu()
+        let t = state.t
 
         let openMenu = NSMenuItem(
-            title: "Меню",
+            title: t.menuOpenPrefs,
             action: #selector(openPreferences),
             keyEquivalent: ""
         )
         openMenu.target = self
         menu.addItem(openMenu)
+        openMenuItem = openMenu
 
         menu.addItem(NSMenuItem.separator())
 
@@ -143,12 +149,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem.separator())
 
         let grace = NSMenuItem(
-            title: "Ещё минутку",
+            title: t.menuExtraMinute,
             action: #selector(grantOneMinute),
             keyEquivalent: ""
         )
         grace.target = self
         menu.addItem(grace)
+        graceMenuItem = grace
 
         let countdown = NSMenuItem(title: "", action: nil, keyEquivalent: "")
         countdown.isEnabled = false
@@ -159,14 +166,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem.separator())
 
         let quit = NSMenuItem(
-            title: "Закрыть",
+            title: t.menuQuit,
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: ""
         )
         menu.addItem(quit)
+        quitMenuItem = quit
 
         item.menu = menu
         statusItem = item
+    }
+
+    private func refreshMenuTitles() {
+        let t = state.t
+        openMenuItem?.title = t.menuOpenPrefs
+        graceMenuItem?.title = t.menuExtraMinute
+        quitMenuItem?.title = t.menuQuit
+        toggleMenuItem?.title = toggleTitle()
     }
 
     // MARK: - Workspace + Timer
@@ -258,6 +274,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func toggleTitle() -> String {
-        "Включено: \(state.enabled ? "Да" : "Нет")"
+        state.t.menuToggleEnabled(state.enabled)
     }
 }

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct AboutView: View {
+    @Environment(\.t) var t
+
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             HStack(alignment: .center, spacing: 14) {
@@ -23,7 +25,7 @@ struct AboutView: View {
                 }
             }
 
-            Text("Софт для тех, кто пишет код. Для людей с двумя+ мониторами, которые умеют сфокусироваться, но иногда забывают — и Telegram во второй экран сам себя не закроет.")
+            Text(t.aboutDescription)
                 .font(.system(size: 13))
                 .foregroundColor(Color.white.opacity(0.78))
                 .lineSpacing(3)
@@ -31,11 +33,11 @@ struct AboutView: View {
                 .frame(maxWidth: 460, alignment: .leading)
 
             VStack(alignment: .leading, spacing: 10) {
-                Text("Как пользоваться")
+                Text(t.aboutHowToUseTitle)
                     .font(.system(size: 12))
                     .foregroundColor(Theme.textTertiary)
 
-                Text("Добавь приложение через «+ Добавить» в боковой панели. Открой его расписание и нарисуй на круге зелёные слоты — это окна доступа. Всё остальное время приложение заблокировано: блюр поверх окна и блок ввода.")
+                Text(t.aboutHowToUseDesc)
                     .font(.system(size: 13))
                     .foregroundColor(Color.white.opacity(0.78))
                     .lineSpacing(3)

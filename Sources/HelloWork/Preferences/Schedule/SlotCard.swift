@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SlotCard: View {
+    @Environment(\.t) var t
     let slot: Slot
     let onDelete: () -> Void
 
@@ -47,9 +48,9 @@ struct SlotCard: View {
         let length = slot.lengthMinutes
         let h = length / 60
         let m = length % 60
-        if h == 0 { return "\(m) мин" }
-        if m == 0 { return "\(h) ч" }
-        return "\(h) ч \(m) мин"
+        if h == 0 { return "\(m) \(t.unitMin)" }
+        if m == 0 { return "\(h) \(t.unitH)" }
+        return "\(h) \(t.unitH) \(m) \(t.unitMin)"
     }
 
     private func format(_ minute: Int) -> String {

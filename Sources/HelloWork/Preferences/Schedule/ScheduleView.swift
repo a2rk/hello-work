@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ScheduleView: View {
+    @Environment(\.t) var t
     @ObservedObject var state: AppState
     let bundleID: String
     @State private var dragMode: DragMode?
@@ -29,29 +30,29 @@ struct ScheduleView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
-        .alert("Архивировать «\(managedApp?.name ?? "")»?", isPresented: $showArchiveAlert) {
-            Button("Отмена", role: .cancel) { }
-            Button("Архивировать") {
+        .alert(t.archiveAlertTitle(managedApp?.name ?? ""), isPresented: $showArchiveAlert) {
+            Button(t.cancel, role: .cancel) { }
+            Button(t.archiveAlertConfirm) {
                 state.archiveApp(bundleID: bundleID)
             }
         } message: {
-            Text("Расписание сохранится. Можно вернуть из бокового меню.")
+            Text(t.archiveAlertMessage)
         }
-        .alert("Удалить «\(managedApp?.name ?? "")» навсегда?", isPresented: $showDeleteAlert) {
-            Button("Отмена", role: .cancel) { }
-            Button("Удалить", role: .destructive) {
+        .alert(t.deleteAlertTitle(managedApp?.name ?? ""), isPresented: $showDeleteAlert) {
+            Button(t.cancel, role: .cancel) { }
+            Button(t.deleteAlertConfirm, role: .destructive) {
                 state.removeManagedApp(bundleID: bundleID)
             }
         } message: {
-            Text("Расписание исчезнет без следа.")
+            Text(t.deleteAlertMessage)
         }
-        .alert("Очистить все слоты?", isPresented: $showClearAlert) {
-            Button("Отмена", role: .cancel) { }
-            Button("Очистить", role: .destructive) {
+        .alert(t.clearAlertTitle, isPresented: $showClearAlert) {
+            Button(t.cancel, role: .cancel) { }
+            Button(t.clearAlertConfirm, role: .destructive) {
                 state.clearSlots(forApp: bundleID)
             }
         } message: {
-            Text("Все временные окна будут удалены.")
+            Text(t.clearAlertMessage)
         }
     }
 
@@ -77,7 +78,7 @@ struct ScheduleView: View {
 
                 if app.isArchived {
                     archivedBadge
-                    Button("Вернуть") {
+                    Button(t.restore) {
                         state.unarchiveApp(bundleID: bundleID)
                     }
                     .buttonStyle(.plain)
@@ -91,7 +92,7 @@ struct ScheduleView: View {
                     Button {
                         showDeleteAlert = true
                     } label: {
-                        Text("Удалить навсегда")
+                        Text(t.deleteForever)
                             .font(.system(size: 12, weight: .medium))
                             .foregroundColor(Theme.danger)
                             .padding(.horizontal, 12)
@@ -113,14 +114,14 @@ struct ScheduleView: View {
                             .overlay(Circle().stroke(Theme.surfaceStroke, lineWidth: 1))
                     }
                     .buttonStyle(.plain)
-                    .help("Архивировать")
+                    .help(t.archiveTooltip)
                 }
             }
         }
     }
 
     private var archivedBadge: some View {
-        Text("В АРХИВЕ")
+        Text(t.archivedBadge)
             .font(.system(size: 9, weight: .semibold))
             .tracking(1.2)
             .foregroundColor(Theme.textTertiary)
@@ -137,7 +138,7 @@ struct ScheduleView: View {
             Circle()
                 .fill(color)
                 .frame(width: 5, height: 5)
-            Text(isAllowed ? "Разрешено" : "Заблокировано")
+            Text(isAllowed ? t.allowed : t.blocked)
                 .font(.system(size: 11, weight: .medium))
                 .foregroundColor(Color.white.opacity(0.85))
         }
@@ -173,10 +174,10 @@ struct ScheduleView: View {
                             thickness: ringThickness, size: centerlineSize,
                             color: Theme.accent.opacity(0.70))
                             .contextMenu {
-                                Button("Уменьшить на 10 мин") { adjustSlot(slot, by: -10) }
-                                Button("Увеличить на 10 мин") { adjustSlot(slot, by: 10) }
+                                Button(t.slotShrink) { adjustSlot(slot, by: -10) }
+                                Button(t.slotExtend) { adjustSlot(slot, by: 10) }
                                 Divider()
-                                Button("Удалить", role: .destructive) {
+                                Button(t.slotDelete, role: .destructive) {
                                     state.removeSlot(fromApp: bundleID, id: slot.id)
                                 }
                             }
@@ -229,7 +230,7 @@ struct ScheduleView: View {
                     Text(formatMinutes(totalAllowedMinutes))
                         .font(.system(size: 22, weight: .semibold))
                         .foregroundColor(.white)
-                    Text("в день")
+                    Text(t.inDay)
                         .font(.system(size: 11))
                         .foregroundColor(Theme.textTertiary)
                 }
@@ -305,7 +306,7 @@ struct ScheduleView: View {
     private var slotsColumn: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("Слоты")
+                Text(t.slots)
                     .font(.system(size: 11))
                     .foregroundColor(Theme.textTertiary)
                 Spacer()
@@ -313,7 +314,7 @@ struct ScheduleView: View {
                     Button {
                         showClearAlert = true
                     } label: {
-                        Text("Очистить всё")
+                        Text(t.clearAll)
                             .font(.system(size: 11))
                             .foregroundColor(Theme.textSecondary)
                     }
@@ -322,7 +323,7 @@ struct ScheduleView: View {
             }
 
             if slots.isEmpty {
-                Text("Слотов нет — приложение заблокировано весь день.")
+                Text(t.noSlots)
                     .font(.system(size: 12))
                     .foregroundColor(Theme.textTertiary)
                     .padding(.vertical, 4)
@@ -503,9 +504,9 @@ struct ScheduleView: View {
     private func formatMinutes(_ m: Int) -> String {
         let h = m / 60
         let mm = m % 60
-        if h == 0 { return "\(mm) мин" }
-        if mm == 0 { return "\(h) ч" }
-        return "\(h) ч \(mm) мин"
+        if h == 0 { return "\(mm) \(t.unitMin)" }
+        if mm == 0 { return "\(h) \(t.unitH)" }
+        return "\(h) \(t.unitH) \(mm) \(t.unitMin)"
     }
 
     private func formatTime(_ minute: Int) -> String {

@@ -1,20 +1,24 @@
 import SwiftUI
 
 struct ContactsView: View {
-    private let rows: [(label: String, value: String)] = [
-        ("Email",    "..."),
-        ("Telegram", "..."),
-        ("Сайт",     "..."),
-        ("Issues",   "...")
-    ]
+    @Environment(\.t) var t
+
+    private var rows: [(label: String, value: String)] {
+        [
+            (t.contactEmail,    "..."),
+            (t.contactTelegram, "..."),
+            (t.contactWebsite,  "..."),
+            (t.contactIssues,   "...")
+        ]
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("Контакты")
+                Text(t.contactsTitle)
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundColor(.white)
-                Text("Связь с автором.")
+                Text(t.contactsSubtitle)
                     .font(.system(size: 12))
                     .foregroundColor(Theme.textSecondary)
             }

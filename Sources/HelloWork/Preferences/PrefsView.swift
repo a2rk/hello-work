@@ -21,6 +21,7 @@ struct PrefsView: View {
         .frame(width: Layout.prefsWindow.width, height: Layout.prefsWindow.height)
         .background(BackgroundView())
         .preferredColorScheme(.dark)
+        .environment(\.t, state.t)
         .onAppear {
             if selection == nil {
                 selection = state.managedApps.first.map { .app($0.bundleID) } ?? .onboarding
@@ -87,7 +88,7 @@ struct PrefsView: View {
                 Image(systemName: "plus")
                     .font(.system(size: 11, weight: .semibold))
                     .frame(width: 16)
-                Text("Добавить")
+                Text(state.t.addApp)
                     .font(.system(size: 13, weight: .medium))
                 Spacer()
             }
@@ -150,8 +151,8 @@ struct PrefsView: View {
         panel.canChooseDirectories = false
         panel.canChooseFiles = true
         panel.directoryURL = URL(fileURLWithPath: "/Applications")
-        panel.message = "Выбери приложение для расписания"
-        panel.prompt = "Добавить"
+        panel.message = state.t.pickerMessage
+        panel.prompt = state.t.pickerPrompt
 
         guard panel.runModal() == .OK, let url = panel.url,
               let bundle = Bundle(url: url),

@@ -1,21 +1,24 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @Environment(\.t) var t
     let action: () -> Void
 
-    private let steps: [(num: Int, title: String, desc: String)] = [
-        (1, "Выбери приложение", "Из /Applications. То, что отвлекает."),
-        (2, "Установи график", "Кругом обозначь окна доступа. Шаг 5 минут."),
-        (3, "Работай спокойно", "Вне расписания — блюр и блок ввода.")
-    ]
+    private var steps: [(num: Int, title: String, desc: String)] {
+        [
+            (1, t.onboardingStep1Title, t.onboardingStep1Desc),
+            (2, t.onboardingStep2Title, t.onboardingStep2Desc),
+            (3, t.onboardingStep3Title, t.onboardingStep3Desc)
+        ]
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 36) {
             VStack(alignment: .leading, spacing: 8) {
-                Text("Добавить приложение")
+                Text(t.onboardingTitle)
                     .font(.system(size: 26, weight: .semibold))
                     .foregroundColor(.white)
-                Text("Три шага. Выбери приложение, нарисуй график, работай спокойно.")
+                Text(t.onboardingSubtitle)
                     .font(.system(size: 13))
                     .foregroundColor(Theme.textSecondary)
                     .frame(maxWidth: 460, alignment: .leading)
@@ -26,7 +29,7 @@ struct OnboardingView: View {
 
             Button(action: action) {
                 HStack(spacing: 8) {
-                    Text("Выбрать приложение")
+                    Text(t.onboardingButton)
                         .font(.system(size: 13, weight: .semibold))
                     Image(systemName: "arrow.right")
                         .font(.system(size: 11, weight: .semibold))

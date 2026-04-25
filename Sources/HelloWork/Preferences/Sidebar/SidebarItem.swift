@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SidebarItem: View {
+    @Environment(\.t) var t
     let section: PrefSection
     let isSelected: Bool
     var showsBadge: Bool = false
@@ -13,7 +14,7 @@ struct SidebarItem: View {
                     .font(.system(size: 12, weight: .regular))
                     .frame(width: 16)
                     .foregroundColor(iconColor)
-                Text(section.title)
+                Text(section.title(t))
                     .font(.system(size: 13, weight: isSelected ? .semibold : .regular))
                     .foregroundColor(textColor)
                 Spacer()

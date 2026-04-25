@@ -2,12 +2,13 @@ import SwiftUI
 import AppKit
 
 struct UpdatesView: View {
+    @Environment(\.t) var t
     @ObservedObject var state: AppState
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("Обновления")
+                Text(t.updatesTitle)
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundColor(.white)
                 Text(headerSubtitle)
@@ -43,9 +44,9 @@ struct UpdatesView: View {
 
     private var headerSubtitle: String {
         if state.updateAvailable, let v = state.latestRemoteVersion {
-            return "Доступна версия \(v). Сейчас у тебя v\(AppVersion.marketing)."
+            return t.updatesSubtitleAvailable(v, AppVersion.marketing)
         }
-        return "Текущая версия — v\(AppVersion.marketing). Свежее ничего нет."
+        return t.updatesSubtitleCurrent(AppVersion.marketing)
     }
 
     private var controls: some View {
@@ -62,7 +63,7 @@ struct UpdatesView: View {
                         Image(systemName: "arrow.clockwise")
                             .font(.system(size: 11, weight: .semibold))
                     }
-                    Text(state.isCheckingUpdates ? "Проверяю…" : "Проверить")
+                    Text(state.isCheckingUpdates ? t.checkingButton : t.checkButton)
                         .font(.system(size: 12, weight: .medium))
                 }
                 .foregroundColor(.white)
@@ -81,7 +82,7 @@ struct UpdatesView: View {
                     HStack(spacing: 6) {
                         Image(systemName: "arrow.down.circle.fill")
                             .font(.system(size: 11, weight: .semibold))
-                        Text("Установить v\(state.latestRemoteVersion ?? "")")
+                        Text(t.installButton(state.latestRemoteVersion ?? ""))
                             .font(.system(size: 12, weight: .semibold))
                     }
                     .foregroundColor(.black)
@@ -98,9 +99,7 @@ struct UpdatesView: View {
 
     private var emptyState: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(state.lastUpdateCheckError == nil
-                 ? "Лог пуст. Запусти «Проверить»."
-                 : "Не удалось загрузить.")
+            Text(state.lastUpdateCheckError == nil ? t.updatesEmptyOk : t.updatesEmptyError)
                 .font(.system(size: 13))
                 .foregroundColor(Theme.textSecondary)
             if let err = state.lastUpdateCheckError {
@@ -114,6 +113,7 @@ struct UpdatesView: View {
 }
 
 private struct UpdateEntryCard: View {
+    @Environment(\.t) var t
     let entry: UpdateInfo
     let isLatest: Bool
     let isInstalled: Bool
@@ -126,9 +126,9 @@ private struct UpdateEntryCard: View {
                     .foregroundColor(.white)
 
                 if isInstalled {
-                    badge("Установлено", color: Theme.textTertiary, fill: Color.white.opacity(0.04))
+                    badge(t.badgeInstalled, color: Theme.textTertiary, fill: Color.white.opacity(0.04))
                 } else if isLatest {
-                    badge("Доступно", color: Theme.accent, fill: Theme.accent.opacity(0.10))
+                    badge(t.badgeAvailable, color: Theme.accent, fill: Theme.accent.opacity(0.10))
                 }
 
                 Spacer()

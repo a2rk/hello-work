@@ -1,0 +1,102 @@
+import Foundation
+
+/// Все строки приложения. Никаких хардкодов в вьюхах — только через t.
+struct Translation {
+    // MARK: - StatusBar menu
+    let menuOpenPrefs: String
+    let menuToggleEnabled: (Bool) -> String
+    let menuExtraMinute: String
+    let menuQuit: String
+
+    // MARK: - Sidebar
+    let addApp: String
+    let sectionUpdates: String
+    let sectionSettings: String
+    let sectionContacts: String
+    let sectionAbout: String
+
+    // MARK: - File picker
+    let pickerMessage: String
+    let pickerPrompt: String
+
+    // MARK: - Onboarding
+    let onboardingTitle: String
+    let onboardingSubtitle: String
+    let onboardingStep1Title: String
+    let onboardingStep1Desc: String
+    let onboardingStep2Title: String
+    let onboardingStep2Desc: String
+    let onboardingStep3Title: String
+    let onboardingStep3Desc: String
+    let onboardingButton: String
+
+    // MARK: - Schedule
+    let scheduleHint: String
+    let allowed: String
+    let blocked: String
+    let archivedBadge: String
+    let restore: String
+    let deleteForever: String
+    let archiveTooltip: String
+    let slots: String
+    let clearAll: String
+    let noSlots: String
+    let inDay: String
+    let unitH: String
+    let unitMin: String
+
+    let archiveAlertTitle: (String) -> String
+    let archiveAlertMessage: String
+    let archiveAlertConfirm: String
+    let deleteAlertTitle: (String) -> String
+    let deleteAlertMessage: String
+    let deleteAlertConfirm: String
+    let clearAlertTitle: String
+    let clearAlertMessage: String
+    let clearAlertConfirm: String
+    let cancel: String
+
+    let slotShrink: String
+    let slotExtend: String
+    let slotDelete: String
+
+    // MARK: - Settings
+    let settingsTitle: String
+    let settingsSubtitle: String
+    let settingEnableTitle: String
+    let settingEnableDesc: String
+    let settingsUpdatesTitle: String
+    let settingsUpdateAvailable: (_ remote: String, _ current: String) -> String
+    let settingsCurrentVersion: (_ current: String, _ time: String) -> String
+    let settingsCurrentVersionShort: (_ current: String) -> String
+    let checkButton: String
+    let checkingButton: String
+    let settingLanguageTitle: String
+    let settingLanguageDesc: String
+
+    // MARK: - Updates
+    let updatesTitle: String
+    let updatesSubtitleAvailable: (_ remote: String, _ current: String) -> String
+    let updatesSubtitleCurrent: (_ current: String) -> String
+    let installButton: (_ version: String) -> String
+    let badgeInstalled: String
+    let badgeAvailable: String
+    let updatesEmptyOk: String
+    let updatesEmptyError: String
+
+    // MARK: - Contacts
+    let contactsTitle: String
+    let contactsSubtitle: String
+    let contactEmail: String
+    let contactTelegram: String
+    let contactWebsite: String
+    let contactIssues: String
+
+    // MARK: - About
+    let aboutDescription: String
+    let aboutHowToUseTitle: String
+    let aboutHowToUseDesc: String
+
+    // MARK: - Languages
+    let languageSystem: String
+}

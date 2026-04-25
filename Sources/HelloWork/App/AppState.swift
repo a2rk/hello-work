@@ -8,7 +8,25 @@ final class AppState: ObservableObject {
     @Published var isCheckingUpdates: Bool = false
     @Published var lastUpdateCheck: Date?
     @Published var lastUpdateCheckError: String?
+    @Published var language: AppLanguage {
+        didSet { UserDefaults.standard.set(language.rawValue, forKey: Self.languageKey) }
+    }
     private(set) var graceUntil: Date?
+
+    private static let languageKey = "helloWorkLanguage"
+
+    init() {
+        if let raw = UserDefaults.standard.string(forKey: Self.languageKey),
+           let parsed = AppLanguage(rawValue: raw) {
+            self.language = parsed
+        } else {
+            self.language = .system
+        }
+    }
+
+    /// Текущий резолвнутый словарь. Используется и в SwiftUI (через .environment(\.t)),
+    /// и в AppDelegate напрямую для menubar-строк.
+    var t: Translation { L10n.resolved(language) }
 
     var latestRemoteVersion: String? { devLogEntries.first?.version }
 
