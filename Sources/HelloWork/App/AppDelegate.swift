@@ -67,7 +67,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func ensureOverlay(for bundleID: String) -> NSWindow {
         if let w = overlayWindows[bundleID] { return w }
-        let hosting = NSHostingController(rootView: OverlayContentView())
+        let hosting = NSHostingController(rootView: OverlayContentView(state: state))
         let win = FixedWindow(
             contentRect: NSRect(x: 0, y: 0, width: 400, height: 100),
             styleMask: [.borderless],

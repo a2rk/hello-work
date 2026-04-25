@@ -114,6 +114,9 @@ struct Translation {
     let settingsSectionUpdates: String
     let settingsSectionInterface: String
 
+    let settingPatternOverlayTitle: String
+    let settingPatternOverlayDesc: String
+
     // MARK: - Contacts
     let contactsTitle: String
     let contactsSubtitle: String

@@ -46,6 +46,15 @@ struct SettingsView: View {
                             .toggleStyle(.switch).controlSize(.small)
                             .tint(Theme.accent).labelsHidden()
                     }
+                    rowDivider()
+                    settingRow(
+                        title: t.settingPatternOverlayTitle,
+                        description: t.settingPatternOverlayDesc
+                    ) {
+                        Toggle("", isOn: $state.patternOverlay)
+                            .toggleStyle(.switch).controlSize(.small)
+                            .tint(Theme.accent).labelsHidden()
+                    }
                 }
             }
 

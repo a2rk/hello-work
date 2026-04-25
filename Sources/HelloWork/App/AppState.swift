@@ -32,6 +32,9 @@ final class AppState: ObservableObject {
     @Published var customGraceMinutes: [Int] {
         didSet { UserDefaults.standard.set(customGraceMinutes, forKey: Self.graceCustomsKey) }
     }
+    @Published var patternOverlay: Bool {
+        didSet { UserDefaults.standard.set(patternOverlay, forKey: Self.patternOverlayKey) }
+    }
     @Published private(set) var launchAtLogin: Bool
 
     private(set) var graceUntil: Date?
@@ -43,6 +46,7 @@ final class AppState: ObservableObject {
     private static let graceCustomsKey = "helloWorkGraceCustoms"
     private static let enabledKey = "helloWorkEnabled"
     private static let managedAppsKey = "helloWorkManagedApps"
+    private static let patternOverlayKey = "helloWorkPatternOverlay"
 
     static let gracePresetSeconds: [Int] = [30, 60, 180, 300, 600]
     static let snapStepOptions: [Int] = [1, 5, 10, 15]
@@ -67,6 +71,7 @@ final class AppState: ObservableObject {
         }
 
         self.customGraceMinutes = (UserDefaults.standard.array(forKey: Self.graceCustomsKey) as? [Int]) ?? []
+        self.patternOverlay = (UserDefaults.standard.object(forKey: Self.patternOverlayKey) as? Bool) ?? true
         self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
 
         // enabled: дефолт true, если ключа нет
