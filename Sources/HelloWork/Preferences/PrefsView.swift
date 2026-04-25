@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 
 struct PrefsView: View {
     @ObservedObject var state: AppState
-    @State private var selection: SidebarSelection? = nil
+    // selection теперь живёт в state.prefsSelection — AppDelegate тоже умеет её менять
 
     var body: some View {
         HStack(spacing: 0) {
@@ -23,8 +23,8 @@ struct PrefsView: View {
         .preferredColorScheme(.dark)
         .environment(\.t, state.t)
         .onAppear {
-            if selection == nil {
-                selection = state.managedApps.first.map { .app($0.bundleID) } ?? .onboarding
+            if state.prefsSelection == nil {
+                state.prefsSelection = state.managedApps.first.map { .app($0.bundleID) } ?? .onboarding
             }
         }
     }
@@ -41,10 +41,10 @@ struct PrefsView: View {
             ForEach(state.managedApps) { app in
                 AppSidebarRow(
                     app: app,
-                    isSelected: selection == .app(app.bundleID),
+                    isSelected: state.prefsSelection == .app(app.bundleID),
                     isAllowedNow: state.isAllowed(app: app)
                 ) {
-                    selection = .app(app.bundleID)
+                    state.prefsSelection = .app(app.bundleID)
                 }
             }
 
@@ -53,10 +53,10 @@ struct PrefsView: View {
             ForEach(visibleSections) { section in
                 SidebarItem(
                     section: section,
-                    isSelected: selection == .section(section),
+                    isSelected: state.prefsSelection == .section(section),
                     showsBadge: section == .updates && state.updateAvailable
                 ) {
-                    selection = .section(section)
+                    state.prefsSelection = .section(section)
                 }
             }
 
@@ -82,7 +82,7 @@ struct PrefsView: View {
 
     private var createButton: some View {
         Button {
-            selection = .onboarding
+            state.prefsSelection = .onboarding
         } label: {
             HStack(spacing: 9) {
                 Image(systemName: "plus")
@@ -92,12 +92,12 @@ struct PrefsView: View {
                     .font(.system(size: 13, weight: .medium))
                 Spacer()
             }
-            .foregroundColor(selection == .onboarding ? .white : Color.white.opacity(0.78))
+            .foregroundColor(state.prefsSelection == .onboarding ? .white : Color.white.opacity(0.78))
             .padding(.horizontal, 10)
             .padding(.vertical, 7)
             .background(
                 RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .fill(selection == .onboarding ? Color.white.opacity(0.06) : Color.clear)
+                    .fill(state.prefsSelection == .onboarding ? Color.white.opacity(0.06) : Color.clear)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 7, style: .continuous)
@@ -123,7 +123,7 @@ struct PrefsView: View {
 
     @ViewBuilder
     private var content: some View {
-        switch selection {
+        switch state.prefsSelection {
         case .app(let bid):
             if state.managedApps.contains(where: { $0.bundleID == bid }) {
                 ScheduleView(state: state, bundleID: bid)
@@ -164,6 +164,6 @@ struct PrefsView: View {
 
         let app = ManagedApp(bundleID: bundleID, name: name, appURL: url, slots: [])
         state.addManagedApp(app)
-        selection = .app(bundleID)
+        state.prefsSelection = .app(bundleID)
     }
 }

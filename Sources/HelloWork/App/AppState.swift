@@ -2,7 +2,10 @@ import Foundation
 import Combine
 import ServiceManagement
 
+@MainActor
 final class AppState: ObservableObject {
+    let installer = UpdateInstaller()
+    @Published var prefsSelection: SidebarSelection?
     @Published var enabled: Bool {
         didSet { UserDefaults.standard.set(enabled, forKey: Self.enabledKey) }
     }

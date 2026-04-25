@@ -1,6 +1,7 @@
 import SwiftUI
 import AppKit
 
+@MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private let state = AppState()
     private var timer: Timer?
@@ -145,33 +146,70 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         rebuildStatusMenu()
     }
 
-    /// Полностью пересобираю NSMenu: грейс-пункты могут меняться,
-    /// язык переключается на лету. Вызывается из refresh() через
-    /// сравнение сигнатуры — не каждый тик, только когда что-то поменялось.
     private func rebuildStatusMenu() {
         guard let item = statusItem else { return }
         let menu = NSMenu()
         let t = state.t
 
-        let openMenu = NSMenuItem(
-            title: t.menuOpenPrefs,
-            action: #selector(openPreferences),
-            keyEquivalent: ""
-        )
-        openMenu.target = self
-        menu.addItem(openMenu)
+        // 1. Update notice (если доступно обновление)
+        if state.updateAvailable, let v = state.latestRemoteVersion {
+            let updateItem = NSMenuItem(
+                title: t.installButton(v),
+                action: #selector(triggerUpdate),
+                keyEquivalent: ""
+            )
+            updateItem.target = self
+            if let icon = NSImage(
+                systemSymbolName: "arrow.down.circle.fill",
+                accessibilityDescription: nil
+            ) {
+                icon.isTemplate = true
+                updateItem.image = icon
+            }
+            menu.addItem(updateItem)
+            menu.addItem(NSMenuItem.separator())
+        }
 
-        menu.addItem(NSMenuItem.separator())
-
+        // 2. Глобальный тумблер (наверху)
         let toggle = NSMenuItem(
-            title: toggleTitle(),
+            title: "",
             action: #selector(toggleEnabled),
             keyEquivalent: ""
         )
         toggle.target = self
+        toggle.attributedTitle = makeBulletTitle(
+            text: t.menuToggleEnabled(state.enabled),
+            color: state.enabled ? .systemGreen : .systemGray,
+            bold: true
+        )
         menu.addItem(toggle)
         toggleMenuItem = toggle
 
+        // 3. Линия + список приложений со статус-точкой
+        let activeApps = state.managedApps.filter { !$0.isArchived }
+        if !activeApps.isEmpty {
+            menu.addItem(NSMenuItem.separator())
+            for app in activeApps {
+                let appItem = NSMenuItem(
+                    title: app.name,
+                    action: #selector(selectApp(_:)),
+                    keyEquivalent: ""
+                )
+                appItem.target = self
+                appItem.representedObject = app.bundleID
+                appItem.attributedTitle = makeBulletTitle(
+                    text: app.name,
+                    color: state.isAllowed(app: app) ? .systemGreen : .systemRed,
+                    bold: false
+                )
+                let icon = NSWorkspace.shared.icon(forFile: app.appURL.path)
+                icon.size = NSSize(width: 16, height: 16)
+                appItem.image = icon
+                menu.addItem(appItem)
+            }
+        }
+
+        // 4. Линия + грейс-кнопки (восходяще)
         let graceSeconds = state.allGraceSeconds
         if !graceSeconds.isEmpty {
             menu.addItem(NSMenuItem.separator())
@@ -187,13 +225,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
 
+        // Countdown — невидимый по умолчанию, показывается во время grace
         let countdown = NSMenuItem(title: "", action: nil, keyEquivalent: "")
         countdown.isEnabled = false
         countdown.isHidden = true
         menu.addItem(countdown)
         countdownMenuItem = countdown
 
+        // 5. Линия + основные действия
         menu.addItem(NSMenuItem.separator())
+
+        let openMenu = NSMenuItem(
+            title: t.menuOpenPrefs,
+            action: #selector(openPreferences),
+            keyEquivalent: ""
+        )
+        openMenu.target = self
+        menu.addItem(openMenu)
 
         let quit = NSMenuItem(
             title: t.menuQuit,
@@ -205,14 +253,42 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         item.menu = menu
     }
 
+    /// Текст с цветной точкой-«bullet» в начале — для тумблера и для списка приложений.
+    private func makeBulletTitle(text: String, color: NSColor, bold: Bool) -> NSAttributedString {
+        let bulletFont = NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: .black)
+        let textFont: NSFont = bold
+            ? NSFont.menuFont(ofSize: 0).bold()
+            : NSFont.menuFont(ofSize: 0)
+
+        let result = NSMutableAttributedString()
+        result.append(NSAttributedString(
+            string: "● ",
+            attributes: [.foregroundColor: color, .font: bulletFont]
+        ))
+        result.append(NSAttributedString(
+            string: text,
+            attributes: [.font: textFont]
+        ))
+        return result
+    }
+
     private func refreshMenuIfNeeded() {
-        let signature = "\(state.language.rawValue)|\(state.allGraceSeconds)|\(state.enabled)"
+        let appsSig = state.managedApps
+            .filter { !$0.isArchived }
+            .map { "\($0.bundleID):\(state.isAllowed(app: $0))" }
+            .joined(separator: ",")
+        let signature = [
+            state.language.rawValue,
+            "\(state.enabled)",
+            "\(state.allGraceSeconds)",
+            "\(state.updateAvailable)",
+            state.latestRemoteVersion ?? "",
+            appsSig
+        ].joined(separator: "|")
+
         if signature != lastMenuSignature {
             rebuildStatusMenu()
             lastMenuSignature = signature
-        } else {
-            // Только countdown обновляем
-            toggleMenuItem?.title = toggleTitle()
         }
     }
 
@@ -251,6 +327,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func grantGrace(_ sender: NSMenuItem) {
         state.grantGrace(seconds: TimeInterval(sender.tag))
         refresh()
+    }
+
+    @objc private func selectApp(_ sender: NSMenuItem) {
+        guard let bid = sender.representedObject as? String else { return }
+        state.prefsSelection = .app(bid)
+        openPreferences()
+    }
+
+    @objc private func triggerUpdate() {
+        guard state.installer.status == .idle else { return }
+        guard let dmgStr = state.devLogEntries.first?.dmgUrl,
+              let url = URL(string: dmgStr) else { return }
+        if !UpdateInstaller.canSelfInstall {
+            NSWorkspace.shared.open(url)
+            return
+        }
+        Task { await state.installer.install(dmgUrl: url) }
     }
 
     private func runBackgroundUpdateCheckIfDue() {
@@ -318,5 +411,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func toggleTitle() -> String {
         state.t.menuToggleEnabled(state.enabled)
+    }
+}
+
+private extension NSFont {
+    func bold() -> NSFont {
+        let descriptor = fontDescriptor.withSymbolicTraits(.bold)
+        return NSFont(descriptor: descriptor, size: pointSize) ?? self
     }
 }

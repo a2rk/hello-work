@@ -4,7 +4,12 @@ import AppKit
 struct UpdatesView: View {
     @Environment(\.t) var t
     @ObservedObject var state: AppState
-    @StateObject private var installer = UpdateInstaller()
+    @ObservedObject var installer: UpdateInstaller
+
+    init(state: AppState) {
+        self.state = state
+        self.installer = state.installer
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {

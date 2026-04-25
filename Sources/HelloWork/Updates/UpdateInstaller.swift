@@ -17,7 +17,7 @@ final class UpdateInstaller: ObservableObject {
 
     /// Можем ли мы заменять собственный .app? Нет, если запущены через AppTranslocation,
     /// из dev-сборки, или вообще не из .app-бандла.
-    static var canSelfInstall: Bool {
+    nonisolated static var canSelfInstall: Bool {
         let path = Bundle.main.bundleURL.path
         if path.contains("/AppTranslocation/") { return false }
         if path.contains("/.build/") { return false }
