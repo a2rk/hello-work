@@ -109,6 +109,11 @@ struct Translation {
     let updateOpenInBrowser: String
     let updateCannotSelfInstall: String
 
+    let settingsSectionBehavior: String
+    let settingsSectionSchedule: String
+    let settingsSectionUpdates: String
+    let settingsSectionInterface: String
+
     // MARK: - Contacts
     let contactsTitle: String
     let contactsSubtitle: String

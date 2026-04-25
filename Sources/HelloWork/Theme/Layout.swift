@@ -8,4 +8,5 @@ enum Layout {
     static let detailPaddingV: CGFloat = 44
     static let chartSize: CGFloat = 400
     static let statsMinWidth: CGFloat = 240
+    static let settingsCardMaxWidth: CGFloat = 720
 }
