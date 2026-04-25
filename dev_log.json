@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.8.3",
+    "date": "2026-04-26",
+    "customMessage": "Фикс: алёрт «Многовато» больше не вешает приложение.",
+    "main": "При вводе кастомной длительности > 30 мин окно настроек переставало откликаться.",
+    "points": [
+      "Auto-close по didResignKey срабатывал ДО прикрепления sheet'а с алёртом",
+      "Закрывал prefs прямо во время презентации SwiftUI .alert — алёрт сиротел, окно мертвело",
+      "Решение: проверку откладываем на один runloop-тик и проверяем prefsWindow.attachedSheet и isKeyWindow",
+      "Заодно лечит любые другие будущие sheet/dialog кейсы (NSOpenPanel и пр.)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.8.3/HelloWork-0.8.3.dmg"
+  },
+  {
     "version": "0.8.2",
     "date": "2026-04-26",
     "customMessage": "Блюр теперь не просто блюр — поверх падает анимированный паттерн в стиле neo-rain.",

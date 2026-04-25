@@ -392,8 +392,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func prefsWindowDidResignKey(_ notification: Notification) {
-        if NSApp.modalWindow != nil { return }
-        prefsWindow?.close()
+        // Откладываем проверку на один runloop-тик: SwiftUI .alert и NSOpenPanel
+        // презентуются как sheet, и attachedSheet выставляется чуть позже момента
+        // потери key-статуса. Без этой задержки мы закрывали окно прямо во время
+        // презентации алёрта, и юзер видел зависшее приложение.
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            // Идёт app-модальный диалог
+            if NSApp.modalWindow != nil { return }
+            // К окну прикреплён sheet (alert / NSOpenPanel)
+            if self.prefsWindow?.attachedSheet != nil { return }
+            // Окно успело снова стать key
+            if self.prefsWindow?.isKeyWindow == true { return }
+            self.prefsWindow?.close()
+        }
     }
 
     private func updateCountdownItem() {
