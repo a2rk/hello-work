@@ -119,6 +119,10 @@ struct Translation {
 
     let niceTryFooter: String
 
+    let updatesShowOlder: (_ count: Int) -> String
+    let updatesHideOlder: String
+    let updatesOpenPage: String
+
     // MARK: - Contacts
     let contactsTitle: String
     let contactsSubtitle: String

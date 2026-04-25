@@ -5,10 +5,29 @@ struct UpdatesView: View {
     @Environment(\.t) var t
     @ObservedObject var state: AppState
     @ObservedObject var installer: UpdateInstaller
+    @State private var showOlder: Bool = false
 
     init(state: AppState) {
         self.state = state
         self.installer = state.installer
+    }
+
+    private var newerEntries: [UpdateInfo] {
+        state.devLogEntries.filter {
+            AppVersion.compare($0.version, AppVersion.marketing) == .orderedDescending
+        }
+    }
+
+    private var currentEntry: UpdateInfo? {
+        state.devLogEntries.first {
+            AppVersion.compare($0.version, AppVersion.marketing) == .orderedSame
+        }
+    }
+
+    private var olderEntries: [UpdateInfo] {
+        state.devLogEntries.filter {
+            AppVersion.compare($0.version, AppVersion.marketing) == .orderedAscending
+        }
     }
 
     var body: some View {
@@ -28,12 +47,56 @@ struct UpdatesView: View {
                 emptyState
             } else {
                 LazyVStack(alignment: .leading, spacing: 14) {
-                    ForEach(state.devLogEntries) { entry in
+                    // 1. Доступные апдейты (новее текущей)
+                    ForEach(newerEntries) { entry in
                         UpdateEntryCard(
                             entry: entry,
-                            isLatest: entry.id == state.devLogEntries.first?.id,
-                            isInstalled: AppVersion.compare(entry.version, AppVersion.marketing) != .orderedDescending
+                            isLatest: entry.id == newerEntries.first?.id,
+                            isInstalled: false
                         )
+                    }
+
+                    // 2. Текущая установленная — всегда видна
+                    if let current = currentEntry {
+                        UpdateEntryCard(
+                            entry: current,
+                            isLatest: false,
+                            isInstalled: true
+                        )
+                    }
+
+                    // 3. История более старых — под раскрытие
+                    if !olderEntries.isEmpty {
+                        if showOlder {
+                            ForEach(olderEntries) { entry in
+                                UpdateEntryCard(
+                                    entry: entry,
+                                    isLatest: false,
+                                    isInstalled: true
+                                )
+                            }
+                        }
+
+                        Button {
+                            showOlder.toggle()
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: showOlder ? "chevron.up" : "chevron.down")
+                                    .font(.system(size: 10, weight: .semibold))
+                                Text(showOlder ? t.updatesHideOlder : t.updatesShowOlder(olderEntries.count))
+                                    .font(.system(size: 12, weight: .medium))
+                            }
+                            .foregroundColor(Theme.textSecondary)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(
+                                Capsule()
+                                    .fill(Color.white.opacity(0.04))
+                                    .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.top, 4)
                     }
                 }
                 .frame(maxWidth: 620, alignment: .leading)

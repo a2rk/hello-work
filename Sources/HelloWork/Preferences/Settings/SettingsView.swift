@@ -160,26 +160,41 @@ struct SettingsView: View {
                 }
             }
             Spacer()
-            Button {
-                Task { await state.checkForUpdates() }
-            } label: {
-                HStack(spacing: 5) {
-                    if state.isCheckingUpdates {
-                        ProgressView().controlSize(.small).scaleEffect(0.6)
-                    } else {
-                        Image(systemName: "arrow.clockwise").font(.system(size: 10, weight: .semibold))
+            HStack(spacing: 6) {
+                Button {
+                    Task { await state.checkForUpdates() }
+                } label: {
+                    HStack(spacing: 5) {
+                        if state.isCheckingUpdates {
+                            ProgressView().controlSize(.small).scaleEffect(0.6)
+                        } else {
+                            Image(systemName: "arrow.clockwise").font(.system(size: 10, weight: .semibold))
+                        }
+                        Text(state.isCheckingUpdates ? t.checkingButton : t.checkButton)
+                            .font(.system(size: 11, weight: .medium))
                     }
-                    Text(state.isCheckingUpdates ? t.checkingButton : t.checkButton)
-                        .font(.system(size: 11, weight: .medium))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(Capsule().fill(Color.white.opacity(0.06)))
+                    .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
                 }
-                .foregroundColor(.white)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .background(Capsule().fill(Color.white.opacity(0.06)))
-                .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
+                .buttonStyle(.plain)
+                .disabled(state.isCheckingUpdates)
+
+                Button {
+                    state.prefsSelection = .section(.updates)
+                } label: {
+                    Image(systemName: "arrow.up.right")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundColor(.white)
+                        .frame(width: 24, height: 24)
+                        .background(Circle().fill(Color.white.opacity(0.06)))
+                        .overlay(Circle().stroke(Theme.surfaceStroke, lineWidth: 1))
+                }
+                .buttonStyle(.plain)
+                .help(t.updatesOpenPage)
             }
-            .buttonStyle(.plain)
-            .disabled(state.isCheckingUpdates)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
