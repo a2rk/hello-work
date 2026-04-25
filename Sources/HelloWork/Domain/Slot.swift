@@ -1,6 +1,6 @@
 import Foundation
 
-struct Slot: Identifiable, Equatable {
+struct Slot: Identifiable, Equatable, Codable {
     let id: UUID
     var startMinutes: Int   // [0, minutesInDay)
     var endMinutes: Int     // (startMinutes, startMinutes + minutesInDay]

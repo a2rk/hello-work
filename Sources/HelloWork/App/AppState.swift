@@ -3,8 +3,12 @@ import Combine
 import ServiceManagement
 
 final class AppState: ObservableObject {
-    @Published var enabled: Bool = true
-    @Published var managedApps: [ManagedApp] = []
+    @Published var enabled: Bool {
+        didSet { UserDefaults.standard.set(enabled, forKey: Self.enabledKey) }
+    }
+    @Published var managedApps: [ManagedApp] {
+        didSet { saveManagedApps() }
+    }
     @Published var devLogEntries: [UpdateInfo] = []
     @Published var isCheckingUpdates: Bool = false
     @Published var lastUpdateCheck: Date?
@@ -34,6 +38,8 @@ final class AppState: ObservableObject {
     private static let snapStepKey = "helloWorkSnapStep"
     private static let gracePresetsKey = "helloWorkGracePresets"
     private static let graceCustomsKey = "helloWorkGraceCustoms"
+    private static let enabledKey = "helloWorkEnabled"
+    private static let managedAppsKey = "helloWorkManagedApps"
 
     static let gracePresetSeconds: [Int] = [30, 60, 180, 300, 600]
     static let snapStepOptions: [Int] = [1, 5, 10, 15]
@@ -59,6 +65,22 @@ final class AppState: ObservableObject {
 
         self.customGraceMinutes = (UserDefaults.standard.array(forKey: Self.graceCustomsKey) as? [Int]) ?? []
         self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
+
+        // enabled: дефолт true, если ключа нет
+        self.enabled = (UserDefaults.standard.object(forKey: Self.enabledKey) as? Bool) ?? true
+
+        // managedApps: десериализуем JSON из UserDefaults; пустой массив, если ничего нет / битое
+        if let data = UserDefaults.standard.data(forKey: Self.managedAppsKey),
+           let apps = try? JSONDecoder().decode([ManagedApp].self, from: data) {
+            self.managedApps = apps
+        } else {
+            self.managedApps = []
+        }
+    }
+
+    private func saveManagedApps() {
+        guard let data = try? JSONEncoder().encode(managedApps) else { return }
+        UserDefaults.standard.set(data, forKey: Self.managedAppsKey)
     }
 
     var t: Translation { L10n.resolved(language) }
