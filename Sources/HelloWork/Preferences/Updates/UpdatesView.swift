@@ -1,0 +1,199 @@
+import SwiftUI
+import AppKit
+
+struct UpdatesView: View {
+    @ObservedObject var state: AppState
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Обновления")
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundColor(.white)
+                Text(headerSubtitle)
+                    .font(.system(size: 12))
+                    .foregroundColor(Theme.textSecondary)
+            }
+
+            controls
+
+            if state.devLogEntries.isEmpty {
+                emptyState
+            } else {
+                LazyVStack(alignment: .leading, spacing: 14) {
+                    ForEach(state.devLogEntries) { entry in
+                        UpdateEntryCard(
+                            entry: entry,
+                            isLatest: entry.id == state.devLogEntries.first?.id,
+                            isInstalled: AppVersion.compare(entry.version, AppVersion.marketing) != .orderedDescending
+                        )
+                    }
+                }
+                .frame(maxWidth: 620, alignment: .leading)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .task {
+            if state.devLogEntries.isEmpty {
+                await state.checkForUpdates()
+            }
+        }
+    }
+
+    private var headerSubtitle: String {
+        if state.updateAvailable, let v = state.latestRemoteVersion {
+            return "Доступна версия \(v). Сейчас у тебя v\(AppVersion.marketing)."
+        }
+        return "Текущая версия — v\(AppVersion.marketing). Свежее ничего нет."
+    }
+
+    private var controls: some View {
+        HStack(spacing: 10) {
+            Button {
+                Task { await state.checkForUpdates() }
+            } label: {
+                HStack(spacing: 6) {
+                    if state.isCheckingUpdates {
+                        ProgressView()
+                            .controlSize(.small)
+                            .scaleEffect(0.7)
+                    } else {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.system(size: 11, weight: .semibold))
+                    }
+                    Text(state.isCheckingUpdates ? "Проверяю…" : "Проверить")
+                        .font(.system(size: 12, weight: .medium))
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Capsule().fill(Color.white.opacity(0.08)))
+                .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+            .disabled(state.isCheckingUpdates)
+
+            if state.updateAvailable, let dmg = state.devLogEntries.first?.dmgUrl, let url = URL(string: dmg) {
+                Button {
+                    NSWorkspace.shared.open(url)
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "arrow.down.circle.fill")
+                            .font(.system(size: 11, weight: .semibold))
+                        Text("Установить v\(state.latestRemoteVersion ?? "")")
+                            .font(.system(size: 12, weight: .semibold))
+                    }
+                    .foregroundColor(.black)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 6)
+                    .background(Capsule().fill(Theme.accent))
+                }
+                .buttonStyle(.plain)
+            }
+
+            Spacer()
+        }
+    }
+
+    private var emptyState: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(state.lastUpdateCheckError == nil
+                 ? "Лог пуст. Запусти «Проверить»."
+                 : "Не удалось загрузить.")
+                .font(.system(size: 13))
+                .foregroundColor(Theme.textSecondary)
+            if let err = state.lastUpdateCheckError {
+                Text(err)
+                    .font(.system(size: 11))
+                    .foregroundColor(Theme.danger.opacity(0.8))
+            }
+        }
+        .padding(.vertical, 8)
+    }
+}
+
+private struct UpdateEntryCard: View {
+    let entry: UpdateInfo
+    let isLatest: Bool
+    let isInstalled: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .firstTextBaseline, spacing: 10) {
+                Text("v\(entry.version)")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.white)
+
+                if isInstalled {
+                    badge("Установлено", color: Theme.textTertiary, fill: Color.white.opacity(0.04))
+                } else if isLatest {
+                    badge("Доступно", color: Theme.accent, fill: Theme.accent.opacity(0.10))
+                }
+
+                Spacer()
+
+                if let date = entry.date {
+                    Text(date)
+                        .font(.system(size: 11))
+                        .foregroundColor(Theme.textTertiary)
+                }
+            }
+
+            if let msg = entry.customMessage, !msg.isEmpty {
+                Text(msg)
+                    .font(.system(size: 12))
+                    .foregroundColor(Theme.textSecondary)
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Text(entry.main)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.white)
+                .lineSpacing(2)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if !entry.points.isEmpty {
+                VStack(alignment: .leading, spacing: 5) {
+                    ForEach(0..<entry.points.count, id: \.self) { i in
+                        HStack(alignment: .firstTextBaseline, spacing: 8) {
+                            Circle()
+                                .fill(Theme.textTertiary)
+                                .frame(width: 3, height: 3)
+                                .padding(.top, 5)
+                            Text(entry.points[i])
+                                .font(.system(size: 12))
+                                .foregroundColor(Color.white.opacity(0.78))
+                                .lineSpacing(2)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                }
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.white.opacity(isLatest && !isInstalled ? 0.05 : 0.03))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .stroke(
+                    (isLatest && !isInstalled) ? Theme.accent.opacity(0.35) : Theme.surfaceStroke,
+                    lineWidth: 1
+                )
+        )
+    }
+
+    private func badge(_ text: String, color: Color, fill: Color) -> some View {
+        Text(text)
+            .font(.system(size: 9, weight: .semibold))
+            .tracking(1)
+            .foregroundColor(color)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 3)
+            .background(Capsule().fill(fill))
+    }
+}
