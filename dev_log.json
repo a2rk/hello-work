@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.8.4",
+    "date": "2026-04-26",
+    "customMessage": "Easter egg: попробуй заблокировать Hello work через Hello work.",
+    "main": "Если добавить себя в список приложений — вместо расписания вылезает «nice try» на восьми языках.",
+    "points": [
+      "Hello work добавляется как обычное приложение, со своей иконкой в сайдбаре",
+      "На странице расписания — заголовок «nice try» 72pt + список переводов (RU/DE/FR/ES/ZH/JA/IT/PT)",
+      "Overlay-цикл AppDelegate теперь пропускает свой bundleID — никаких самоблокировок",
+      "Footer с подмигиванием: «Hello work не блокирует Hello work»"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.8.4/HelloWork-0.8.4.dmg"
+  },
+  {
     "version": "0.8.3",
     "date": "2026-04-26",
     "customMessage": "Фикс: алёрт «Многовато» больше не вешает приложение.",

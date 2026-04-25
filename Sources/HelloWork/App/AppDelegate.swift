@@ -101,9 +101,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         let frontmostBID = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+        let ownBID = Bundle.main.bundleIdentifier
         var seenBIDs = Set<String>()
 
-        for app in state.managedApps where !app.isArchived {
+        for app in state.managedApps where !app.isArchived && app.bundleID != ownBID {
             seenBIDs.insert(app.bundleID)
             let win = ensureOverlay(for: app.bundleID)
 

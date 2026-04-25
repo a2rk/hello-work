@@ -117,6 +117,8 @@ struct Translation {
     let settingPatternOverlayTitle: String
     let settingPatternOverlayDesc: String
 
+    let niceTryFooter: String
+
     // MARK: - Contacts
     let contactsTitle: String
     let contactsSubtitle: String

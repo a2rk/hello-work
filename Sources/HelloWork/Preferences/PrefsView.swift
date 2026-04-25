@@ -125,7 +125,9 @@ struct PrefsView: View {
     private var content: some View {
         switch state.prefsSelection {
         case .app(let bid):
-            if state.managedApps.contains(where: { $0.bundleID == bid }) {
+            if bid == Bundle.main.bundleIdentifier {
+                NiceTryView()
+            } else if state.managedApps.contains(where: { $0.bundleID == bid }) {
                 ScheduleView(state: state, bundleID: bid)
                     .id(bid)
             } else {
