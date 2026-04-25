@@ -13,7 +13,7 @@ struct OverlayContentView: View {
                     .opacity(0.95)
 
                 HalftoneOverlay(
-                    baseColor: Color.black.opacity(0.55),
+                    baseColor: Color.black.opacity(0.70),
                     dotSpacing: 8,
                     dotRadius: 1.4
                 )
