@@ -117,9 +117,26 @@ final class AppState: ObservableObject {
         defer { isCheckingUpdates = false }
 
         do {
-            var req = URLRequest(url: DevLogConfig.url)
-            req.cachePolicy = .reloadIgnoringLocalCacheData
-            let (data, _) = try await URLSession.shared.data(for: req)
+            // Cache-busting: уникальный URL = CDN/proxy не может отдать старое.
+            var components = URLComponents(url: DevLogConfig.url, resolvingAgainstBaseURL: false)
+                ?? URLComponents()
+            var items = components.queryItems ?? []
+            items.append(URLQueryItem(name: "_", value: "\(Int(Date().timeIntervalSince1970))"))
+            components.queryItems = items
+            let url = components.url ?? DevLogConfig.url
+
+            // Ephemeral session — никакого URLCache, никаких cookies.
+            let config = URLSessionConfiguration.ephemeral
+            config.urlCache = nil
+            config.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+            let session = URLSession(configuration: config)
+
+            var req = URLRequest(url: url)
+            req.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+            req.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
+            req.setValue("no-cache", forHTTPHeaderField: "Pragma")
+
+            let (data, _) = try await session.data(for: req)
             let entries = try JSONDecoder().decode([UpdateInfo].self, from: data)
             self.devLogEntries = entries.sorted {
                 AppVersion.compare($0.version, $1.version) == .orderedDescending

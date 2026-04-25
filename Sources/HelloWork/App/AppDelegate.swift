@@ -275,6 +275,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         prefsWindow?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+
+        // Каждое открытие окна — свежий fetch dev_log, чтобы юзер видел актуальное.
+        Task { await state.checkForUpdates() }
     }
 
     @objc private func prefsWindowDidResignKey(_ notification: Notification) {

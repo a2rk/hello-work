@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.7.1",
+    "date": "2026-04-26",
+    "customMessage": "Фикс: dev-лог стал тянуться свежим, без застревания в CDN-кэше.",
+    "main": "Раньше после релиза приложение могло долго не видеть новую версию из-за edge-cache GitHub raw.",
+    "points": [
+      "Cache-busting query-param к URL dev_log.json",
+      "Ephemeral URLSession без URLCache",
+      "Свежий fetch при каждом открытии окна настроек"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.7.1/HelloWork-0.7.1.dmg"
+  },
+  {
     "version": "0.7.0",
     "date": "2026-04-26",
     "customMessage": "Приложения и расписание больше не теряются после закрытия.",
