@@ -102,6 +102,13 @@ struct Translation {
     let updatesEmptyOk: String
     let updatesEmptyError: String
 
+    let updateDownloading: String
+    let updateInstalling: String
+    let updateRelaunching: String
+    let updateFailed: String
+    let updateOpenInBrowser: String
+    let updateCannotSelfInstall: String
+
     // MARK: - Contacts
     let contactsTitle: String
     let contactsSubtitle: String
