@@ -184,7 +184,7 @@ struct ScheduleView: View {
                     }
                 }
 
-                if case let .create(s, e) = dragMode, abs(e - s) >= snapMinutes {
+                if case let .create(s, e) = dragMode, abs(e - s) >= state.snapStep {
                     let segs = arcSegments(rawStart: s, rawEnd: e)
                     ForEach(Array(segs.enumerated()), id: \.offset) { _, seg in
                         arc(start: seg.0, end: seg.1,
@@ -202,7 +202,7 @@ struct ScheduleView: View {
                     edgeLabel(at: slot.endMinutes, center: center, radius: labelRadius)
                 }
 
-                if case let .create(s, e) = dragMode, abs(e - s) >= snapMinutes {
+                if case let .create(s, e) = dragMode, abs(e - s) >= state.snapStep {
                     edgeLabel(at: displayMinute(s), center: center, radius: labelRadius)
                     edgeLabel(at: displayMinute(e), center: center, radius: labelRadius)
                 }
@@ -384,7 +384,7 @@ struct ScheduleView: View {
             case .start:
                 var newStart = os + deltaMin
                 let minStart = oe - minutesInDay
-                let maxStart = oe - snapMinutes
+                let maxStart = oe - state.snapStep
                 newStart = max(minStart, min(newStart, maxStart))
 
                 var newEnd = oe
@@ -400,7 +400,7 @@ struct ScheduleView: View {
                 state.managedApps[appIdx].slots[slotIdx].endMinutes = newEnd
             case .end:
                 var newEnd = oe + deltaMin
-                let minEnd = os + snapMinutes
+                let minEnd = os + state.snapStep
                 let maxEnd = os + minutesInDay
                 newEnd = max(minEnd, min(newEnd, maxEnd))
                 state.managedApps[appIdx].slots[slotIdx].endMinutes = newEnd
@@ -412,7 +412,7 @@ struct ScheduleView: View {
         defer { dragMode = nil }
         switch dragMode {
         case .create(let s, let e):
-            if abs(e - s) >= snapMinutes {
+            if abs(e - s) >= state.snapStep {
                 state.addSlot(toApp: bundleID, start: s, end: e)
             }
         case .resize(let id, _, _, _):
@@ -430,7 +430,7 @@ struct ScheduleView: View {
         else { return }
 
         var newEnd = slot.endMinutes + deltaMinutes
-        let minEnd = slot.startMinutes + snapMinutes
+        let minEnd = slot.startMinutes + state.snapStep
         let maxEnd = slot.startMinutes + minutesInDay
 
         if newEnd < minEnd {
@@ -444,8 +444,8 @@ struct ScheduleView: View {
     }
 
     private func snapToGrid(_ minute: Int) -> Int {
-        let q = (Double(minute) / Double(snapMinutes)).rounded()
-        return Int(q) * snapMinutes
+        let q = (Double(minute) / Double(state.snapStep)).rounded()
+        return Int(q) * state.snapStep
     }
 
     private func arcSegments(rawStart: Int, rawEnd: Int) -> [(Int, Int)] {
@@ -523,7 +523,7 @@ struct ScheduleView: View {
         if angle >= 2 * .pi { angle -= 2 * .pi }
         let frac = angle / (2 * .pi)
         let mins = Int(round(frac * Double(minutesInDay)))
-        return min(minutesInDay, max(0, (mins / snapMinutes) * snapMinutes))
+        return min(minutesInDay, max(0, (mins / state.snapStep) * state.snapStep))
     }
 
     private func pointToAngle(_ p: CGPoint, center: CGPoint) -> Double {

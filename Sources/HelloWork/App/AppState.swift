@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import ServiceManagement
 
 final class AppState: ObservableObject {
     @Published var enabled: Bool = true
@@ -8,12 +9,34 @@ final class AppState: ObservableObject {
     @Published var isCheckingUpdates: Bool = false
     @Published var lastUpdateCheck: Date?
     @Published var lastUpdateCheckError: String?
+
     @Published var language: AppLanguage {
         didSet { UserDefaults.standard.set(language.rawValue, forKey: Self.languageKey) }
     }
+    @Published var autoUpdate: Bool {
+        didSet { UserDefaults.standard.set(autoUpdate, forKey: Self.autoUpdateKey) }
+    }
+    @Published var snapStep: Int {
+        didSet { UserDefaults.standard.set(snapStep, forKey: Self.snapStepKey) }
+    }
+    @Published var enabledGracePresets: Set<Int> {
+        didSet { UserDefaults.standard.set(Array(enabledGracePresets), forKey: Self.gracePresetsKey) }
+    }
+    @Published var customGraceMinutes: [Int] {
+        didSet { UserDefaults.standard.set(customGraceMinutes, forKey: Self.graceCustomsKey) }
+    }
+    @Published private(set) var launchAtLogin: Bool
+
     private(set) var graceUntil: Date?
 
     private static let languageKey = "helloWorkLanguage"
+    private static let autoUpdateKey = "helloWorkAutoUpdate"
+    private static let snapStepKey = "helloWorkSnapStep"
+    private static let gracePresetsKey = "helloWorkGracePresets"
+    private static let graceCustomsKey = "helloWorkGraceCustoms"
+
+    static let gracePresetSeconds: [Int] = [30, 60, 180, 300, 600]
+    static let snapStepOptions: [Int] = [1, 5, 10, 15]
 
     init() {
         if let raw = UserDefaults.standard.string(forKey: Self.languageKey),
@@ -22,10 +45,22 @@ final class AppState: ObservableObject {
         } else {
             self.language = .system
         }
+
+        self.autoUpdate = UserDefaults.standard.bool(forKey: Self.autoUpdateKey)
+
+        let s = UserDefaults.standard.integer(forKey: Self.snapStepKey)
+        self.snapStep = (s == 0 ? 5 : s)
+
+        if let raw = UserDefaults.standard.array(forKey: Self.gracePresetsKey) as? [Int] {
+            self.enabledGracePresets = Set(raw)
+        } else {
+            self.enabledGracePresets = [60]
+        }
+
+        self.customGraceMinutes = (UserDefaults.standard.array(forKey: Self.graceCustomsKey) as? [Int]) ?? []
+        self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
     }
 
-    /// Текущий резолвнутый словарь. Используется и в SwiftUI (через .environment(\.t)),
-    /// и в AppDelegate напрямую для menubar-строк.
     var t: Translation { L10n.resolved(language) }
 
     var latestRemoteVersion: String? { devLogEntries.first?.version }
@@ -33,6 +68,25 @@ final class AppState: ObservableObject {
     var updateAvailable: Bool {
         guard let latest = latestRemoteVersion else { return false }
         return AppVersion.compare(latest, AppVersion.marketing) == .orderedDescending
+    }
+
+    /// Объединённый список длительностей грейса в секундах (пресеты + кастомные), отсортированный.
+    var allGraceSeconds: [Int] {
+        let customSecs = customGraceMinutes.map { $0 * 60 }
+        return Array(enabledGracePresets.union(customSecs)).sorted()
+    }
+
+    func setLaunchAtLogin(_ enabled: Bool) {
+        do {
+            if enabled {
+                try SMAppService.mainApp.register()
+            } else {
+                try SMAppService.mainApp.unregister()
+            }
+        } catch {
+            // Ничего не делаем — состояние перечитаем ниже из системы.
+        }
+        self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
     }
 
     @MainActor
@@ -114,8 +168,9 @@ final class AppState: ObservableObject {
 
         let lo = min(start, end)
         let hi = max(start, end)
-        let length = ((hi - lo) / snapMinutes) * snapMinutes
-        guard length >= snapMinutes else { return }
+        let step = snapStep
+        let length = ((hi - lo) / step) * step
+        guard length >= step else { return }
 
         if length >= minutesInDay {
             managedApps[idx].slots = [Slot(id: UUID(), startMinutes: 0, endMinutes: minutesInDay)]
@@ -125,22 +180,22 @@ final class AppState: ObservableObject {
         var s = lo
         while s < 0 { s += minutesInDay }
         while s >= minutesInDay { s -= minutesInDay }
-        s = (s / snapMinutes) * snapMinutes
+        s = (s / step) * step
         let e = s + length
 
         let candidate = Slot(id: UUID(), startMinutes: s, endMinutes: e)
 
-        var unionSet = Self.minuteSet(of: candidate)
+        var unionSet = minuteSet(of: candidate)
         var keep: [Slot] = []
         for slot in managedApps[idx].slots {
-            let sset = Self.minuteSet(of: slot)
+            let sset = minuteSet(of: slot)
             if !sset.isDisjoint(with: unionSet) {
                 unionSet.formUnion(sset)
             } else {
                 keep.append(slot)
             }
         }
-        let merged = Self.slotsFromMinuteSet(unionSet)
+        let merged = slotsFromMinuteSet(unionSet)
         managedApps[idx].slots = (keep + merged).sorted { $0.startMinutes < $1.startMinutes }
     }
 
@@ -165,8 +220,9 @@ final class AppState: ObservableObject {
 
     // MARK: - Helpers
 
-    private static func minuteSet(of slot: Slot) -> Set<Int> {
+    private func minuteSet(of slot: Slot) -> Set<Int> {
         var set = Set<Int>()
+        let step = snapStep
         let segments: [(Int, Int)]
         if slot.endMinutes <= minutesInDay {
             segments = [(slot.startMinutes, slot.endMinutes)]
@@ -175,27 +231,28 @@ final class AppState: ObservableObject {
         }
         for (a, b) in segments {
             var m = a
-            while m < b { set.insert(m); m += snapMinutes }
+            while m < b { set.insert(m); m += step }
         }
         return set
     }
 
-    private static func slotsFromMinuteSet(_ set: Set<Int>) -> [Slot] {
+    private func slotsFromMinuteSet(_ set: Set<Int>) -> [Slot] {
         if set.isEmpty { return [] }
-        if set.count * snapMinutes >= minutesInDay {
+        let step = snapStep
+        if set.count * step >= minutesInDay {
             return [Slot(id: UUID(), startMinutes: 0, endMinutes: minutesInDay)]
         }
         let sorted = set.sorted()
         var runs: [(Int, Int)] = []
         var cs = sorted[0]
-        var ce = sorted[0] + snapMinutes
+        var ce = sorted[0] + step
         for i in 1..<sorted.count {
             if sorted[i] == ce {
-                ce = sorted[i] + snapMinutes
+                ce = sorted[i] + step
             } else {
                 runs.append((cs, ce))
                 cs = sorted[i]
-                ce = sorted[i] + snapMinutes
+                ce = sorted[i] + step
             }
         }
         runs.append((cs, ce))

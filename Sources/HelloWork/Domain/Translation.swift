@@ -5,7 +5,7 @@ struct Translation {
     // MARK: - StatusBar menu
     let menuOpenPrefs: String
     let menuToggleEnabled: (Bool) -> String
-    let menuExtraMinute: String
+    let menuGraceLabel: (_ seconds: Int) -> String
     let menuQuit: String
 
     // MARK: - Sidebar
@@ -44,6 +44,7 @@ struct Translation {
     let inDay: String
     let unitH: String
     let unitMin: String
+    let unitSec: String
 
     let archiveAlertTitle: (String) -> String
     let archiveAlertMessage: String
@@ -73,6 +74,23 @@ struct Translation {
     let checkingButton: String
     let settingLanguageTitle: String
     let settingLanguageDesc: String
+
+    let settingAutoUpdateTitle: String
+    let settingAutoUpdateDesc: String
+
+    let settingLaunchAtLoginTitle: String
+    let settingLaunchAtLoginDesc: String
+
+    let settingSnapStepTitle: String
+    let settingSnapStepDesc: String
+
+    let settingGraceTitle: String
+    let settingGraceDesc: String
+    let settingGraceCustomPlaceholder: String
+    let settingGraceCustomAdd: String
+    let graceTooBigTitle: String
+    let graceTooBigMessage: String
+    let graceTooBigOk: String
 
     // MARK: - Updates
     let updatesTitle: String

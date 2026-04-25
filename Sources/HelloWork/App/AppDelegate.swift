@@ -68,10 +68,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return win
     }
 
+    private var lastAutoUpdateCheck: Date?
+
     private func refresh() {
         state.recompute()
         updateCountdownItem()
-        refreshMenuTitles()
+        refreshMenuIfNeeded()
+        runBackgroundUpdateCheckIfDue()
 
         if !state.enabled {
             for w in overlayWindows.values { w.orderOut(nil) }
@@ -115,14 +118,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Status bar
 
-    private var openMenuItem: NSMenuItem?
-    private var graceMenuItem: NSMenuItem?
-    private var quitMenuItem: NSMenuItem?
+    private var lastMenuSignature: String = ""
 
     private func setupStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         item.button?.image = MenuBarIcon.make()
+        statusItem = item
+        rebuildStatusMenu()
+    }
 
+    /// Полностью пересобираю NSMenu: грейс-пункты могут меняться,
+    /// язык переключается на лету. Вызывается из refresh() через
+    /// сравнение сигнатуры — не каждый тик, только когда что-то поменялось.
+    private func rebuildStatusMenu() {
+        guard let item = statusItem else { return }
         let menu = NSMenu()
         let t = state.t
 
@@ -133,7 +142,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         )
         openMenu.target = self
         menu.addItem(openMenu)
-        openMenuItem = openMenu
 
         menu.addItem(NSMenuItem.separator())
 
@@ -146,16 +154,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(toggle)
         toggleMenuItem = toggle
 
-        menu.addItem(NSMenuItem.separator())
-
-        let grace = NSMenuItem(
-            title: t.menuExtraMinute,
-            action: #selector(grantOneMinute),
-            keyEquivalent: ""
-        )
-        grace.target = self
-        menu.addItem(grace)
-        graceMenuItem = grace
+        let graceSeconds = state.allGraceSeconds
+        if !graceSeconds.isEmpty {
+            menu.addItem(NSMenuItem.separator())
+            for secs in graceSeconds {
+                let gi = NSMenuItem(
+                    title: t.menuGraceLabel(secs),
+                    action: #selector(grantGrace(_:)),
+                    keyEquivalent: ""
+                )
+                gi.target = self
+                gi.tag = secs
+                menu.addItem(gi)
+            }
+        }
 
         let countdown = NSMenuItem(title: "", action: nil, keyEquivalent: "")
         countdown.isEnabled = false
@@ -171,18 +183,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             keyEquivalent: ""
         )
         menu.addItem(quit)
-        quitMenuItem = quit
 
         item.menu = menu
-        statusItem = item
     }
 
-    private func refreshMenuTitles() {
-        let t = state.t
-        openMenuItem?.title = t.menuOpenPrefs
-        graceMenuItem?.title = t.menuExtraMinute
-        quitMenuItem?.title = t.menuQuit
-        toggleMenuItem?.title = toggleTitle()
+    private func refreshMenuIfNeeded() {
+        let signature = "\(state.language.rawValue)|\(state.allGraceSeconds)|\(state.enabled)"
+        if signature != lastMenuSignature {
+            rebuildStatusMenu()
+            lastMenuSignature = signature
+        } else {
+            // Только countdown обновляем
+            toggleMenuItem?.title = toggleTitle()
+        }
     }
 
     // MARK: - Workspace + Timer
@@ -217,9 +230,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refresh()
     }
 
-    @objc private func grantOneMinute() {
-        state.grantGrace(seconds: 60)
+    @objc private func grantGrace(_ sender: NSMenuItem) {
+        state.grantGrace(seconds: TimeInterval(sender.tag))
         refresh()
+    }
+
+    private func runBackgroundUpdateCheckIfDue() {
+        guard state.autoUpdate else { return }
+        let interval: TimeInterval = 30 * 60
+        let elapsed = Date().timeIntervalSince(lastAutoUpdateCheck ?? .distantPast)
+        guard elapsed > interval else { return }
+        lastAutoUpdateCheck = Date()
+        Task { await state.checkForUpdates() }
     }
 
     @objc private func openPreferences() {
