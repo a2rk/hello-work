@@ -22,6 +22,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             reason: "Periodic app-focus / time check"
         )
 
+        stripOwnQuarantine()
+
         setupStatusItem()
         setupWorkspaceObservers()
         startTimer()
@@ -29,6 +31,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         showPrefsIfFirstLaunch()
         Task { await state.checkForUpdates() }
+    }
+
+    /// Снимаем `com.apple.quarantine` с собственного бандла, чтобы Gatekeeper не
+    /// показывал «может содержать вредоносный код» на каждом запуске.
+    /// Без подписи Apple Developer ID это самый чистый workaround для ad-hoc.
+    private func stripOwnQuarantine() {
+        let url = Bundle.main.bundleURL
+        let task = Process()
+        task.launchPath = "/usr/bin/xattr"
+        task.arguments = ["-dr", "com.apple.quarantine", url.path]
+        do {
+            try task.run()
+            task.waitUntilExit()
+        } catch {
+            // Best effort — если не получилось, игнорируем.
+        }
     }
 
     /// Самый первый запуск — открываем prefs-окно, чтобы юзер не растерялся

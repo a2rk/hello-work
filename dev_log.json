@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.7.2",
+    "date": "2026-04-26",
+    "customMessage": "Конец «может быть заражено» на каждом запуске.",
+    "main": "Приложение само снимает с себя карантин Gatekeeper при старте.",
+    "points": [
+      "xattr -dr com.apple.quarantine на собственном bundle при applicationDidFinishLaunching",
+      "После первого запуска предупреждение больше не возвращается",
+      "Без подписи Apple Developer ID это лучший workaround для ad-hoc"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.7.2/HelloWork-0.7.2.dmg"
+  },
+  {
     "version": "0.7.1",
     "date": "2026-04-26",
     "customMessage": "Фикс: dev-лог стал тянуться свежим, без застревания в CDN-кэше.",
