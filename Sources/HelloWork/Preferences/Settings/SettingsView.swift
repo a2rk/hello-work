@@ -102,6 +102,12 @@ struct SettingsView: View {
                 }
             }
 
+            section(title: t.settingsSectionFocus) {
+                multiRowCard {
+                    FocusSettingsView(state: state)
+                }
+            }
+
             section(title: t.settingsSectionStats) {
                 multiRowCard {
                     statsResetRow

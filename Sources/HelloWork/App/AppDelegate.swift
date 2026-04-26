@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import Combine
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
@@ -12,6 +13,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var activityToken: NSObjectProtocol?
     private var prefsWindow: NSWindow?
     private var overlayWindows: [String: NSWindow] = [:]
+    private let hotkeyManager = HotkeyManager()
+    private var hotkeyCancellables: Set<AnyCancellable> = []
 
     private let firstLaunchKey = "helloWorkHasLaunchedBefore"
 
@@ -27,6 +30,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         setupStatusItem()
         setupWorkspaceObservers()
+        setupFocusObservers()
+        registerFocusHotkey()
         startTimer()
         refresh()
 
@@ -100,6 +105,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         updateCountdownItem()
         refreshMenuIfNeeded()
         runBackgroundUpdateCheckIfDue()
+        state.focus.tick()
 
         if !state.enabled {
             for w in overlayWindows.values { w.orderOut(nil) }
@@ -239,8 +245,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(countdown)
         countdownMenuItem = countdown
 
-        // 5. Линия + основные действия
+        // 5. Линия + Focus mode + основные действия
         menu.addItem(NSMenuItem.separator())
+
+        if state.focusModeEnabled {
+            let focusItem = NSMenuItem(
+                title: t.focusMenuItem,
+                action: #selector(toggleFocusMode),
+                keyEquivalent: ""
+            )
+            focusItem.target = self
+            focusItem.state = state.focus.isActive ? .on : .off
+            // Правая клавиатурная подсказка через обычный текст в title — простой путь.
+            let hk = state.focusHotkey.displayString()
+            focusItem.title = "\(t.focusMenuItem)   \(hk)"
+            menu.addItem(focusItem)
+            menu.addItem(NSMenuItem.separator())
+        }
 
         let openMenu = NSMenuItem(
             title: t.menuOpenPrefs,
@@ -271,6 +292,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             "\(state.allGraceSeconds)",
             "\(state.updateAvailable)",
             state.latestRemoteVersion ?? "",
+            "\(state.focusModeEnabled)",
+            "\(state.focus.isActive)",
+            state.focusHotkey.serialized,
             appsSig
         ].joined(separator: "|")
 
@@ -296,6 +320,71 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ) { [weak self] _ in self?.refresh() })
     }
 
+    // MARK: - Focus mode
+
+    private func setupFocusObservers() {
+        // Изменение конфигурации экранов.
+        observers.append(NotificationCenter.default.addObserver(
+            forName: NSApplication.didChangeScreenParametersNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.state.focus.handleScreenParametersChanged()
+            }
+        })
+
+        // Sleep / lock — гасим focus mode.
+        let nc = NSWorkspace.shared.notificationCenter
+        observers.append(nc.addObserver(
+            forName: NSWorkspace.willSleepNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.state.focus.handleSystemSleep()
+            }
+        })
+        observers.append(nc.addObserver(
+            forName: NSWorkspace.screensDidSleepNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.state.focus.handleSystemSleep()
+            }
+        })
+    }
+
+    /// Регистрируем хоткей по AppState.focusHotkey. Перерегистрация при смене.
+    func registerFocusHotkey() {
+        hotkeyManager.unregister()
+        guard state.focusModeEnabled else { return }
+        _ = hotkeyManager.register(state.focusHotkey) { [weak self] in
+            self?.state.focus.toggle()
+        }
+
+        // Подписываемся один раз — на изменения hotkey/enabled перерегистрируем.
+        if hotkeyCancellables.isEmpty {
+            state.$focusHotkey
+                .dropFirst()
+                .sink { [weak self] _ in
+                    Task { @MainActor [weak self] in self?.registerFocusHotkey() }
+                }
+                .store(in: &hotkeyCancellables)
+            state.$focusModeEnabled
+                .dropFirst()
+                .sink { [weak self] enabled in
+                    Task { @MainActor [weak self] in
+                        guard let self else { return }
+                        if !enabled { self.state.focus.disable() }
+                        self.registerFocusHotkey()
+                    }
+                }
+                .store(in: &hotkeyCancellables)
+        }
+    }
+
     private func startTimer() {
         let t = Timer(timeInterval: 0.25, repeats: true) { [weak self] _ in
             self?.refresh()
@@ -315,6 +404,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func grantGrace(_ sender: NSMenuItem) {
         state.grantGrace(seconds: TimeInterval(sender.tag))
         refresh()
+    }
+
+    @objc private func toggleFocusMode() {
+        state.focus.toggle()
     }
 
     @objc private func triggerUpdate() {

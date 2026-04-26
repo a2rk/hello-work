@@ -186,4 +186,22 @@ struct Translation {
     let statsPrivacyNote: String
 
     let settingsSectionStats: String
+
+    // MARK: - Focus mode
+    let settingsSectionFocus: String
+    let focusMenuItem: String
+    let focusEnableTitle: String
+    let focusEnableDesc: String
+    let focusHotkeyTitle: String
+    let focusHotkeyDesc: String
+    let focusHotkeyCustom: String
+    let focusHotkeyConflict: String
+    let focusOpacityTitle: String
+    let focusOpacityDesc: String
+    let focusUseAXTitle: String
+    let focusUseAXDesc: String
+    let focusRecorderTitle: String
+    let focusRecorderHint: String
+    let focusRecorderPlaceholder: String
+    let focusRecorderConfirm: String
 }

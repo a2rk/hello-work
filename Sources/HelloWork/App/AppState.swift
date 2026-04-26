@@ -6,6 +6,7 @@ import ServiceManagement
 final class AppState: ObservableObject {
     let installer = UpdateInstaller()
     let stats = StatsCollector()
+    let focus = FocusModeController()
     @Published var prefsSelection: SidebarSelection?
     @Published var enabled: Bool {
         didSet { UserDefaults.standard.set(enabled, forKey: Self.enabledKey) }
@@ -36,6 +37,24 @@ final class AppState: ObservableObject {
     @Published var patternOverlay: Bool {
         didSet { UserDefaults.standard.set(patternOverlay, forKey: Self.patternOverlayKey) }
     }
+    @Published var focusModeEnabled: Bool {
+        didSet { UserDefaults.standard.set(focusModeEnabled, forKey: Self.focusModeEnabledKey) }
+    }
+    @Published var focusHotkey: FocusHotkey {
+        didSet { UserDefaults.standard.set(focusHotkey.serialized, forKey: Self.focusHotkeyKey) }
+    }
+    @Published var focusDimOpacity: Double {
+        didSet {
+            UserDefaults.standard.set(focusDimOpacity, forKey: Self.focusOpacityKey)
+            focus.updateDimOpacity(focusDimOpacity)
+        }
+    }
+    @Published var focusUseAccessibility: Bool {
+        didSet {
+            UserDefaults.standard.set(focusUseAccessibility, forKey: Self.focusAXKey)
+            focus.useAccessibility = focusUseAccessibility
+        }
+    }
     @Published private(set) var launchAtLogin: Bool
 
     private(set) var graceUntil: Date?
@@ -48,6 +67,10 @@ final class AppState: ObservableObject {
     private static let enabledKey = "helloWorkEnabled"
     private static let managedAppsKey = "helloWorkManagedApps"
     private static let patternOverlayKey = "helloWorkPatternOverlay"
+    private static let focusModeEnabledKey = "helloWorkFocusModeEnabled"
+    private static let focusHotkeyKey = "helloWorkFocusHotkey"
+    private static let focusOpacityKey = "helloWorkFocusOpacity"
+    private static let focusAXKey = "helloWorkFocusUseAX"
 
     static let gracePresetSeconds: [Int] = [30, 60, 180, 300, 600]
     static let snapStepOptions: [Int] = [1, 5, 10, 15]
@@ -73,6 +96,15 @@ final class AppState: ObservableObject {
 
         self.customGraceMinutes = (UserDefaults.standard.array(forKey: Self.graceCustomsKey) as? [Int]) ?? []
         self.patternOverlay = (UserDefaults.standard.object(forKey: Self.patternOverlayKey) as? Bool) ?? true
+        self.focusModeEnabled = (UserDefaults.standard.object(forKey: Self.focusModeEnabledKey) as? Bool) ?? true
+        if let raw = UserDefaults.standard.string(forKey: Self.focusHotkeyKey),
+           let parsed = FocusHotkey.deserialize(raw) {
+            self.focusHotkey = parsed
+        } else {
+            self.focusHotkey = .default
+        }
+        self.focusDimOpacity = (UserDefaults.standard.object(forKey: Self.focusOpacityKey) as? Double) ?? 0.9
+        self.focusUseAccessibility = UserDefaults.standard.bool(forKey: Self.focusAXKey)
         self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
 
         // enabled: дефолт true, если ключа нет
@@ -85,6 +117,10 @@ final class AppState: ObservableObject {
         } else {
             self.managedApps = []
         }
+
+        // Сразу прокидываем настройки в controller.
+        focus.dimOpacity = focusDimOpacity
+        focus.useAccessibility = focusUseAccessibility
     }
 
     private func saveManagedApps() {

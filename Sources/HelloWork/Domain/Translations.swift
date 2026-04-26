@@ -158,7 +158,23 @@ extension Translation {
         statsResetAlertMessage: "All counters of taps, scrolls, sessions and history will be erased. This cannot be undone.",
         statsResetAlertConfirm: "Reset",
         statsPrivacyNote: "All statistics are stored locally on your Mac. Hello work doesn't send any data anywhere.",
-        settingsSectionStats: "Statistics"
+        settingsSectionStats: "Statistics",
+        settingsSectionFocus: "Focus Mode",
+        focusMenuItem: "Focus Mode",
+        focusEnableTitle: "Enable Focus Mode",
+        focusEnableDesc: "Press the hotkey to dim everything except the active window. Click any other window to switch focus to it.",
+        focusHotkeyTitle: "Hotkey",
+        focusHotkeyDesc: "Pick a preset or set your own combination.",
+        focusHotkeyCustom: "Custom…",
+        focusHotkeyConflict: "Possible conflict",
+        focusOpacityTitle: "Dim opacity",
+        focusOpacityDesc: "How dark everything around the active window will be.",
+        focusUseAXTitle: "Precise window detection",
+        focusUseAXDesc: "Uses Accessibility to find the focused window inside the active app. macOS will ask for permission.",
+        focusRecorderTitle: "Press a key combination",
+        focusRecorderHint: "At least one modifier (⌃ ⌥ ⇧ ⌘) is required, except for F-keys.",
+        focusRecorderPlaceholder: "Waiting for input…",
+        focusRecorderConfirm: "Save"
     )
 
     static let ru = Translation(
@@ -313,7 +329,23 @@ extension Translation {
         statsResetAlertMessage: "Все счётчики тыков, скроллов, заходов и история — будут удалены. Отменить нельзя.",
         statsResetAlertConfirm: "Сбросить",
         statsPrivacyNote: "Вся статистика хранится локально на твоём Mac. Hello work не отправляет данные никуда.",
-        settingsSectionStats: "Статистика"
+        settingsSectionStats: "Статистика",
+        settingsSectionFocus: "Фокус-режим",
+        focusMenuItem: "Фокус-режим",
+        focusEnableTitle: "Включить фокус-режим",
+        focusEnableDesc: "По хоткею затемняет всё, кроме активного окна. Кликни любое окно — фокус перейдёт на него.",
+        focusHotkeyTitle: "Хоткей",
+        focusHotkeyDesc: "Выбери пресет или задай своё сочетание.",
+        focusHotkeyCustom: "Своё…",
+        focusHotkeyConflict: "Возможен конфликт",
+        focusOpacityTitle: "Затемнение",
+        focusOpacityDesc: "Насколько тёмным будет всё вокруг активного окна.",
+        focusUseAXTitle: "Точное определение окна",
+        focusUseAXDesc: "Использует Accessibility, чтобы находить фокусное окно внутри активного приложения. macOS попросит разрешение.",
+        focusRecorderTitle: "Нажми сочетание клавиш",
+        focusRecorderHint: "Нужен хотя бы один модификатор (⌃ ⌥ ⇧ ⌘), кроме F-клавиш.",
+        focusRecorderPlaceholder: "Ожидание ввода…",
+        focusRecorderConfirm: "Сохранить"
     )
 
     static let zh = Translation(
@@ -464,6 +496,22 @@ extension Translation {
         statsResetAlertMessage: "所有点击、滚动、次数和历史的计数器都将被擦除。此操作无法撤销。",
         statsResetAlertConfirm: "重置",
         statsPrivacyNote: "所有统计数据存储在你的 Mac 本地。Hello work 不会向任何地方发送数据。",
-        settingsSectionStats: "统计"
+        settingsSectionStats: "统计",
+        settingsSectionFocus: "聚焦模式",
+        focusMenuItem: "聚焦模式",
+        focusEnableTitle: "启用聚焦模式",
+        focusEnableDesc: "按下快捷键,除活动窗口外其他全部变暗。点击任何其他窗口,焦点切换到它。",
+        focusHotkeyTitle: "快捷键",
+        focusHotkeyDesc: "选择预设或自定义组合。",
+        focusHotkeyCustom: "自定义…",
+        focusHotkeyConflict: "可能冲突",
+        focusOpacityTitle: "暗度",
+        focusOpacityDesc: "活动窗口周围的暗度程度。",
+        focusUseAXTitle: "精确窗口检测",
+        focusUseAXDesc: "使用辅助功能查找活动应用中的焦点窗口。macOS 将请求权限。",
+        focusRecorderTitle: "按下组合键",
+        focusRecorderHint: "至少需要一个修饰键(⌃ ⌥ ⇧ ⌘),F 键除外。",
+        focusRecorderPlaceholder: "等待输入…",
+        focusRecorderConfirm: "保存"
     )
 }
