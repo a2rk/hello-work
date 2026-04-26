@@ -10,6 +10,7 @@ struct Translation {
 
     // MARK: - Sidebar
     let addApp: String
+    let sectionStats: String
     let sectionUpdates: String
     let sectionSettings: String
     let sectionContacts: String
@@ -138,4 +139,51 @@ struct Translation {
 
     // MARK: - Languages
     let languageSystem: String
+
+    // MARK: - Stats
+    let statsTitle: String
+    let statsSubtitle: String
+    let statsRangeToday: String
+    let statsRangeWeek: String
+    let statsRangeMonth: String
+    let statsRangeYear: String
+    let statsRangeAll: String
+
+    let statsAttempts: (_ n: Int) -> String        // "127 попыток"
+    let statsLostFocus: (_ formatted: String) -> String  // "9 мин 24 с потерянного фокуса"
+    let statsCompareUp: (_ percent: Int) -> String       // "на 23% больше чем вчера"
+    let statsCompareDown: (_ percent: Int) -> String     // "на 23% меньше чем вчера"
+    let statsCompareEqual: String                        // "столько же, сколько вчера"
+    let statsCompareNoData: String                       // "впервые за этот период"
+
+    let statsSectionWhen: String      // "Когда"
+    let statsSectionWhere: String     // "Куда лез"
+    let statsSectionHow: String       // "Как"
+    let statsSectionGrace: String     // "Бонусы"
+    let statsSectionYear: String      // "Год"
+
+    let statsClicks: String
+    let statsScrolls: String
+    let statsKeys: String
+    let statsPeeks: String
+
+    let statsGraceLine: (_ count: Int, _ minutes: Int) -> String  // "Использовано «Ещё минутку» 4 раза. 7 минут."
+    let statsGraceNone: String
+
+    let statsHeatmapLegendLess: String
+    let statsHeatmapLegendMore: String
+    let statsHeatmapDay: (_ date: String, _ count: Int) -> String
+
+    let statsEmptyTitle: String
+    let statsEmptyHint: String
+
+    let statsResetTitle: String
+    let statsResetDescription: String
+    let statsResetButton: String
+    let statsResetAlertTitle: String
+    let statsResetAlertMessage: String
+    let statsResetAlertConfirm: String
+    let statsPrivacyNote: String
+
+    let settingsSectionStats: String
 }

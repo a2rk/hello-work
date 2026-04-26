@@ -5,6 +5,7 @@ import ServiceManagement
 @MainActor
 final class AppState: ObservableObject {
     let installer = UpdateInstaller()
+    let stats = StatsCollector()
     @Published var prefsSelection: SidebarSelection?
     @Published var enabled: Bool {
         didSet { UserDefaults.standard.set(enabled, forKey: Self.enabledKey) }
@@ -165,6 +166,7 @@ final class AppState: ObservableObject {
 
     func grantGrace(seconds: TimeInterval) {
         graceUntil = Date().addingTimeInterval(seconds)
+        stats.recordGrace(seconds: Int(seconds))
     }
 
     func recompute(now: Date = Date()) {

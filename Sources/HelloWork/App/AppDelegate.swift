@@ -34,6 +34,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         Task { await state.checkForUpdates() }
     }
 
+    func applicationWillTerminate(_ notification: Notification) {
+        state.stats.flushNow()
+    }
+
     /// Снимаем `com.apple.quarantine` с собственного бандла, чтобы Gatekeeper не
     /// показывал «может содержать вредоносный код» на каждом запуске.
     /// Без подписи Apple Developer ID это самый чистый workaround для ad-hoc.
@@ -83,6 +87,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         win.ignoresMouseEvents = false
         win.level = .normal
         win.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+        win.bundleID = bundleID
+        win.collector = state.stats
         overlayWindows[bundleID] = win
         return win
     }
@@ -97,6 +103,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         if !state.enabled {
             for w in overlayWindows.values { w.orderOut(nil) }
+            state.stats.closeAllSessions()
             return
         }
 
@@ -122,6 +129,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 win.setFrame(frame, display: true)
             }
             win.order(.above, relativeTo: winNum)
+
+            // Считаем blocked-время только если жертва frontmost (а overlay поверх неё) —
+            // тогда юзер реально смотрит на блок, а не он висит фоном на другом мониторе.
+            if frontmostBID == app.bundleID {
+                state.stats.tickBlocked(bundleID: app.bundleID, seconds: 0.25)
+            }
 
             if frontmostBID == app.bundleID && !win.isKeyWindow {
                 win.makeKey()

@@ -1,5 +1,14 @@
 import Foundation
 
+/// Русское склонение по числу: 1 попытка / 2 попытки / 5 попыток.
+private func ruPlural(_ n: Int, _ one: String, _ few: String, _ many: String) -> String {
+    let mod10 = n % 10
+    let mod100 = n % 100
+    if mod10 == 1 && mod100 != 11 { return one }
+    if (2...4).contains(mod10) && !(12...14).contains(mod100) { return few }
+    return many
+}
+
 extension Translation {
     static let en = Translation(
         menuOpenPrefs: "Open menu",
@@ -9,6 +18,7 @@ extension Translation {
         },
         menuQuit: "Quit",
         addApp: "Add",
+        sectionStats: "Statistics",
         sectionUpdates: "Updates",
         sectionSettings: "Settings",
         sectionContacts: "Contacts",
@@ -109,7 +119,46 @@ extension Translation {
         aboutDescription: "App for those who write code. For people with two-plus monitors who can focus, but sometimes forget — and Telegram on the second screen won’t close itself.",
         aboutHowToUseTitle: "How to use",
         aboutHowToUseDesc: "Add an app via «+ Add» in the sidebar. Open its schedule and draw green slots on the dial — these are the access windows. The rest of the time the app is blocked: blur on top of the window and input lock.",
-        languageSystem: "System"
+        languageSystem: "System",
+        statsTitle: "Statistics",
+        statsSubtitle: "Cold facts about how often you tried to break the schedule.",
+        statsRangeToday: "Today",
+        statsRangeWeek: "Week",
+        statsRangeMonth: "Month",
+        statsRangeYear: "Year",
+        statsRangeAll: "All time",
+        statsAttempts: { n in "\(n) \(n == 1 ? "attempt" : "attempts")" },
+        statsLostFocus: { "\($0) of lost focus" },
+        statsCompareUp: { p in "↗ \(p)% more than yesterday" },
+        statsCompareDown: { p in "↘ \(p)% less than yesterday" },
+        statsCompareEqual: "Same as yesterday",
+        statsCompareNoData: "First time in this period",
+        statsSectionWhen: "When",
+        statsSectionWhere: "Where you reached",
+        statsSectionHow: "How",
+        statsSectionGrace: "Bonuses",
+        statsSectionYear: "Year",
+        statsClicks: "Clicks",
+        statsScrolls: "Scrolls",
+        statsKeys: "Keystrokes",
+        statsPeeks: "Sessions",
+        statsGraceLine: { count, mins in
+            "Used \"Extra minute\" \(count) \(count == 1 ? "time" : "times"). \(mins) min total."
+        },
+        statsGraceNone: "No bonuses used.",
+        statsHeatmapLegendLess: "Less",
+        statsHeatmapLegendMore: "More",
+        statsHeatmapDay: { date, n in "\(date) · \(n) attempts" },
+        statsEmptyTitle: "Nothing yet",
+        statsEmptyHint: "When the schedule blocks an app and you try to reach it, the numbers show up here.",
+        statsResetTitle: "Reset statistics",
+        statsResetDescription: "Removes all counters and history. Cannot be undone.",
+        statsResetButton: "Reset",
+        statsResetAlertTitle: "Reset all statistics?",
+        statsResetAlertMessage: "All counters of taps, scrolls, sessions and history will be erased. This cannot be undone.",
+        statsResetAlertConfirm: "Reset",
+        statsPrivacyNote: "All statistics are stored locally on your Mac. Hello work doesn't send any data anywhere.",
+        settingsSectionStats: "Statistics"
     )
 
     static let ru = Translation(
@@ -120,6 +169,7 @@ extension Translation {
         },
         menuQuit: "Закрыть",
         addApp: "Добавить",
+        sectionStats: "Статистика",
         sectionUpdates: "Обновления",
         sectionSettings: "Настройки",
         sectionContacts: "Контакты",
@@ -220,7 +270,50 @@ extension Translation {
         aboutDescription: "Софт для тех, кто пишет код. Для людей с двумя+ мониторами, которые умеют сфокусироваться, но иногда забывают — и Telegram во второй экран сам себя не закроет.",
         aboutHowToUseTitle: "Как пользоваться",
         aboutHowToUseDesc: "Добавь приложение через «+ Добавить» в боковой панели. Открой его расписание и нарисуй на круге зелёные слоты — это окна доступа. Всё остальное время приложение заблокировано: блюр поверх окна и блок ввода.",
-        languageSystem: "Системный"
+        languageSystem: "Системный",
+        statsTitle: "Статистика",
+        statsSubtitle: "Холодные факты о том, как часто ты пытался обойти расписание.",
+        statsRangeToday: "Сегодня",
+        statsRangeWeek: "Неделя",
+        statsRangeMonth: "Месяц",
+        statsRangeYear: "Год",
+        statsRangeAll: "Всё время",
+        statsAttempts: { n in
+            "\(n) \(ruPlural(n, "попытка", "попытки", "попыток"))"
+        },
+        statsLostFocus: { "\($0) потерянного фокуса" },
+        statsCompareUp: { p in "↗ на \(p)% больше чем вчера" },
+        statsCompareDown: { p in "↘ на \(p)% меньше чем вчера" },
+        statsCompareEqual: "Столько же, сколько вчера",
+        statsCompareNoData: "Впервые за этот период",
+        statsSectionWhen: "Когда",
+        statsSectionWhere: "Куда лез",
+        statsSectionHow: "Как",
+        statsSectionGrace: "Бонусы",
+        statsSectionYear: "Год",
+        statsClicks: "Кликов",
+        statsScrolls: "Скроллов",
+        statsKeys: "Клавиш",
+        statsPeeks: "Заходов",
+        statsGraceLine: { count, mins in
+            "Использовано «Ещё минутку» \(count) \(ruPlural(count, "раз", "раза", "раз")). Всего \(mins) \(ruPlural(mins, "минута", "минуты", "минут"))."
+        },
+        statsGraceNone: "Бонусов не использовано.",
+        statsHeatmapLegendLess: "Меньше",
+        statsHeatmapLegendMore: "Больше",
+        statsHeatmapDay: { date, n in
+            "\(date) · \(n) \(ruPlural(n, "попытка", "попытки", "попыток"))"
+        },
+        statsEmptyTitle: "Пока пусто",
+        statsEmptyHint: "Когда расписание заблокирует приложение и ты попытаешься его открыть — здесь появятся цифры.",
+        statsResetTitle: "Сбросить статистику",
+        statsResetDescription: "Удалит все счётчики и историю. Отменить нельзя.",
+        statsResetButton: "Сбросить",
+        statsResetAlertTitle: "Сбросить всю статистику?",
+        statsResetAlertMessage: "Все счётчики тыков, скроллов, заходов и история — будут удалены. Отменить нельзя.",
+        statsResetAlertConfirm: "Сбросить",
+        statsPrivacyNote: "Вся статистика хранится локально на твоём Mac. Hello work не отправляет данные никуда.",
+        settingsSectionStats: "Статистика"
     )
 
     static let zh = Translation(
@@ -231,6 +324,7 @@ extension Translation {
         },
         menuQuit: "退出",
         addApp: "添加",
+        sectionStats: "统计",
         sectionUpdates: "更新",
         sectionSettings: "设置",
         sectionContacts: "联系",
@@ -331,6 +425,45 @@ extension Translation {
         aboutDescription: "为程序员设计的软件。给那些有双显示器、能够专注但偶尔会忘记关闭次屏 Telegram 的人。",
         aboutHowToUseTitle: "使用方法",
         aboutHowToUseDesc: "通过侧边栏的「+ 添加」添加应用。打开其时间表并在表盘上绘制绿色时段 — 这些是允许使用的时段。其余时间应用将被阻止:窗口模糊和输入锁定。",
-        languageSystem: "系统"
+        languageSystem: "系统",
+        statsTitle: "统计",
+        statsSubtitle: "冷酷的事实:你多少次尝试打破时间表。",
+        statsRangeToday: "今天",
+        statsRangeWeek: "本周",
+        statsRangeMonth: "本月",
+        statsRangeYear: "今年",
+        statsRangeAll: "全部",
+        statsAttempts: { n in "\(n) 次尝试" },
+        statsLostFocus: { "\($0) 失去的专注" },
+        statsCompareUp: { p in "↗ 比昨天多 \(p)%" },
+        statsCompareDown: { p in "↘ 比昨天少 \(p)%" },
+        statsCompareEqual: "和昨天一样",
+        statsCompareNoData: "本期首次",
+        statsSectionWhen: "何时",
+        statsSectionWhere: "去哪",
+        statsSectionHow: "如何",
+        statsSectionGrace: "奖励",
+        statsSectionYear: "全年",
+        statsClicks: "点击",
+        statsScrolls: "滚动",
+        statsKeys: "按键",
+        statsPeeks: "次数",
+        statsGraceLine: { count, mins in
+            "使用「再来一分钟」\(count) 次。共 \(mins) 分钟。"
+        },
+        statsGraceNone: "未使用奖励。",
+        statsHeatmapLegendLess: "少",
+        statsHeatmapLegendMore: "多",
+        statsHeatmapDay: { date, n in "\(date) · \(n) 次" },
+        statsEmptyTitle: "暂无数据",
+        statsEmptyHint: "当时间表阻止应用而你尝试打开它时,这里会出现数字。",
+        statsResetTitle: "重置统计",
+        statsResetDescription: "删除所有计数器和历史。无法撤销。",
+        statsResetButton: "重置",
+        statsResetAlertTitle: "重置所有统计?",
+        statsResetAlertMessage: "所有点击、滚动、次数和历史的计数器都将被擦除。此操作无法撤销。",
+        statsResetAlertConfirm: "重置",
+        statsPrivacyNote: "所有统计数据存储在你的 Mac 本地。Hello work 不会向任何地方发送数据。",
+        settingsSectionStats: "统计"
     )
 }

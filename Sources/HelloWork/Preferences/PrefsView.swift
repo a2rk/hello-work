@@ -133,6 +133,8 @@ struct PrefsView: View {
             } else {
                 OnboardingView(action: openAppPicker)
             }
+        case .section(.stats):
+            StatsView(state: state)
         case .section(.updates):
             UpdatesView(state: state)
         case .section(.settings):
