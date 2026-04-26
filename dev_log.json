@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.8.9",
+    "date": "2026-04-26",
+    "customMessage": "Меню в трее наконец-то с настоящим Apple-стайл переключателем.",
+    "main": "Полный редизайн топа menubar — кастомные SwiftUI-views вместо плоских attributedTitle.",
+    "points": [
+      "Глобальный тумблер теперь нативный SwiftUI Toggle (.switch) — зелёный когда вкл, серый когда выкл, ровно как у Apple",
+      "Раскладка строки приложения: иконка → имя → spacer → маленькая 5px точка справа",
+      "Точка минималистичнее (была bullet 14pt сlева, стала 5px справа)",
+      "Hover на app-row подсвечивает строку accent-цветом, клик открывает расписание"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.8.9/HelloWork-0.8.9.dmg"
+  },
+  {
     "version": "0.8.8",
     "date": "2026-04-26",
     "customMessage": "Чуть мягче и темнее.",

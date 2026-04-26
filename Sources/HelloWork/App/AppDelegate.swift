@@ -171,41 +171,34 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             menu.addItem(NSMenuItem.separator())
         }
 
-        // 2. Глобальный тумблер (наверху)
-        let toggle = NSMenuItem(
-            title: "",
-            action: #selector(toggleEnabled),
-            keyEquivalent: ""
-        )
-        toggle.target = self
-        toggle.attributedTitle = makeBulletTitle(
-            text: t.menuToggleEnabled(state.enabled),
-            color: state.enabled ? .systemGreen : .systemGray,
-            bold: true
-        )
-        menu.addItem(toggle)
-        toggleMenuItem = toggle
+        // 2. Глобальный тумблер (наверху) — кастомная SwiftUI-вьюха с
+        //    нативным Toggle вместо attributedTitle с точкой
+        let toggleHosting = NSHostingView(rootView: ToggleMenuRow(state: state))
+        toggleHosting.frame = NSRect(x: 0, y: 0, width: 240, height: 28)
+        let toggleItem = NSMenuItem()
+        toggleItem.view = toggleHosting
+        menu.addItem(toggleItem)
+        toggleMenuItem = toggleItem
 
-        // 3. Линия + список приложений со статус-точкой
+        // 3. Линия + список приложений со статус-точкой справа
         let activeApps = state.managedApps.filter { !$0.isArchived }
         if !activeApps.isEmpty {
             menu.addItem(NSMenuItem.separator())
             for app in activeApps {
-                let appItem = NSMenuItem(
-                    title: app.name,
-                    action: #selector(selectApp(_:)),
-                    keyEquivalent: ""
-                )
-                appItem.target = self
-                appItem.representedObject = app.bundleID
-                appItem.attributedTitle = makeBulletTitle(
-                    text: app.name,
-                    color: state.isAllowed(app: app) ? .systemGreen : .systemRed,
-                    bold: false
-                )
-                let icon = NSWorkspace.shared.icon(forFile: app.appURL.path)
-                icon.size = NSSize(width: 16, height: 16)
-                appItem.image = icon
+                let bid = app.bundleID
+                let row = AppMenuRow(
+                    app: app,
+                    isAllowed: state.isAllowed(app: app)
+                ) { [weak self] in
+                    guard let self else { return }
+                    self.statusItem?.menu?.cancelTracking()
+                    self.state.prefsSelection = .app(bid)
+                    self.openPreferences()
+                }
+                let hosting = NSHostingView(rootView: row)
+                hosting.frame = NSRect(x: 0, y: 0, width: 240, height: 26)
+                let appItem = NSMenuItem()
+                appItem.view = hosting
                 menu.addItem(appItem)
             }
         }
@@ -252,25 +245,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(quit)
 
         item.menu = menu
-    }
-
-    /// Текст с цветной точкой-«bullet» в начале — для тумблера и для списка приложений.
-    private func makeBulletTitle(text: String, color: NSColor, bold: Bool) -> NSAttributedString {
-        let bulletFont = NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: .black)
-        let textFont: NSFont = bold
-            ? NSFont.menuFont(ofSize: 0).bold()
-            : NSFont.menuFont(ofSize: 0)
-
-        let result = NSMutableAttributedString()
-        result.append(NSAttributedString(
-            string: "● ",
-            attributes: [.foregroundColor: color, .font: bulletFont]
-        ))
-        result.append(NSAttributedString(
-            string: text,
-            attributes: [.font: textFont]
-        ))
-        return result
     }
 
     private func refreshMenuIfNeeded() {
@@ -328,12 +302,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func grantGrace(_ sender: NSMenuItem) {
         state.grantGrace(seconds: TimeInterval(sender.tag))
         refresh()
-    }
-
-    @objc private func selectApp(_ sender: NSMenuItem) {
-        guard let bid = sender.representedObject as? String else { return }
-        state.prefsSelection = .app(bid)
-        openPreferences()
     }
 
     @objc private func triggerUpdate() {
@@ -424,12 +392,5 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func toggleTitle() -> String {
         state.t.menuToggleEnabled(state.enabled)
-    }
-}
-
-private extension NSFont {
-    func bold() -> NSFont {
-        let descriptor = fontDescriptor.withSymbolicTraits(.bold)
-        return NSFont(descriptor: descriptor, size: pointSize) ?? self
     }
 }
