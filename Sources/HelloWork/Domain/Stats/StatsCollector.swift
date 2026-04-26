@@ -105,6 +105,50 @@ final class StatsCollector: ObservableObject {
     }
 
     static let graceBundleID = "__grace__"
+    static let focusTotalBundleID = "__focus_total__"
+
+    // MARK: - Focus mode
+
+    /// +seconds к focusSeconds на бандл (если задан) и к total + hourly бакету.
+    /// Вызывается из FocusModeController.tick раз в 250мс.
+    func tickFocus(bundleID: String?, seconds: Double, at date: Date = Date()) {
+        let key = StatsStore.dayKey(date)
+        var day = store.days[key] ?? [:]
+
+        // Per-app focus seconds.
+        if let bid = bundleID, !bid.isEmpty, bid != Self.focusTotalBundleID {
+            var stat = day[bid] ?? DailyStat()
+            stat.focusSeconds += seconds
+            day[bid] = stat
+        }
+
+        // Total + hourly.
+        var total = day[Self.focusTotalBundleID] ?? DailyStat()
+        total.focusSeconds += seconds
+        let hour = Calendar.current.component(.hour, from: date)
+        if (0..<24).contains(hour) {
+            total.focusHourly[hour] += seconds
+        }
+        day[Self.focusTotalBundleID] = total
+
+        store.days[key] = day
+        dirty = true
+    }
+
+    /// Финал focus-сессии: ++count, обновляем longest.
+    func recordFocusSessionEnd(seconds: Double, at date: Date = Date()) {
+        guard seconds > 0 else { return }
+        let key = StatsStore.dayKey(date)
+        var day = store.days[key] ?? [:]
+        var total = day[Self.focusTotalBundleID] ?? DailyStat()
+        total.focusSessions += 1
+        if seconds > total.focusLongestSeconds {
+            total.focusLongestSeconds = seconds
+        }
+        day[Self.focusTotalBundleID] = total
+        store.days[key] = day
+        dirty = true
+    }
 
     /// Сбросить всю статистику. Вызывается из Settings.
     func resetAll() {

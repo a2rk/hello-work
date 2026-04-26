@@ -121,6 +121,7 @@ final class AppState: ObservableObject {
         // Сразу прокидываем настройки в controller.
         focus.dimOpacity = focusDimOpacity
         focus.useAccessibility = focusUseAccessibility
+        focus.stats = stats
     }
 
     private func saveManagedApps() {

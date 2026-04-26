@@ -23,12 +23,15 @@ struct StatsView: View {
                 StatsHeroView(
                     attempts: snapshot.totalAttempts,
                     blockedSeconds: snapshot.aggregate.blockedSeconds,
-                    comparisonText: snapshot.comparisonText
+                    comparisonText: snapshot.comparisonText,
+                    focusSeconds: snapshot.focusTotal.focusSeconds,
+                    focusSessions: snapshot.focusTotal.focusSessions
                 )
 
                 section(title: t.statsSectionWhen) {
                     StatsHourlyChart(
-                        hours: snapshot.aggregate.hourlyAttempts,
+                        attemptsHours: snapshot.aggregate.hourlyAttempts,
+                        focusHours: snapshot.focusTotal.focusHourly,
                         currentHour: range == .today ? Calendar.current.component(.hour, from: Date()) : nil
                     )
                 }
@@ -41,6 +44,15 @@ struct StatsView: View {
 
                 section(title: t.statsSectionHow) {
                     StatsMethodGrid(stat: snapshot.aggregate)
+                }
+
+                if hasFocusData {
+                    section(title: t.statsSectionFocus) {
+                        StatsFocusSection(
+                            total: snapshot.focusTotal,
+                            perApp: snapshot.focusAppRows
+                        )
+                    }
                 }
 
                 section(title: t.statsSectionGrace) {
@@ -151,22 +163,31 @@ struct StatsView: View {
     // MARK: - Snapshot
 
     private struct Snapshot {
-        let aggregate: DailyStat
+        let aggregate: DailyStat                      // сумма всего, кроме grace/focus_total
         let totalAttempts: Int
         let appRows: [StatsAppBreakdownRow]
         let comparisonText: String?
+        let focusTotal: DailyStat                     // под __focus_total__
+        let focusAppRows: [FocusAppRow]               // top по focusSeconds
     }
 
     private var snapshot: Snapshot {
         let interval = range.interval()
         let perBundle = stats.store.aggregate(from: interval.start, to: interval.end)
 
-        // Сумма по всему периоду + apps breakdown (без grace bundleID).
+        // Сумма по всему периоду (без служебных bundle ID).
         var total = DailyStat()
         var appsAggregate: [(bundleID: String, stat: DailyStat)] = []
+        let focusTotal = perBundle[StatsCollector.focusTotalBundleID] ?? DailyStat()
+
         for (bid, stat) in perBundle {
-            total = total + stat
             if bid == StatsCollector.graceBundleID { continue }
+            if bid == StatsCollector.focusTotalBundleID {
+                // focus-агрегаты копируем в общую aggregate чтобы graceUsed* и hourlyAttempts суммировались верно
+                total = total + stat
+                continue
+            }
+            total = total + stat
             appsAggregate.append((bid, stat))
         }
 
@@ -189,12 +210,43 @@ struct StatsView: View {
                 )
             }
 
+        // Focus per-app rows — отсортированы по focusSeconds.
+        let focusTotalSeconds = focusTotal.focusSeconds
+        let focusAppRows: [FocusAppRow] = appsAggregate
+            .filter { $0.stat.focusSeconds > 0 }
+            .sorted { $0.stat.focusSeconds > $1.stat.focusSeconds }
+            .prefix(5)
+            .map { item in
+                let percent = focusTotalSeconds > 0
+                    ? Int((item.stat.focusSeconds / focusTotalSeconds * 100).rounded())
+                    : 0
+                let known = state.managedApps.first(where: { $0.bundleID == item.bundleID })
+                let displayName = known?.name
+                    ?? (NSRunningApplication.runningApplications(withBundleIdentifier: item.bundleID).first?.localizedName)
+                    ?? item.bundleID
+                let icon = known?.icon
+                    ?? NSRunningApplication.runningApplications(withBundleIdentifier: item.bundleID).first?.icon
+                return FocusAppRow(
+                    id: item.bundleID,
+                    name: displayName,
+                    icon: icon,
+                    seconds: item.stat.focusSeconds,
+                    percent: percent
+                )
+            }
+
         return Snapshot(
             aggregate: total,
             totalAttempts: totalAttempts,
             appRows: appRows,
-            comparisonText: comparisonText(currentTotal: totalAttempts)
+            comparisonText: comparisonText(currentTotal: totalAttempts),
+            focusTotal: focusTotal,
+            focusAppRows: focusAppRows
         )
+    }
+
+    private var hasFocusData: Bool {
+        snapshot.focusTotal.focusSessions > 0 || snapshot.focusTotal.focusSeconds > 0
     }
 
     private var isEmpty: Bool {
@@ -202,6 +254,7 @@ struct StatsView: View {
             && snapshot.aggregate.peeks == 0
             && snapshot.aggregate.blockedSeconds == 0
             && snapshot.aggregate.graceUsedCount == 0
+            && !hasFocusData
     }
 
     // MARK: - Comparison

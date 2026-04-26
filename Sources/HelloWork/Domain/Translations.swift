@@ -174,7 +174,20 @@ extension Translation {
         focusRecorderTitle: "Press a key combination",
         focusRecorderHint: "At least one modifier (⌃ ⌥ ⇧ ⌘) is required, except for F-keys.",
         focusRecorderPlaceholder: "Waiting for input…",
-        focusRecorderConfirm: "Save"
+        focusRecorderConfirm: "Save",
+        statsHeroAttemptsLabel: "Attempts",
+        statsHeroFocusLabel: "Focus",
+        statsHeroFocusMinutes: "minutes in focus",
+        statsHeroFocusHours: "hours in focus",
+        statsHeroFocusSessions: { n in "\(n) \(n == 1 ? "session" : "sessions")" },
+        statsSectionFocus: "Focus mode",
+        statsFocusSessions: "Sessions",
+        statsFocusTotal: "Total",
+        statsFocusLongest: "Longest",
+        statsFocusAverage: "Average",
+        statsFocusTopApps: "Top apps",
+        statsLegendFocus: "Focus",
+        statsLegendAttempts: "Attempts"
     )
 
     static let ru = Translation(
@@ -345,7 +358,22 @@ extension Translation {
         focusRecorderTitle: "Нажми сочетание клавиш",
         focusRecorderHint: "Нужен хотя бы один модификатор (⌃ ⌥ ⇧ ⌘), кроме F-клавиш.",
         focusRecorderPlaceholder: "Ожидание ввода…",
-        focusRecorderConfirm: "Сохранить"
+        focusRecorderConfirm: "Сохранить",
+        statsHeroAttemptsLabel: "Попытки",
+        statsHeroFocusLabel: "Фокус",
+        statsHeroFocusMinutes: "минут в фокусе",
+        statsHeroFocusHours: "часов в фокусе",
+        statsHeroFocusSessions: { n in
+            "\(n) \(ruPlural(n, "сессия", "сессии", "сессий"))"
+        },
+        statsSectionFocus: "Фокус-режим",
+        statsFocusSessions: "Сессий",
+        statsFocusTotal: "Всего",
+        statsFocusLongest: "Самая длинная",
+        statsFocusAverage: "Средняя",
+        statsFocusTopApps: "Где фокусировался",
+        statsLegendFocus: "Фокус",
+        statsLegendAttempts: "Попытки"
     )
 
     static let zh = Translation(
@@ -512,6 +540,19 @@ extension Translation {
         focusRecorderTitle: "按下组合键",
         focusRecorderHint: "至少需要一个修饰键(⌃ ⌥ ⇧ ⌘),F 键除外。",
         focusRecorderPlaceholder: "等待输入…",
-        focusRecorderConfirm: "保存"
+        focusRecorderConfirm: "保存",
+        statsHeroAttemptsLabel: "尝试",
+        statsHeroFocusLabel: "聚焦",
+        statsHeroFocusMinutes: "聚焦分钟",
+        statsHeroFocusHours: "聚焦小时",
+        statsHeroFocusSessions: { n in "\(n) 次会话" },
+        statsSectionFocus: "聚焦模式",
+        statsFocusSessions: "会话",
+        statsFocusTotal: "总计",
+        statsFocusLongest: "最长",
+        statsFocusAverage: "平均",
+        statsFocusTopApps: "聚焦在哪",
+        statsLegendFocus: "聚焦",
+        statsLegendAttempts: "尝试"
     )
 }

@@ -204,4 +204,19 @@ struct Translation {
     let focusRecorderHint: String
     let focusRecorderPlaceholder: String
     let focusRecorderConfirm: String
+
+    // MARK: - Stats: focus part
+    let statsHeroAttemptsLabel: String
+    let statsHeroFocusLabel: String
+    let statsHeroFocusMinutes: String
+    let statsHeroFocusHours: String
+    let statsHeroFocusSessions: (_ n: Int) -> String
+    let statsSectionFocus: String
+    let statsFocusSessions: String
+    let statsFocusTotal: String
+    let statsFocusLongest: String
+    let statsFocusAverage: String
+    let statsFocusTopApps: String
+    let statsLegendFocus: String
+    let statsLegendAttempts: String
 }

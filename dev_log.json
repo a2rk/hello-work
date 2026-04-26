@@ -1,5 +1,21 @@
 [
   {
+    "version": "0.9.2",
+    "date": "2026-04-26",
+    "customMessage": "В статистике теперь две стороны: попытки сорваться и время в фокусе.",
+    "main": "Focus mode пишется в статистику. Hero на странице Statistics стал парой: красная цифра попыток слева, зелёная цифра минут в фокусе справа.",
+    "points": [
+      "Hero-карточка раздвоилась: «ПОПЫТКИ ↓ 127» × «ФОКУС ↑ 47 мин · 3 сессии»",
+      "Новая секция «Фокус-режим» между «Как» и «Бонусы»: sessions, total, longest, average + top-5 приложений",
+      "Hourly chart двухцветный — фокус зелёным баром, попытки красным в правой половине бакета",
+      "Per-app focus-time: видно на каких приложениях ты сосредотачивался (Xcode, Figma, etc.) и сколько",
+      "FocusModeController хукается в StatsCollector через слабую ссылку — раз в 250мс +0.25с к focusSeconds",
+      "Recording session: на disable() считается длина сессии, обновляются sessions count и longest за день",
+      "Backward-compatible decoder в DailyStat — старые stats.json читаются без потерь"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.2/HelloWork-0.9.2.dmg"
+  },
+  {
     "version": "0.9.1",
     "date": "2026-04-26",
     "customMessage": "Затемни всё, кроме окна, в которое смотришь. Потом — следующее.",

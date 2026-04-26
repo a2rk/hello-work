@@ -8,13 +8,18 @@ final class FocusModeController: ObservableObject {
 
     private var dimWindows: [CGDirectDisplayID: FocusOverlayWindow] = [:]
     private var lastHero: FrontmostWindowFinder.Target?
+    private var sessionStartedAt: Date?
 
     /// Опции, которые задаёт AppState.
     var dimOpacity: Double = 0.9
     var useAccessibility: Bool = false
 
+    /// Stats sink — устанавливается извне (AppState).
+    weak var stats: StatsCollector?
+
     private static let fadeInDuration: TimeInterval = 0.25
     private static let fadeOutDuration: TimeInterval = 0.12
+    private static let tickInterval: TimeInterval = 0.25
 
     // MARK: - Public
 
@@ -34,6 +39,7 @@ final class FocusModeController: ObservableObject {
             win.orderFront(nil)
         }
         isActive = true
+        sessionStartedAt = Date()
 
         // Сразу применяем z-order под текущий hero.
         applyHero(animated: false)
@@ -44,6 +50,11 @@ final class FocusModeController: ObservableObject {
         guard isActive else { return }
         isActive = false
         lastHero = nil
+        if let started = sessionStartedAt {
+            let length = Date().timeIntervalSince(started)
+            stats?.recordFocusSessionEnd(seconds: length)
+        }
+        sessionStartedAt = nil
         fadeOut { [weak self] in
             guard let self else { return }
             for win in self.dimWindows.values { win.orderOut(nil) }
@@ -156,6 +167,9 @@ final class FocusModeController: ObservableObject {
                 win.orderFrontRegardless()
             }
         }
+
+        // Учёт focus времени — на каждый tick инкрементим focusSeconds для hero и в total.
+        stats?.tickFocus(bundleID: hero.bundleID, seconds: Self.tickInterval)
 
         _ = animated  // зарезервировано на смену hero (можно потом анимировать alpha-flick)
     }
