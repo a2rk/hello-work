@@ -9,11 +9,11 @@ struct OverlayContentView: View {
 
             if state.patternOverlay {
                 FallingPatternView(elementColor: Theme.accent)
-                    .blur(radius: 6)
+                    .blur(radius: 9)
                     .opacity(0.95)
 
                 HalftoneOverlay(
-                    baseColor: Color.black.opacity(0.70),
+                    baseColor: Color.black.opacity(0.80),
                     dotSpacing: 8,
                     dotRadius: 1.4
                 )
