@@ -11,6 +11,7 @@ struct Translation {
     // MARK: - Sidebar
     let addApp: String
     let sectionStats: String
+    let sectionMenubar: String
     let sectionUpdates: String
     let sectionSettings: String
     let sectionContacts: String
@@ -225,4 +226,22 @@ struct Translation {
     let settingsTabFocus: String
     let settingsTabApp: String
     let settingsTabData: String
+
+    // MARK: - Menubar page
+    let menubarSubtitle: String
+    let menubarHideAll: String
+    let menubarShowAll: String
+    let menubarEnableLabel: String
+    let menubarStateCollapsed: String
+    let menubarStateExpanded: String
+    let menubarPreviewNow: String
+    let menubarPreviewAfter: String
+    let menubarItemCount: (_ n: Int) -> String
+    let menubarHiddenHint: String
+    let menubarHotkeyTitle: String
+    let menubarAutoTitle: String
+    let menubarAutoFocus: String
+    let menubarAutoSchedule: String
+    let menubarPersist: String
+    let menubarDisclaimer: String
 }

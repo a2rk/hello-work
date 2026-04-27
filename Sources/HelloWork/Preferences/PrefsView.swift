@@ -135,6 +135,8 @@ struct PrefsView: View {
             }
         case .section(.stats):
             StatsView(state: state)
+        case .section(.menubar):
+            MenubarView(state: state)
         case .section(.updates):
             UpdatesView(state: state)
         case .section(.settings):

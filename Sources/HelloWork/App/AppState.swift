@@ -7,6 +7,7 @@ final class AppState: ObservableObject {
     let installer = UpdateInstaller()
     let stats = StatsCollector()
     let focus = FocusModeController()
+    let menubarHider = MenubarHiderController()
     @Published var prefsSelection: SidebarSelection?
     @Published var enabled: Bool {
         didSet { UserDefaults.standard.set(enabled, forKey: Self.enabledKey) }
@@ -58,6 +59,21 @@ final class AppState: ObservableObject {
     @Published var settingsTab: SettingsTab {
         didSet { UserDefaults.standard.set(settingsTab.rawValue, forKey: Self.settingsTabKey) }
     }
+    @Published var menubarHiderEnabled: Bool {
+        didSet { UserDefaults.standard.set(menubarHiderEnabled, forKey: Self.menubarHiderEnabledKey) }
+    }
+    @Published var menubarHotkey: MenubarHotkey {
+        didSet { UserDefaults.standard.set(menubarHotkey.serialized, forKey: Self.menubarHotkeyKey) }
+    }
+    @Published var menubarHideOnFocus: Bool {
+        didSet { UserDefaults.standard.set(menubarHideOnFocus, forKey: Self.menubarHideOnFocusKey) }
+    }
+    @Published var menubarHideOnSchedule: Bool {
+        didSet { UserDefaults.standard.set(menubarHideOnSchedule, forKey: Self.menubarHideOnScheduleKey) }
+    }
+    @Published var menubarPersistCollapsed: Bool {
+        didSet { UserDefaults.standard.set(menubarPersistCollapsed, forKey: Self.menubarPersistKey) }
+    }
     @Published private(set) var launchAtLogin: Bool
 
     private(set) var graceUntil: Date?
@@ -75,6 +91,12 @@ final class AppState: ObservableObject {
     private static let focusOpacityKey = "helloWorkFocusOpacity"
     private static let focusAXKey = "helloWorkFocusUseAX"
     private static let settingsTabKey = "helloWorkSettingsTab"
+    private static let menubarHiderEnabledKey = "helloWorkMenubarHiderEnabled"
+    private static let menubarHotkeyKey = "helloWorkMenubarHotkey"
+    private static let menubarHideOnFocusKey = "helloWorkMenubarHideOnFocus"
+    private static let menubarHideOnScheduleKey = "helloWorkMenubarHideOnSchedule"
+    private static let menubarPersistKey = "helloWorkMenubarPersistCollapsed"
+    private static let menubarLastCollapsedKey = "helloWorkMenubarLastCollapsed"
 
     static let gracePresetSeconds: [Int] = [30, 60, 180, 300, 600]
     static let snapStepOptions: [Int] = [1, 5, 10, 15]
@@ -115,6 +137,18 @@ final class AppState: ObservableObject {
         } else {
             self.settingsTab = .schedule
         }
+
+        self.menubarHiderEnabled = (UserDefaults.standard.object(forKey: Self.menubarHiderEnabledKey) as? Bool) ?? false
+        if let raw = UserDefaults.standard.string(forKey: Self.menubarHotkeyKey),
+           let parsed = MenubarHotkey.deserialize(raw) {
+            self.menubarHotkey = parsed
+        } else {
+            self.menubarHotkey = .default
+        }
+        self.menubarHideOnFocus = (UserDefaults.standard.object(forKey: Self.menubarHideOnFocusKey) as? Bool) ?? true
+        self.menubarHideOnSchedule = UserDefaults.standard.bool(forKey: Self.menubarHideOnScheduleKey)
+        self.menubarPersistCollapsed = (UserDefaults.standard.object(forKey: Self.menubarPersistKey) as? Bool) ?? true
+
         self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
 
         // enabled: дефолт true, если ключа нет
@@ -140,6 +174,18 @@ final class AppState: ObservableObject {
     }
 
     var t: Translation { L10n.resolved(language) }
+
+    // MARK: - Menubar persistence helpers
+
+    /// Сохранить текущее состояние menubar hider на диск (для restore при следующем запуске).
+    func saveMenubarCollapsed(_ collapsed: Bool) {
+        UserDefaults.standard.set(collapsed, forKey: Self.menubarLastCollapsedKey)
+    }
+
+    /// Прочитать сохранённое состояние menubar hider. Default — true (свёрнут).
+    var menubarRestoredCollapsed: Bool {
+        (UserDefaults.standard.object(forKey: Self.menubarLastCollapsedKey) as? Bool) ?? true
+    }
 
     var latestRemoteVersion: String? { devLogEntries.first?.version }
 

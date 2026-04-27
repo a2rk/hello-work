@@ -14,7 +14,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var prefsWindow: NSWindow?
     private var overlayWindows: [String: NSWindow] = [:]
     private let hotkeyManager = HotkeyManager()
+    private let menubarHotkeyManager = HotkeyManager()
     private var hotkeyCancellables: Set<AnyCancellable> = []
+    private var menubarCancellables: Set<AnyCancellable> = []
 
     private let firstLaunchKey = "helloWorkHasLaunchedBefore"
 
@@ -32,6 +34,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupWorkspaceObservers()
         setupFocusObservers()
         registerFocusHotkey()
+        setupMenubarHider()
         startTimer()
         refresh()
 
@@ -106,6 +109,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refreshMenuIfNeeded()
         runBackgroundUpdateCheckIfDue()
         state.focus.tick()
+        updateMenubarAutoSchedule()
 
         if !state.enabled {
             for w in overlayWindows.values { w.orderOut(nil) }
@@ -354,6 +358,86 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 self?.state.focus.handleSystemSleep()
             }
         })
+    }
+
+    // MARK: - Menubar hider
+
+    private func setupMenubarHider() {
+        // Создаём hider если фича включена.
+        applyMenubarHiderEnabled()
+
+        // Подписки: enable/disable, hotkey смена, авто-скрытие триггеры.
+        state.$menubarHiderEnabled
+            .dropFirst()
+            .sink { [weak self] _ in
+                Task { @MainActor [weak self] in
+                    self?.applyMenubarHiderEnabled()
+                    self?.registerMenubarHotkey()
+                }
+            }
+            .store(in: &menubarCancellables)
+
+        state.$menubarHotkey
+            .dropFirst()
+            .sink { [weak self] _ in
+                Task { @MainActor [weak self] in self?.registerMenubarHotkey() }
+            }
+            .store(in: &menubarCancellables)
+
+        // Auto-hide: focus mode.
+        state.focus.$isActive
+            .dropFirst()
+            .sink { [weak self] active in
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    guard self.state.menubarHiderEnabled, self.state.menubarHideOnFocus else { return }
+                    self.state.menubarHider.applyAuto(collapsed: active)
+                }
+            }
+            .store(in: &menubarCancellables)
+
+        // Сохраняем состояние при изменении hider.isCollapsed.
+        state.menubarHider.$isCollapsed
+            .dropFirst()
+            .sink { [weak self] collapsed in
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    if self.state.menubarPersistCollapsed {
+                        self.state.saveMenubarCollapsed(collapsed)
+                    }
+                }
+            }
+            .store(in: &menubarCancellables)
+
+        registerMenubarHotkey()
+    }
+
+    private func applyMenubarHiderEnabled() {
+        if state.menubarHiderEnabled {
+            // initialCollapsed: persist'нутое состояние или true по умолчанию.
+            let initial = state.menubarPersistCollapsed ? state.menubarRestoredCollapsed : true
+            state.menubarHider.setEnabled(true, initialCollapsed: initial)
+        } else {
+            state.menubarHider.setEnabled(false, initialCollapsed: true)
+        }
+    }
+
+    private func registerMenubarHotkey() {
+        menubarHotkeyManager.unregister()
+        guard state.menubarHiderEnabled else { return }
+        _ = menubarHotkeyManager.register(state.menubarHotkey.asFocusHotkey) { [weak self] in
+            self?.state.menubarHider.toggle()
+        }
+    }
+
+    /// Авто-скрытие при изменении расписания. Вызывается из refresh().
+    private func updateMenubarAutoSchedule() {
+        guard state.menubarHiderEnabled, state.menubarHideOnSchedule else { return }
+        // Если есть хоть одно managed app в blocked-режиме — скрываем.
+        let anyBlocked = state.managedApps.contains {
+            !$0.isArchived && !state.isAllowed(app: $0)
+        }
+        state.menubarHider.applyAuto(collapsed: anyBlocked)
     }
 
     /// Регистрируем хоткей по AppState.focusHotkey. Перерегистрация при смене.

@@ -19,6 +19,7 @@ extension Translation {
         menuQuit: "Quit",
         addApp: "Add",
         sectionStats: "Statistics",
+        sectionMenubar: "Menubar",
         sectionUpdates: "Updates",
         sectionSettings: "Settings",
         sectionContacts: "Contacts",
@@ -191,7 +192,23 @@ extension Translation {
         settingsTabSchedule: "Schedule",
         settingsTabFocus: "Focus",
         settingsTabApp: "App",
-        settingsTabData: "Data"
+        settingsTabData: "Data",
+        menubarSubtitle: "Clean the tray with one click. Or hotkey. Or automatically.",
+        menubarHideAll: "Hide all",
+        menubarShowAll: "Show all",
+        menubarEnableLabel: "Enable menubar manager",
+        menubarStateCollapsed: "Hidden",
+        menubarStateExpanded: "Visible",
+        menubarPreviewNow: "Currently in your menubar",
+        menubarPreviewAfter: "After hiding",
+        menubarItemCount: { n in "\(n) \(n == 1 ? "item" : "items") detected" },
+        menubarHiddenHint: "Only Hello work and the chevron divider remain. The icons stay alive — they're just pushed off-screen.",
+        menubarHotkeyTitle: "Hotkey",
+        menubarAutoTitle: "Automatic",
+        menubarAutoFocus: "Hide while Focus Mode is on",
+        menubarAutoSchedule: "Hide during blocked schedule windows",
+        menubarPersist: "Remember state between launches",
+        menubarDisclaimer: "macOS only allows hiding all menubar icons at once. We use the «wide divider» technique that pushes right-side icons off the screen. The icons remain functional — you just can't see them."
     )
 
     static let ru = Translation(
@@ -203,6 +220,7 @@ extension Translation {
         menuQuit: "Закрыть",
         addApp: "Добавить",
         sectionStats: "Статистика",
+        sectionMenubar: "Меню бар",
         sectionUpdates: "Обновления",
         sectionSettings: "Настройки",
         sectionContacts: "Контакты",
@@ -381,7 +399,25 @@ extension Translation {
         settingsTabSchedule: "Расписание",
         settingsTabFocus: "Фокус",
         settingsTabApp: "Приложение",
-        settingsTabData: "Данные"
+        settingsTabData: "Данные",
+        menubarSubtitle: "Чисти трей одной кнопкой. Или хоткеем. Или автоматически.",
+        menubarHideAll: "Скрыть всё",
+        menubarShowAll: "Показать всё",
+        menubarEnableLabel: "Включить менеджер menubar",
+        menubarStateCollapsed: "Скрыто",
+        menubarStateExpanded: "Видно",
+        menubarPreviewNow: "Сейчас в твоём меню-баре",
+        menubarPreviewAfter: "После скрытия",
+        menubarItemCount: { n in
+            "Найдено \(n) \(ruPlural(n, "иконка", "иконки", "иконок"))"
+        },
+        menubarHiddenHint: "Останется только Hello work и chevron-разделитель. Иконки продолжают работать — их просто не видно.",
+        menubarHotkeyTitle: "Хоткей",
+        menubarAutoTitle: "Автоматика",
+        menubarAutoFocus: "Скрывать когда включён фокус-режим",
+        menubarAutoSchedule: "Скрывать во время заблокированных окон расписания",
+        menubarPersist: "Запоминать состояние между запусками",
+        menubarDisclaimer: "macOS позволяет скрывать иконки только все разом. Это ограничение системы — Hello work использует технику «широкий разделитель», которая выталкивает правые иконки за край экрана. Иконки остаются рабочими — их просто не видно."
     )
 
     static let zh = Translation(
@@ -393,6 +429,7 @@ extension Translation {
         menuQuit: "退出",
         addApp: "添加",
         sectionStats: "统计",
+        sectionMenubar: "菜单栏",
         sectionUpdates: "更新",
         sectionSettings: "设置",
         sectionContacts: "联系",
@@ -565,6 +602,22 @@ extension Translation {
         settingsTabSchedule: "时间表",
         settingsTabFocus: "聚焦",
         settingsTabApp: "应用",
-        settingsTabData: "数据"
+        settingsTabData: "数据",
+        menubarSubtitle: "一键清理菜单栏。或快捷键。或自动。",
+        menubarHideAll: "全部隐藏",
+        menubarShowAll: "全部显示",
+        menubarEnableLabel: "启用菜单栏管理",
+        menubarStateCollapsed: "已隐藏",
+        menubarStateExpanded: "可见",
+        menubarPreviewNow: "你的菜单栏现状",
+        menubarPreviewAfter: "隐藏后",
+        menubarItemCount: { n in "检测到 \(n) 个图标" },
+        menubarHiddenHint: "只剩下 Hello work 和 chevron 分隔符。图标仍在运行 — 只是看不见。",
+        menubarHotkeyTitle: "快捷键",
+        menubarAutoTitle: "自动",
+        menubarAutoFocus: "聚焦模式开启时隐藏",
+        menubarAutoSchedule: "时间表阻止时隐藏",
+        menubarPersist: "在启动间记住状态",
+        menubarDisclaimer: "macOS 只允许一次隐藏所有菜单栏图标。这是系统限制 — Hello work 使用「宽分隔符」技术,将右侧图标推出屏幕。图标仍然可用 — 只是看不见。"
     )
 }
