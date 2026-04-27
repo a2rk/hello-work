@@ -1,5 +1,22 @@
 [
   {
+    "version": "0.9.5",
+    "date": "2026-04-27",
+    "customMessage": "Вкладка «Трей» в настройках — точная настройка иконок в menubar.",
+    "main": "Новая вкладка Settings → «Трей» с тремя группами: иконка Hello work, chevron-разделитель и поведение peek.",
+    "points": [
+      "Toggle «Показывать иконку Hello work в menubar» — power-user может работать только через хоткеи",
+      "Стиль иконки: Заливка / Контур (Solid / Outline) — тонкая визуальная подстройка",
+      "Toggle «Показывать grace countdown» — при активном «Ещё минутку» рядом с иконкой отображается mm:ss, видно остаток без открытия меню",
+      "Toggle «Показывать chevron-разделитель» — можно сделать его невидимым (всё ещё кликается)",
+      "Стиль chevron: Chevron / Circle / Line — три варианта SF Symbols",
+      "Peek behavior: при касании мышью верхнего края экрана раскрыть menubar на N секунд (0/1/2/3/5). Debounce 2с между peek'ами",
+      "Кнопка «Открыть страницу Меню бар» — переход на полный preview с hero-кнопками",
+      "Все настройки persist в UserDefaults и применяются live"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.5/HelloWork-0.9.5.dmg"
+  },
+  {
     "version": "0.9.4",
     "date": "2026-04-27",
     "customMessage": "Чисти трей одной кнопкой. Или хоткеем. Или автоматически на focus mode.",

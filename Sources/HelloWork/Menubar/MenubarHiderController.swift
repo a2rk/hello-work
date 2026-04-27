@@ -11,6 +11,13 @@ final class MenubarHiderController: ObservableObject {
     private var hider: HiderStatusItem?
     private var lastAutoState: Bool? = nil      // запоминаем что мы сами форсили — чтобы не воевать с юзером
 
+    /// Внешний вид — синхронизируется из AppState.
+    var showChevron: Bool = true
+    var chevronStyle: HiderChevronStyle = .chevron
+
+    /// Peek state: временный expand на N секунд при наведении на верх экрана.
+    private var peekTimer: Timer?
+
     init() {}
 
     // MARK: - Public
@@ -20,6 +27,8 @@ final class MenubarHiderController: ObservableObject {
         if enabled {
             guard hider == nil else { return }
             let h = HiderStatusItem()
+            h.showChevron = self.showChevron
+            h.chevronStyle = self.chevronStyle
             h.onClick = { [weak self] in
                 Task { @MainActor [weak self] in self?.toggle() }
             }
@@ -34,7 +43,44 @@ final class MenubarHiderController: ObservableObject {
             self.enabled = false
             self.isCollapsed = true
             lastAutoState = nil
+            cancelPeek()
         }
+    }
+
+    /// Применить стиль (вызывается из AppDelegate при изменении state).
+    func applyAppearance(showChevron: Bool, style: HiderChevronStyle) {
+        self.showChevron = showChevron
+        self.chevronStyle = style
+        hider?.showChevron = showChevron
+        hider?.chevronStyle = style
+    }
+
+    // MARK: - Peek
+
+    /// Временно раскрыть menubar на N секунд (при наведении на верх экрана).
+    /// Если уже expanded — игнор. Если активен авто — игнор.
+    func peek(seconds: Int) {
+        guard seconds > 0, let h = hider else { return }
+        guard h.isCollapsed else { return }     // уже раскрыт — пиковать нечего
+
+        h.setCollapsed(false)
+        isCollapsed = false
+
+        peekTimer?.invalidate()
+        let t = Timer(timeInterval: TimeInterval(seconds), repeats: false) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                guard let self, let h = self.hider else { return }
+                h.setCollapsed(true)
+                self.isCollapsed = true
+            }
+        }
+        RunLoop.main.add(t, forMode: .common)
+        peekTimer = t
+    }
+
+    private func cancelPeek() {
+        peekTimer?.invalidate()
+        peekTimer = nil
     }
 
     func collapseAll() {

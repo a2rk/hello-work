@@ -7,9 +7,20 @@ final class HiderStatusItem {
     private(set) var item: NSStatusItem
     private(set) var isCollapsed: Bool = true
 
+    /// Стиль chevron-иконки.
+    var chevronStyle: HiderChevronStyle = .chevron {
+        didSet { updateImage() }
+    }
+
+    /// Показывать ли иконку. Если false — рисуем прозрачный pixel, чтобы клик-зона осталась.
+    var showChevron: Bool = true {
+        didSet { updateImage() }
+    }
+
     /// Ширина в "развёрнутом" состоянии — 10000pt достаточно даже для 5K-моников.
     private static let expandedWidth: CGFloat = 10000
     private static let collapsedWidth: CGFloat = 24
+    private static let invisibleWidth: CGFloat = 8
 
     var onClick: (() -> Void)?
 
@@ -54,7 +65,13 @@ final class HiderStatusItem {
 
     private func updateImage() {
         guard let button = item.button else { return }
-        let symbol = isCollapsed ? "chevron.left.2" : "chevron.right.2"
+        if !showChevron {
+            // Рисуем 1×1 прозрачный — клик-зона остаётся, но визуально пусто.
+            let img = NSImage(size: NSSize(width: 1, height: 1))
+            button.image = img
+            return
+        }
+        let symbol = isCollapsed ? chevronStyle.collapsedSymbol : chevronStyle.expandedSymbol
         if let img = NSImage(systemSymbolName: symbol, accessibilityDescription: "Toggle menubar items") {
             img.isTemplate = true
             button.image = img
@@ -62,7 +79,8 @@ final class HiderStatusItem {
     }
 
     private func applyWidth(animated: Bool) {
-        let target: CGFloat = isCollapsed ? Self.collapsedWidth : Self.expandedWidth
+        let collapsedTarget: CGFloat = showChevron ? Self.collapsedWidth : Self.invisibleWidth
+        let target: CGFloat = isCollapsed ? collapsedTarget : Self.expandedWidth
         if animated {
             NSAnimationContext.runAnimationGroup { ctx in
                 ctx.duration = 0.18

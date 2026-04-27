@@ -35,6 +35,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupFocusObservers()
         registerFocusHotkey()
         setupMenubarHider()
+        setupTrayObservers()
         startTimer()
         refresh()
 
@@ -106,6 +107,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func refresh() {
         state.recompute()
         updateCountdownItem()
+        updateStatusBarTitle()
         refreshMenuIfNeeded()
         runBackgroundUpdateCheckIfDue()
         state.focus.tick()
@@ -164,10 +166,36 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var lastMenuSignature: String = ""
 
     private func setupStatusItem() {
+        guard state.showStatusBarIcon else { return }
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        item.button?.image = MenuBarIcon.make()
+        item.button?.image = MenuBarIcon.make(style: state.statusIconStyle)
         statusItem = item
         rebuildStatusMenu()
+    }
+
+    private func tearDownStatusItem() {
+        guard let item = statusItem else { return }
+        NSStatusBar.system.removeStatusItem(item)
+        statusItem = nil
+    }
+
+    private func applyStatusIconStyle() {
+        statusItem?.button?.image = MenuBarIcon.make(style: state.statusIconStyle)
+    }
+
+    /// Обновляет видимый title рядом с иконкой — countdown grace в формате `0:47`.
+    private func updateStatusBarTitle() {
+        guard let button = statusItem?.button else { return }
+        if state.showGraceCountdownInBar, let remaining = state.graceRemaining {
+            let total = Int(ceil(remaining))
+            let mm = total / 60
+            let ss = total % 60
+            button.title = " \(mm):\(String(format: "%02d", ss))"
+            button.imagePosition = .imageLeading
+        } else if !button.title.isEmpty {
+            button.title = ""
+            button.imagePosition = .imageOnly
+        }
     }
 
     private func rebuildStatusMenu() {
@@ -438,6 +466,91 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             !$0.isArchived && !state.isAllowed(app: $0)
         }
         state.menubarHider.applyAuto(collapsed: anyBlocked)
+    }
+
+    // MARK: - Tray observers (status bar icon, chevron style, peek behavior)
+
+    private var peekMouseMonitor: Any?
+    private var lastPeekAt: Date?
+
+    private func setupTrayObservers() {
+        // Прокидываем стиль chevron при старте.
+        state.menubarHider.applyAppearance(
+            showChevron: state.showHiderChevron,
+            style: state.hiderChevronStyle
+        )
+
+        state.$showStatusBarIcon
+            .dropFirst()
+            .sink { [weak self] show in
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    if show && self.statusItem == nil {
+                        self.setupStatusItem()
+                    } else if !show && self.statusItem != nil {
+                        self.tearDownStatusItem()
+                    }
+                }
+            }
+            .store(in: &menubarCancellables)
+
+        state.$statusIconStyle
+            .dropFirst()
+            .sink { [weak self] _ in
+                Task { @MainActor [weak self] in self?.applyStatusIconStyle() }
+            }
+            .store(in: &menubarCancellables)
+
+        state.$showGraceCountdownInBar
+            .dropFirst()
+            .sink { [weak self] _ in
+                Task { @MainActor [weak self] in self?.updateStatusBarTitle() }
+            }
+            .store(in: &menubarCancellables)
+
+        Publishers.CombineLatest(state.$showHiderChevron, state.$hiderChevronStyle)
+            .dropFirst()
+            .sink { [weak self] show, style in
+                Task { @MainActor [weak self] in
+                    self?.state.menubarHider.applyAppearance(showChevron: show, style: style)
+                }
+            }
+            .store(in: &menubarCancellables)
+
+        state.$menubarPeekSeconds
+            .sink { [weak self] secs in
+                Task { @MainActor [weak self] in
+                    self?.updatePeekMonitor(seconds: secs)
+                }
+            }
+            .store(in: &menubarCancellables)
+    }
+
+    /// Глобальный mouseMoved monitor — детектит наведение на самый верх экрана.
+    private func updatePeekMonitor(seconds: Int) {
+        if let m = peekMouseMonitor {
+            NSEvent.removeMonitor(m)
+            peekMouseMonitor = nil
+        }
+        guard seconds > 0, state.menubarHiderEnabled else { return }
+        peekMouseMonitor = NSEvent.addGlobalMonitorForEvents(matching: .mouseMoved) { [weak self] event in
+            Task { @MainActor [weak self] in
+                self?.handleMouseMove(event: event)
+            }
+        }
+    }
+
+    private func handleMouseMove(event: NSEvent) {
+        // event.locationInWindow для global monitor — это global screen coords (origin bottom-left).
+        let p = NSEvent.mouseLocation
+        guard let screen = NSScreen.screens.first(where: { $0.frame.contains(p) }) else { return }
+        let topY = screen.frame.maxY
+        // На самой верхней 2px-полосе — peek-trigger.
+        guard p.y >= topY - 2 else { return }
+        // Debounce — не чаще одного peek в 2 секунды.
+        if let last = lastPeekAt, Date().timeIntervalSince(last) < 2 { return }
+        lastPeekAt = Date()
+        state.menubarHider.peek(seconds: state.menubarPeekSeconds)
     }
 
     /// Регистрируем хоткей по AppState.focusHotkey. Перерегистрация при смене.

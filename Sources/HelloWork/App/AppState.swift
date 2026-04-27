@@ -74,6 +74,24 @@ final class AppState: ObservableObject {
     @Published var menubarPersistCollapsed: Bool {
         didSet { UserDefaults.standard.set(menubarPersistCollapsed, forKey: Self.menubarPersistKey) }
     }
+    @Published var showStatusBarIcon: Bool {
+        didSet { UserDefaults.standard.set(showStatusBarIcon, forKey: Self.showStatusBarIconKey) }
+    }
+    @Published var showGraceCountdownInBar: Bool {
+        didSet { UserDefaults.standard.set(showGraceCountdownInBar, forKey: Self.graceCountdownKey) }
+    }
+    @Published var statusIconStyle: StatusIconStyle {
+        didSet { UserDefaults.standard.set(statusIconStyle.rawValue, forKey: Self.statusIconStyleKey) }
+    }
+    @Published var showHiderChevron: Bool {
+        didSet { UserDefaults.standard.set(showHiderChevron, forKey: Self.showHiderChevronKey) }
+    }
+    @Published var hiderChevronStyle: HiderChevronStyle {
+        didSet { UserDefaults.standard.set(hiderChevronStyle.rawValue, forKey: Self.hiderChevronStyleKey) }
+    }
+    @Published var menubarPeekSeconds: Int {
+        didSet { UserDefaults.standard.set(menubarPeekSeconds, forKey: Self.menubarPeekKey) }
+    }
     @Published private(set) var launchAtLogin: Bool
 
     private(set) var graceUntil: Date?
@@ -97,6 +115,14 @@ final class AppState: ObservableObject {
     private static let menubarHideOnScheduleKey = "helloWorkMenubarHideOnSchedule"
     private static let menubarPersistKey = "helloWorkMenubarPersistCollapsed"
     private static let menubarLastCollapsedKey = "helloWorkMenubarLastCollapsed"
+    private static let showStatusBarIconKey = "helloWorkShowStatusBarIcon"
+    private static let graceCountdownKey = "helloWorkGraceCountdownInBar"
+    private static let statusIconStyleKey = "helloWorkStatusIconStyle"
+    private static let showHiderChevronKey = "helloWorkShowHiderChevron"
+    private static let hiderChevronStyleKey = "helloWorkHiderChevronStyle"
+    private static let menubarPeekKey = "helloWorkMenubarPeekSeconds"
+
+    static let menubarPeekOptions: [Int] = [0, 1, 2, 3, 5]
 
     static let gracePresetSeconds: [Int] = [30, 60, 180, 300, 600]
     static let snapStepOptions: [Int] = [1, 5, 10, 15]
@@ -148,6 +174,23 @@ final class AppState: ObservableObject {
         self.menubarHideOnFocus = (UserDefaults.standard.object(forKey: Self.menubarHideOnFocusKey) as? Bool) ?? true
         self.menubarHideOnSchedule = UserDefaults.standard.bool(forKey: Self.menubarHideOnScheduleKey)
         self.menubarPersistCollapsed = (UserDefaults.standard.object(forKey: Self.menubarPersistKey) as? Bool) ?? true
+
+        self.showStatusBarIcon = (UserDefaults.standard.object(forKey: Self.showStatusBarIconKey) as? Bool) ?? true
+        self.showGraceCountdownInBar = (UserDefaults.standard.object(forKey: Self.graceCountdownKey) as? Bool) ?? true
+        if let raw = UserDefaults.standard.string(forKey: Self.statusIconStyleKey),
+           let parsed = StatusIconStyle(rawValue: raw) {
+            self.statusIconStyle = parsed
+        } else {
+            self.statusIconStyle = .solid
+        }
+        self.showHiderChevron = (UserDefaults.standard.object(forKey: Self.showHiderChevronKey) as? Bool) ?? true
+        if let raw = UserDefaults.standard.string(forKey: Self.hiderChevronStyleKey),
+           let parsed = HiderChevronStyle(rawValue: raw) {
+            self.hiderChevronStyle = parsed
+        } else {
+            self.hiderChevronStyle = .chevron
+        }
+        self.menubarPeekSeconds = (UserDefaults.standard.object(forKey: Self.menubarPeekKey) as? Int) ?? 0
 
         self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
 

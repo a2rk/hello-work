@@ -224,8 +224,35 @@ struct Translation {
     // MARK: - Settings tabs
     let settingsTabSchedule: String
     let settingsTabFocus: String
+    let settingsTabTray: String
     let settingsTabApp: String
     let settingsTabData: String
+
+    // MARK: - Settings Tray tab
+    let traySectionIcon: String
+    let traySectionDivider: String
+    let traySectionBehavior: String
+    let trayShowIconTitle: String
+    let trayShowIconDesc: String
+    let trayIconStyleTitle: String
+    let trayIconStyleDesc: String
+    let trayIconStyleSolid: String
+    let trayIconStyleOutline: String
+    let trayCountdownTitle: String
+    let trayCountdownDesc: String
+    let trayShowChevronTitle: String
+    let trayShowChevronDesc: String
+    let trayChevronStyleTitle: String
+    let trayChevronStyleDesc: String
+    let trayChevronStyleChevron: String
+    let trayChevronStyleCircle: String
+    let trayChevronStyleMinus: String
+    let trayPeekTitle: String
+    let trayPeekDesc: String
+    let trayPeekOff: String
+    let trayOpenMenubarPageTitle: String
+    let trayOpenMenubarPageDesc: String
+    let trayOpenMenubarPageButton: String
 
     // MARK: - Menubar page
     let menubarSubtitle: String

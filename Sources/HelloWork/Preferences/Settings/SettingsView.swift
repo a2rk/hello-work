@@ -73,6 +73,7 @@ struct SettingsView: View {
         switch state.settingsTab {
         case .schedule: SettingsScheduleTab(state: state)
         case .focus:    SettingsFocusTab(state: state)
+        case .tray:     SettingsTrayTab(state: state)
         case .app:      SettingsAppTab(state: state)
         case .data:     SettingsDataTab(state: state)
         }
