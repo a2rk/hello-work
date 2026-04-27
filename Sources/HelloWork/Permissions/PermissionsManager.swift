@@ -60,12 +60,16 @@ final class PermissionsManager: ObservableObject {
     }
 
     func requestScreenRecording() {
-        UserDefaults.standard.set(true, forKey: "helloWorkPermissionsRequestedSR")
         // macOS убивает процесс после изменения TCC — взводим auto-relaunch.
         AutoRelauncher.armRelaunchAfterDeath()
         // CGRequestScreenCaptureAccess — синхронный, показывает системный prompt.
         // Если уже отказали — prompt не покажется, надо в System Settings руками.
-        _ = CGRequestScreenCaptureAccess()
+        let granted = CGRequestScreenCaptureAccess()
+        // Ключ «уже запросили» ставим ПОСЛЕ вызова и только если не granted —
+        // защита от false-positive при гипотетическом ранне-возврате/краше.
+        if !granted {
+            UserDefaults.standard.set(true, forKey: "helloWorkPermissionsRequestedSR")
+        }
         refresh()
     }
 
@@ -81,13 +85,16 @@ final class PermissionsManager: ObservableObject {
     }
 
     func requestAccessibility() {
-        UserDefaults.standard.set(true, forKey: "helloWorkPermissionsRequestedAX")
         // На случай kill после grant — взводим auto-relaunch.
         AutoRelauncher.armRelaunchAfterDeath()
         // Prompt показывается только при первом вызове. Дальше — System Settings.
         let key = "AXTrustedCheckOptionPrompt" as CFString
         let opts = [key: true] as CFDictionary
         _ = AXIsProcessTrustedWithOptions(opts)
+        // Ключ «уже запросили» — ПОСЛЕ вызова и только если не granted.
+        if !AXIsProcessTrusted() {
+            UserDefaults.standard.set(true, forKey: "helloWorkPermissionsRequestedAX")
+        }
         refresh()
     }
 

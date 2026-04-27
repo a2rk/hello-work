@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.32",
+    "date": "2026-04-27",
+    "customMessage": "TASK-011: ключ «уже запросили» в PermissionsManager ставится ПОСЛЕ TCC-вызова и только если не granted. Защита от false-positive .denied при гипотетическом ранне-возврате.",
+    "main": "Раньше requestedSR/requestedAX ставился ДО вызова CGRequestScreenCaptureAccess/AXIsProcessTrustedWithOptions. Если что-то ломалось до системного prompt'а — heuristic трактовал состояние как .denied вместо .notDetermined. Теперь ключ ставится после, при !granted.",
+    "points": [
+      "requestScreenRecording: ключ установлен только когда CGRequestScreenCaptureAccess вернул false",
+      "requestAccessibility: то же по AXIsProcessTrusted",
+      "Granted-кейс ключ не пишет — checkXxx коротко-замкнётся на granted"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.32/HelloWork-0.9.32.dmg"
+  },
+  {
     "version": "0.9.31",
     "date": "2026-04-27",
     "customMessage": "TASK-010 verified: persist callback корректен. PHASE A полностью закрыта (TASK-001..010).",

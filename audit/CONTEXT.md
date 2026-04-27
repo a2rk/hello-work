@@ -148,7 +148,7 @@ HelloWork/
 
 ### Phase B — Permissions / TCC flow
 
-- [ ] **TASK-011 [impl]** — `checkScreenRecording` heuristic — ставить `requestedSR` ключ ПОСЛЕ результата, не до
+- [x] **TASK-011 [impl]** — `checkScreenRecording` heuristic — ставить `requestedSR` ключ ПОСЛЕ результата, не до  → released as v0.9.32
   - Файл: `Permissions/PermissionsManager.swift:57-69` (зеркально для AX 78-91)
   - Проблема: ключ `helloWorkPermissionsRequestedSR` ставится в `requestScreenRecording()` ДО результата → если юзер закрыл prompt без решения, на next refresh видим `.denied` хотя должно быть `.notDetermined`.
   - Решение: ставить ключ только если `CGPreflightScreenCaptureAccess()` вернул true после запроса. Аналогично для AX через `AXIsProcessTrusted()`.
