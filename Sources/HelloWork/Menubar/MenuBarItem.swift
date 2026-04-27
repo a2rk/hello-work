@@ -45,21 +45,19 @@ struct MenuBarItem: Equatable {
     /// Список текущих menubar items через Bridging (приватный CGS API).
     static func currentItems() -> [MenuBarItem] {
         let ids = Bridging.getWindowList(option: [.menuBarItems, .onScreen])
+        // Доп. инфо (title/ownerName) — best-effort из публичного API.
         return ids.compactMap { id in
             guard let frame = Bridging.getWindowFrame(for: id) else { return nil }
-            // pid и owner получаем через CGWindowList публичный API
-            // (приватный CGSWindowGetOwner возможен но не нужен — есть публичная альтернатива).
-            guard let info = CGWindowListCopyWindowInfo([.optionIncludingWindow], id) as? [[String: Any]],
-                  let entry = info.first,
-                  let pidNum = entry[kCGWindowOwnerPID as String] as? Int else {
-                return nil
-            }
+            guard let pid = Bridging.getWindowOwnerPID(for: id) else { return nil }
+            // Publik CGWindowList может вернуть nil для layer 25 — это OK,
+            // title/ownerName тогда останутся nil.
+            let info = (CGWindowListCopyWindowInfo([.optionIncludingWindow], id) as? [[String: Any]])?.first
             return MenuBarItem(
                 windowID: id,
-                pid: pid_t(pidNum),
+                pid: pid,
                 frame: frame,
-                title: entry[kCGWindowName as String] as? String,
-                ownerName: entry[kCGWindowOwnerName as String] as? String
+                title: info?[kCGWindowName as String] as? String,
+                ownerName: info?[kCGWindowOwnerName as String] as? String
             )
         }
         .sorted { $0.frame.minX < $1.frame.minX }   // слева направо

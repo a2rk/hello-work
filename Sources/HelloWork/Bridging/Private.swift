@@ -59,3 +59,16 @@ func CGSGetScreenRectForWindow(
     _ wid: CGWindowID,
     _ outRect: inout CGRect
 ) -> CGError
+
+@_silgen_name("CGSGetWindowOwner")
+func CGSGetWindowOwner(
+    _ cid: CGSConnectionID,
+    _ wid: CGWindowID,
+    _ outOwner: inout CGSConnectionID
+) -> CGError
+
+@_silgen_name("CGSConnectionGetPID")
+func CGSConnectionGetPID(
+    _ cid: CGSConnectionID,
+    _ outPID: inout pid_t
+) -> CGError

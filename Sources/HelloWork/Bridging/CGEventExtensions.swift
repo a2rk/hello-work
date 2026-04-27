@@ -8,6 +8,7 @@ import CoreGraphics
 enum MenuBarItemEventButtonState {
     case leftMouseDown
     case leftMouseUp
+    case leftMouseDragged
     case rightMouseDown
     case rightMouseUp
     case otherMouseDown
@@ -26,29 +27,31 @@ enum MenuBarItemEventType {
 
     var cgEventType: CGEventType {
         switch buttonState {
-        case .leftMouseDown:  return .leftMouseDown
-        case .leftMouseUp:    return .leftMouseUp
-        case .rightMouseDown: return .rightMouseDown
-        case .rightMouseUp:   return .rightMouseUp
-        case .otherMouseDown: return .otherMouseDown
-        case .otherMouseUp:   return .otherMouseUp
+        case .leftMouseDown:    return .leftMouseDown
+        case .leftMouseUp:      return .leftMouseUp
+        case .leftMouseDragged: return .leftMouseDragged
+        case .rightMouseDown:   return .rightMouseDown
+        case .rightMouseUp:     return .rightMouseUp
+        case .otherMouseDown:   return .otherMouseDown
+        case .otherMouseUp:     return .otherMouseUp
         }
     }
 
-    /// При .move(.leftMouseDown) добавляем maskCommand — это симулирует cmd+drag,
-    /// который macOS интерпретирует как «двигаем menubar item».
+    /// Для .move на mouseDown и mouseDragged держим maskCommand —
+    /// macOS только при ⌘+drag интерпретирует движение как «таскаем menubar item».
+    /// На mouseUp флаг убираем (как реальный отпуск кнопки).
     var cgEventFlags: CGEventFlags {
         switch self {
-        case .move(.leftMouseDown): return .maskCommand
-        case .move, .click:         return []
+        case .move(.leftMouseDown), .move(.leftMouseDragged): return .maskCommand
+        case .move, .click:                                   return []
         }
     }
 
     var mouseButton: CGMouseButton {
         switch buttonState {
-        case .leftMouseDown, .leftMouseUp:   return .left
-        case .rightMouseDown, .rightMouseUp: return .right
-        case .otherMouseDown, .otherMouseUp: return .center
+        case .leftMouseDown, .leftMouseUp, .leftMouseDragged: return .left
+        case .rightMouseDown, .rightMouseUp:                  return .right
+        case .otherMouseDown, .otherMouseUp:                  return .center
         }
     }
 }

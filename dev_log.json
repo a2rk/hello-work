@@ -1,5 +1,22 @@
 [
   {
+    "version": "0.9.16",
+    "date": "2026-04-27",
+    "customMessage": "Hider реально начал двигать чужие иконки. В 0.9.15 поток событий был кривой — иконка переключалась, items не уезжали. Теперь работает.",
+    "main": "Фикс CGEvent simulation: pid через приватный CGSGetWindowOwner вместо публичного CGWindowList (тот не видит layer 25), полный drag-поток с mouseDragged, guard на Accessibility, флаг collapsed ставится только если items реально съехали.",
+    "points": [
+      "MenuBarItem.pid теперь через CGSGetWindowOwner + CGSConnectionGetPID — публичный CGWindowListCopyWindowInfo для menubar items на layer 25 часто возвращал nil, items молча выкидывались",
+      "MenuBarItemMover: добавлен .leftMouseDragged, поток теперь Down(⌘) → Dragged(⌘) midpoint → Dragged(⌘) end → Up. Без промежуточных Dragged macOS считает это ⌘+click и не двигает item",
+      "MenuBarItemMover.move возвращает true только если frame item'а реально сдвинулся к target X — никаких false positives",
+      "MenubarHiderController.collapseInternal: guard AXIsProcessTrusted() — без accessibility postToPid тихо игнорится. При отсутствии — открываем System Settings",
+      "isCollapsed ставится только если хотя бы один item реально съехал — больше нет ситуации «иконка изменилась, items на месте»",
+      "Двигаем справа налево чтобы layout соседей не уносил координаты на каждом шаге",
+      "Bridging.getWindowOwnerPID — новый helper для надёжного pid lookup'а по windowID",
+      "Control Center cluster (com.apple.controlcenter) и Apple-managed items остаются на местах — их физически нельзя двинуть, как и в Ice"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.16/HelloWork-0.9.16.dmg"
+  },
+  {
     "version": "0.9.15",
     "date": "2026-04-27",
     "customMessage": "Hider полностью переписан по Ice approach — физическая симуляция cmd+drag через CGEvent. Скрытие реально работает на macOS Sequoia.",

@@ -1,20 +1,19 @@
-// MenuBarItemMover.swift — двигает чужие menubar items через симуляцию cmd+drag.
+// MenuBarItemMover.swift — двигает чужие menubar items через симуляцию ⌘+drag.
 // Адаптация из Ice (https://github.com/jordanbaird/Ice) — GPLv3.
 //
-// Принцип:
-// 1. Создаём CGEvent .leftMouseDown с modifier .maskCommand в позиции текущего item'а.
-//    macOS интерпретирует это как «юзер нажал ⌘+click на menubar item — собирается двигать».
-// 2. Создаём .leftMouseUp в целевой позиции (например x=-1000, за край экрана).
-//    macOS перемещает item туда.
-// 3. windowID указывается в события через CGEventField, чтобы macOS знал что двигать.
+// Поток событий, который macOS принимает за «таскаем menubar item»:
+//   1. .leftMouseDown с .maskCommand в позиции item'а
+//   2. одна или несколько .leftMouseDragged (с .maskCommand) на пути
+//   3. .leftMouseUp в целевой позиции (без флагов)
+//
+// Только Down+Up без Dragged — macOS трактует как обычный ⌘+click, item не уезжает.
 
 import Cocoa
 
 @MainActor
 enum MenuBarItemMover {
-    /// Перемещает item в указанную абсолютную screen-position.
-    /// `targetX` — куда переместить center item'а (X-координата).
-    /// Возвращает true при успехе.
+    /// Перемещает item в указанную абсолютную screen-позицию X.
+    /// Возвращает true, если item реально съехал (frame изменился).
     @discardableResult
     static func move(item: MenuBarItem, toX targetX: CGFloat) -> Bool {
         guard item.isHideable else { return false }
@@ -22,40 +21,44 @@ enum MenuBarItemMover {
 
         let startPoint = CGPoint(x: item.frame.midX, y: item.frame.midY)
         let endPoint = CGPoint(x: targetX, y: item.frame.midY)
+        // Промежуточная точка — нужна, чтобы macOS зарегистрировал drag, а не click.
+        let midPoint = CGPoint(
+            x: (startPoint.x + endPoint.x) / 2,
+            y: startPoint.y
+        )
 
-        guard
-            let mouseDown = CGEvent.menuBarItemEvent(
-                type: .move(.leftMouseDown),
-                location: startPoint,
+        let events: [(MenuBarItemEventType, CGPoint)] = [
+            (.move(.leftMouseDown),    startPoint),
+            (.move(.leftMouseDragged), midPoint),
+            (.move(.leftMouseDragged), endPoint),
+            (.move(.leftMouseUp),      endPoint),
+        ]
+
+        for (type, location) in events {
+            guard let event = CGEvent.menuBarItemEvent(
+                type: type,
+                location: location,
                 windowID: item.windowID,
                 pid: item.pid,
                 source: source
-            ),
-            let mouseUp = CGEvent.menuBarItemEvent(
-                type: .move(.leftMouseUp),
-                location: endPoint,
-                windowID: item.windowID,
-                pid: item.pid,
-                source: source
-            )
-        else {
-            return false
+            ) else {
+                return false
+            }
+            event.postToPid(item.pid)
+            // Маленькая пауза — даём процессу-владельцу прочитать событие из своей очереди
+            // до того как кладём следующее. Без неё события склеиваются в click.
+            Thread.sleep(forTimeInterval: 0.025)
         }
 
-        // Маршрутизируем event на конкретный pid процесса-владельца через
-        // postToPid — событие приходит как будто от его собственного process.
-        mouseDown.postToPid(item.pid)
-        // Микро-задержка — macOS нужно time чтобы accept mouseDown перед mouseUp.
-        Thread.sleep(forTimeInterval: 0.05)
-        mouseUp.postToPid(item.pid)
-
-        return true
+        // Проверяем, что item реально переехал — frame обновился.
+        let moved = MenuBarItem.currentItems().first { $0.windowID == item.windowID }
+        guard let nowFrame = moved?.frame else { return false }
+        return abs(nowFrame.midX - targetX) < abs(item.frame.midX - targetX)
     }
 
     /// Перемещает item за левый край экрана (off-screen left).
     @discardableResult
     static func hide(_ item: MenuBarItem) -> Bool {
-        // -1000 гарантированно за пределами видимого menubar
         return move(item: item, toX: -1000)
     }
 

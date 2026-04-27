@@ -15,6 +15,19 @@ extension Bridging {
         guard result == .success else { return nil }
         return rect
     }
+
+    /// Возвращает pid процесса-владельца окна через приватный CGSGetWindowOwner.
+    /// Надёжнее, чем CGWindowListCopyWindowInfo для menubar items (layer 25),
+    /// которые публичный API часто пропускает.
+    static func getWindowOwnerPID(for windowID: CGWindowID) -> pid_t? {
+        var ownerCID: CGSConnectionID = 0
+        let r1 = CGSGetWindowOwner(CGSMainConnectionID(), windowID, &ownerCID)
+        guard r1 == .success else { return nil }
+        var pid: pid_t = 0
+        let r2 = CGSConnectionGetPID(ownerCID, &pid)
+        guard r2 == .success, pid > 0 else { return nil }
+        return pid
+    }
 }
 
 // MARK: - Window List
@@ -74,10 +87,11 @@ extension Bridging {
     }
 
     private static func getMenuBarWindowList() -> [CGWindowID] {
-        let count = getWindowCount()
-        var list = [CGWindowID](repeating: 0, count: count)
+        // Точного count нет — берём общий и режем по realCount.
+        let buffer = max(getWindowCount(), 256)
+        var list = [CGWindowID](repeating: 0, count: buffer)
         var realCount: Int32 = 0
-        let result = CGSGetProcessMenuBarWindowList(CGSMainConnectionID(), 0, Int32(count), &list, &realCount)
+        let result = CGSGetProcessMenuBarWindowList(CGSMainConnectionID(), 0, Int32(buffer), &list, &realCount)
         guard result == .success else { return [] }
         return [CGWindowID](list[..<Int(realCount)])
     }

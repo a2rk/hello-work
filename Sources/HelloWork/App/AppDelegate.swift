@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import ApplicationServices
 import Combine
 
 @MainActor
@@ -453,6 +454,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Menubar hider
 
     private func setupMenubarHider() {
+        // Без Accessibility CGEvent.postToPid игнорится — открываем System Settings.
+        state.menubarHider.onAccessibilityRequired = { [weak self] in
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                self.state.permissions.requestAccessibility()
+                if !AXIsProcessTrusted() {
+                    self.state.permissions.openSystemSettings(for: .accessibility)
+                }
+            }
+        }
+
         // Подписки: enable/disable, hotkey смена, авто-скрытие триггеры.
         state.$menubarHiderEnabled
             .dropFirst()

@@ -3,6 +3,7 @@
 // через CGEvent simulation. Адаптация подхода Ice (https://github.com/jordanbaird/Ice) — GPLv3.
 
 import AppKit
+import ApplicationServices
 import Combine
 
 @MainActor
@@ -24,6 +25,10 @@ final class MenubarHiderController: ObservableObject {
 
     /// Callback при создании mainItem (AppDelegate переустанавливает menu).
     var onMainItemReady: ((NSStatusItem) -> Void)?
+
+    /// Срабатывает, когда collapse заблокирован отсутствием Accessibility —
+    /// AppDelegate показывает prompt и/или открывает System Settings.
+    var onAccessibilityRequired: (() -> Void)?
 
     init() {}
 
@@ -128,16 +133,36 @@ final class MenubarHiderController: ObservableObject {
     private func collapseInternal() {
         guard !isCollapsed else { return }
 
+        // Без Accessibility CGEvent.postToPid игнорится → постинг бесполезен.
+        guard AXIsProcessTrusted() else {
+            onAccessibilityRequired?()
+            return
+        }
+
         // Сохраняем текущий список hideable items + их X-координаты.
         let items = MenuBarItem.currentItems().filter { $0.isHideable }
+        guard !items.isEmpty else { return }
+
         savedItems = items
         savedPositions = Dictionary(uniqueKeysWithValues: items.map { ($0.windowID, $0.frame.midX) })
 
-        // Двигаем всех за левый край.
-        for item in items {
-            MenuBarItemMover.hide(item)
-            // Маленькая задержка между items — чтобы macOS успевал обработать каждый event.
-            Thread.sleep(forTimeInterval: 0.02)
+        // Двигаем справа налево — так каждый последующий item оказывается
+        // в актуальной позиции (предыдущие уже уехали и не сдвигают layout).
+        var movedAny = false
+        for item in items.sorted(by: { $0.frame.midX > $1.frame.midX }) {
+            // Берём актуальный frame — соседи могли подвинуться после предыдущего hide.
+            let current = MenuBarItem.currentItems().first { $0.windowID == item.windowID } ?? item
+            if MenuBarItemMover.hide(current) {
+                movedAny = true
+            }
+            Thread.sleep(forTimeInterval: 0.03)
+        }
+
+        guard movedAny else {
+            // Ни один item не съехал — откатываем сохранённое состояние, иконку не меняем.
+            savedItems.removeAll()
+            savedPositions.removeAll()
+            return
         }
 
         isCollapsed = true
@@ -152,15 +177,19 @@ final class MenubarHiderController: ObservableObject {
     }
 
     private func restoreAllItems() {
-        // Восстанавливаем в сохранённые позиции.
-        // Двигаем в обратном порядке — сначала те что были левее (минимальный X),
-        // чтобы они оказались на своих местах когда правые items ещё не вставлены.
+        guard AXIsProcessTrusted() else {
+            // Без AX откатить не сможем — просто чистим state, чтобы не зависнуть.
+            savedItems.removeAll()
+            savedPositions.removeAll()
+            return
+        }
+        // Восстанавливаем слева направо: сначала те что были левее,
+        // чтобы они «упёрлись» в левый край и более правые встали корректно.
         for item in savedItems.sorted(by: { $0.frame.midX < $1.frame.midX }) {
-            // Получаем актуальный item (frame мог измениться).
             let current = MenuBarItem.currentItems().first { $0.windowID == item.windowID } ?? item
             if let originalX = savedPositions[item.windowID] {
                 MenuBarItemMover.restore(current, toX: originalX)
-                Thread.sleep(forTimeInterval: 0.02)
+                Thread.sleep(forTimeInterval: 0.03)
             }
         }
         savedItems.removeAll()
