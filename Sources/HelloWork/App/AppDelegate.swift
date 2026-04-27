@@ -104,18 +104,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func showPrefsIfFirstLaunch() {
         let defaults = UserDefaults.standard
         let isFirstLaunch = !defaults.bool(forKey: firstLaunchKey)
-        if isFirstLaunch {
-            defaults.set(true, forKey: firstLaunchKey)
-        }
+        guard isFirstLaunch else { return }
+        defaults.set(true, forKey: firstLaunchKey)
 
-        // Permissions onboarding показываем на КАЖДОМ запуске, пока хоть одно
-        // разрешение не выдано — иначе юзер забывает и hider/focus тихо не работают.
-        let needsPermsOnboarding = state.permissions.anyMissing
-
-        guard isFirstLaunch || needsPermsOnboarding else { return }
+        // На первом запуске — открываем Prefs. Если ещё нет AX/SR — селектим
+        // permissions tab сразу. На последующих запусках лезть в лицо не будем,
+        // sidebar-row «Доступы» с красной точкой остаётся ненавязчивой точкой
+        // возврата + onAccessibilityRequired в hider дёргает её при попытке.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
             guard let self else { return }
-            if needsPermsOnboarding {
+            if self.state.permissions.anyMissing {
                 self.state.prefsSelection = .permissions
             }
             self.openPreferences()

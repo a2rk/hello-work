@@ -162,7 +162,7 @@ HelloWork/
 
 - [x] **TASK-014 [verify]** — TASK-013  → released as v0.9.35
 
-- [ ] **TASK-015 [impl]** — Permissions onboarding less aggressive
+- [x] **TASK-015 [impl]** — Permissions onboarding less aggressive  → released as v0.9.36
   - Файл: `App/AppDelegate.swift:86-110`
   - Проблема: показывается на каждом запуске пока `anyMissing`, даже если юзер уже видел и сознательно отказался.
   - Решение: показ только если (а) первый запуск, или (б) юзер из меню/permissions-сайдбара явно тыкнул «Re-grant». Иначе — silent. Permissions-row в сайдбаре с красной точкой остаётся (это и есть точка возврата).

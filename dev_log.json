@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.36",
+    "date": "2026-04-27",
+    "customMessage": "TASK-015: Prefs больше не открываются автоматически на каждом запуске пока anyMissing. Только на первом запуске. Sidebar-row «Доступы» с красной точкой — ненавязчивая точка возврата.",
+    "main": "Раньше Prefs открывались каждый раз пока хоть одно разрешение не выдано. Юзер сознательно отказался → раздражающее повторение. Теперь окно лезет только в первый запуск. Если permissions потеряются позже (TCC reset / новый бинарь) — sidebar-row светит красной точкой, и hider при попытке collapse без AX дёргает экран сам через onAccessibilityRequired.",
+    "points": [
+      "showPrefsIfFirstLaunch: guard на isFirstLaunch вместо || needsPermsOnboarding",
+      "Sidebar-row «Доступы» уже подсвечивается при anyMissing — TASK 0.9.17",
+      "onAccessibilityRequired в hider — explicit re-grant trigger сохраняется"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.36/HelloWork-0.9.36.dmg"
+  },
+  {
     "version": "0.9.35",
     "date": "2026-04-27",
     "customMessage": "TASK-014 verified: AutoRelauncher timeout корректен. bash $SECONDS считает wall-clock, deadline 60c проверяется в loop.",
