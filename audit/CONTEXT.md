@@ -210,7 +210,7 @@ HelloWork/
 
 ### Phase F — UI re-render perf
 
-- [ ] **TASK-025 [impl]** — Throttle slider didSet writes (`focusDimOpacity`)
+- [x] **TASK-025 [impl]** — Throttle slider didSet writes (`focusDimOpacity`)  → released as v0.9.46
   - Файл: `App/AppState.swift:48-52`
   - Проблема: drag слайдера = десятки UserDefaults.set в секунду.
   - Решение: вынести focusDimOpacity на @State в FocusSettingsView (live UI), commit в AppState только на `.onChange(of: ... debounce 300ms)` или на отпускании слайдера. Альтернатива: throttle через Combine `.throttle(for: .milliseconds(300))`.

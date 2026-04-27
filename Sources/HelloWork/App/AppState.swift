@@ -47,8 +47,11 @@ final class AppState: ObservableObject {
     }
     @Published var focusDimOpacity: Double {
         didSet {
-            UserDefaults.standard.set(focusDimOpacity, forKey: Self.focusOpacityKey)
+            // Визуальный апдейт сразу — пользователь видит overlay в реалтайме.
             focus.updateDimOpacity(focusDimOpacity)
+            // Persist debounced — drag слайдера не должен дёргать cfprefsd
+            // на каждый шаг.
+            scheduleFocusDimOpacityPersist()
         }
     }
     @Published var focusUseAccessibility: Bool {
@@ -280,6 +283,18 @@ final class AppState: ObservableObject {
 
     func dismissCorruption(_ id: UUID) {
         corruptionWarnings.removeAll { $0.id == id }
+    }
+
+    private var focusDimOpacityPersistWork: DispatchWorkItem?
+
+    private func scheduleFocusDimOpacityPersist() {
+        focusDimOpacityPersistWork?.cancel()
+        let work = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            UserDefaults.standard.set(self.focusDimOpacity, forKey: Self.focusOpacityKey)
+        }
+        focusDimOpacityPersistWork = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: work)
     }
 
     private func saveManagedApps() {

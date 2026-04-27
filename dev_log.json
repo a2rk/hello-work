@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.46",
+    "date": "2026-04-27",
+    "customMessage": "TASK-025: focusDimOpacity persist через debounced workitem (300ms). Drag слайдера обновляет overlay сразу, но cfprefsd дёргается один раз после остановки.",
+    "main": "didSet раньше синхронно писал UserDefaults на каждый шаг. Теперь focus.updateDimOpacity сразу (для real-time visual), а UserDefaults.set отложен через DispatchWorkItem с дебаунсом 300ms.",
+    "points": [
+      "scheduleFocusDimOpacityPersist() — cancel + asyncAfter(0.3s)",
+      "Slider drag overlay реагирует мгновенно",
+      "cfprefsd write — 1 раз в конце drag'а"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.46/HelloWork-0.9.46.dmg"
+  },
+  {
     "version": "0.9.45",
     "date": "2026-04-27",
     "customMessage": "TASK-024 verified: update-check throttle и URLSession-invalidate работают. Phase E (update fetch) полностью закрыта.",
