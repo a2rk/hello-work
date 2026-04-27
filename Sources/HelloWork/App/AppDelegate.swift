@@ -7,7 +7,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let state = AppState()
     private var timer: Timer?
     private var observers: [NSObjectProtocol] = []
-    private var statusItem: NSStatusItem?
+    /// Главный status item теперь живёт внутри menubarHider controller'a (mainItem).
+    /// Здесь только weak ref для удобства.
+    private var statusItem: NSStatusItem? { state.menubarHider.mainItem }
     private var toggleMenuItem: NSMenuItem?
     private var countdownMenuItem: NSMenuItem?
     private var activityToken: NSObjectProtocol?
@@ -195,39 +197,34 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private var lastMenuSignature: String = ""
 
+    /// Создаёт status items через controller. Также вешает menu на main item.
     private func setupStatusItem() {
-        guard state.showStatusBarIcon else { return }
-        let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        item.button?.imagePosition = .imageLeading
-        statusItem = item
-        applyMenubarHiderState()
-        rebuildStatusMenu()
+        applyStatusBarConfiguration()
     }
 
+    /// Полностью убирает все status items.
     private func tearDownStatusItem() {
-        guard let item = statusItem else { return }
-        NSStatusBar.system.removeStatusItem(item)
-        statusItem = nil
+        state.menubarHider.tearDown()
     }
 
     private func applyStatusIconStyle() {
-        applyMenubarHiderState()
+        state.menubarHider.updateMainIcon(style: state.statusIconStyle)
     }
 
-    /// Применяет ширину и иконку основного status item под текущее состояние hider'а.
-    /// При collapsed=true ширина 10000pt → правые иконки уезжают за край экрана.
-    /// КРИТИЧНО: при collapsed используем .imageTrailing — иначе иконка отрисуется
-    /// в левой части 10000pt-widget'a и уедет за границу экрана.
-    private func applyMenubarHiderState() {
-        guard let item = statusItem else { return }
-        let collapsed = state.menubarHiderEnabled && state.menubarHider.isCollapsed
-        let length: CGFloat = collapsed ? 10000 : NSStatusItem.variableLength
-        item.length = length
-        item.button?.image = MenuBarIcon.make(
-            style: state.statusIconStyle,
-            collapsed: collapsed
+    /// Конфигурирует controller под текущие настройки.
+    private func applyStatusBarConfiguration() {
+        guard state.showStatusBarIcon else {
+            state.menubarHider.tearDown()
+            return
+        }
+        state.menubarHider.configure(
+            hiderEnabled: state.menubarHiderEnabled,
+            initialCollapsed: state.menubarPersistCollapsed
+                ? state.menubarRestoredCollapsed
+                : false,
+            iconStyle: state.statusIconStyle
         )
-        item.button?.imagePosition = collapsed ? .imageTrailing : .imageLeading
+        rebuildStatusMenu()
     }
 
     /// Обновляет видимый title рядом с иконкой — countdown grace в формате `0:47`.
@@ -456,16 +453,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Menubar hider
 
     private func setupMenubarHider() {
-        // Активируем hider state если фича включена.
-        applyMenubarHiderEnabled()
-
         // Подписки: enable/disable, hotkey смена, авто-скрытие триггеры.
         state.$menubarHiderEnabled
             .dropFirst()
             .sink { [weak self] _ in
                 Task { @MainActor [weak self] in
-                    self?.applyMenubarHiderEnabled()
-                    self?.applyMenubarHiderState()
+                    self?.applyStatusBarConfiguration()
                     self?.registerMenubarHotkey()
                 }
             }
@@ -490,13 +483,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
             .store(in: &menubarCancellables)
 
-        // Изменилось состояние hider — обновляем визуал статус-айтема + persist.
+        // Изменилось состояние hider — persist (визуал обновляет controller сам).
         state.menubarHider.$isCollapsed
             .dropFirst()
             .sink { [weak self] collapsed in
                 Task { @MainActor [weak self] in
                     guard let self else { return }
-                    self.applyMenubarHiderState()
                     if self.state.menubarPersistCollapsed {
                         self.state.saveMenubarCollapsed(collapsed)
                     }
@@ -505,27 +497,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             .store(in: &menubarCancellables)
 
         registerMenubarHotkey()
-    }
-
-    private func applyMenubarHiderEnabled() {
-        if state.menubarHiderEnabled {
-            // SAFEGUARD: всегда стартуем в expanded — гарантия что юзер увидит иконку.
-            // Через 1.2 сек применяем persist'нутое состояние (если включено).
-            state.menubarHider.setEnabled(true, initialCollapsed: false)
-
-            if state.menubarPersistCollapsed {
-                let target = state.menubarRestoredCollapsed
-                if target {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { [weak self] in
-                        guard let self else { return }
-                        guard self.state.menubarHiderEnabled else { return }
-                        self.state.menubarHider.collapseAll()
-                    }
-                }
-            }
-        } else {
-            state.menubarHider.setEnabled(false, initialCollapsed: true)
-        }
     }
 
     private func registerMenubarHotkey() {
@@ -554,14 +525,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupTrayObservers() {
         state.$showStatusBarIcon
             .dropFirst()
-            .sink { [weak self] show in
+            .sink { [weak self] _ in
                 Task { @MainActor [weak self] in
-                    guard let self else { return }
-                    if show && self.statusItem == nil {
-                        self.setupStatusItem()
-                    } else if !show && self.statusItem != nil {
-                        self.tearDownStatusItem()
-                    }
+                    self?.applyStatusBarConfiguration()
                 }
             }
             .store(in: &menubarCancellables)

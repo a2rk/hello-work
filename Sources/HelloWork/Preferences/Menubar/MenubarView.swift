@@ -6,26 +6,22 @@ struct MenubarView: View {
     @Environment(\.t) var t
     @ObservedObject var state: AppState
     @ObservedObject var hider: MenubarHiderController
-    @ObservedObject var perms: PermissionsManager
 
-    @State private var items: [MenubarItemsScanner.Item] = []
-    @State private var refreshTimer: Timer?
     @State private var conflictWarning: String?
     @State private var showingRecorder = false
 
     init(state: AppState) {
         self.state = state
         self.hider = state.menubarHider
-        self.perms = state.permissions
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             header
 
-            heroButtons
+            heroSection
 
-            previewSection
+            instructionSection
 
             settingsSection
 
@@ -33,12 +29,7 @@ struct MenubarView: View {
 
             Spacer(minLength: 0)
         }
-        .onAppear {
-            items = MenubarItemsScanner.scan()
-            startRefreshTimer()
-            updateConflictWarning()
-        }
-        .onDisappear { stopRefreshTimer() }
+        .onAppear { updateConflictWarning() }
         .sheet(isPresented: $showingRecorder) {
             HotkeyRecorderSheet(
                 onCancel: { showingRecorder = false },
@@ -66,16 +57,18 @@ struct MenubarView: View {
 
     // MARK: - Hero
 
-    private var heroButtons: some View {
+    private var heroSection: some View {
         HStack(spacing: 10) {
             heroButton(
                 title: t.menubarHideAll,
                 primary: true,
+                disabled: !state.menubarHiderEnabled,
                 action: { hider.collapseAll() }
             )
             heroButton(
                 title: t.menubarShowAll,
                 primary: false,
+                disabled: !state.menubarHiderEnabled,
                 action: { hider.expandAll() }
             )
 
@@ -110,7 +103,7 @@ struct MenubarView: View {
         .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
     }
 
-    private func heroButton(title: String, primary: Bool, action: @escaping () -> Void) -> some View {
+    private func heroButton(title: String, primary: Bool, disabled: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 12, weight: .semibold))
@@ -125,47 +118,120 @@ struct MenubarView: View {
                 )
         }
         .buttonStyle(.plain)
-        .disabled(!state.menubarHiderEnabled)
-        .opacity(state.menubarHiderEnabled ? 1 : 0.45)
+        .disabled(disabled)
+        .opacity(disabled ? 0.45 : 1)
     }
 
-    // MARK: - Preview
+    // MARK: - Instruction
 
     @ViewBuilder
-    private var previewSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(t.menubarPreviewNow.uppercased())
+    private var instructionSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(t.menubarHowItWorks.uppercased())
                 .font(.system(size: 10, weight: .semibold))
                 .tracking(1.4)
                 .foregroundColor(Theme.textTertiary)
 
-            MenubarPreviewCard(items: items, isCollapsed: false)
+            // Schematic
+            schematic
 
-            Text(t.menubarItemCount(items.count))
-                .font(.system(size: 11))
-                .foregroundColor(Theme.textSecondary)
-
-            Text(t.menubarPreviewAfter.uppercased())
-                .font(.system(size: 10, weight: .semibold))
-                .tracking(1.4)
-                .foregroundColor(Theme.textTertiary)
-                .padding(.top, 4)
-
-            MenubarPreviewCard(items: items, isCollapsed: true)
-
-            Text(t.menubarHiddenHint)
-                .font(.system(size: 11))
-                .foregroundColor(Theme.textSecondary)
+            // Step-by-step
+            VStack(alignment: .leading, spacing: 10) {
+                instructionRow(
+                    number: "1",
+                    text: t.menubarStep1
+                )
+                instructionRow(
+                    number: "2",
+                    text: t.menubarStep2
+                )
+                instructionRow(
+                    number: "3",
+                    text: t.menubarStep3
+                )
+            }
         }
         .frame(maxWidth: Layout.settingsCardMaxWidth, alignment: .leading)
     }
 
-    // MARK: - Settings
+    private var schematic: some View {
+        HStack(spacing: 0) {
+            // Слева: H |
+            HStack(spacing: 4) {
+                Text("H")
+                    .font(.system(size: 14, weight: .heavy))
+                    .foregroundColor(.black.opacity(0.85))
+                Rectangle()
+                    .fill(Color.black.opacity(0.85))
+                    .frame(width: 1.5, height: 14)
+            }
+            .padding(.horizontal, 10)
+            .frame(height: 32)
+            .background(
+                RoundedRectangle(cornerRadius: 8).fill(Color.white.opacity(0.92))
+            )
+
+            // Стрелки + текст
+            HStack(spacing: 6) {
+                Image(systemName: "arrow.left")
+                    .font(.system(size: 10))
+                    .foregroundColor(Theme.textTertiary)
+                Text(t.menubarSchematicMid)
+                    .font(.system(size: 10))
+                    .foregroundColor(Theme.textTertiary)
+                Image(systemName: "arrow.right")
+                    .font(.system(size: 10))
+                    .foregroundColor(Theme.textTertiary)
+            }
+            .padding(.horizontal, 12)
+            .frame(height: 32)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.white.opacity(0.04))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .strokeBorder(
+                                Theme.surfaceStroke,
+                                style: StrokeStyle(lineWidth: 1, dash: [4, 3])
+                            )
+                    )
+            )
+
+            // Справа: >
+            HStack(spacing: 0) {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.black.opacity(0.85))
+            }
+            .padding(.horizontal, 14)
+            .frame(height: 32)
+            .background(
+                RoundedRectangle(cornerRadius: 8).fill(Color.white.opacity(0.92))
+            )
+        }
+    }
+
+    private func instructionRow(number: String, text: String) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text(number)
+                .font(.system(size: 11, weight: .bold))
+                .foregroundColor(Theme.accent)
+                .frame(width: 16, alignment: .leading)
+                .padding(.top, 1)
+            Text(text)
+                .font(.system(size: 12))
+                .foregroundColor(Theme.textSecondary)
+                .lineSpacing(3)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    // MARK: - Settings (hotkey + auto)
 
     @ViewBuilder
     private var settingsSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            // Hotkey
             VStack(alignment: .leading, spacing: 8) {
                 Text(t.menubarHotkeyTitle.uppercased())
                     .font(.system(size: 10, weight: .semibold))
@@ -192,7 +258,6 @@ struct MenubarView: View {
             .opacity(state.menubarHiderEnabled ? 1 : 0.45)
             .disabled(!state.menubarHiderEnabled)
 
-            // Auto
             VStack(alignment: .leading, spacing: 6) {
                 Text(t.menubarAutoTitle.uppercased())
                     .font(.system(size: 10, weight: .semibold))
@@ -282,23 +347,6 @@ struct MenubarView: View {
             .lineSpacing(2)
             .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: Layout.settingsCardMaxWidth, alignment: .leading)
-    }
-
-    // MARK: - Refresh
-
-    private func startRefreshTimer() {
-        let timer = Timer(timeInterval: 2, repeats: true) { _ in
-            Task { @MainActor in
-                items = MenubarItemsScanner.scan()
-            }
-        }
-        RunLoop.main.add(timer, forMode: .common)
-        refreshTimer = timer
-    }
-
-    private func stopRefreshTimer() {
-        refreshTimer?.invalidate()
-        refreshTimer = nil
     }
 
     private func updateConflictWarning() {

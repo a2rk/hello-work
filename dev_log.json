@@ -1,5 +1,22 @@
 [
   {
+    "version": "0.9.12",
+    "date": "2026-04-27",
+    "customMessage": "Hidden Bar approach: три status item'а, юзер сам ⌘+drag'ом ставит свои иконки между H и ›. Реально работает.",
+    "main": "Переписали menubar-hider по схеме Hidden Bar / Dozer: вместо одного widget'а с переменной шириной — три отдельных status item'а. Юзер cmd+drag'ом перетаскивает свои иконки между H | и >, при click on > они уезжают за край.",
+    "points": [
+      "mainItem (H │) — наша иконка с visible separator-bar, носит главное menu",
+      "separatorItem — invisible widget между main и chevron, его length меняется (24pt ↔ 10000pt)",
+      "chevronItem (›) — toggle button с SF Symbol chevron.right/chevron.left",
+      "При collapse: separator расширяется → items другие apps между separator и chevron уходят за visible area (system clipping)",
+      "Юзер ⌘+drag'ом перетаскивает иконки в зону между H и › (как в Hidden Bar README)",
+      "Apple-managed иконки (Time, CC, Spotlight) physically нельзя двинуть — они остаются справа всегда. Это macOS hard constraint.",
+      "Hero-кнопки «Скрыть всё / Показать всё» — программный toggle separator'а",
+      "Глобальный хоткей (⌃⇧B) toggle"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.12/HelloWork-0.9.12.dmg"
+  },
+  {
     "version": "0.9.11",
     "date": "2026-04-27",
     "customMessage": "Stub-installer + curl-install + Homebrew. Один маленький DMG ставится один раз и тянет всё остальное под капотом.",

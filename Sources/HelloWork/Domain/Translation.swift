@@ -253,10 +253,11 @@ struct Translation {
     let menubarEnableLabel: String
     let menubarStateCollapsed: String
     let menubarStateExpanded: String
-    let menubarPreviewNow: String
-    let menubarPreviewAfter: String
-    let menubarItemCount: (_ n: Int) -> String
-    let menubarHiddenHint: String
+    let menubarHowItWorks: String
+    let menubarSchematicMid: String
+    let menubarStep1: String
+    let menubarStep2: String
+    let menubarStep3: String
     let menubarHotkeyTitle: String
     let menubarAutoTitle: String
     let menubarAutoFocus: String

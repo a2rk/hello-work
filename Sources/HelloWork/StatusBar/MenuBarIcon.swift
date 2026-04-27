@@ -1,18 +1,13 @@
 import AppKit
 
 enum MenuBarIcon {
-    /// Иконка для status bar. При `collapsed` иконка шире и содержит `›` справа от H.
-    static func make(style: StatusIconStyle = .solid, collapsed: Bool = false) -> NSImage {
-        let size = NSSize(width: collapsed ? 26 : 18, height: 18)
+    /// Базовая иконка H без сепаратора.
+    static func make(style: StatusIconStyle = .solid) -> NSImage {
+        let size = NSSize(width: 18, height: 18)
         let image = NSImage(size: size, flipped: false) { rect in
             switch style {
-            case .solid:
-                drawSolid(in: rect)
-            case .outline:
-                drawOutline(in: rect)
-            }
-            if collapsed {
-                drawChevron(in: rect)
+            case .solid:    drawH(in: rect, weight: .heavy, stroke: false)
+            case .outline:  drawH(in: rect, weight: .bold, stroke: true)
             }
             return true
         }
@@ -20,47 +15,52 @@ enum MenuBarIcon {
         return image
     }
 
-    private static func drawSolid(in rect: NSRect) {
-        let attrs: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 14, weight: .heavy),
-            .foregroundColor: NSColor.black
-        ]
+    /// Иконка H с visible vertical separator-bar справа.
+    /// Используется как «terminator» в Hidden Bar approach — между ней и chevron'ом
+    /// располагаются скрываемые items.
+    static func makeWithSeparator(style: StatusIconStyle = .solid) -> NSImage {
+        let size = NSSize(width: 26, height: 18)
+        let image = NSImage(size: size, flipped: false) { rect in
+            // H в левой части
+            let hRect = NSRect(x: 0, y: 0, width: 18, height: rect.height)
+            switch style {
+            case .solid:    drawH(in: hRect, weight: .heavy, stroke: false)
+            case .outline:  drawH(in: hRect, weight: .bold, stroke: true)
+            }
+
+            // Vertical separator-bar справа от H
+            let barRect = NSRect(x: rect.width - 4, y: 3, width: 1.5, height: rect.height - 6)
+            NSColor.black.setFill()
+            barRect.fill()
+
+            return true
+        }
+        image.isTemplate = true
+        return image
+    }
+
+    // MARK: - H drawing
+
+    private static func drawH(in rect: NSRect, weight: NSFont.Weight, stroke: Bool) {
+        let attrs: [NSAttributedString.Key: Any]
+        if stroke {
+            attrs = [
+                .font: NSFont.systemFont(ofSize: 14, weight: weight),
+                .foregroundColor: NSColor.clear,
+                .strokeColor: NSColor.black,
+                .strokeWidth: 5
+            ]
+        } else {
+            attrs = [
+                .font: NSFont.systemFont(ofSize: 14, weight: weight),
+                .foregroundColor: NSColor.black
+            ]
+        }
         let str = NSAttributedString(string: "H", attributes: attrs)
         let strSize = str.size()
         let point = NSPoint(
-            x: 2,
-            y: (rect.height - strSize.height) / 2
-        )
-        str.draw(at: point)
-    }
-
-    private static func drawOutline(in rect: NSRect) {
-        let attrs: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 14, weight: .bold),
-            .foregroundColor: NSColor.clear,
-            .strokeColor: NSColor.black,
-            .strokeWidth: 5
-        ]
-        let str = NSAttributedString(string: "H", attributes: attrs)
-        let strSize = str.size()
-        let point = NSPoint(
-            x: 2,
-            y: (rect.height - strSize.height) / 2
-        )
-        str.draw(at: point)
-    }
-
-    /// Маленький `›` справа — индикатор collapsed-состояния.
-    private static func drawChevron(in rect: NSRect) {
-        let attrs: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 11, weight: .heavy),
-            .foregroundColor: NSColor.black
-        ]
-        let str = NSAttributedString(string: "›", attributes: attrs)
-        let strSize = str.size()
-        let point = NSPoint(
-            x: rect.width - strSize.width - 2,
-            y: (rect.height - strSize.height) / 2
+            x: rect.origin.x + (rect.width - strSize.width) / 2,
+            y: rect.origin.y + (rect.height - strSize.height) / 2
         )
         str.draw(at: point)
     }
