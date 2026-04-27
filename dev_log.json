@@ -1,5 +1,20 @@
 [
   {
+    "version": "0.9.10",
+    "date": "2026-04-27",
+    "customMessage": "Серые квадратики были не багом permissions, а архитектурным ограничением CGWindowList. Перешли на NSWorkspace — иконки теперь честно настоящие.",
+    "main": "Переписали menubar scanner: вместо CGWindowList layer 25 (требовал Screen Recording, показывал только Apple Control Center modules) теперь NSWorkspace.runningApplications — не требует никаких permissions.",
+    "points": [
+      "MenubarItemsScanner полностью переписан — берём список accessory + regular apps, у каждого реальный bundleID/name/icon",
+      "Убрали баннер про Screen Recording — фича больше от него не зависит",
+      "Permissions onboarding стал проще: оставили только Accessibility (для focus mode precise window detection в multi-window приложениях). SR в UI больше не упоминается — он опционален",
+      "Фильтрация helper-процессов по имени (Renderer, GPU process, Crashpad) — не показываем фоновые сабпроцессы Chrome/Electron",
+      "Сортировка по имени для стабильности preview между обновлениями",
+      "Известный нюанс ad-hoc подписи: TCC permissions могут сбрасываться между релизами (binary identity меняется без stable certificate). Поэтому отказ от SR — стратегически правильно"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.10/HelloWork-0.9.10.dmg"
+  },
+  {
     "version": "0.9.9",
     "date": "2026-04-27",
     "customMessage": "Серьёзный баг: после выдачи прав иконка уезжала за экран. Чинено в трёх местах сразу.",

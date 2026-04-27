@@ -251,7 +251,7 @@ extension Translation {
             "Total allowed across \(apps) apps: \(h)h \(m)min per day."
         },
         permsTitle: "Permissions",
-        permsSubtitle: "For Hello work to do its job — read your menubar, find focus windows, count attempts — macOS needs your nod. Grant once, forget about it.",
+        permsSubtitle: "Optional — Hello work works without it. Accessibility lets focus mode precisely detect the window you're looking at in apps with multiple windows.",
         permsScreenshotPlaceholder: "Screenshot will go here. For now — placeholder.",
         permsScreenRecordingTitle: "Screen Recording",
         permsScreenRecordingDesc: "Read real names and icons of menubar items. Without this — you'll see grey placeholders instead of your apps.",
@@ -522,7 +522,7 @@ extension Translation {
             return "Суммарно по \(apps) \(appsStr): \(h) \(hStr) \(m) мин в сутках."
         },
         permsTitle: "Разрешения",
-        permsSubtitle: "Чтобы Hello work работал как надо — читал menubar, точно находил окна фокуса, считал тыки — macOS должен дать добро. Разреши один раз и забудь.",
+        permsSubtitle: "Опционально — Hello work работает и без этого. Accessibility позволяет фокус-режиму точно определять окно, в которое ты смотришь, в приложениях с несколькими окнами.",
         permsScreenshotPlaceholder: "Здесь будет скриншот. Пока заглушка.",
         permsScreenRecordingTitle: "Запись экрана",
         permsScreenRecordingDesc: "Чтобы видеть настоящие имена и иконки menubar-приложений. Без этого вместо твоих приложений будут серые квадратики.",
@@ -777,7 +777,7 @@ extension Translation {
             "\(apps) 个应用每日总允许时间:\(h) 小时 \(m) 分钟。"
         },
         permsTitle: "权限",
-        permsSubtitle: "为了让 Hello work 正常工作 — 读取菜单栏、精准找到焦点窗口、统计尝试次数 — macOS 需要你的许可。授权一次,从此忘记。",
+        permsSubtitle: "可选 — Hello work 没有它也能工作。辅助功能可以让聚焦模式在多窗口应用中精确检测你正在看的窗口。",
         permsScreenshotPlaceholder: "截图将放在这里。暂为占位符。",
         permsScreenRecordingTitle: "屏幕录制",
         permsScreenRecordingDesc: "读取菜单栏项目的真实名称和图标。否则会看到灰色占位符而不是你的应用。",

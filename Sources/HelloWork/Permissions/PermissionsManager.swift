@@ -20,13 +20,15 @@ final class PermissionsManager: ObservableObject {
     @Published private(set) var accessibility: PermissionState = .notDetermined
 
     /// Полностью ли всё дано — для решения «показать onboarding или нет».
+    /// Сейчас критичен только Accessibility (для focus mode precise window detection).
+    /// Screen Recording — необязателен (menubar list берём из NSWorkspace).
     var allRequiredGranted: Bool {
-        screenRecording == .granted && accessibility == .granted
+        accessibility == .granted
     }
 
     /// Хотя бы что-то требует внимания.
     var anyMissing: Bool {
-        screenRecording != .granted || accessibility != .granted
+        accessibility != .granted
     }
 
     init() {

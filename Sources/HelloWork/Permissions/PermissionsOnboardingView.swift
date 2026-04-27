@@ -26,12 +26,6 @@ struct PermissionsOnboardingView: View {
 
             VStack(spacing: 10) {
                 permRow(
-                    title: t.permsScreenRecordingTitle,
-                    description: t.permsScreenRecordingDesc,
-                    state: perms.screenRecording,
-                    onAction: { handleAction(.screenRecording) }
-                )
-                permRow(
                     title: t.permsAccessibilityTitle,
                     description: t.permsAccessibilityDesc,
                     state: perms.accessibility,

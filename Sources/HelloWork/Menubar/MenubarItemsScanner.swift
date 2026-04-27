@@ -1,59 +1,55 @@
 import AppKit
 
-/// Сканирует текущий menubar через CGWindowList (layer 25 = status menu layer).
-/// Возвращает список реальных menubar items с pid + иконкой владельца + bounds.
+/// Список приложений, которые скорее всего видны в menubar.
+/// Источник — NSWorkspace.runningApplications (публичный API, без permissions).
+/// Фильтруем по accessory (LSUIElement = YES) и по наличию иконки.
 enum MenubarItemsScanner {
     struct Item: Identifiable, Equatable {
-        let id: Int        // CGWindowID
+        let id: String          // bundleID
         let pid: pid_t
         let name: String
         let icon: NSImage?
-        let bounds: CGRect
 
         static func == (lhs: Item, rhs: Item) -> Bool { lhs.id == rhs.id }
     }
 
-    /// kCGStatusWindowLevel = 25.
-    private static let statusLayer = 25
-
     static func scan() -> [Item] {
-        let options: CGWindowListOption = [.optionOnScreenOnly]
-        guard let info = CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]] else {
-            return []
-        }
+        let ownBID = Bundle.main.bundleIdentifier
+        let apps = NSWorkspace.shared.runningApplications
 
+        var seenBundles = Set<String>()
         var items: [Item] = []
-        for w in info {
-            guard
-                let layer = w[kCGWindowLayer as String] as? Int, layer == statusLayer,
-                let bounds = w[kCGWindowBounds as String] as? [String: CGFloat],
-                let x = bounds["X"], let y = bounds["Y"],
-                let width = bounds["Width"], let height = bounds["Height"],
-                let winNum = w[kCGWindowNumber as String] as? Int,
-                let pidNum = w[kCGWindowOwnerPID as String] as? Int,
-                width > 4, height > 4, height < 40   // фильтруем не-status окна
-            else { continue }
 
-            let rect = CGRect(x: x, y: y, width: width, height: height)
-            let pid = pid_t(pidNum)
+        for app in apps {
+            // accessory = LSUIElement YES (типичные menubar apps вроде Slack notification helper).
+            // Regular apps типа Discord/Spotify тоже могут иметь menubar items — включаем и их.
+            guard app.activationPolicy == .accessory || app.activationPolicy == .regular else {
+                continue
+            }
+            guard let bid = app.bundleIdentifier, bid != ownBID else { continue }
+            guard !seenBundles.contains(bid) else { continue }
+            guard let icon = app.icon else { continue }
+            // Системные демоны без имени отбрасываем.
+            guard let name = app.localizedName, !name.isEmpty else { continue }
+            // Фильтруем «голые» helper-процессы по bundleID — обычно у них в имени есть Helper / Renderer / GPU.
+            let lower = name.lowercased()
+            if lower.contains("helper")
+                || lower.contains("renderer")
+                || lower.contains("gpu process")
+                || lower.contains("crashpad") {
+                continue
+            }
 
-            // Имя владельца
-            let ownerName = (w[kCGWindowOwnerName as String] as? String) ?? "Unknown"
-            let app = NSRunningApplication(processIdentifier: pid)
-            let displayName = app?.localizedName ?? ownerName
-            let icon = app?.icon
-
+            seenBundles.insert(bid)
             items.append(Item(
-                id: winNum,
-                pid: pid,
-                name: displayName,
-                icon: icon,
-                bounds: rect
+                id: bid,
+                pid: app.processIdentifier,
+                name: name,
+                icon: icon
             ))
         }
 
-        // Сортировка слева направо по X.
-        items.sort { $0.bounds.origin.x < $1.bounds.origin.x }
+        items.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
         return items
     }
 }
