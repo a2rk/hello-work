@@ -224,7 +224,7 @@ HelloWork/
 
 - [x] **TASK-028 [verify]** — TASK-027  → released as v0.9.49
 
-- [ ] **TASK-029 [impl]** — `CombinedScheduleView` — TimelineView для ticker
+- [x] **TASK-029 [impl]** — `CombinedScheduleView` — TimelineView для ticker  → released as v0.9.50
   - Файл: `Preferences/Combined/CombinedScheduleView.swift`
   - Проблема: @State now Date с 1Hz timer перерисовывает всю combined-вьюху.
   - Решение: `TimelineView(.periodic(from: .now, by: 60))` (раз в минуту достаточно для расписания) на ring-чарте, не на parent body.

@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.50",
+    "date": "2026-04-27",
+    "customMessage": "TASK-029: CombinedScheduleView избавился от @State now + Timer. Теперь TimelineView обновляет только тикающие чарты раз в 30с, parent body не перерисовывается.",
+    "main": "Раньше @State now Date с Timer 30c триггерил перерисовку всего CombinedScheduleView (header, legend, info — всё). Теперь TimelineView(.periodic) оборачивает только ringSection, timelineSection и infoSection — header и legend остаются статичными.",
+    "points": [
+      "Убраны @State now, @State ticker, startTicker(), stopTicker()",
+      "ringSection / timelineSection / infoSection обёрнуты в TimelineView(.periodic(from: .now, by: 30))",
+      "Parent body больше не зависит от now"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.50/HelloWork-0.9.50.dmg"
+  },
+  {
     "version": "0.9.49",
     "date": "2026-04-27",
     "customMessage": "TASK-028 verified: ScheduleView decoupling корректен, edge cases для snapStep / Environment / mutations прошли trace.",

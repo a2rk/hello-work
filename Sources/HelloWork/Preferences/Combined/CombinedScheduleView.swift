@@ -4,8 +4,6 @@ import AppKit
 struct CombinedScheduleView: View {
     @Environment(\.t) var t
     @ObservedObject var state: AppState
-    @State private var now: Date = Date()
-    @State private var ticker: Timer?
 
     private var activeApps: [ManagedApp] {
         state.managedApps.filter { !$0.isArchived }
@@ -25,8 +23,6 @@ struct CombinedScheduleView: View {
 
             Spacer(minLength: 0)
         }
-        .onAppear { startTicker() }
-        .onDisappear { stopTicker() }
     }
 
     // MARK: - Header
@@ -47,13 +43,17 @@ struct CombinedScheduleView: View {
     private var ringSection: some View {
         HStack {
             Spacer(minLength: 0)
-            CombinedRingChart(
-                apps: activeApps,
-                now: now,
-                onAppTap: { bid in
-                    state.prefsSelection = .app(bid)
-                }
-            )
+            // TimelineView оборачивает только тикающую часть — раз в 30с
+            // обновляется now, но parent body НЕ перерисовывается.
+            TimelineView(.periodic(from: .now, by: 30)) { ctx in
+                CombinedRingChart(
+                    apps: activeApps,
+                    now: ctx.date,
+                    onAppTap: { bid in
+                        state.prefsSelection = .app(bid)
+                    }
+                )
+            }
             Spacer(minLength: 0)
         }
         .padding(.vertical, 12)
@@ -99,13 +99,15 @@ struct CombinedScheduleView: View {
                 .font(.system(size: 10, weight: .semibold))
                 .tracking(1.4)
                 .foregroundColor(Theme.textTertiary)
-            CombinedTimeline(
-                apps: activeApps,
-                now: now,
-                onAppTap: { bid in
-                    state.prefsSelection = .app(bid)
-                }
-            )
+            TimelineView(.periodic(from: .now, by: 30)) { ctx in
+                CombinedTimeline(
+                    apps: activeApps,
+                    now: ctx.date,
+                    onAppTap: { bid in
+                        state.prefsSelection = .app(bid)
+                    }
+                )
+            }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
             .background(
@@ -127,23 +129,9 @@ struct CombinedScheduleView: View {
                 .font(.system(size: 10, weight: .semibold))
                 .tracking(1.4)
                 .foregroundColor(Theme.textTertiary)
-            CombinedInfoPanel(apps: activeApps, now: now)
+            TimelineView(.periodic(from: .now, by: 30)) { ctx in
+                CombinedInfoPanel(apps: activeApps, now: ctx.date)
+            }
         }
-    }
-
-    // MARK: - Ticker
-
-    private func startTicker() {
-        // Раз в 30с обновляем `now` — для clock-hand и live-info текстов.
-        let t = Timer(timeInterval: 30, repeats: true) { _ in
-            Task { @MainActor in now = Date() }
-        }
-        RunLoop.main.add(t, forMode: .common)
-        ticker = t
-    }
-
-    private func stopTicker() {
-        ticker?.invalidate()
-        ticker = nil
     }
 }
