@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.49",
+    "date": "2026-04-27",
+    "customMessage": "TASK-028 verified: ScheduleView decoupling корректен, edge cases для snapStep / Environment / mutations прошли trace.",
+    "main": "Verification of TASK-027. Unrelated state-changes больше не триггерят redraw. Slot mutations + gestures + env обновления работают как раньше. Build чистый.",
+    "points": [
+      "Equatable diff на let inputs скип неиспользуемые редrawы",
+      "snapStep — читается динамически на gesture"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.49/HelloWork-0.9.49.dmg"
+  },
+  {
     "version": "0.9.48",
     "date": "2026-04-27",
     "customMessage": "TASK-027: ScheduleView больше не наблюдает AppState напрямую. Принимает app: ManagedApp как let — body recompute'ится только когда конкретное приложение реально изменилось.",

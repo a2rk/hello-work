@@ -222,7 +222,7 @@ HelloWork/
   - Проблема: ScheduleView держит `@ObservedObject var state: AppState` и перерисовывается на любой изменение в state (язык, focusDimOpacity, etc).
   - Решение: переписать на `bundleID` + локальный snapshot `ManagedApp` через computed property с filtering. Alternative: extract narrow `ScheduleViewModel`.
 
-- [ ] **TASK-028 [verify]** — TASK-027
+- [x] **TASK-028 [verify]** — TASK-027  → released as v0.9.49
 
 - [ ] **TASK-029 [impl]** — `CombinedScheduleView` — TimelineView для ticker
   - Файл: `Preferences/Combined/CombinedScheduleView.swift`
