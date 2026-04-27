@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.28",
+    "date": "2026-04-27",
+    "customMessage": "TASK-007: Mover.move post-move check теперь делает single-window CGS вместо полного menubar enum. Финал N+1 фикса.",
+    "main": "После постинга drag events MenuBarItemMover проверял что item действительно сдвинулся. Раньше — full currentItems() per move. Теперь — Bridging.getWindowFrame(for: id).",
+    "points": [
+      "Mover.move: getWindowFrame вместо currentItems().first {...}",
+      "Совместно с TASK-005 collapse(10 items) теперь делает 1 full enum + 30 lightweight per-window queries (вместо 30+ full enums)",
+      "Logic эквивалентна — frame nil трактуется как успех (off-screen)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.28/HelloWork-0.9.28.dmg"
+  },
+  {
     "version": "0.9.27",
     "date": "2026-04-27",
     "customMessage": "TASK-006 verified: cache-замена корректна, Mover внутри пока всё ещё дёргает full enum — это TASK-007.",

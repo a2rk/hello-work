@@ -133,7 +133,7 @@ HelloWork/
 
 - [x] **TASK-006 [verify]** — TASK-005  → released as v0.9.27
 
-- [ ] **TASK-007 [impl]** — `MenuBarItemMover.move()` — убрать второй `currentItems()` для verify
+- [x] **TASK-007 [impl]** — `MenuBarItemMover.move()` — убрать второй `currentItems()` для verify  → released as v0.9.28
   - Файл: `Menubar/MenuBarItemMover.swift:79-88`
   - Решение: после постинга событий вместо `currentItems().first {...}` использовать `Bridging.getWindowFrame(for: item.windowID)` (1 CGS call вместо полного перечисления).
 

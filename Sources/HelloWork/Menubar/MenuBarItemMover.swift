@@ -77,14 +77,15 @@ enum MenuBarItemMover {
         // Даём WindowServer обработать события.
         Thread.sleep(forTimeInterval: 0.04)
 
-        let nowFrame = MenuBarItem.currentItems().first { $0.windowID == item.windowID }?.frame
-        if nowFrame == nil {
-            devlog("mover", "post-move wid=\(item.windowID) исчез из списка — считаем успехом")
+        // Проверяем frame через лёгкий per-window CGS вместо полного menubar enum.
+        // Если окно исчезло (frame == nil) — это валидный «успех» для off-screen hide.
+        guard let nowFrame = Bridging.getWindowFrame(for: item.windowID) else {
+            devlog("mover", "post-move wid=\(item.windowID) frame nil — считаем успехом")
             return true
         }
-        let success = abs(nowFrame!.midX - targetX) < abs(item.frame.midX - targetX)
+        let success = abs(nowFrame.midX - targetX) < abs(item.frame.midX - targetX)
         devlog("mover",
-               "post-move wid=\(item.windowID) midX=\(String(format: "%.0f", nowFrame!.midX)) target=\(String(format: "%.0f", targetX)) success=\(success)")
+               "post-move wid=\(item.windowID) midX=\(String(format: "%.0f", nowFrame.midX)) target=\(String(format: "%.0f", targetX)) success=\(success)")
         return success
     }
 
