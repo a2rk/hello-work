@@ -55,6 +55,9 @@ final class AppState: ObservableObject {
             focus.useAccessibility = focusUseAccessibility
         }
     }
+    @Published var settingsTab: SettingsTab {
+        didSet { UserDefaults.standard.set(settingsTab.rawValue, forKey: Self.settingsTabKey) }
+    }
     @Published private(set) var launchAtLogin: Bool
 
     private(set) var graceUntil: Date?
@@ -71,6 +74,7 @@ final class AppState: ObservableObject {
     private static let focusHotkeyKey = "helloWorkFocusHotkey"
     private static let focusOpacityKey = "helloWorkFocusOpacity"
     private static let focusAXKey = "helloWorkFocusUseAX"
+    private static let settingsTabKey = "helloWorkSettingsTab"
 
     static let gracePresetSeconds: [Int] = [30, 60, 180, 300, 600]
     static let snapStepOptions: [Int] = [1, 5, 10, 15]
@@ -105,6 +109,12 @@ final class AppState: ObservableObject {
         }
         self.focusDimOpacity = (UserDefaults.standard.object(forKey: Self.focusOpacityKey) as? Double) ?? 0.9
         self.focusUseAccessibility = UserDefaults.standard.bool(forKey: Self.focusAXKey)
+        if let raw = UserDefaults.standard.string(forKey: Self.settingsTabKey),
+           let parsed = SettingsTab(rawValue: raw) {
+            self.settingsTab = parsed
+        } else {
+            self.settingsTab = .schedule
+        }
         self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
 
         // enabled: дефолт true, если ключа нет

@@ -187,7 +187,11 @@ extension Translation {
         statsFocusAverage: "Average",
         statsFocusTopApps: "Top apps",
         statsLegendFocus: "Focus",
-        statsLegendAttempts: "Attempts"
+        statsLegendAttempts: "Attempts",
+        settingsTabSchedule: "Schedule",
+        settingsTabFocus: "Focus",
+        settingsTabApp: "App",
+        settingsTabData: "Data"
     )
 
     static let ru = Translation(
@@ -373,7 +377,11 @@ extension Translation {
         statsFocusAverage: "Средняя",
         statsFocusTopApps: "Где фокусировался",
         statsLegendFocus: "Фокус",
-        statsLegendAttempts: "Попытки"
+        statsLegendAttempts: "Попытки",
+        settingsTabSchedule: "Расписание",
+        settingsTabFocus: "Фокус",
+        settingsTabApp: "Приложение",
+        settingsTabData: "Данные"
     )
 
     static let zh = Translation(
@@ -553,6 +561,10 @@ extension Translation {
         statsFocusAverage: "平均",
         statsFocusTopApps: "聚焦在哪",
         statsLegendFocus: "聚焦",
-        statsLegendAttempts: "尝试"
+        statsLegendAttempts: "尝试",
+        settingsTabSchedule: "时间表",
+        settingsTabFocus: "聚焦",
+        settingsTabApp: "应用",
+        settingsTabData: "数据"
     )
 }

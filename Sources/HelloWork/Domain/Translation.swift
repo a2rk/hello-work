@@ -219,4 +219,10 @@ struct Translation {
     let statsFocusTopApps: String
     let statsLegendFocus: String
     let statsLegendAttempts: String
+
+    // MARK: - Settings tabs
+    let settingsTabSchedule: String
+    let settingsTabFocus: String
+    let settingsTabApp: String
+    let settingsTabData: String
 }
