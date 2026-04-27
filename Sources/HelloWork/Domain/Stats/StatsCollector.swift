@@ -96,7 +96,10 @@ final class StatsCollector: ObservableObject {
     }
 
     /// Регистрация использования "ещё минутку".
+    /// Guard на положительное значение — иначе можно засрать stats отрицательными
+    /// или нулевыми grace'ами при программной ошибке у caller'а.
     func recordGrace(seconds: Int, at date: Date = Date()) {
+        guard seconds > 0 else { return }
         let key = StatsStore.dayKey(date)
         var day = store.days[key] ?? [:]
         // Записываем в специальный псевдо-bundleID, не привязано к конкретному app.

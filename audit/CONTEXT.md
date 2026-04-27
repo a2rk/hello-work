@@ -285,7 +285,7 @@ HelloWork/
 
 - [x] **TASK-042 [verify]** — TASK-041  → released as v0.9.63
 
-- [ ] **TASK-043 [impl]** — `StatsCollector.recordGrace` — guard ≥ 0
+- [x] **TASK-043 [impl]** — `StatsCollector.recordGrace` — guard ≥ 0  → released as v0.9.64
   - Файл: `Domain/Stats/StatsCollector.swift`
   - Решение: `guard seconds > 0 else { return }` в начале.
 
