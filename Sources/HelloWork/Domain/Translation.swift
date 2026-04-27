@@ -254,7 +254,6 @@ struct Translation {
     let menubarStateCollapsed: String
     let menubarStateExpanded: String
     let menubarHowItWorks: String
-    let menubarSchematicMid: String
     let menubarStep1: String
     let menubarStep2: String
     let menubarStep3: String

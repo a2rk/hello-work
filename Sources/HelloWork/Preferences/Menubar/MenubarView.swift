@@ -21,7 +21,7 @@ struct MenubarView: View {
 
             heroSection
 
-            instructionSection
+            howItWorksSection
 
             settingsSection
 
@@ -122,94 +122,23 @@ struct MenubarView: View {
         .opacity(disabled ? 0.45 : 1)
     }
 
-    // MARK: - Instruction
+    // MARK: - How it works
 
     @ViewBuilder
-    private var instructionSection: some View {
+    private var howItWorksSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(t.menubarHowItWorks.uppercased())
                 .font(.system(size: 10, weight: .semibold))
                 .tracking(1.4)
                 .foregroundColor(Theme.textTertiary)
 
-            // Schematic
-            schematic
-
-            // Step-by-step
             VStack(alignment: .leading, spacing: 10) {
-                instructionRow(
-                    number: "1",
-                    text: t.menubarStep1
-                )
-                instructionRow(
-                    number: "2",
-                    text: t.menubarStep2
-                )
-                instructionRow(
-                    number: "3",
-                    text: t.menubarStep3
-                )
+                instructionRow(number: "1", text: t.menubarStep1)
+                instructionRow(number: "2", text: t.menubarStep2)
+                instructionRow(number: "3", text: t.menubarStep3)
             }
         }
         .frame(maxWidth: Layout.settingsCardMaxWidth, alignment: .leading)
-    }
-
-    private var schematic: some View {
-        HStack(spacing: 0) {
-            // Слева: H |
-            HStack(spacing: 4) {
-                Text("H")
-                    .font(.system(size: 14, weight: .heavy))
-                    .foregroundColor(.black.opacity(0.85))
-                Rectangle()
-                    .fill(Color.black.opacity(0.85))
-                    .frame(width: 1.5, height: 14)
-            }
-            .padding(.horizontal, 10)
-            .frame(height: 32)
-            .background(
-                RoundedRectangle(cornerRadius: 8).fill(Color.white.opacity(0.92))
-            )
-
-            // Стрелки + текст
-            HStack(spacing: 6) {
-                Image(systemName: "arrow.left")
-                    .font(.system(size: 10))
-                    .foregroundColor(Theme.textTertiary)
-                Text(t.menubarSchematicMid)
-                    .font(.system(size: 10))
-                    .foregroundColor(Theme.textTertiary)
-                Image(systemName: "arrow.right")
-                    .font(.system(size: 10))
-                    .foregroundColor(Theme.textTertiary)
-            }
-            .padding(.horizontal, 12)
-            .frame(height: 32)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white.opacity(0.04))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .strokeBorder(
-                                Theme.surfaceStroke,
-                                style: StrokeStyle(lineWidth: 1, dash: [4, 3])
-                            )
-                    )
-            )
-
-            // Справа: >
-            HStack(spacing: 0) {
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(.black.opacity(0.85))
-            }
-            .padding(.horizontal, 14)
-            .frame(height: 32)
-            .background(
-                RoundedRectangle(cornerRadius: 8).fill(Color.white.opacity(0.92))
-            )
-        }
     }
 
     private func instructionRow(number: String, text: String) -> some View {

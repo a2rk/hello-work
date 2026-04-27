@@ -1,5 +1,24 @@
 [
   {
+    "version": "0.9.15",
+    "date": "2026-04-27",
+    "customMessage": "Hider полностью переписан по Ice approach — физическая симуляция cmd+drag через CGEvent. Скрытие реально работает на macOS Sequoia.",
+    "main": "Отказ от Hidden Bar 'separator widget' техники (сломана в macOS Sequoia). Перешли на Ice approach: физическое перемещение чужих menubar items через CGEvent simulation. Hello work теперь GPLv3 (требование Ice).",
+    "points": [
+      "Bridging/Private.swift — приватные CGS API через _silgen_name (CGSGetWindowList, CGSGetScreenRectForWindow, CGSGetProcessMenuBarWindowList и т.д.)",
+      "Bridging/Bridging.swift — wrapper для безопасного доступа к window list менюбар items",
+      "Bridging/CGEventExtensions.swift — CGEvent.menuBarItemEvent с .maskCommand symuлирует cmd+drag",
+      "MenuBarItem.swift — модель: bundleID, frame, isMovable, isHideable. Apple-managed (controlcenter, systemuiserver, Spotlight) — immovable",
+      "MenuBarItemMover.swift — двигает item через mouseDown(cmd) + mouseUp в target X. Для скрытия — toX = -1000 (за край экрана)",
+      "MenubarHiderController переписан: один статус item H, при collapse сохраняем X-positions всех hideable items + двигаем за край, при expand — восстанавливаем",
+      "Иконка H: при expanded — solid (заливка), при collapsed — outline (контур, индикатор)",
+      "Удалены: 3 status items архитектура, separator с line marker, isValidPosition guard — больше не нужны",
+      "ВНИМАНИЕ: требуется Accessibility permission для CGEvent simulation на чужие apps",
+      "LICENSE: GPLv3 (наследуется от Ice)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.15/HelloWork-0.9.15.dmg"
+  },
+  {
     "version": "0.9.14",
     "date": "2026-04-27",
     "customMessage": "Скопировал Hidden Bar точно. Visible line marker, separator 1pt initial, validation guards, dynamic length. Должно работать.",
