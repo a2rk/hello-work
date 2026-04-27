@@ -43,6 +43,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         startTimer()
         refresh()
 
+        state.installer.consumePreviousUpdateStatus()
         showPrefsIfFirstLaunch()
         setupPermissionsRefresh()
         Task { await state.checkForUpdates() }

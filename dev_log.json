@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.9.60",
+    "date": "2026-04-27",
+    "customMessage": "TASK-039: UpdateInstaller helper-script больше не молчит при сбоях. rm/cp errors → /tmp/hellowork-update-status, при следующем запуске engine читает и поднимает .failed. Self-signed identity сохраняется при re-sign.",
+    "main": "Helper-script: 30с deadline на ожидание parent-exit, status logging в /tmp/hellowork-update.log, exit codes для rm и cp проверяются, fallback копия в /Applications/HWInstaller-fallback.app при cp-failure. Re-sign использует self-signed cert (если есть в keychain) — TCC grants сохраняются.",
+    "points": [
+      "set -u + log() helper в helper-скрипте",
+      "rm/cp/parent-wait — каждый ошибочный путь пишет код в hellowork-update-status",
+      "consumePreviousUpdateStatus() при старте читает файл и raise .failed",
+      "Re-sign по cert hash 'HelloWork Self-Signed' (fallback ad-hoc)",
+      "При cp-fail — старый .app снесён, делаем fallback копию в /Applications"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.60/HelloWork-0.9.60.dmg"
+  },
+  {
     "version": "0.9.59",
     "date": "2026-04-27",
     "customMessage": "TASK-038 verified: FrontmostWindowFinder single-CGS корректен. Phase G полностью закрыта.",

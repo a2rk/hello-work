@@ -266,7 +266,7 @@ HelloWork/
 
 ### Phase H — UpdateInstaller / Stub
 
-- [ ] **TASK-039 [impl]** — UpdateInstaller — fail-fast при replace-while-running на Sequoia
+- [x] **TASK-039 [impl]** — UpdateInstaller — fail-fast при replace-while-running на Sequoia  → released as v0.9.60
   - Файл: `Updates/UpdateInstaller.swift`
   - Проблема: `rm -rf "$TARGET" && cp -R ...` пока app запущен на Sequoia может зафейлиться без явной ошибки в UI.
   - Решение: 

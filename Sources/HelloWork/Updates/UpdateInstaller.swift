@@ -52,6 +52,27 @@ final class UpdateInstaller: ObservableObject {
         status = .idle
     }
 
+    /// Проверяется при старте — был ли провал предыдущего apply-update'а?
+    /// Helper-скрипт пишет статус в `/tmp/hellowork-update-status`. Если там
+    /// что-то отличное от "ok" — поднимаем .failed чтобы UI показал.
+    /// Файл удаляется после чтения.
+    func consumePreviousUpdateStatus() {
+        let path = "/tmp/hellowork-update-status"
+        guard let raw = try? String(contentsOfFile: path, encoding: .utf8) else { return }
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed != "ok" && !trimmed.isEmpty {
+            let msg: String
+            switch trimmed {
+            case "rm-failed":     msg = "Не удалось снести старый .app для замены"
+            case "cp-failed":     msg = "Не удалось скопировать новый .app — старый удалён, fallback в /Applications/HWInstaller-fallback.app"
+            case "parent-stuck":  msg = "Предыдущий процесс не закрылся за 30с — обновление отменено"
+            default:              msg = "Update failed: \(trimmed)"
+            }
+            status = .failed(msg)
+        }
+        try? FileManager.default.removeItem(atPath: path)
+    }
+
     // MARK: - Steps
 
     private func downloadDMG(_ url: URL) async throws -> URL {
@@ -113,28 +134,64 @@ final class UpdateInstaller: ObservableObject {
 
         let script = #"""
         #!/bin/bash
+        set -u
         PARENT_PID="$1"
         SOURCE="$2"
         TARGET="$3"
         MOUNT="$4"
         DMG="$5"
 
-        # Ждём, пока родитель не умрёт
-        while kill -0 "$PARENT_PID" 2>/dev/null; do sleep 0.2; done
+        LOGFILE="/tmp/hellowork-update.log"
+        STATUSFILE="/tmp/hellowork-update-status"
+
+        log() { echo "$(date +%H:%M:%S) $*" >> "$LOGFILE"; }
+
+        log "spawned for parent $PARENT_PID"
+
+        # Ждём, пока родитель не умрёт (с deadline 30с — Sequoia может отказать в exit
+        # если что-то держит. Не висим вечно).
+        DEADLINE=$((SECONDS + 30))
+        while kill -0 "$PARENT_PID" 2>/dev/null; do
+            if [ $SECONDS -ge $DEADLINE ]; then
+                log "parent didn't exit within 30s — abort"
+                echo "parent-stuck" > "$STATUSFILE"
+                exit 0
+            fi
+            sleep 0.2
+        done
         sleep 0.5
 
         # Заменяем .app
-        rm -rf "$TARGET"
-        cp -R "$SOURCE" "$TARGET"
+        if ! rm -rf "$TARGET"; then
+            log "rm -rf '$TARGET' failed (rc=$?)"
+            echo "rm-failed" > "$STATUSFILE"
+            open "$TARGET" 2>/dev/null
+            exit 1
+        fi
+        if ! cp -R "$SOURCE" "$TARGET"; then
+            log "cp -R '$SOURCE' '$TARGET' failed (rc=$?)"
+            echo "cp-failed" > "$STATUSFILE"
+            # Старый .app уже удалён — пытаемся хотя бы DMG-app оставить как fallback.
+            cp -R "$SOURCE" "/Applications/HWInstaller-fallback.app" 2>/dev/null
+            exit 1
+        fi
 
-        # Снимаем quarantine + перепрописываем ad-hoc подпись
+        # Снимаем quarantine + перепрописываем подпись (используем ту же
+        # self-signed identity если есть, иначе ad-hoc).
         xattr -dr com.apple.quarantine "$TARGET" 2>/dev/null || true
-        codesign --force --deep --sign - "$TARGET" 2>/dev/null || true
+        SIGN_HASH=$(security find-identity -p codesigning ~/Library/Keychains/login.keychain-db 2>/dev/null \
+            | awk -v name="HelloWork Self-Signed" '$0 ~ name {print $2; exit}')
+        if [ -n "$SIGN_HASH" ]; then
+            codesign --force --deep --sign "$SIGN_HASH" "$TARGET" 2>>"$LOGFILE" || true
+        else
+            codesign --force --deep --sign - "$TARGET" 2>>"$LOGFILE" || true
+        fi
 
-        # Запускаем свежее
+        log "replaced OK, launching"
+        echo "ok" > "$STATUSFILE"
         open "$TARGET"
 
-        # Размонтируем DMG и удаляем временные файлы
+        # Cleanup
         hdiutil detach "$MOUNT" -quiet 2>/dev/null || true
         rm -f "$DMG"
         rm -- "$0"
