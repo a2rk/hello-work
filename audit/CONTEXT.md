@@ -124,7 +124,7 @@ HelloWork/
   - Проблема: 1с asyncAfter после `configure()` вызывает `collapseInternal()`. Если за эту секунду юзер уже toggle-нул (expanded), отложенный collapse всё равно случится.
   - Решение: token/cancel-flag, инкрементируется в `configure`, проверяется в asyncAfter; toggle/applyAuto тоже инкрементируют чтобы дезактивировать pending.
 
-- [ ] **TASK-004 [verify]** — TASK-003
+- [x] **TASK-004 [verify]** — TASK-003  → released as v0.9.25
 
 - [ ] **TASK-005 [impl]** — Cache `currentItems()` в `collapseInternal` + `restoreAllItems` (N+1 → 1)
   - Файлы: `Menubar/MenubarHiderController.swift:153,170`, `:214-217`

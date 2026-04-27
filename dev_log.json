@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.25",
+    "date": "2026-04-27",
+    "customMessage": "TASK-004 verified: deferred-collapse cancellation работает по сценариям A-D. Регрессий нет.",
+    "main": "Verification of TASK-003. Trace-сценарии: user toggle до deferred → cancel ✓; applyAuto до deferred → cancel ✓; ничего не происходит → fires ✓; re-configure → старый token cancel'ится, новый отрабатывает ✓.",
+    "points": [
+      "Token-based cancellation корректен для всех известных путей",
+      "Build чистый"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.25/HelloWork-0.9.25.dmg"
+  },
+  {
     "version": "0.9.24",
     "date": "2026-04-27",
     "customMessage": "TASK-003: фикс race condition в configure() — отложенный через 1с initialCollapsed теперь отменяется любым user/auto действием.",
