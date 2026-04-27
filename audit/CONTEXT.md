@@ -206,7 +206,7 @@ HelloWork/
     - Если уже `isCheckingUpdates == true` — skip параллельный.
     - В `checkForUpdates` после `let (data, _) = await session.data(...)` вызвать `session.finishTasksAndInvalidate()`.
 
-- [ ] **TASK-024 [verify]** — TASK-023
+- [x] **TASK-024 [verify]** — TASK-023  → released as v0.9.45
 
 ### Phase F — UI re-render perf
 
