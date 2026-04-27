@@ -185,7 +185,7 @@ HelloWork/
   - Файлы: `Domain/ManagedApp.swift`, `Domain/Stats/StatsStore.swift`
   - Решение: обернуть persisted JSON в `{"version": 1, "data": [...]}`. Loader: читает version, если != current — попытка миграции (пока пустой migrator), иначе fallback на пустой state. Backward-compat: если old format (no wrapper) — read as version 1, save in new format.
 
-- [ ] **TASK-020 [verify]** — TASK-019
+- [x] **TASK-020 [verify]** — TASK-019  → released as v0.9.41
 
 ### Phase D — Hotkey collisions
 

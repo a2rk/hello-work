@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.41",
+    "date": "2026-04-27",
+    "customMessage": "TASK-020 verified: schema versioning все 5 путей корректны. Phase C (Resilience) полностью закрыта.",
+    "main": "Trace: новая install / versioned-current / versioned-future / legacy plain / corrupt — все ведут себя корректно. Build чистый. Phase C done — переходим к Phase D (Hotkey IDs).",
+    "points": [
+      "Phase C complete (TASK-017..020, 4 tasks)",
+      "Persistence resilient: corruption и downgrade не теряют данные",
+      "Готовы к Phase D"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.41/HelloWork-0.9.41.dmg"
+  },
+  {
     "version": "0.9.40",
     "date": "2026-04-27",
     "customMessage": "TASK-019: managedApps + stats JSON получили version-wrapper. Будущие миграции схемы — без потери данных. Backward-compat для legacy-формата сохранён.",
