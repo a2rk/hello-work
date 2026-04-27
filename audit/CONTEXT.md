@@ -126,7 +126,7 @@ HelloWork/
 
 - [x] **TASK-004 [verify]** — TASK-003  → released as v0.9.25
 
-- [ ] **TASK-005 [impl]** — Cache `currentItems()` в `collapseInternal` + `restoreAllItems` (N+1 → 1)
+- [x] **TASK-005 [impl]** — Cache `currentItems()` в `collapseInternal` + `restoreAllItems` (N+1 → 1)  → released as v0.9.26
   - Файлы: `Menubar/MenubarHiderController.swift:153,170`, `:214-217`
   - Проблема: для N items — N+1 полных CGS-перечислений menubar.
   - Решение: один `currentItems()` в начале, по `windowID` lookup внутри loop'а. Frame для actual-position брать через `Bridging.getWindowFrame(for: id)` (одно CGS-обращение, не полный list).

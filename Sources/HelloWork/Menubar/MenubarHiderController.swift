@@ -188,12 +188,23 @@ final class MenubarHiderController: ObservableObject {
         savedItems = items
         savedPositions = Dictionary(uniqueKeysWithValues: items.map { ($0.windowID, $0.frame.midX) })
 
+        // Берём актуальный frame через дешёвый CGS-запрос на ОДНО окно
+        // (Bridging.getWindowFrame) вместо полного перечисления menubar
+        // (MenuBarItem.currentItems) на каждой итерации цикла.
         var movedAny = false
         for item in items.sorted(by: { $0.frame.midX > $1.frame.midX }) {
-            let current = MenuBarItem.currentItems().first { $0.windowID == item.windowID } ?? item
+            let liveFrame = Bridging.getWindowFrame(for: item.windowID) ?? item.frame
+            let current = MenuBarItem(
+                windowID: item.windowID,
+                pid: item.pid,
+                frame: liveFrame,
+                title: item.title,
+                ownerName: item.ownerName
+            )
             let beforeX = current.frame.midX
             let ok = MenuBarItemMover.hide(current)
-            let afterX = MenuBarItem.currentItems().first { $0.windowID == item.windowID }?.frame.midX ?? .nan
+            let afterFrame = Bridging.getWindowFrame(for: item.windowID)
+            let afterX = afterFrame?.midX ?? .nan
             devlog("hider.move",
                    "hide wid=\(item.windowID) before=\(String(format: "%.0f", beforeX)) after=\(String(format: "%.0f", afterX)) success=\(ok)")
             if ok { movedAny = true }
@@ -234,8 +245,16 @@ final class MenubarHiderController: ObservableObject {
         }
         // Восстанавливаем слева направо: сначала те что были левее,
         // чтобы они «упёрлись» в левый край и более правые встали корректно.
+        // Frame обновляем через лёгкий per-window CGS-запрос вместо полного перечисления.
         for item in savedItems.sorted(by: { $0.frame.midX < $1.frame.midX }) {
-            let current = MenuBarItem.currentItems().first { $0.windowID == item.windowID } ?? item
+            let liveFrame = Bridging.getWindowFrame(for: item.windowID) ?? item.frame
+            let current = MenuBarItem(
+                windowID: item.windowID,
+                pid: item.pid,
+                frame: liveFrame,
+                title: item.title,
+                ownerName: item.ownerName
+            )
             if let originalX = savedPositions[item.windowID] {
                 MenuBarItemMover.restore(current, toX: originalX)
                 Thread.sleep(forTimeInterval: 0.03)

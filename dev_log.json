@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.26",
+    "date": "2026-04-27",
+    "customMessage": "TASK-005: убран N+1 CGS overhead в hider. Collapse 10 items раньше делал 11+ полных перечислений menubar — теперь 1 + N лёгких per-window запросов.",
+    "main": "В collapseInternal/restoreAllItems вместо MenuBarItem.currentItems() в цикле теперь Bridging.getWindowFrame(for: id) — один CGS-запрос на конкретное окно вместо полного menubar enumeration.",
+    "points": [
+      "collapseInternal: один currentItems() в начале + per-item getWindowFrame в loop",
+      "restoreAllItems: то же — getWindowFrame на актуальную позицию",
+      "Сокращает CGS-нагрузку при collapse(10 items) с ~30 calls до ~10"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.26/HelloWork-0.9.26.dmg"
+  },
+  {
     "version": "0.9.25",
     "date": "2026-04-27",
     "customMessage": "TASK-004 verified: deferred-collapse cancellation работает по сценариям A-D. Регрессий нет.",
