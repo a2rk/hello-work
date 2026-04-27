@@ -20,7 +20,10 @@ final class MenubarHiderController: ObservableObject {
     /// Сохранённые items с их полными данными (нужны для restore через mover).
     private var savedItems: [MenuBarItem] = []
 
-    private var lastAutoState: Bool? = nil
+    /// Последний auto-сигнал, переданный в `applyAuto` (focus-mode / schedule).
+    /// Семантика: применяем auto только когда СИГНАЛ изменился. Если сигнал
+    /// не менялся, а юзер успел вручную переключить — не лезем поверх его выбора.
+    private var lastAutoIntent: Bool? = nil
     private var isToggling = false
 
     /// Callback при создании mainItem (AppDelegate переустанавливает menu).
@@ -87,29 +90,33 @@ final class MenubarHiderController: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
             self?.isToggling = false
         }
-        lastAutoState = nil
+        // НЕ обнуляем lastAutoIntent — наоборот, держим его, чтобы повторные
+        // applyAuto с тем же сигналом (что было ДО toggle) не возвращали
+        // состояние «как auto хочет». Юзер сам выбрал — auto уважит до тех
+        // пор, пока сам сигнал не изменится.
     }
 
     func collapseAll() {
         guard enabled else { return }
         collapseInternal()
-        lastAutoState = nil
     }
 
     func expandAll() {
         guard enabled else { return }
         expandInternal()
-        lastAutoState = nil
     }
 
+    /// Применяем auto-сигнал (focus-mode / schedule) только когда он ИЗМЕНИЛСЯ.
+    /// Если signal == lastAutoIntent → значит источник auto не менялся,
+    /// и если юзер за это время вручную переключил — оставляем его выбор.
     func applyAuto(collapsed: Bool) {
         guard enabled else { return }
-        if let last = lastAutoState, last == isCollapsed {
-            // мы сами поставили
-        } else if lastAutoState != nil {
-            lastAutoState = collapsed
+        if lastAutoIntent == collapsed {
+            devlog("hider", "applyAuto(\(collapsed)) — signal unchanged, respect user")
             return
         }
+        devlog("hider", "applyAuto(\(collapsed)) — signal changed (was \(lastAutoIntent.map(String.init(describing:)) ?? "nil"))")
+        lastAutoIntent = collapsed
         if isCollapsed != collapsed {
             if collapsed {
                 collapseInternal()
@@ -117,7 +124,6 @@ final class MenubarHiderController: ObservableObject {
                 expandInternal()
             }
         }
-        lastAutoState = collapsed
     }
 
     /// Временно раскрыть menubar на N секунд при peek.

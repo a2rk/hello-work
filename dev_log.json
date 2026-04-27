@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.22",
+    "date": "2026-04-27",
+    "customMessage": "TASK-001: applyAuto больше не клобберит ручной toggle. Теперь auto применяется только когда сигнал реально изменился — между focus on/off auto не лезет поверх юзерского выбора.",
+    "main": "Раньше lastAutoState сравнивался с isCollapsed на каждом тике; после auto-collapse и ручного toggle следующий refresh схлопывал menubar обратно. Теперь трекаем lastAutoIntent (последний сигнал) — apply только при изменении сигнала.",
+    "points": [
+      "MenubarHiderController.applyAuto: упрощённая state machine — apply только при lastAutoIntent != collapsed",
+      "toggle()/collapseAll()/expandAll() больше НЕ обнуляют lastAutoIntent — иначе следующий refresh с тем же сигналом стирал бы юзерский выбор",
+      "devlog hider: видно когда сигнал не изменился (skip) и когда изменился (apply)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.22/HelloWork-0.9.22.dmg"
+  },
+  {
     "version": "0.9.21",
     "date": "2026-04-27",
     "customMessage": "Стабильная self-signed подпись. С этого билда юзеры выдают Accessibility / Screen Recording РАЗ — TCC больше не будет их сбрасывать на каждый апдейт.",

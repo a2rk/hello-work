@@ -1,6 +1,8 @@
 # HelloWork — Audit Context & Task Ledger
 
 > Этот файл — **единственный источник истины** для агента, который выполняет аудит-таски. Перед каждой итерацией читать его целиком. После каждой итерации обновлять статусы.
+>
+> **Цель**: довести систему до 9.5/10 через 60 точечных тасков. Версионирование — **одна патч-версия на таск**. Старт 0.9.21 → финиш минимум 0.9.81. Каждый шаг релизится в `gh release` отдельно — чтобы юзер видел движение и мог откатиться к любому промежуточному состоянию.
 
 ---
 
@@ -88,13 +90,16 @@ HelloWork/
 
 ### Когда релизить
 
-Группировать импл-таски по фазам (см. ниже). После закрытия каждой фазы (все impl + verify в фазе зелёные):
-- bump patch via `./scripts/bump.sh patch`
-- `./scripts/build.sh && ./scripts/package.sh && ./scripts/build_stub.sh && ./scripts/package_stub.sh`
-- запись в `dev_log.json` с кратким summary фазы
-- commit + tag + `gh release create`
+**ПОЛИТИКА: одна микро-версия на каждый таск.** Старт — 0.9.21. Цель — минимум 0.9.81 (0.9.21 + 60 тасков).
 
-Между фазами — НЕ релизить, только локально builds.
+После каждого закрытого таска (impl или verify):
+- `./scripts/bump.sh patch`
+- `./scripts/build.sh && ./scripts/package.sh && ./scripts/build_stub.sh && ./scripts/package_stub.sh`
+- entry в `dev_log.json` (короткий — 1 предложение customMessage, 2-4 пункта points для impl-таска; для verify-таска — что верифицировано и было ли OK)
+- commit с заголовком `Hello work X.Y.Z — TASK-NNN ...` (уникальный для версии)
+- tag + push + `gh release create`
+
+Каждый патч-релиз = ровно один таск. Юзер видит постоянное движение вперёд, легко откатить любой шаг через тэги.
 
 ---
 
@@ -104,7 +109,7 @@ HelloWork/
 
 ### Phase A — Hider state machine (correctness)
 
-- [ ] **TASK-001 [impl]** — Fix `applyAuto()` clobbers user manual toggle
+- [x] **TASK-001 [impl]** — Fix `applyAuto()` clobbers user manual toggle  → released as v0.9.22
   - Файл: `Sources/HelloWork/Menubar/MenubarHiderController.swift:99-115`
   - Проблема: после auto-collapse юзер вручную toggle-нул через menu, `lastAutoState` всё ещё содержит auto-флаг → следующий `applyAuto(false)` уже не вернёт expand'ом, потому что `lastAutoState != nil` → ранний return на стр 105.
   - Acceptance: сценарий «focus on → auto-collapse → user toggle expand → focus off → no spurious collapse» отрабатывает. Сценарий «schedule blocked → auto-collapse → schedule allowed → auto-expand» тоже.

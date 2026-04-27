@@ -32,15 +32,15 @@
 5. Если на пути требуется ввести новые i18n строки — обязательно en + ru + zh, проверь порядок полей в Translation.swift (он строгий).
 6. Если правка задевает hider/permissions — добавь точки `devlog(...)` для дальнейшей диагностики.
 7. **Соберись**: `swift build 2>&1 | grep -E "error:" | head -10`. Если ошибки — фикси пока чисто.
-8. **Если фаза НЕ закрылась этим таском** — НЕ релизь, НЕ коммитись. Просто пометь таск `[x]`.
-9. **Если этот таск закрывает ВСЮ фазу** (все impl + verify в фазе теперь `[x]`):
-    - bump patch: `./scripts/bump.sh patch`
-    - build: `./scripts/build.sh && ./scripts/package.sh && ./scripts/build_stub.sh && ./scripts/package_stub.sh`
-    - в `dev_log.json` добавить entry с подытогом этой фазы (1-2 предложения customMessage, 3-7 пунктов points)
-    - `git add -A && git commit -m "..."` — сообщение коммита как принято в репо (см. `git log`)
+8. **Пометь таск `[x]`** в `CONTEXT.md`.
+9. **Релиз (всегда, для каждого таска)**:
+    - `./scripts/bump.sh patch`
+    - `./scripts/build.sh && ./scripts/package.sh && ./scripts/build_stub.sh && ./scripts/package_stub.sh`
+    - в `dev_log.json` добавить entry: customMessage (1 предложение про этот таск), 2-4 points
+    - `git add -A && git commit -m "Hello work X.Y.Z — TASK-NNN: <короткое название>"`
     - `git tag vX.Y.Z && git push origin main && git push origin vX.Y.Z`
     - `gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg --title "..." --notes "..."`
-10. Финально — отчёт юзеру в чат: что сделал, какой таск закрыт, какая следующая фаза/таск, был ли релиз.
+10. Финально — отчёт юзеру в чат: что сделал, какой таск закрыт, какая версия релиза, какой следующий таск.
 
 ### Шаг 3b — Verification
 
@@ -54,7 +54,7 @@
    - Не сломаны ли соседние пути (см. инварианты из CONTEXT)?
    - Если impl касался hider/permissions — собрать `swift build`, проверить что compile-чисто.
    - Smoke-сценарии из таска (если описаны).
-5. **Если всё OK** — пометь таск `[x]`. Если фаза закрылась — релиз (см. шаг 3a, пункт 9).
+5. **Если всё OK** — пометь таск `[x]`. **Релиз тоже делай** (per-task политика, см. шаг 3a пункт 9). В commit message укажи `TASK-NNN [verify]: OK`. В dev_log entry — короткое «верифицирован TASK-XXX, регрессий нет».
 6. **Если найдена регрессия / gap** — НЕ помечай verify-таск как done. Допиши follow-up таск в секцию `## 5. Follow-up tasks` в CONTEXT.md в формате:
    ```
    - [ ] **TASK-NNN-followup [impl]** — короткое название
