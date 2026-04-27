@@ -137,7 +137,7 @@ HelloWork/
   - Файл: `Menubar/MenuBarItemMover.swift:79-88`
   - Решение: после постинга событий вместо `currentItems().first {...}` использовать `Bridging.getWindowFrame(for: item.windowID)` (1 CGS call вместо полного перечисления).
 
-- [ ] **TASK-008 [verify]** — TASK-007
+- [x] **TASK-008 [verify]** — TASK-007  → released as v0.9.29
 
 - [ ] **TASK-009 [impl]** — Combine cascade на toggle хайдера → 2 disk writes
   - Файл: `App/AppDelegate.swift:487-527`, `Menubar/MenubarHiderController.swift:configure()`

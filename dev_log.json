@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.29",
+    "date": "2026-04-27",
+    "customMessage": "TASK-008 verified: Mover.move post-check семантически эквивалентен. Регрессий нет.",
+    "main": "Verification of TASK-007. getWindowFrame и currentItems().first дают одинаковый CGRect? для конкретного windowID. Edge cases (nil frame, off-screen) трактуются идентично.",
+    "points": [
+      "Семантически эквивалентно",
+      "Build чистый"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.29/HelloWork-0.9.29.dmg"
+  },
+  {
     "version": "0.9.28",
     "date": "2026-04-27",
     "customMessage": "TASK-007: Mover.move post-move check теперь делает single-window CGS вместо полного menubar enum. Финал N+1 фикса.",
