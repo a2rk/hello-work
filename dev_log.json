@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.27",
+    "date": "2026-04-27",
+    "customMessage": "TASK-006 verified: cache-замена корректна, Mover внутри пока всё ещё дёргает full enum — это TASK-007.",
+    "main": "Verification of TASK-005. Логическая эквивалентность подтверждена: frame обновляется per-window-CGS, остальные поля (pid/title/ownerName) переиспользуются из снапшота. Mover.move отдельная зона.",
+    "points": [
+      "Build чистый",
+      "Mover.move внутренне ещё делает currentItems() — будет в TASK-007"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.27/HelloWork-0.9.27.dmg"
+  },
+  {
     "version": "0.9.26",
     "date": "2026-04-27",
     "customMessage": "TASK-005: убран N+1 CGS overhead в hider. Collapse 10 items раньше делал 11+ полных перечислений menubar — теперь 1 + N лёгких per-window запросов.",

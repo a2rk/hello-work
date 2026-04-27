@@ -131,7 +131,7 @@ HelloWork/
   - Проблема: для N items — N+1 полных CGS-перечислений menubar.
   - Решение: один `currentItems()` в начале, по `windowID` lookup внутри loop'а. Frame для actual-position брать через `Bridging.getWindowFrame(for: id)` (одно CGS-обращение, не полный list).
 
-- [ ] **TASK-006 [verify]** — TASK-005
+- [x] **TASK-006 [verify]** — TASK-005  → released as v0.9.27
 
 - [ ] **TASK-007 [impl]** — `MenuBarItemMover.move()` — убрать второй `currentItems()` для verify
   - Файл: `Menubar/MenuBarItemMover.swift:79-88`
