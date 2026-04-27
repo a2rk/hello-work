@@ -55,9 +55,24 @@ if [ ! -f scripts/AppIcon.icns ]; then
 fi
 cp scripts/AppIcon.icns "$APP_PATH/Contents/Resources/AppIcon.icns"
 
-# 7. Ad-hoc codesign со стабильным identifier — нужен для TCC permissions
-#    (без stable identifier macOS не сохраняет grant между запусками).
-codesign --force --deep --sign - --identifier "$BUNDLE_ID" "$APP_PATH" 2>&1 | grep -v "replacing existing signature" || true
+# 7. Codesign. Если есть наша self-signed identity — подписываем ей
+#    (TCC keys по cert hash → grants живут через апдейты). Иначе ad-hoc.
+#    Self-signed cert не trusted в системе, поэтому ищем по SHA-1 hash —
+#    codesign --sign HASH не требует доверия к сертификату.
+SIGN_NAME="HelloWork Self-Signed"
+SIGN_HASH=$(security find-identity -p codesigning ~/Library/Keychains/login.keychain-db 2>/dev/null \
+    | awk -v name="$SIGN_NAME" '$0 ~ name {print $2; exit}')
+if [ -n "$SIGN_HASH" ]; then
+    echo "▶ Подписываю '$SIGN_NAME' ($SIGN_HASH)..."
+    codesign --force --deep --sign "$SIGN_HASH" --identifier "$BUNDLE_ID" \
+        --options runtime --timestamp=none "$APP_PATH" 2>&1 \
+        | grep -v "replacing existing signature" || true
+else
+    echo "⚠️  Идентичность '$SIGN_NAME' не найдена → подписываю ad-hoc"
+    echo "    Запусти scripts/setup_signing.sh чтобы grants выживали через апдейты."
+    codesign --force --deep --sign - --identifier "$BUNDLE_ID" "$APP_PATH" 2>&1 \
+        | grep -v "replacing existing signature" || true
+fi
 
 echo "✓ $APP_PATH"
 du -sh "$APP_PATH" | awk '{print "  size: " $1}'

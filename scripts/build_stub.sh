@@ -53,8 +53,19 @@ if [ ! -f scripts/AppIconInstaller.icns ]; then
 fi
 cp scripts/AppIconInstaller.icns "$APP_PATH/Contents/Resources/AppIcon.icns"
 
-# 6. Ad-hoc codesign
-codesign --force --deep --sign - --identifier "$BUNDLE_ID" "$APP_PATH" 2>&1 | grep -v "replacing existing signature" || true
+# 6. Codesign — стабильная self-signed identity если есть, иначе ad-hoc.
+SIGN_NAME="HelloWork Self-Signed"
+SIGN_HASH=$(security find-identity -p codesigning ~/Library/Keychains/login.keychain-db 2>/dev/null \
+    | awk -v name="$SIGN_NAME" '$0 ~ name {print $2; exit}')
+if [ -n "$SIGN_HASH" ]; then
+    codesign --force --deep --sign "$SIGN_HASH" --identifier "$BUNDLE_ID" \
+        --options runtime --timestamp=none "$APP_PATH" 2>&1 \
+        | grep -v "replacing existing signature" || true
+else
+    echo "⚠️  '$SIGN_NAME' нет → ad-hoc. Запусти scripts/setup_signing.sh"
+    codesign --force --deep --sign - --identifier "$BUNDLE_ID" "$APP_PATH" 2>&1 \
+        | grep -v "replacing existing signature" || true
+fi
 
 echo "✓ $APP_PATH"
 du -sh "$APP_PATH" | awk '{print "  size: " $1}'

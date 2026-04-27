@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.9.21",
+    "date": "2026-04-27",
+    "customMessage": "Стабильная self-signed подпись. С этого билда юзеры выдают Accessibility / Screen Recording РАЗ — TCC больше не будет их сбрасывать на каждый апдейт.",
+    "main": "Перешли с ad-hoc подписи на постоянный self-signed cert 'HelloWork Self-Signed'. TCC keying по cert root hash (стабильному) вместо cdhash (меняется на каждый бинарь). Designated requirement теперь: identifier + certificate root = H\"3191dd0...\".",
+    "points": [
+      "scripts/setup_signing.sh — one-time скрипт для dev-машины: генерит RSA-2048 cert с extendedKeyUsage=codeSigning, упаковывает в p12, импортирует в login.keychain, разрешает codesign использовать ключ silent",
+      "scripts/build.sh + build_stub.sh: ищут SHA-1 hash идентичности 'HelloWork Self-Signed' и подписывают по нему (codesign --sign HASH работает даже без trust setup в системе)",
+      "Designated requirement содержит cert root hash — стабилен между билдами → TCC видит одинаковое приложение",
+      "Если cert не настроен — fallback на ad-hoc с предупреждением",
+      "ВАЖНО: при переходе с ad-hoc TCC юзеру надо ОДИН РАЗ снести старый grant и выдать заново. После этого живёт до 2036 года (cert validity 10 лет)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.21/HelloWork-0.9.21.dmg"
+  },
+  {
     "version": "0.9.20",
     "date": "2026-04-27",
     "customMessage": "Hider: events теперь идут через .cghidEventTap (а не .postToPid) — события через WindowServer, который реально обрабатывает menubar drag. Screen Recording добавлен в обязательные доступы.",
