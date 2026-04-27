@@ -119,7 +119,7 @@ HelloWork/
   - Сценарии 1/2/3 трассированы — работают.
   - Найден edge-case → создан follow-up TASK-061/062.
 
-- [ ] **TASK-003 [impl]** — Configure deferred initialCollapsed race
+- [x] **TASK-003 [impl]** — Configure deferred initialCollapsed race  → released as v0.9.24
   - Файл: `Sources/HelloWork/Menubar/MenubarHiderController.swift:46-53`
   - Проблема: 1с asyncAfter после `configure()` вызывает `collapseInternal()`. Если за эту секунду юзер уже toggle-нул (expanded), отложенный collapse всё равно случится.
   - Решение: token/cancel-flag, инкрементируется в `configure`, проверяется в asyncAfter; toggle/applyAuto тоже инкрементируют чтобы дезактивировать pending.

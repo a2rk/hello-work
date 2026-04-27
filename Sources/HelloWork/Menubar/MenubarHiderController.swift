@@ -26,6 +26,11 @@ final class MenubarHiderController: ObservableObject {
     private var lastAutoIntent: Bool? = nil
     private var isToggling = false
 
+    /// Токен deferred-collapse'а из `configure(initialCollapsed: true)`.
+    /// Любой пользовательский toggle/applyAuto/peek — invalidate'ит его,
+    /// так что отложенный через 1с collapse не отменяет уже выбранное состояние.
+    private var deferredCollapseToken: UUID?
+
     /// Callback при создании mainItem (AppDelegate переустанавливает menu).
     var onMainItemReady: ((NSStatusItem) -> Void)?
 
@@ -49,9 +54,16 @@ final class MenubarHiderController: ObservableObject {
         updateMainIcon(style: iconStyle)
 
         if hiderEnabled && initialCollapsed {
+            let token = UUID()
+            deferredCollapseToken = token
             // Применяем persist через 1с после init — даём menubar layout устаканиться.
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 guard let self, self.enabled else { return }
+                guard self.deferredCollapseToken == token else {
+                    devlog("hider", "deferred initialCollapsed cancelled — user или auto уже изменили состояние")
+                    return
+                }
+                self.deferredCollapseToken = nil
                 devlog("hider", "deferred initialCollapsed → collapseInternal")
                 self.collapseInternal()
             }
@@ -66,6 +78,7 @@ final class MenubarHiderController: ObservableObject {
         tearDownItems()
         enabled = false
         isCollapsed = false
+        deferredCollapseToken = nil
     }
 
     func updateMainIcon(style: StatusIconStyle) {
@@ -81,6 +94,7 @@ final class MenubarHiderController: ObservableObject {
             devlog("hider", "toggle() — guard rejected")
             return
         }
+        deferredCollapseToken = nil  // юзер выбрал — отложенный collapse отменён
         isToggling = true
         if isCollapsed {
             expandInternal()
@@ -98,11 +112,13 @@ final class MenubarHiderController: ObservableObject {
 
     func collapseAll() {
         guard enabled else { return }
+        deferredCollapseToken = nil
         collapseInternal()
     }
 
     func expandAll() {
         guard enabled else { return }
+        deferredCollapseToken = nil
         expandInternal()
     }
 
@@ -117,6 +133,7 @@ final class MenubarHiderController: ObservableObject {
         }
         devlog("hider", "applyAuto(\(collapsed)) — signal changed (was \(lastAutoIntent.map(String.init(describing:)) ?? "nil"))")
         lastAutoIntent = collapsed
+        deferredCollapseToken = nil  // auto-сигнал перетёр initialCollapsed
         if isCollapsed != collapsed {
             if collapsed {
                 collapseInternal()

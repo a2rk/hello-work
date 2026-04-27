@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.24",
+    "date": "2026-04-27",
+    "customMessage": "TASK-003: фикс race condition в configure() — отложенный через 1с initialCollapsed теперь отменяется любым user/auto действием.",
+    "main": "Раньше asyncAfter из configure(initialCollapsed:true) гарантированно срабатывал через секунду. Если за эту секунду юзер успевал toggle, или прилетал applyAuto — отложенный collapse отменял выбор. Теперь UUID-токен инвалидится в toggle/collapseAll/expandAll/applyAuto/tearDown.",
+    "points": [
+      "deferredCollapseToken: UUID? — guard в asyncAfter сравнивает с захваченным token",
+      "toggle/collapseAll/expandAll/applyAuto/tearDown сбрасывают token в nil",
+      "devlog: видно когда deferred cancel'нулся"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.24/HelloWork-0.9.24.dmg"
+  },
+  {
     "version": "0.9.23",
     "date": "2026-04-27",
     "customMessage": "TASK-002 verified: applyAuto fix корректен по основным сценариям. Найден edge-case с configure()/tearDown — отдельным follow-up TASK-061.",
