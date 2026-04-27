@@ -139,7 +139,7 @@ HelloWork/
 
 - [x] **TASK-008 [verify]** — TASK-007  → released as v0.9.29
 
-- [ ] **TASK-009 [impl]** — Combine cascade на toggle хайдера → 2 disk writes
+- [x] **TASK-009 [impl]** — Combine cascade на toggle хайдера → 2 disk writes  → released as v0.9.30
   - Файл: `App/AppDelegate.swift:487-527`, `Menubar/MenubarHiderController.swift:configure()`
   - Проблема: `configure()` ставит `isCollapsed = false` → sink на `$isCollapsed` пишет UserDefaults. Потом collapse-internal через 1с — ещё один write.
   - Решение: добавить `private var suppressPersist: Bool` в controller, обнулять только после первого реального user-action или после deferred-collapse.

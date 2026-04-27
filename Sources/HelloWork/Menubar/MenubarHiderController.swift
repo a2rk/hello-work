@@ -38,6 +38,12 @@ final class MenubarHiderController: ObservableObject {
     /// AppDelegate показывает prompt и/или открывает System Settings.
     var onAccessibilityRequired: (() -> Void)?
 
+    /// Зовётся ровно при РЕАЛЬНОМ изменении collapsed-состояния
+    /// (collapseInternal / expandInternal), но НЕ при transient-сбросе
+    /// в configure. AppDelegate подписывает сюда persistence — чтобы
+    /// `configure(initialCollapsed:true)` не писал disk дважды (false → true).
+    var onCollapsedPersist: ((Bool) -> Void)?
+
     init() {}
 
     // MARK: - Configuration
@@ -224,6 +230,7 @@ final class MenubarHiderController: ObservableObject {
 
         isCollapsed = true
         updateMainIcon(style: currentIconStyle)
+        onCollapsedPersist?(true)
         devlog("hider", "collapseInternal done — isCollapsed=true")
     }
 
@@ -233,6 +240,7 @@ final class MenubarHiderController: ObservableObject {
         restoreAllItems()
         isCollapsed = false
         updateMainIcon(style: currentIconStyle)
+        onCollapsedPersist?(false)
         devlog("hider", "expandInternal done")
     }
 

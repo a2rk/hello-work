@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.30",
+    "date": "2026-04-27",
+    "customMessage": "TASK-009: устранён двойной disk-write при старте с initialCollapsed=true. Persist через callback (только на реальные collapse/expand) вместо $isCollapsed sink (срабатывал и на transient-сброс в configure).",
+    "main": "Раньше configure() ставил isCollapsed=false → sink писал false; через 1с deferred ставил true → sink писал true. Net: 2 writes на каждый старт. Теперь persist живёт callback'ом MenubarHiderController.onCollapsedPersist, дёргается только из collapseInternal/expandInternal.",
+    "points": [
+      "MenubarHiderController.onCollapsedPersist: ((Bool) -> Void)? — точка persistence",
+      "AppDelegate переехал с $isCollapsed sink на onCollapsedPersist closure",
+      "configure transient false→deferred true теперь = 1 disk write вместо 2"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.30/HelloWork-0.9.30.dmg"
+  },
+  {
     "version": "0.9.29",
     "date": "2026-04-27",
     "customMessage": "TASK-008 verified: Mover.move post-check семантически эквивалентен. Регрессий нет.",

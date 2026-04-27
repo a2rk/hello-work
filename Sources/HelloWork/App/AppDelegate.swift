@@ -513,18 +513,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
             .store(in: &menubarCancellables)
 
-        // Изменилось состояние hider — persist (визуал обновляет controller сам).
-        state.menubarHider.$isCollapsed
-            .dropFirst()
-            .sink { [weak self] collapsed in
-                Task { @MainActor [weak self] in
-                    guard let self else { return }
-                    if self.state.menubarPersistCollapsed {
-                        self.state.saveMenubarCollapsed(collapsed)
-                    }
-                }
-            }
-            .store(in: &menubarCancellables)
+        // Persist через callback — controller зовёт его ТОЛЬКО на реальные
+        // collapse/expand-события, не на transient-сброс в configure(). Это
+        // спасает от двойного disk-write при старте с initialCollapsed=true
+        // (configure ставит isCollapsed=false → 1с deferred ставит true).
+        state.menubarHider.onCollapsedPersist = { [weak self] collapsed in
+            guard let self, self.state.menubarPersistCollapsed else { return }
+            self.state.saveMenubarCollapsed(collapsed)
+        }
 
         registerMenubarHotkey()
     }
