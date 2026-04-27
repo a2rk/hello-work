@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.52",
+    "date": "2026-04-27",
+    "customMessage": "TASK-031: Diagnostics tab автообновление через mtime gate. Stat() дёшев, full read+state-update — только когда файл реально изменился.",
+    "main": "Раньше каждые 0.8с делали full read+state-update. Теперь сначала stat() для mtime; если не изменилось — skip. .onDisappear корректно останавливает timer при смене таба.",
+    "points": [
+      "lastModificationDate @State кэширует mtime",
+      "Refresh button + Clear сбрасывают cache, форсируя reload",
+      "Когда dev mode off — log не пишется, mtime не меняется, skip"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.52/HelloWork-0.9.52.dmg"
+  },
+  {
     "version": "0.9.51",
     "date": "2026-04-27",
     "customMessage": "TASK-030 verified: TimelineView корректно изолирует тикающие чарты от parent body.",

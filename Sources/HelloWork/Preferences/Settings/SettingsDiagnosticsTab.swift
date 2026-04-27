@@ -7,6 +7,8 @@ struct SettingsDiagnosticsTab: View {
 
     @State private var contents: String = ""
     @State private var refreshTimer: Timer?
+    /// Last seen mtime файла лога — если не изменился, skip read+state-update.
+    @State private var lastModificationDate: Date?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -51,11 +53,13 @@ struct SettingsDiagnosticsTab: View {
     private var controlsBar: some View {
         HStack(spacing: 8) {
             actionButton(t.diagnosticsRefresh, system: "arrow.clockwise") {
+                lastModificationDate = nil
                 reload()
             }
             actionButton(t.diagnosticsClear, system: "trash") {
                 DevLogger.shared.clear()
                 contents = ""
+                lastModificationDate = nil
             }
             actionButton(t.diagnosticsReveal, system: "folder") {
                 NSWorkspace.shared.activateFileViewerSelecting([DevLogger.shared.logURL])
@@ -131,6 +135,16 @@ struct SettingsDiagnosticsTab: View {
     }
 
     private func reload() {
-        contents = DevLogger.shared.readContents()
+        // Двухступенчатый: дешёвый stat() для mtime, full read только если изменилось.
+        // .onDisappear уже останавливает timer при смене таба, так что здесь
+        // дополнительная пауза не нужна — но gate через mtime спасает от
+        // ненужных file-read'ов когда логгер выключен / dev mode off.
+        let url = DevLogger.shared.logURL
+        let attrs = try? FileManager.default.attributesOfItem(atPath: url.path)
+        let mtime = attrs?[.modificationDate] as? Date
+        if mtime != lastModificationDate {
+            lastModificationDate = mtime
+            contents = DevLogger.shared.readContents()
+        }
     }
 }

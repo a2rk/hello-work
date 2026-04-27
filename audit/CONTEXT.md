@@ -231,7 +231,7 @@ HelloWork/
 
 - [x] **TASK-030 [verify]** — TASK-029  → released as v0.9.51
 
-- [ ] **TASK-031 [impl]** — Diagnostics tab — pause refresh когда таб не активен
+- [x] **TASK-031 [impl]** — Diagnostics tab — pause refresh когда таб не активен  → released as v0.9.52
   - Файл: `Preferences/Settings/SettingsDiagnosticsTab.swift:36-48`
   - Решение: проверять `state.settingsTab == .diagnostics` перед refresh. Также — проверять mtime файла, читать только при изменении.
 
