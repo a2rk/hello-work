@@ -271,4 +271,16 @@ struct Translation {
     let menubarAutoSchedule: String
     let menubarPersist: String
     let menubarDisclaimer: String
+
+    // MARK: - Combined schedule
+    let combinedScheduleTitle: String
+    let combinedScheduleSubtitle: (_ count: Int) -> String
+    let combinedAppCount: (_ count: Int) -> String
+    let combinedTimelineTitle: String
+    let combinedInfoTitle: String
+    let combinedNowAllowed: String
+    let combinedNowBlocked: String
+    let combinedNobody: String
+    let combinedNextChange: (_ appName: String, _ minutes: Int, _ willBlock: Bool) -> String
+    let combinedTotalAllowed: (_ hours: Int, _ minutes: Int, _ apps: Int) -> String
 }

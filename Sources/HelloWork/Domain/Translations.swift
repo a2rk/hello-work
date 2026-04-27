@@ -233,7 +233,31 @@ extension Translation {
         menubarAutoFocus: "Hide while Focus Mode is on",
         menubarAutoSchedule: "Hide during blocked schedule windows",
         menubarPersist: "Remember state between launches",
-        menubarDisclaimer: "macOS only allows hiding all menubar icons at once. We use the «wide divider» technique that pushes right-side icons off the screen. The icons remain functional — you just can't see them."
+        menubarDisclaimer: "macOS only allows hiding all menubar icons at once. We use the «wide divider» technique that pushes right-side icons off the screen. The icons remain functional — you just can't see them.",
+        combinedScheduleTitle: "Combined schedule",
+        combinedScheduleSubtitle: { n in
+            "All \(n) \(n == 1 ? "app" : "apps") on a single 24-hour clock. Read-only view."
+        },
+        combinedAppCount: { n in
+            "\(n) \(n == 1 ? "app" : "apps")"
+        },
+        combinedTimelineTitle: "Timeline",
+        combinedInfoTitle: "At a glance",
+        combinedNowAllowed: "Allowed now",
+        combinedNowBlocked: "Blocked now",
+        combinedNobody: "Nothing",
+        combinedNextChange: { name, mins, willBlock in
+            let suffix = willBlock ? "will be blocked" : "will be allowed"
+            if mins < 60 {
+                return "Next change in \(mins) min — \(name) \(suffix)."
+            }
+            let h = mins / 60
+            let m = mins % 60
+            return "Next change in \(h)h \(m)min — \(name) \(suffix)."
+        },
+        combinedTotalAllowed: { h, m, apps in
+            "Total allowed across \(apps) apps: \(h)h \(m)min per day."
+        }
     )
 
     static let ru = Translation(
@@ -467,7 +491,35 @@ extension Translation {
         menubarAutoFocus: "Скрывать когда включён фокус-режим",
         menubarAutoSchedule: "Скрывать во время заблокированных окон расписания",
         menubarPersist: "Запоминать состояние между запусками",
-        menubarDisclaimer: "macOS позволяет скрывать иконки только все разом. Это ограничение системы — Hello work использует технику «широкий разделитель», которая выталкивает правые иконки за край экрана. Иконки остаются рабочими — их просто не видно."
+        menubarDisclaimer: "macOS позволяет скрывать иконки только все разом. Это ограничение системы — Hello work использует технику «широкий разделитель», которая выталкивает правые иконки за край экрана. Иконки остаются рабочими — их просто не видно.",
+        combinedScheduleTitle: "Общее расписание",
+        combinedScheduleSubtitle: { n in
+            "Все \(n) \(ruPlural(n, "приложение", "приложения", "приложений")) на одном 24-часовом круге. Только просмотр."
+        },
+        combinedAppCount: { n in
+            "\(n) \(ruPlural(n, "приложение", "приложения", "приложений"))"
+        },
+        combinedTimelineTitle: "Линия времени",
+        combinedInfoTitle: "Краткая сводка",
+        combinedNowAllowed: "Сейчас разрешено",
+        combinedNowBlocked: "Сейчас заблокировано",
+        combinedNobody: "Ничего",
+        combinedNextChange: { name, mins, willBlock in
+            let suffix = willBlock ? "уйдёт в блок" : "станет доступно"
+            if mins < 60 {
+                let m = ruPlural(mins, "минуту", "минуты", "минут")
+                return "Следующая смена через \(mins) \(m) — «\(name)» \(suffix)."
+            }
+            let h = mins / 60
+            let m = mins % 60
+            let hStr = ruPlural(h, "час", "часа", "часов")
+            return "Следующая смена через \(h) \(hStr) \(m) мин — «\(name)» \(suffix)."
+        },
+        combinedTotalAllowed: { h, m, apps in
+            let appsStr = ruPlural(apps, "приложению", "приложениям", "приложениям")
+            let hStr = ruPlural(h, "час", "часа", "часов")
+            return "Суммарно по \(apps) \(appsStr): \(h) \(hStr) \(m) мин в сутках."
+        }
     )
 
     static let zh = Translation(
@@ -693,6 +745,26 @@ extension Translation {
         menubarAutoFocus: "聚焦模式开启时隐藏",
         menubarAutoSchedule: "时间表阻止时隐藏",
         menubarPersist: "在启动间记住状态",
-        menubarDisclaimer: "macOS 只允许一次隐藏所有菜单栏图标。这是系统限制 — Hello work 使用「宽分隔符」技术,将右侧图标推出屏幕。图标仍然可用 — 只是看不见。"
+        menubarDisclaimer: "macOS 只允许一次隐藏所有菜单栏图标。这是系统限制 — Hello work 使用「宽分隔符」技术,将右侧图标推出屏幕。图标仍然可用 — 只是看不见。",
+        combinedScheduleTitle: "总时间表",
+        combinedScheduleSubtitle: { n in "全部 \(n) 个应用在一个 24 小时圆盘上。只读视图。" },
+        combinedAppCount: { n in "\(n) 个应用" },
+        combinedTimelineTitle: "时间线",
+        combinedInfoTitle: "概览",
+        combinedNowAllowed: "当前允许",
+        combinedNowBlocked: "当前阻止",
+        combinedNobody: "无",
+        combinedNextChange: { name, mins, willBlock in
+            let suffix = willBlock ? "将被阻止" : "将被允许"
+            if mins < 60 {
+                return "下次变化将在 \(mins) 分钟后 — \(name) \(suffix)。"
+            }
+            let h = mins / 60
+            let m = mins % 60
+            return "下次变化将在 \(h) 小时 \(m) 分钟后 — \(name) \(suffix)。"
+        },
+        combinedTotalAllowed: { h, m, apps in
+            "\(apps) 个应用每日总允许时间:\(h) 小时 \(m) 分钟。"
+        }
     )
 }

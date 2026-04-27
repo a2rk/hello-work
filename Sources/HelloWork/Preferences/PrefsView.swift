@@ -38,6 +38,14 @@ struct PrefsView: View {
 
             createButton
 
+            if combinedScheduleVisible {
+                CombinedScheduleSidebarRow(
+                    isSelected: state.prefsSelection == .combined
+                ) {
+                    state.prefsSelection = .combined
+                }
+            }
+
             ForEach(state.managedApps) { app in
                 AppSidebarRow(
                     app: app,
@@ -70,6 +78,11 @@ struct PrefsView: View {
             if section == .updates { return state.updateAvailable }
             return true
         }
+    }
+
+    /// Combined schedule item visible if 2+ active (non-archived) apps.
+    private var combinedScheduleVisible: Bool {
+        state.managedApps.filter { !$0.isArchived }.count >= 2
     }
 
     private var sidebarDivider: some View {
@@ -130,6 +143,12 @@ struct PrefsView: View {
             } else if state.managedApps.contains(where: { $0.bundleID == bid }) {
                 ScheduleView(state: state, bundleID: bid)
                     .id(bid)
+            } else {
+                OnboardingView(action: openAppPicker)
+            }
+        case .combined:
+            if combinedScheduleVisible {
+                CombinedScheduleView(state: state)
             } else {
                 OnboardingView(action: openAppPicker)
             }
