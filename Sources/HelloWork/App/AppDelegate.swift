@@ -167,6 +167,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let ownBID = Bundle.main.bundleIdentifier
         var seenBIDs = Set<String>()
 
+        // Bulk window discovery — один CGWindowListCopyWindowInfo на все
+        // блокируемые приложения вместо N отдельных enumeration'ов на тик.
+        let blockedBIDs: Set<String> = Set(
+            state.managedApps
+                .filter { !$0.isArchived && $0.bundleID != ownBID && !state.isAllowed(app: $0) }
+                .map { $0.bundleID }
+        )
+        let foundWindows = AppWindowFinder.findMultiple(bundleIDs: blockedBIDs)
+
         for app in state.managedApps where !app.isArchived && app.bundleID != ownBID {
             seenBIDs.insert(app.bundleID)
             let win = ensureOverlay(for: app.bundleID)
@@ -176,7 +185,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 continue
             }
 
-            guard let (frame, winNum) = AppWindowFinder.find(bundleID: app.bundleID) else {
+            guard let (frame, winNum) = foundWindows[app.bundleID] else {
                 win.orderOut(nil)
                 continue
             }

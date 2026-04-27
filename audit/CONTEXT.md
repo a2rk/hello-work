@@ -246,7 +246,7 @@ HelloWork/
 
 ### Phase G — refresh() timer + window finder
 
-- [ ] **TASK-035 [impl]** — refresh() throttle + skip когда `!enabled` + workspace-driven frontmost
+- [x] **TASK-035 [impl]** — refresh() throttle + skip когда `!enabled` + workspace-driven frontmost  → released as v0.9.56
   - Файлы: `App/AppDelegate.swift:startTimer/refresh`, `WindowDetection/AppWindowFinder.swift`, `Focus/FrontmostWindowFinder.swift`
   - Проблема: 4Hz timer вызывает AppWindowFinder.find() для каждого managed app независимо от того, изменилось ли что-то.
   - Решение: 

@@ -1,15 +1,26 @@
 import AppKit
 
 enum AppWindowFinder {
-    static func find(bundleID: String) -> (NSRect, Int)? {
+    /// Bulk-вариант — один проход по CGWindowList на N приложений вместо N
+    /// отдельных вызовов CGWindowListCopyWindowInfo. Используется в refresh()
+    /// чтобы при 4Hz-tick'е не делать N полных enumeration'ов.
+    static func findMultiple(bundleIDs: Set<String>) -> [String: (NSRect, Int)] {
+        guard !bundleIDs.isEmpty else { return [:] }
         let options: CGWindowListOption = [.optionOnScreenOnly, .excludeDesktopElements]
         guard let info = CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]] else {
-            return nil
+            return [:]
         }
 
-        var bestRect: NSRect?
-        var bestWindowNumber: Int?
-        var bestArea: CGFloat = 0
+        // Cache pid → bundleID — одинаковые pid'ы встречаются у нескольких окон.
+        var pidToBundle: [pid_t: String?] = [:]
+        func bundle(for pid: pid_t) -> String? {
+            if let cached = pidToBundle[pid] { return cached }
+            let bid = NSRunningApplication(processIdentifier: pid)?.bundleIdentifier
+            pidToBundle[pid] = bid
+            return bid
+        }
+
+        var bestPerBundle: [String: (NSRect, Int, CGFloat)] = [:]
 
         for w in info {
             guard
@@ -23,20 +34,24 @@ enum AppWindowFinder {
             else { continue }
 
             let pid = pid_t(pidNum)
-            guard NSRunningApplication(processIdentifier: pid)?.bundleIdentifier == bundleID
-            else { continue }
+            guard let bid = bundle(for: pid), bundleIDs.contains(bid) else { continue }
 
             let area = width * height
-            if area > bestArea {
-                bestArea = area
-                bestRect = cgFrameToScreenFrame(NSRect(x: x, y: y, width: width, height: height))
-                bestWindowNumber = winNum
-            }
+            if let existing = bestPerBundle[bid], area <= existing.2 { continue }
+            let frame = cgFrameToScreenFrame(NSRect(x: x, y: y, width: width, height: height))
+            bestPerBundle[bid] = (frame, winNum, area)
         }
-        if let r = bestRect, let n = bestWindowNumber {
-            return (r, n)
+
+        var result: [String: (NSRect, Int)] = [:]
+        for (bid, (frame, winNum, _)) in bestPerBundle {
+            result[bid] = (frame, winNum)
         }
-        return nil
+        return result
+    }
+
+    /// Convenience-обёртка для одного приложения.
+    static func find(bundleID: String) -> (NSRect, Int)? {
+        findMultiple(bundleIDs: [bundleID])[bundleID]
     }
 
     private static func cgFrameToScreenFrame(_ cg: NSRect) -> NSRect {

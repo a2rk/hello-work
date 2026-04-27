@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.9.56",
+    "date": "2026-04-27",
+    "customMessage": "TASK-035: refresh() переехал на bulk window discovery. Один CGWindowListCopyWindowInfo на N managed apps вместо N отдельных вызовов.",
+    "main": "Раньше для каждого blocked приложения refresh() вызывал AppWindowFinder.find(), который делал full CGS enum + linear scan по всем окнам. С 5 apps × 4Hz = 20 full CGS calls/sec. Теперь один проход с pid→bundleID кэшем — 4 calls/sec независимо от количества apps.",
+    "points": [
+      "AppWindowFinder.findMultiple(bundleIDs:) — bulk lookup за один CGS call",
+      "find(bundleID:) теперь thin wrapper over findMultiple",
+      "AppDelegate.refresh: blockedBIDs Set + findMultiple → словарь lookups в loop",
+      "pid→bundleID cache внутри findMultiple — NSRunningApplication дёргается раз на pid"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.56/HelloWork-0.9.56.dmg"
+  },
+  {
     "version": "0.9.55",
     "date": "2026-04-27",
     "customMessage": "TASK-034 verified: Hasher signature корректен. Phase F (UI re-render perf) полностью закрыта.",
