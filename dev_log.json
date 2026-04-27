@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.35",
+    "date": "2026-04-27",
+    "customMessage": "TASK-014 verified: AutoRelauncher timeout корректен. bash $SECONDS считает wall-clock, deadline 60c проверяется в loop.",
+    "main": "Verification of TASK-013. Trace: kill within 60s → relaunch as before; no kill within 60s → exit 0, watcher dies clean. Build чистый.",
+    "points": [
+      "bash $SECONDS — wall-clock since shell start, integer",
+      "Loop sleep 0.4s, deadline check каждый итер",
+      "/bin/bash корректно интерпретирует синтаксис"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.35/HelloWork-0.9.35.dmg"
+  },
+  {
     "version": "0.9.34",
     "date": "2026-04-27",
     "customMessage": "TASK-013: AutoRelauncher больше не висит вечно. Если macOS не убил процесс при grant'е (а часто не убивает) — bash watcher выходит через 60с.",

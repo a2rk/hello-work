@@ -160,7 +160,7 @@ HelloWork/
   - Проблема: bash-watcher делает `while kill -0 PID; do sleep 0.4; done` → если macOS НЕ убил процесс при grant'е (а часто не убивает), скрипт висит вечно, мусорный процесс.
   - Решение: добавить timeout 60с в while. После timeout — exit без relaunch.
 
-- [ ] **TASK-014 [verify]** — TASK-013
+- [x] **TASK-014 [verify]** — TASK-013  → released as v0.9.35
 
 - [ ] **TASK-015 [impl]** — Permissions onboarding less aggressive
   - Файл: `App/AppDelegate.swift:86-110`
