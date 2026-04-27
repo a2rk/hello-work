@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.9.65",
+    "date": "2026-04-27",
+    "customMessage": "TASK-044 verified: recordGrace guard корректен.",
+    "main": "Verification of TASK-043. Trivial guard.",
+    "points": [
+      "0 / negative → skip"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.65/HelloWork-0.9.65.dmg"
+  },
+  {
     "version": "0.9.64",
     "date": "2026-04-27",
     "customMessage": "TASK-043: recordGrace отказывается записывать ≤0 секунд. Защита от программных ошибок у caller'ов.",

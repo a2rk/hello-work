@@ -289,7 +289,7 @@ HelloWork/
   - Файл: `Domain/Stats/StatsCollector.swift`
   - Решение: `guard seconds > 0 else { return }` в начале.
 
-- [ ] **TASK-044 [verify]** — TASK-043
+- [x] **TASK-044 [verify]** — TASK-043  → released as v0.9.65
 
 - [ ] **TASK-045 [impl]** — `AppVersion.compare` — pre-release suffix
   - Файл: `App/Version.swift`
