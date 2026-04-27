@@ -262,7 +262,7 @@ HelloWork/
   - Проблема: при useAccessibility=true может два раза дёргать CGWindowListCopyWindowInfo.
   - Решение: пробросить CG-info между AX и CG путями.
 
-- [ ] **TASK-038 [verify]** — TASK-037
+- [x] **TASK-038 [verify]** — TASK-037  → released as v0.9.59
 
 ### Phase H — UpdateInstaller / Stub
 

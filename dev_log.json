@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.59",
+    "date": "2026-04-27",
+    "customMessage": "TASK-038 verified: FrontmostWindowFinder single-CGS корректен. Phase G полностью закрыта.",
+    "main": "Verification of TASK-037. Все 3 пути (AX-success, AX-fallback, CG-only) делают ровно 1 CGS call. Algorithm preserved. Phase G done.",
+    "points": [
+      "Phase G complete (TASK-035..038, 4 tasks)",
+      "Refresh tick CGS-нагрузка теперь 1 call/tick от menubar + 1 от focus = 2"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.59/HelloWork-0.9.59.dmg"
+  },
+  {
     "version": "0.9.58",
     "date": "2026-04-27",
     "customMessage": "TASK-037: FrontmostWindowFinder делает РОВНО одну CGS-enum независимо от пути (AX/CG). Раньше AX-path + fallback на CG = 2 call'а, теперь cgInfo пробрасывается между.",
