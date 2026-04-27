@@ -16,6 +16,7 @@ struct Translation {
     let sectionSettings: String
     let sectionContacts: String
     let sectionAbout: String
+    let sectionPermissions: String
 
     // MARK: - File picker
     let pickerMessage: String

@@ -68,6 +68,14 @@ struct PrefsView: View {
                 }
             }
 
+            PermissionsSidebarRow(
+                title: state.t.sectionPermissions,
+                isSelected: state.prefsSelection == .permissions,
+                missing: state.permissions.anyMissing
+            ) {
+                state.prefsSelection = .permissions
+            }
+
             Spacer()
         }
         .padding(.horizontal, 10)

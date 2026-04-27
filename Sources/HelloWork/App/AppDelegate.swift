@@ -22,7 +22,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var menubarCancellables: Set<AnyCancellable> = []
 
     private let firstLaunchKey = "helloWorkHasLaunchedBefore"
-    private let permissionsShownKey = "helloWorkPermissionsOnboardingShown"
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
@@ -90,15 +89,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             defaults.set(true, forKey: firstLaunchKey)
         }
 
-        // Permissions onboarding показываем при первом запуске или если ещё не показывали.
-        let needsPermsOnboarding = !defaults.bool(forKey: permissionsShownKey)
-            && state.permissions.anyMissing
+        // Permissions onboarding показываем на КАЖДОМ запуске, пока хоть одно
+        // разрешение не выдано — иначе юзер забывает и hider/focus тихо не работают.
+        let needsPermsOnboarding = state.permissions.anyMissing
 
-        if isFirstLaunch || needsPermsOnboarding {
-            defaults.set(true, forKey: permissionsShownKey)
-        }
-
-        // Небольшая задержка, чтобы статус-бар и обсерверы успели разогреться.
         guard isFirstLaunch || needsPermsOnboarding else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
             guard let self else { return }
@@ -454,13 +448,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Menubar hider
 
     private func setupMenubarHider() {
-        // Без Accessibility CGEvent.postToPid игнорится — открываем System Settings.
+        // Без Accessibility CGEvent.postToPid игнорится — отправляем юзера
+        // на экран «Доступы», там есть кнопка Grant и подсказки.
         state.menubarHider.onAccessibilityRequired = { [weak self] in
             Task { @MainActor [weak self] in
                 guard let self else { return }
-                self.state.permissions.requestAccessibility()
-                if !AXIsProcessTrusted() {
-                    self.state.permissions.openSystemSettings(for: .accessibility)
+                self.state.prefsSelection = .permissions
+                self.openPreferences()
+                // Если ещё не спрашивали — system prompt появится автоматически.
+                if self.state.permissions.accessibility == .notDetermined {
+                    self.state.permissions.requestAccessibility()
                 }
             }
         }

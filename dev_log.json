@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.9.17",
+    "date": "2026-04-27",
+    "customMessage": "Онбординг доступов теперь живёт постоянно: пункт «Доступы» в сайдбаре + красная точка пока что-то не выдано. Hider шлёт юзера на этот же экран, если AX не дано.",
+    "main": "Permissions onboarding больше не one-shot. Раньше показывался ровно при первом запуске и забывался — если юзер кликнул «потом», hider молча не работал и вернуться было некуда. Теперь экран доступен всегда и подсвечивается красной точкой, пока что-то не granted.",
+    "points": [
+      "Preferences/Sidebar/PermissionsSidebarRow.swift — отдельная строка «Доступы» с иконкой lock.shield и красной точкой-индикатором при anyMissing",
+      "PrefsView сайдбар: ряд Доступы виден всегда — селектит .permissions, открывая существующий PermissionsOnboardingView",
+      "AppDelegate.showPrefsIfFirstLaunch: убран ключ helloWorkPermissionsOnboardingShown, онбординг показывается на КАЖДОМ запуске пока permissions.anyMissing",
+      "MenubarHider.onAccessibilityRequired: теперь открывает Prefs на экране Доступы вместо тихого System Settings — юзер видит контекст",
+      "Translation.sectionPermissions: en/ru/zh строки добавлены"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.17/HelloWork-0.9.17.dmg"
+  },
+  {
     "version": "0.9.16",
     "date": "2026-04-27",
     "customMessage": "Hider реально начал двигать чужие иконки. В 0.9.15 поток событий был кривой — иконка переключалась, items не уезжали. Теперь работает.",
