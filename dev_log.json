@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.51",
+    "date": "2026-04-27",
+    "customMessage": "TASK-030 verified: TimelineView корректно изолирует тикающие чарты от parent body.",
+    "main": "Verification of TASK-029. Header/legend больше не перестраиваются на каждый тик. Build чистый.",
+    "points": [
+      "TimelineView ticks → только её content closure",
+      "Parent body не зависит от now"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.51/HelloWork-0.9.51.dmg"
+  },
+  {
     "version": "0.9.50",
     "date": "2026-04-27",
     "customMessage": "TASK-029: CombinedScheduleView избавился от @State now + Timer. Теперь TimelineView обновляет только тикающие чарты раз в 30с, parent body не перерисовывается.",

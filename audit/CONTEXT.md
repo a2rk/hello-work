@@ -229,7 +229,7 @@ HelloWork/
   - Проблема: @State now Date с 1Hz timer перерисовывает всю combined-вьюху.
   - Решение: `TimelineView(.periodic(from: .now, by: 60))` (раз в минуту достаточно для расписания) на ring-чарте, не на parent body.
 
-- [ ] **TASK-030 [verify]** — TASK-029
+- [x] **TASK-030 [verify]** — TASK-029  → released as v0.9.51
 
 - [ ] **TASK-031 [impl]** — Diagnostics tab — pause refresh когда таб не активен
   - Файл: `Preferences/Settings/SettingsDiagnosticsTab.swift:36-48`
