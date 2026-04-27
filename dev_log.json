@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.55",
+    "date": "2026-04-27",
+    "customMessage": "TASK-034 verified: Hasher signature корректен. Phase F (UI re-render perf) полностью закрыта.",
+    "main": "Verification of TASK-033. Hashable все поля, edge cases (empty/many apps) работают, collision negligible. Phase F done.",
+    "points": [
+      "Phase F complete (TASK-025..034, 10 tasks)",
+      "Slider debounce + ScheduleView decouple + TimelineView + diagnostics mtime + Hasher menu sig",
+      "Готовы к Phase G (refresh timer + window finder)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.55/HelloWork-0.9.55.dmg"
+  },
+  {
     "version": "0.9.54",
     "date": "2026-04-27",
     "customMessage": "TASK-033: signature для menu rebuild через Hasher вместо String-concat. Дешевле, особенно с большим списком приложений.",

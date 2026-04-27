@@ -242,7 +242,7 @@ HelloWork/
   - Проблема: signature ребилдится на изменение архивированного app или языка (хотя в menu только активные apps). Лишние полные NSMenu+NSHostingView перестроения.
   - Решение: фильтровать managedApps по `!isArchived` перед signature; убрать language если он не используется в menu (проверить).
 
-- [ ] **TASK-034 [verify]** — TASK-033
+- [x] **TASK-034 [verify]** — TASK-033  → released as v0.9.55
 
 ### Phase G — refresh() timer + window finder
 
