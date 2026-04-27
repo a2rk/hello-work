@@ -237,7 +237,7 @@ HelloWork/
 
 - [x] **TASK-032 [verify]** — TASK-031  → released as v0.9.53
 
-- [ ] **TASK-033 [impl]** — `rebuildStatusMenu` signature — semantic, не string-concat
+- [x] **TASK-033 [impl]** — `rebuildStatusMenu` signature — semantic, не string-concat  → released as v0.9.54
   - Файл: `App/AppDelegate.swift:391-415`
   - Проблема: signature ребилдится на изменение архивированного app или языка (хотя в menu только активные apps). Лишние полные NSMenu+NSHostingView перестроения.
   - Решение: фильтровать managedApps по `!isArchived` перед signature; убрать language если он не используется в menu (проверить).

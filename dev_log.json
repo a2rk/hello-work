@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.54",
+    "date": "2026-04-27",
+    "customMessage": "TASK-033: signature для menu rebuild через Hasher вместо String-concat. Дешевле, особенно с большим списком приложений.",
+    "main": "Раньше signature строилась через [String].joined(separator: '|') — на каждый refresh tick (4Hz) аллоцировались несколько String и финальная конкатенация. Теперь Hasher.combine inline + finalize → Int. Сами решения о rebuild идентичны.",
+    "points": [
+      "lastMenuSignature: String → Int",
+      "Hasher accumulates все relevant поля + apps loop",
+      "4Hz refresh теперь не аллоцирует строки впустую"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.54/HelloWork-0.9.54.dmg"
+  },
+  {
     "version": "0.9.53",
     "date": "2026-04-27",
     "customMessage": "TASK-032 verified: mtime gate корректен по всем сценариям (active/idle/closed/refresh/clear/no-file).",

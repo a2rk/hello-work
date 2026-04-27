@@ -207,7 +207,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Status bar
 
-    private var lastMenuSignature: String = ""
+    private var lastMenuSignature: Int = 0
 
     /// Создаёт status items через controller. Также вешает menu на main item.
     private func setupStatusItem() {
@@ -387,24 +387,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func refreshMenuIfNeeded() {
-        let appsSig = state.managedApps
-            .filter { !$0.isArchived }
-            .map { "\($0.bundleID):\(state.isAllowed(app: $0))" }
-            .joined(separator: ",")
-        let signature = [
-            state.language.rawValue,
-            "\(state.enabled)",
-            "\(state.allGraceSeconds)",
-            "\(state.updateAvailable)",
-            state.latestRemoteVersion ?? "",
-            "\(state.focusModeEnabled)",
-            "\(state.focus.isActive)",
-            state.focusHotkey.serialized,
-            "\(state.menubarHiderEnabled)",
-            "\(state.menubarHider.isCollapsed)",
-            state.menubarHotkey.serialized,
-            appsSig
-        ].joined(separator: "|")
+        // Hasher-based signature — дешевле строкового конкатения, особенно
+        // при большом количестве managedApps. Вызывается из refresh() 4 раза
+        // в секунду; signature пересчитывается каждый тик, но если не меняется,
+        // полный rebuild NSMenu / NSHostingView не происходит.
+        var hasher = Hasher()
+        hasher.combine(state.language)
+        hasher.combine(state.enabled)
+        for s in state.allGraceSeconds { hasher.combine(s) }
+        hasher.combine(state.updateAvailable)
+        hasher.combine(state.latestRemoteVersion)
+        hasher.combine(state.focusModeEnabled)
+        hasher.combine(state.focus.isActive)
+        hasher.combine(state.focusHotkey.serialized)
+        hasher.combine(state.menubarHiderEnabled)
+        hasher.combine(state.menubarHider.isCollapsed)
+        hasher.combine(state.menubarHotkey.serialized)
+        for app in state.managedApps where !app.isArchived {
+            hasher.combine(app.bundleID)
+            hasher.combine(state.isAllowed(app: app))
+        }
+        let signature = hasher.finalize()
 
         if signature != lastMenuSignature {
             rebuildStatusMenu()
