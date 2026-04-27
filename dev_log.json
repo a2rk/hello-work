@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.9.44",
+    "date": "2026-04-27",
+    "customMessage": "TASK-023: дедупликация update-checks. Auto-fetch (launch / refresh / open-prefs) throttled на 5 минут. URLSession теперь invalidate'ится после fetch'а. Кнопки «Check for updates» — force=true.",
+    "main": "Раньше launch + refresh-loop + open-prefs независимо триггерили checkForUpdates → 4+ GitHub-запросов в час. Теперь throttle 5 минут и параллельные вызовы skip'аются. URLSession освобождается через finishTasksAndInvalidate в defer.",
+    "points": [
+      "checkForUpdates(force: Bool = false) — explicit force для UI-кнопок",
+      "Throttle: skip если lastUpdateCheck < 5 min ago и не было ошибки",
+      "Skip параллельный вызов если isCheckingUpdates true",
+      "URLSession finishTasksAndInvalidate в defer",
+      "UI buttons: SettingsAppTab + UpdatesView передают force=true"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.44/HelloWork-0.9.44.dmg"
+  },
+  {
     "version": "0.9.43",
     "date": "2026-04-27",
     "customMessage": "TASK-022 verified: distinct hotkey IDs корректны. Phase D (Hotkey collisions) полностью закрыта.",

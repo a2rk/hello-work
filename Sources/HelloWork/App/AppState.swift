@@ -332,30 +332,44 @@ final class AppState: ObservableObject {
     }
 
     @MainActor
-    func checkForUpdates() async {
+    /// Минимальная пауза между fetch'ами dev_log.json (если successFul-fetch < 5 min ago,
+    /// повторный вызов skip'нем). Защищает от cascade'ов при open-prefs / refresh-tick.
+    private static let updateCheckThrottle: TimeInterval = 300
+
+    func checkForUpdates(force: Bool = false) async {
+        // Параллельный вызов уже идёт — не дёргаем второй раз.
+        if isCheckingUpdates { return }
+        // Свежий успешный fetch — пропускаем (если не force).
+        if !force, let last = lastUpdateCheck, lastUpdateCheckError == nil,
+           Date().timeIntervalSince(last) < Self.updateCheckThrottle {
+            return
+        }
+
         isCheckingUpdates = true
         defer { isCheckingUpdates = false }
 
+        // Cache-busting: уникальный URL = CDN/proxy не может отдать старое.
+        var components = URLComponents(url: DevLogConfig.url, resolvingAgainstBaseURL: false)
+            ?? URLComponents()
+        var items = components.queryItems ?? []
+        items.append(URLQueryItem(name: "_", value: "\(Int(Date().timeIntervalSince1970))"))
+        components.queryItems = items
+        let url = components.url ?? DevLogConfig.url
+
+        // Ephemeral session — никакого URLCache, никаких cookies.
+        let config = URLSessionConfiguration.ephemeral
+        config.urlCache = nil
+        config.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        let session = URLSession(configuration: config)
+        // После завершения — освобождаем connection pool / queues.
+        defer { session.finishTasksAndInvalidate() }
+
+        var req = URLRequest(url: url)
+        req.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        req.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
+        req.setValue("no-cache", forHTTPHeaderField: "Pragma")
+
         do {
-            // Cache-busting: уникальный URL = CDN/proxy не может отдать старое.
-            var components = URLComponents(url: DevLogConfig.url, resolvingAgainstBaseURL: false)
-                ?? URLComponents()
-            var items = components.queryItems ?? []
-            items.append(URLQueryItem(name: "_", value: "\(Int(Date().timeIntervalSince1970))"))
-            components.queryItems = items
-            let url = components.url ?? DevLogConfig.url
-
-            // Ephemeral session — никакого URLCache, никаких cookies.
-            let config = URLSessionConfiguration.ephemeral
-            config.urlCache = nil
-            config.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
-            let session = URLSession(configuration: config)
-
-            var req = URLRequest(url: url)
-            req.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
-            req.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
-            req.setValue("no-cache", forHTTPHeaderField: "Pragma")
-
             let (data, _) = try await session.data(for: req)
             let entries = try JSONDecoder().decode([UpdateInfo].self, from: data)
             self.devLogEntries = entries.sorted {

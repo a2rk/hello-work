@@ -198,7 +198,7 @@ HelloWork/
 
 ### Phase E — Update fetch / Network
 
-- [ ] **TASK-023 [impl]** — Дедуп update checks + invalidate URLSession
+- [x] **TASK-023 [impl]** — Дедуп update checks + invalidate URLSession  → released as v0.9.44
   - Файлы: `App/AppDelegate.swift:48,697,733`, `App/AppState.swift:checkForUpdates`
   - Проблема: запуск + refresh-loop + open-prefs все триггерят `checkForUpdates()` независимо. URL-session не invalidate-ится.
   - Решение:

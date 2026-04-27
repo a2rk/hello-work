@@ -83,7 +83,7 @@ struct SettingsAppTab: View {
             Spacer()
             HStack(spacing: 6) {
                 Button {
-                    Task { await state.checkForUpdates() }
+                    Task { await state.checkForUpdates(force: true) }
                 } label: {
                     HStack(spacing: 5) {
                         if state.isCheckingUpdates {

@@ -128,7 +128,7 @@ struct UpdatesView: View {
 
     private var checkButton: some View {
         Button {
-            Task { await state.checkForUpdates() }
+            Task { await state.checkForUpdates(force: true) }
         } label: {
             HStack(spacing: 6) {
                 if state.isCheckingUpdates {
