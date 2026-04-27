@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.9.53",
+    "date": "2026-04-27",
+    "customMessage": "TASK-032 verified: mtime gate корректен по всем сценариям (active/idle/closed/refresh/clear/no-file).",
+    "main": "Verification of TASK-031. 6 trace-сценариев зелёные. Build чистый.",
+    "points": [
+      "All edge cases работают"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.53/HelloWork-0.9.53.dmg"
+  },
+  {
     "version": "0.9.52",
     "date": "2026-04-27",
     "customMessage": "TASK-031: Diagnostics tab автообновление через mtime gate. Stat() дёшев, full read+state-update — только когда файл реально изменился.",

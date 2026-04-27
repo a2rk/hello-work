@@ -235,7 +235,7 @@ HelloWork/
   - Файл: `Preferences/Settings/SettingsDiagnosticsTab.swift:36-48`
   - Решение: проверять `state.settingsTab == .diagnostics` перед refresh. Также — проверять mtime файла, читать только при изменении.
 
-- [ ] **TASK-032 [verify]** — TASK-031
+- [x] **TASK-032 [verify]** — TASK-031  → released as v0.9.53
 
 - [ ] **TASK-033 [impl]** — `rebuildStatusMenu` signature — semantic, не string-concat
   - Файл: `App/AppDelegate.swift:391-415`
