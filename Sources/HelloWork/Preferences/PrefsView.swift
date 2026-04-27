@@ -210,8 +210,8 @@ struct PrefsView: View {
         case .app(let bid):
             if bid == Bundle.main.bundleIdentifier {
                 NiceTryView()
-            } else if state.managedApps.contains(where: { $0.bundleID == bid }) {
-                ScheduleView(state: state, bundleID: bid)
+            } else if let app = state.managedApps.first(where: { $0.bundleID == bid }) {
+                ScheduleView(state: state, app: app)
                     .id(bid)
             } else {
                 OnboardingView(action: openAppPicker)

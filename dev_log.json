@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.9.48",
+    "date": "2026-04-27",
+    "customMessage": "TASK-027: ScheduleView больше не наблюдает AppState напрямую. Принимает app: ManagedApp как let — body recompute'ится только когда конкретное приложение реально изменилось.",
+    "main": "Раньше @ObservedObject var state перерисовывал ScheduleView на любые изменения state (смена focusDimOpacity / language / hider state). Теперь let state + let app: ManagedApp. Mutations всё ещё через state.* methods, обновляют PrefsView, который пересоздаёт ScheduleView с актуальным app.",
+    "points": [
+      "ScheduleView: @ObservedObject → let state + let app",
+      "managedApp computed property → app: ManagedApp param",
+      "PrefsView: первая from(where:) → передаёт app напрямую",
+      "Body recompute только при реальном изменении app (Equatable struct)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.48/HelloWork-0.9.48.dmg"
+  },
+  {
     "version": "0.9.47",
     "date": "2026-04-27",
     "customMessage": "TASK-026 verified: debounced persist корректен — focus.updateDimOpacity sync, UserDefaults через 300ms.",

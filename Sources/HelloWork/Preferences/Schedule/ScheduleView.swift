@@ -2,8 +2,12 @@ import SwiftUI
 
 struct ScheduleView: View {
     @Environment(\.t) var t
-    @ObservedObject var state: AppState
-    let bundleID: String
+    /// `let` (не @ObservedObject) — view не должен ребилдиться на любые изменения
+    /// AppState, только на изменение собственных входов (`app`). Mutations
+    /// всё равно идут через state.* и обновляют PrefsView, который пересоберёт
+    /// этот View с новым `app`, если данные приложения реально поменялись.
+    let state: AppState
+    let app: ManagedApp
     @State private var dragMode: DragMode?
     @State private var lastDragAngle: Double = 0
     @State private var dragAccumulated: Double = 0
@@ -11,13 +15,9 @@ struct ScheduleView: View {
     @State private var showDeleteAlert = false
     @State private var showClearAlert = false
 
-    private var managedApp: ManagedApp? {
-        state.managedApps.first(where: { $0.bundleID == bundleID })
-    }
+    private var bundleID: String { app.bundleID }
 
-    private var slots: [Slot] {
-        managedApp?.slots ?? []
-    }
+    private var slots: [Slot] { app.slots }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -30,7 +30,7 @@ struct ScheduleView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
-        .alert(t.archiveAlertTitle(managedApp?.name ?? ""), isPresented: $showArchiveAlert) {
+        .alert(t.archiveAlertTitle(app.name), isPresented: $showArchiveAlert) {
             Button(t.cancel, role: .cancel) { }
             Button(t.archiveAlertConfirm) {
                 state.archiveApp(bundleID: bundleID)
@@ -38,7 +38,7 @@ struct ScheduleView: View {
         } message: {
             Text(t.archiveAlertMessage)
         }
-        .alert(t.deleteAlertTitle(managedApp?.name ?? ""), isPresented: $showDeleteAlert) {
+        .alert(t.deleteAlertTitle(app.name), isPresented: $showDeleteAlert) {
             Button(t.cancel, role: .cancel) { }
             Button(t.deleteAlertConfirm, role: .destructive) {
                 state.removeManagedApp(bundleID: bundleID)
@@ -60,8 +60,7 @@ struct ScheduleView: View {
 
     @ViewBuilder
     private var header: some View {
-        if let app = managedApp {
-            HStack(alignment: .center, spacing: 12) {
+        HStack(alignment: .center, spacing: 12) {
                 Image(nsImage: app.icon)
                     .resizable()
                     .interpolation(.high)
@@ -117,7 +116,6 @@ struct ScheduleView: View {
                     .help(t.archiveTooltip)
                 }
             }
-        }
     }
 
     private var archivedBadge: some View {
@@ -132,7 +130,7 @@ struct ScheduleView: View {
     }
 
     private var statusPill: some View {
-        let isAllowed = managedApp.map { state.isAllowed(app: $0) } ?? false
+        let isAllowed = state.isAllowed(app: app)
         let color = isAllowed ? Theme.accent : Theme.danger
         return HStack(spacing: 6) {
             Circle()

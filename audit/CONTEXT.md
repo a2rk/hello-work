@@ -217,7 +217,7 @@ HelloWork/
 
 - [x] **TASK-026 [verify]** — TASK-025  → released as v0.9.47
 
-- [ ] **TASK-027 [impl]** — `ScheduleView` decouple от global `@ObservedObject`
+- [x] **TASK-027 [impl]** — `ScheduleView` decouple от global `@ObservedObject`  → released as v0.9.48
   - Файлы: `Preferences/Schedule/ScheduleView.swift`, `Preferences/PrefsView.swift:144-147`
   - Проблема: ScheduleView держит `@ObservedObject var state: AppState` и перерисовывается на любой изменение в state (язык, focusDimOpacity, etc).
   - Решение: переписать на `bundleID` + локальный snapshot `ManagedApp` через computed property с filtering. Alternative: extract narrow `ScheduleViewModel`.
