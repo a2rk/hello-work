@@ -10,8 +10,14 @@ enum AutoRelauncher {
         let appPath = Bundle.main.bundlePath
 
         // bash скрипт: kill -0 проверяет жив ли PID. После смерти — open app.
+        // Timeout 60с: если macOS НЕ убил процесс при grant'е (а иногда не убивает),
+        // watcher не висит вечно — выходит и не делает ничего.
         let script = """
-        while kill -0 \(pid) 2>/dev/null; do sleep 0.4; done
+        deadline=$((SECONDS + 60))
+        while kill -0 \(pid) 2>/dev/null; do
+            if [ $SECONDS -ge $deadline ]; then exit 0; fi
+            sleep 0.4
+        done
         sleep 0.6
         /usr/bin/open "\(appPath)"
         """

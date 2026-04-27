@@ -155,7 +155,7 @@ HelloWork/
 
 - [x] **TASK-012 [verify]** — TASK-011  → released as v0.9.33
 
-- [ ] **TASK-013 [impl]** — `AutoRelauncher` infinite wait
+- [x] **TASK-013 [impl]** — `AutoRelauncher` infinite wait  → released as v0.9.34
   - Файл: `Permissions/AutoRelauncher.swift:13-16`
   - Проблема: bash-watcher делает `while kill -0 PID; do sleep 0.4; done` → если macOS НЕ убил процесс при grant'е (а часто не убивает), скрипт висит вечно, мусорный процесс.
   - Решение: добавить timeout 60с в while. После timeout — exit без relaunch.

@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.34",
+    "date": "2026-04-27",
+    "customMessage": "TASK-013: AutoRelauncher больше не висит вечно. Если macOS не убил процесс при grant'е (а часто не убивает) — bash watcher выходит через 60с.",
+    "main": "Раньше bash-watcher делал while kill -0 PID; sleep 0.4 — если macOS не убивал процесс при grant'е, скрипт висел навсегда. Теперь deadline 60с.",
+    "points": [
+      "AutoRelauncher: добавлен deadline check в while loop",
+      "После 60с — exit без relaunch (юзер уже видит приложение, не нужно)",
+      "Не оставляет orphan bash-процессов в системе"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.34/HelloWork-0.9.34.dmg"
+  },
+  {
     "version": "0.9.33",
     "date": "2026-04-27",
     "customMessage": "TASK-012 verified: requested-key семантика корректна по всем 4 сценариям.",
