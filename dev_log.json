@@ -1,5 +1,24 @@
 [
   {
+    "version": "0.9.14",
+    "date": "2026-04-27",
+    "customMessage": "Скопировал Hidden Bar точно. Visible line marker, separator 1pt initial, validation guards, dynamic length. Должно работать.",
+    "main": "Полный refactor menubar hider'а по reference_ideas.md — копия Hidden Bar approach с одной нашей надстройкой (main item с H между separator и chevron).",
+    "points": [
+      "Layout: [items dragged юзером] [separator | line] [main H+menu] [chevron ‹] [Apple]",
+      "separator теперь VIDIMый — vertical line icon (как Hidden Bar's ic_line). Юзер видит границу зоны скрытия",
+      "separator initial length = 1pt (было 24pt) — узкая полоска, drag-positions точные",
+      "Order creation: chevron FIRST, main SECOND, separator THIRD — создан позже = левее в LTR",
+      "autosaveName для всех items — позиции persist между запусками",
+      "Validation guard isValidPosition: chevron.x >= main.x >= separator.x. Если юзер сломал layout cmd+drag'ом — collapse игнорируется",
+      "Dynamic collapse length = max(500, min(screenWidth+200, 4000)) — Hidden Bar формула",
+      "isToggling debounce 0.3с — предотвращает Dock icon flicker от быстрых кликов",
+      "screenParametersChanged observer — пересчитывает length при смене разрешения / подключении монитора",
+      "Re-collapse через 1с после init — даёт menubar layout устаканиться"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.14/HelloWork-0.9.14.dmg"
+  },
+  {
     "version": "0.9.13",
     "date": "2026-04-27",
     "customMessage": "Hider теперь скрывает другие иконки, а не свою. Перевернули порядок creation status item'ов.",

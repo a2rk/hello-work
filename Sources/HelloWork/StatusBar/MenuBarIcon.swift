@@ -15,9 +15,22 @@ enum MenuBarIcon {
         return image
     }
 
+    /// Vertical line icon — visible marker для hider separator'а.
+    /// Юзер видит эту палку и понимает: «слева от меня — зона скрытия».
+    static func separatorLine() -> NSImage {
+        let size = NSSize(width: 6, height: 18)
+        let image = NSImage(size: size, flipped: false) { rect in
+            let bar = NSRect(x: 2, y: 3, width: 1.5, height: rect.height - 6)
+            NSColor.black.setFill()
+            bar.fill()
+            return true
+        }
+        image.isTemplate = true
+        return image
+    }
+
     /// Иконка H с visible vertical separator-bar справа.
-    /// Используется как «terminator» в Hidden Bar approach — между ней и chevron'ом
-    /// располагаются скрываемые items.
+    /// Используется как middle-marker в нашей версии Hidden Bar approach.
     static func makeWithSeparator(style: StatusIconStyle = .solid) -> NSImage {
         let size = NSSize(width: 26, height: 18)
         let image = NSImage(size: size, flipped: false) { rect in

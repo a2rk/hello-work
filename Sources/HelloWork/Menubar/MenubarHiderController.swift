@@ -1,16 +1,27 @@
 import AppKit
 import Combine
 
-/// Hidden Bar approach: три status item'а.
-/// 1. `mainItem` ("H │")  — visible, носит наше menu и иконку.
-/// 2. `separatorItem`     — invisible, length меняется (24pt ↔ 10000pt). Это «двигатель».
-/// 3. `chevronItem` (">") — visible, toggle button.
+/// Точная копия Hidden Bar approach (https://github.com/dwarvesf/hidden) с одной нашей
+/// надстройкой: между chevron и separator стоит main item с H + menu, всегда видимый.
 ///
-/// Юзер cmd+drag'ом расставляет свои menubar items **между** mainItem и chevronItem.
-/// При collapse — separator расширяется и пихает их за visible area.
+/// Layout (LTR, X слева направо):
+///   [items дрэгнутые юзером] [separator |] [main H+menu] [chevron ‹] [Apple zone]
+///        скрываются           visible 1pt    visible       visible
+///                             расширяется
+///
+/// Order creation влияет на default-position. По наблюдениям macOS:
+/// «созданный позже = X меньше = левее в LTR layout».
+/// Поэтому создаём:
+///   1. chevron     — rightmost (close to Apple)
+///   2. main        — middle
+///   3. separator   — leftmost (visible line marker)
+///
+/// При collapse separator.length 1pt → ~screenWidth+200 → items LEFT of separator
+/// (юзер ⌘+drag-нул их туда) пушатся за visible area. main + chevron остаются
+/// (right of separator, anchored к Apple zone).
 @MainActor
 final class MenubarHiderController: ObservableObject {
-    @Published private(set) var isCollapsed: Bool = true
+    @Published private(set) var isCollapsed: Bool = false
     @Published private(set) var enabled: Bool = false
 
     private(set) var mainItem: NSStatusItem?
@@ -20,45 +31,58 @@ final class MenubarHiderController: ObservableObject {
     private var lastAutoState: Bool? = nil
     private var peekTimer: Timer?
 
+    private var isToggling = false
+    private var screenObserver: NSObjectProtocol?
+
     /// Callback при появлении/смене mainItem (AppDelegate переустанавливает menu).
     var onMainItemReady: ((NSStatusItem) -> Void)?
 
-    private static let collapsedLength: CGFloat = 24
-    private static let expandedLength: CGFloat = 10000
+    private static let collapsedSeparatorLength: CGFloat = 1
+    private var expandedSeparatorLength: CGFloat = 2000   // динамически пересчитывается
 
-    init() {}
+    init() {
+        screenObserver = NotificationCenter.default.addObserver(
+            forName: NSApplication.didChangeScreenParametersNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in self?.updateExpandedLength() }
+        }
+        updateExpandedLength()
+    }
 
-    // MARK: - Public
+    deinit {
+        if let observer = screenObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
+    // MARK: - Configuration
 
     /// Создаёт/пересоздаёт status items под новую конфигурацию.
-    /// `hiderEnabled = true`  → 3 items (main + separator + chevron)
-    /// `hiderEnabled = false` → 1 item (только main)
     func configure(hiderEnabled: Bool, initialCollapsed: Bool, iconStyle: StatusIconStyle) {
         tearDownItems()
+        updateExpandedLength()
 
-        // ВАЖНО: порядок создания влияет на позицию в menubar.
-        // В macOS: позже созданный = ЛЕВЕЕ.
-        // Нам нужен такой layout (справа налево от Apple-зоны):
-        //   [chevron] [separator] [main]  [Apple zone]
-        //                                  ↑ rightmost, всегда видим
-        // При collapse separator расширяется → items LEFT of separator (chevron + что юзер
-        // ⌘+drag-нул в зону между main и chevron) уходят за край экрана. main остаётся.
-        //
-        // Поэтому создаём main ПЕРВЫМ (rightmost), separator вторым, chevron последним (leftmost).
-
+        // Order: chevron → main → separator. Чтобы layout был [separator] [main] [chevron].
+        if hiderEnabled {
+            createChevron()
+        }
         createMain(iconStyle: iconStyle)
         if hiderEnabled {
             createSeparator()
-            createChevron()
         }
 
         enabled = hiderEnabled
-        if hiderEnabled {
-            isCollapsed = initialCollapsed
-        } else {
-            isCollapsed = false
+        isCollapsed = false  // стартуем expanded — гарантия что юзер увидит layout
+
+        if hiderEnabled && initialCollapsed {
+            // Re-collapse через 1с после init — даёт menubar layout устаканиться.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                guard let self, self.enabled else { return }
+                self.collapseInternal()
+            }
         }
-        applyState()
     }
 
     func tearDown() {
@@ -68,62 +92,52 @@ final class MenubarHiderController: ObservableObject {
         cancelPeek()
     }
 
-    func collapseAll() {
-        guard enabled else { return }
-        isCollapsed = true
-        applyState()
-        lastAutoState = nil
+    func updateMainIcon(style: StatusIconStyle) {
+        mainItem?.button?.image = MenuBarIcon.makeWithSeparator(style: style)
     }
 
-    func expandAll() {
-        guard enabled else { return }
-        isCollapsed = false
-        applyState()
-        lastAutoState = nil
-    }
+    // MARK: - Public toggle API
 
     func toggle() {
-        guard enabled else { return }
-        isCollapsed.toggle()
-        applyState()
+        guard enabled, !isToggling else { return }
+        isToggling = true
+        if isCollapsed {
+            expandInternal()
+        } else {
+            collapseInternal()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.isToggling = false
+        }
         lastAutoState = nil
     }
+
+    func collapseAll() { guard enabled else { return }; collapseInternal(); lastAutoState = nil }
+    func expandAll()   { guard enabled else { return }; expandInternal();   lastAutoState = nil }
 
     func applyAuto(collapsed: Bool) {
         guard enabled else { return }
         if let last = lastAutoState, last == isCollapsed {
             // мы сами поставили — можно менять
         } else if lastAutoState != nil {
-            // юзер вмешался — не дёргаем
             lastAutoState = collapsed
             return
         }
         if isCollapsed != collapsed {
-            isCollapsed = collapsed
-            applyState()
+            if collapsed { collapseInternal() } else { expandInternal() }
         }
         lastAutoState = collapsed
-    }
-
-    /// Меняет иконку main без recreate всех items.
-    func updateMainIcon(style: StatusIconStyle) {
-        guard let main = mainItem else { return }
-        main.button?.image = MenuBarIcon.makeWithSeparator(style: style)
     }
 
     // MARK: - Peek
 
     func peek(seconds: Int) {
         guard enabled, seconds > 0, isCollapsed else { return }
-        isCollapsed = false
-        applyState()
+        expandInternal()
 
         peekTimer?.invalidate()
         let t = Timer(timeInterval: TimeInterval(seconds), repeats: false) { [weak self] _ in
-            Task { @MainActor [weak self] in
-                self?.isCollapsed = true
-                self?.applyState()
-            }
+            Task { @MainActor [weak self] in self?.collapseInternal() }
         }
         RunLoop.main.add(t, forMode: .common)
         peekTimer = t
@@ -134,36 +148,66 @@ final class MenubarHiderController: ObservableObject {
         peekTimer = nil
     }
 
+    // MARK: - Internal collapse/expand
+
+    private func collapseInternal() {
+        guard let separator = separatorItem else { return }
+        guard isValidPosition else {
+            // Юзер сломал layout cmd+drag'ом — игнорируем collapse.
+            return
+        }
+        guard !isCollapsed else { return }
+        separator.length = expandedSeparatorLength
+        chevronItem?.button?.image = chevronImage(collapsed: true)
+        isCollapsed = true
+    }
+
+    private func expandInternal() {
+        guard let separator = separatorItem else { return }
+        guard isCollapsed else { return }
+        separator.length = Self.collapsedSeparatorLength
+        chevronItem?.button?.image = chevronImage(collapsed: false)
+        isCollapsed = false
+    }
+
+    /// Layout valid только если: chevron.x >= main.x >= separator.x (LTR).
+    /// Иначе юзер cmd+drag-ом сломал порядок и collapse не сработает корректно.
+    private var isValidPosition: Bool {
+        guard
+            let chevronX = chevronItem?.button?.window?.frame.origin.x,
+            let mainX = mainItem?.button?.window?.frame.origin.x,
+            let separatorX = separatorItem?.button?.window?.frame.origin.x
+        else { return false }
+        return chevronX >= mainX && mainX >= separatorX
+    }
+
     // MARK: - Build items
+
+    private func createChevron() {
+        let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        item.button?.image = chevronImage(collapsed: false)
+        item.button?.imagePosition = .imageOnly
+        item.button?.target = self
+        item.button?.action = #selector(chevronClicked)
+        item.autosaveName = "helloWork_chevron"
+        chevronItem = item
+    }
 
     private func createMain(iconStyle: StatusIconStyle) {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         item.button?.image = MenuBarIcon.makeWithSeparator(style: iconStyle)
         item.button?.imagePosition = .imageOnly
-        // Клик откроет menu, если оно будет установлено через item.menu (это делает AppDelegate).
+        item.autosaveName = "helloWork_main"
         mainItem = item
         onMainItemReady?(item)
     }
 
     private func createSeparator() {
-        let item = NSStatusBar.system.statusItem(withLength: Self.collapsedLength)
-        // Невидимый — нет ни image ни title.
-        item.button?.image = nil
-        item.button?.title = ""
+        let item = NSStatusBar.system.statusItem(withLength: Self.collapsedSeparatorLength)
+        item.button?.image = MenuBarIcon.separatorLine()
         item.button?.imagePosition = .imageOnly
-        // Disable click — separator никак не реагирует.
-        item.button?.target = nil
-        item.button?.action = nil
+        item.autosaveName = "helloWork_separator"
         separatorItem = item
-    }
-
-    private func createChevron() {
-        let item = NSStatusBar.system.statusItem(withLength: 24)
-        item.button?.image = chevronImage(collapsed: true)
-        item.button?.imagePosition = .imageOnly
-        item.button?.target = self
-        item.button?.action = #selector(chevronClicked)
-        chevronItem = item
     }
 
     private func tearDownItems() {
@@ -175,27 +219,27 @@ final class MenubarHiderController: ObservableObject {
         chevronItem = nil
     }
 
-    // MARK: - Apply state
+    private func updateExpandedLength() {
+        let screenWidth = NSScreen.main?.visibleFrame.width ?? 1728
+        // Hidden Bar формула — bounded чтобы избежать pathological layout на новых macOS.
+        expandedSeparatorLength = max(500, min(screenWidth + 200, 4000))
 
-    private func applyState() {
-        guard enabled else { return }
-        let length: CGFloat = isCollapsed ? Self.expandedLength : Self.collapsedLength
-        separatorItem?.length = length
-        chevronItem?.button?.image = chevronImage(collapsed: isCollapsed)
+        // Применить если уже collapsed.
+        if isCollapsed {
+            separatorItem?.length = expandedSeparatorLength
+        }
     }
 
     // MARK: - Chevron icon
 
     private func chevronImage(collapsed: Bool) -> NSImage? {
-        // collapsed (всё спрятано): `‹` — кнопка слева от main, как «свёрнуто»
-        // expanded (всё видно): `›` — указывает направление куда схлопнется при click
+        // collapsed: `‹` — направление куда схлопнуто
+        // expanded: `›` — указывает «click меня — items уйдут вправо за край»
         let symbol = collapsed ? "chevron.left" : "chevron.right"
         let img = NSImage(systemSymbolName: symbol, accessibilityDescription: "Toggle hidden menubar items")
         img?.isTemplate = true
         return img
     }
-
-    // MARK: - Click handlers
 
     @objc private func chevronClicked() {
         toggle()
