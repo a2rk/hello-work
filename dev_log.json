@@ -1,5 +1,23 @@
 [
   {
+    "version": "0.9.19",
+    "date": "2026-04-27",
+    "customMessage": "Stub installer переименован в HWInstaller (без пробела), у него инвертированная иконка. В TCC две записи больше не будут смущать — engine называется HelloWork, инсталлер HWInstaller, визуально различимы.",
+    "main": "Развязали имена stub и engine: stub теперь HWInstaller.app (чёрный фон, белая H), engine — HelloWork.app (белый фон, чёрная H, прежняя). Раньше stub назывался «Hello work» (с пробелом) — macOS показывал в TCC два почти одинаковых пункта, юзер выдавал AX не тому процессу.",
+    "points": [
+      "scripts/build_stub.sh: BUNDLE_NAME/DISPLAY_NAME/APP_PATH → HWInstaller. Bundle ID dev.helloworkapp.macos сохранили",
+      "scripts/build.sh: DISPLAY_NAME «Hello work Engine» → «HelloWork»",
+      "scripts/generate_icon.swift: генерит ОБА icon set'а — AppIcon (engine, белый фон/чёрная H) + AppIconInstaller (инверсия)",
+      "build_stub.sh копирует AppIconInstaller.icns как AppIcon.icns в bundle stub'а",
+      "package_stub.sh: APP_FILE и volname → HWInstaller (статичная HelloWork.dmg остаётся, ссылка не меняется)",
+      "Sources/HelloWorkStub: заголовок окна и Text → HWInstaller",
+      "AppDelegate.cleanupLegacyStub: при старте engine сносит /Applications/Hello work.app, если там лежит старый stub (проверяется bundleID dev.helloworkapp.macos)",
+      "install.sh: APP_NAME → HWInstaller.app, преudaляет legacy 'Hello work.app' до копирования",
+      "Casks/hellowork.rb: app HWInstaller.app, preflight удаляет legacy bundle"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.19/HelloWork-0.9.19.dmg"
+  },
+  {
     "version": "0.9.18",
     "date": "2026-04-27",
     "customMessage": "Режим разработчика: 10 раз быстро тыкнуть в «Данные» → откроется вкладка «Диагностика» с живым логом всего status-bar pipeline'а. Чтобы ловить почему hider не двигает items.",

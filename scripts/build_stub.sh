@@ -5,19 +5,19 @@ set -euo pipefail
 # Stub при первом запуске качает engine с GitHub Release и кладёт в
 # ~/Library/Application Support/HelloWork/. Дальше — silent launch engine.
 #
-# Результат: dist/stub/Hello work.app
+# Результат: dist/stub/HWInstaller.app
 
 cd "$(dirname "$0")/.."
 
 VERSION=$(cat VERSION)
 BUILD=$(cat BUILD)
 BINARY_NAME="HelloWorkStub"
-BUNDLE_NAME="HelloWork"
-DISPLAY_NAME="Hello work"
+BUNDLE_NAME="HWInstaller"
+DISPLAY_NAME="HWInstaller"
 BUNDLE_ID="dev.helloworkapp.macos"
 
 DIST="dist/stub"
-APP_PATH="$DIST/Hello work.app"
+APP_PATH="$DIST/HWInstaller.app"
 
 echo "▶ Building Stub installer $VERSION (build $BUILD)..."
 
@@ -43,13 +43,15 @@ sed \
     -e "s/__DISPLAY_NAME__/$DISPLAY_NAME/g" \
     scripts/Info.plist.stub.template > "$APP_PATH/Contents/Info.plist"
 
-# 5. Generate icon if missing
-if [ ! -f scripts/AppIcon.icns ]; then
-    echo "▶ Generating icon set..."
+# 5. Generate icons if missing. Stub использует ИНВЕРТИРОВАННЫЙ вариант
+#    (чёрный фон, белая H) — чтобы юзер визуально отличал installer от engine.
+if [ ! -f scripts/AppIconInstaller.icns ]; then
+    echo "▶ Generating icon sets..."
     swift scripts/generate_icon.swift
     iconutil -c icns scripts/AppIcon.iconset -o scripts/AppIcon.icns
+    iconutil -c icns scripts/AppIconInstaller.iconset -o scripts/AppIconInstaller.icns
 fi
-cp scripts/AppIcon.icns "$APP_PATH/Contents/Resources/AppIcon.icns"
+cp scripts/AppIconInstaller.icns "$APP_PATH/Contents/Resources/AppIcon.icns"
 
 # 6. Ad-hoc codesign
 codesign --force --deep --sign - --identifier "$BUNDLE_ID" "$APP_PATH" 2>&1 | grep -v "replacing existing signature" || true

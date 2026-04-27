@@ -29,7 +29,7 @@ cp -R "$DIST/$APP_FILE" "$STAGING/"
 rm -f "$DMG"
 
 hdiutil create \
-    -volname "Hello work Engine $VERSION" \
+    -volname "HelloWork $VERSION" \
     -srcfolder "$STAGING" \
     -ov -format UDZO \
     "$DMG" >/dev/null

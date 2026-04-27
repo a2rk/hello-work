@@ -32,6 +32,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         )
 
         stripOwnQuarantine()
+        cleanupLegacyStub()
 
         setupStatusItem()
         setupWorkspaceObservers()
@@ -77,6 +78,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             task.waitUntilExit()
         } catch {
             // Best effort — если не получилось, игнорируем.
+        }
+    }
+
+    /// Сносим старый `/Applications/Hello work.app` (stub до 0.9.18, имя с пробелом) —
+    /// он создаёт лишнюю TCC-запись и путает юзера. Проверяем bundleID, чтобы
+    /// случайно не удалить что-то чужое с похожим именем.
+    private func cleanupLegacyStub() {
+        let url = URL(fileURLWithPath: "/Applications/Hello work.app")
+        guard FileManager.default.fileExists(atPath: url.path) else { return }
+        guard let bundle = Bundle(url: url),
+              bundle.bundleIdentifier == "dev.helloworkapp.macos" else {
+            return
+        }
+        do {
+            try FileManager.default.removeItem(at: url)
+            devlog("migration", "removed legacy /Applications/Hello work.app")
+        } catch {
+            devlog("migration", "failed to remove legacy stub: \(error.localizedDescription)")
         }
     }
 

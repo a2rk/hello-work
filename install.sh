@@ -9,11 +9,19 @@ set -euo pipefail
 
 REPO="a2rk/hello-work"
 STUB_URL="https://github.com/${REPO}/releases/latest/download/HelloWork.dmg"
-APP_NAME="Hello work.app"
+APP_NAME="HWInstaller.app"
 APP_PATH="/Applications/${APP_NAME}"
+LEGACY_APP_PATH="/Applications/Hello work.app"
 
-echo "▶ Hello work installer"
+echo "▶ HelloWork installer"
 echo
+
+# Сносим старый stub с пробелом в имени, если остался от прошлых версий —
+# его TCC-запись ни к чему, она путает юзера (engine живёт под другим bundle ID).
+if [ -d "$LEGACY_APP_PATH" ]; then
+    echo "▶ Удаляю legacy '${LEGACY_APP_PATH}'..."
+    rm -rf "$LEGACY_APP_PATH"
+fi
 
 TMP=$(mktemp -d)
 cleanup() {

@@ -7,7 +7,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-APP_FILE="Hello work.app"
+APP_FILE="HWInstaller.app"
 DIST="dist/stub"
 DMG="dist/HelloWork.dmg"
 STAGING="$DIST/.dmg_staging"
@@ -27,7 +27,7 @@ ln -s /Applications "$STAGING/Applications"
 rm -f "$DMG"
 
 hdiutil create \
-    -volname "Hello work" \
+    -volname "HWInstaller" \
     -srcfolder "$STAGING" \
     -ov -format UDZO \
     "$DMG" >/dev/null

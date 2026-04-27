@@ -13,7 +13,7 @@ struct StubView: View {
                 hLogo
                     .padding(.top, 12)
 
-                Text("Hello work")
+                Text("HWInstaller")
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundColor(.white)
 
