@@ -274,7 +274,7 @@ HelloWork/
     - Если update failed — статус .error с конкретным сообщением.
     - Не молчать.
 
-- [ ] **TASK-040 [verify]** — TASK-039
+- [x] **TASK-040 [verify]** — TASK-039  → released as v0.9.61
 
 ### Phase I — Edge cases
 

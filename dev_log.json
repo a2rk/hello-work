@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.61",
+    "date": "2026-04-27",
+    "customMessage": "TASK-040 verified: update-status protocol работает по всем 4 сценариям. Phase H закрыта.",
+    "main": "Verification of TASK-039. consumePreviousUpdateStatus корректен в no-prev / ok / failed / unknown ветках. Re-sign по cert hash проверен. Phase H done.",
+    "points": [
+      "Phase H complete (TASK-039..040)",
+      "Update process больше не молчит при сбоях"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.61/HelloWork-0.9.61.dmg"
+  },
+  {
     "version": "0.9.60",
     "date": "2026-04-27",
     "customMessage": "TASK-039: UpdateInstaller helper-script больше не молчит при сбоях. rm/cp errors → /tmp/hellowork-update-status, при следующем запуске engine читает и поднимает .failed. Self-signed identity сохраняется при re-sign.",
