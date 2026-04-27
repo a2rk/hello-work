@@ -19,16 +19,16 @@ final class PermissionsManager: ObservableObject {
     @Published private(set) var screenRecording: PermissionState = .notDetermined
     @Published private(set) var accessibility: PermissionState = .notDetermined
 
-    /// Полностью ли всё дано — для решения «показать onboarding или нет».
-    /// Сейчас критичен только Accessibility (для focus mode precise window detection).
-    /// Screen Recording — необязателен (menubar list берём из NSWorkspace).
+    /// Оба разрешения нужны: Accessibility — для CGEvent simulation,
+    /// Screen Recording — Sequoia требует его для постинга событий через
+    /// session event tap, иначе WindowServer молча отбрасывает их при drag'е
+    /// menubar items (TCC относит это к screen-content-related actions).
     var allRequiredGranted: Bool {
-        accessibility == .granted
+        accessibility == .granted && screenRecording == .granted
     }
 
-    /// Хотя бы что-то требует внимания.
     var anyMissing: Bool {
-        accessibility != .granted
+        accessibility != .granted || screenRecording != .granted
     }
 
     init() {

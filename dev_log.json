@@ -1,5 +1,21 @@
 [
   {
+    "version": "0.9.20",
+    "date": "2026-04-27",
+    "customMessage": "Hider: events теперь идут через .cghidEventTap (а не .postToPid) — события через WindowServer, который реально обрабатывает menubar drag. Screen Recording добавлен в обязательные доступы.",
+    "main": "Из логов диагностики 0.9.18 видно: AX выдан, item найден, события создались — но frame не двигался. Sequoia в .postToPid доводит события только до event loop процесса-владельца, минуя WindowServer'овский 'menubar item drag' state machine. Перешли на .cghidEventTap + .combinedSessionState.",
+    "points": [
+      "MenuBarItemMover: посттим через event.post(tap: .cghidEventTap) — события неотличимы от реальных hardware. Дублируем postToPid на всякий",
+      "CGEventSource(stateID: .combinedSessionState) вместо .hidSystemState — Sequoia ужесточил фильтрацию synthetic'а из hidSystemState на menubar",
+      "Сохраняем/восстанавливаем реальный курсор через CGWarpMouseCursorPosition — иначе курсор «прыгает» на каждое движение",
+      "Screen Recording добавлен в allRequiredGranted/anyMissing — Sequoia требует его для постинга событий через session event tap (TCC относит drag menubar items к screen-content actions)",
+      "PermissionsOnboardingView: добавлен row для Screen Recording",
+      "MenubarHiderController: при movedAny=false открываем экран Доступов если SR не выдан",
+      "Логируем CGPreflightScreenCaptureAccess() в collapseInternal"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.20/HelloWork-0.9.20.dmg"
+  },
+  {
     "version": "0.9.19",
     "date": "2026-04-27",
     "customMessage": "Stub installer переименован в HWInstaller (без пробела), у него инвертированная иконка. В TCC две записи больше не будут смущать — engine называется HelloWork, инсталлер HWInstaller, визуально различимы.",

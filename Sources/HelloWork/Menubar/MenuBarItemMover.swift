@@ -1,29 +1,41 @@
 // MenuBarItemMover.swift — двигает чужие menubar items через симуляцию ⌘+drag.
 // Адаптация из Ice (https://github.com/jordanbaird/Ice) — GPLv3.
 //
-// Поток событий, который macOS принимает за «таскаем menubar item»:
-//   1. .leftMouseDown с .maskCommand в позиции item'а
-//   2. одна или несколько .leftMouseDragged (с .maskCommand) на пути
-//   3. .leftMouseUp в целевой позиции (без флагов)
-//
-// Только Down+Up без Dragged — macOS трактует как обычный ⌘+click, item не уезжает.
+// Что важно для Sequoia:
+//   1. Постим через .cghidEventTap (а не .postToPid) — события идут через
+//      WindowServer, который реально обрабатывает menubar drag. .postToPid
+//      в Sequoia доходит только до event loop процесса-владельца, минуя
+//      WindowServer'овский «menubar item drag» state machine.
+//   2. CGEventSource(stateID: .combinedSessionState) — события неотличимы
+//      от реальных hardware events. Apple ужесточил фильтрацию synthetic'а
+//      из .hidSystemState на menubar.
+//   3. До и после постинга сохраняем/восстанавливаем реальную позицию курсора
+//      через CGWarpMouseCursorPosition — иначе курсор «прыгает» на каждое
+//      движение item'а.
+//   4. Полная последовательность ⌘+drag: Down → Dragged(mid) → Dragged(end) → Up
+//      Без промежуточных Dragged macOS видит просто ⌘+click и item не уезжает.
 
 import Cocoa
 
 @MainActor
 enum MenuBarItemMover {
-    /// Перемещает item в указанную абсолютную screen-позицию X.
-    /// Возвращает true, если item реально съехал (frame изменился).
     @discardableResult
     static func move(item: MenuBarItem, toX targetX: CGFloat) -> Bool {
         guard item.isHideable else {
             devlog("mover", "skip wid=\(item.windowID) — not hideable")
             return false
         }
-        guard let source = CGEventSource(stateID: .hidSystemState) else {
-            devlog("mover", "FAIL CGEventSource(hidSystemState) is nil — kernel rejected source creation")
+        guard let source = CGEventSource(stateID: .combinedSessionState) else {
+            devlog("mover", "FAIL CGEventSource(combinedSessionState) is nil")
             return false
         }
+
+        // Сохраняем реальную позицию курсора, чтобы восстановить после движения.
+        let cursorBefore = NSEvent.mouseLocation
+        let savedCursorCG = CGPoint(
+            x: cursorBefore.x,
+            y: (NSScreen.screens.first?.frame.height ?? 0) - cursorBefore.y
+        )
 
         let startPoint = CGPoint(x: item.frame.midX, y: item.frame.midY)
         let endPoint = CGPoint(x: targetX, y: item.frame.midY)
@@ -48,31 +60,39 @@ enum MenuBarItemMover {
                 source: source
             ) else {
                 devlog("mover", "FAIL event creation idx=\(idx) for wid=\(item.windowID)")
+                CGWarpMouseCursorPosition(savedCursorCG)
                 return false
             }
+            // Постим в session event tap — события идут через WindowServer.
+            // Дублируем postToPid для подстраховки (некоторые apps читают только из своего queue).
+            event.post(tap: .cghidEventTap)
             event.postToPid(item.pid)
-            Thread.sleep(forTimeInterval: 0.025)
+            // Достаточно длинная пауза — Sequoia на меньшем интервале склеивает в click.
+            Thread.sleep(forTimeInterval: 0.05)
         }
 
-        let moved = MenuBarItem.currentItems().first { $0.windowID == item.windowID }
-        guard let nowFrame = moved?.frame else {
-            devlog("mover", "post-move: item wid=\(item.windowID) исчез из списка — считаем успехом")
-            // Если item удалился из списка — это тоже валидно (например для hide, item ушёл за край).
+        // Восстанавливаем курсор на исходное место.
+        CGWarpMouseCursorPosition(savedCursorCG)
+
+        // Даём WindowServer обработать события.
+        Thread.sleep(forTimeInterval: 0.04)
+
+        let nowFrame = MenuBarItem.currentItems().first { $0.windowID == item.windowID }?.frame
+        if nowFrame == nil {
+            devlog("mover", "post-move wid=\(item.windowID) исчез из списка — считаем успехом")
             return true
         }
-        let success = abs(nowFrame.midX - targetX) < abs(item.frame.midX - targetX)
+        let success = abs(nowFrame!.midX - targetX) < abs(item.frame.midX - targetX)
         devlog("mover",
-               "post-move wid=\(item.windowID) midX=\(String(format: "%.0f", nowFrame.midX)) target=\(String(format: "%.0f", targetX)) success=\(success)")
+               "post-move wid=\(item.windowID) midX=\(String(format: "%.0f", nowFrame!.midX)) target=\(String(format: "%.0f", targetX)) success=\(success)")
         return success
     }
 
-    /// Перемещает item за левый край экрана (off-screen left).
     @discardableResult
     static func hide(_ item: MenuBarItem) -> Bool {
         return move(item: item, toX: -1000)
     }
 
-    /// Возвращает item в сохранённую позицию.
     @discardableResult
     static func restore(_ item: MenuBarItem, toX originalX: CGFloat) -> Bool {
         return move(item: item, toX: originalX)

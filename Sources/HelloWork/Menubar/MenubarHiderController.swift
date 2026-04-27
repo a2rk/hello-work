@@ -143,7 +143,8 @@ final class MenubarHiderController: ObservableObject {
         }
 
         let trusted = AXIsProcessTrusted()
-        devlog("hider", "collapseInternal — AXIsProcessTrusted=\(trusted)")
+        let sr = CGPreflightScreenCaptureAccess()
+        devlog("hider", "collapseInternal — AXIsProcessTrusted=\(trusted) ScreenRecording=\(sr)")
         guard trusted else {
             onAccessibilityRequired?()
             return
@@ -178,6 +179,10 @@ final class MenubarHiderController: ObservableObject {
 
         guard movedAny else {
             devlog("hider", "collapseInternal — movedAny=false, rolling back")
+            if !CGPreflightScreenCaptureAccess() {
+                devlog("hider", "hint: Screen Recording НЕ выдан — Sequoia требует его для drag'а menubar items")
+                onAccessibilityRequired?()
+            }
             savedItems.removeAll()
             savedPositions.removeAll()
             return

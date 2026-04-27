@@ -31,6 +31,12 @@ struct PermissionsOnboardingView: View {
                     state: perms.accessibility,
                     onAction: { handleAction(.accessibility) }
                 )
+                permRow(
+                    title: t.permsScreenRecordingTitle,
+                    description: t.permsScreenRecordingDesc,
+                    state: perms.screenRecording,
+                    onAction: { handleAction(.screenRecording) }
+                )
             }
 
             HStack {
