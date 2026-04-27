@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.9.13",
+    "date": "2026-04-27",
+    "customMessage": "Hider теперь скрывает другие иконки, а не свою. Перевернули порядок creation status item'ов.",
+    "main": "Фикс главного бага hider'а: при collapse исчезала только наша H |, а чужие иконки оставались на месте. Перевернули порядок создания items — main теперь rightmost, chevron leftmost. Уехать может только то что между ними.",
+    "points": [
+      "Order creation: main FIRST (rightmost, всегда видим), separator SECOND, chevron THIRD (leftmost, toggle)",
+      "В macOS позже созданный = левее. Раньше main был last → leftmost → пушился off-screen. Теперь main first → rightmost → защищён Apple-зоной",
+      "Юзер ⌘+drag'ом ставит свои иконки между H | (main) и ‹ (chevron). При click на chevron — separator растягивается, items уходят влево за край",
+      "Chevron icons инвертированы: collapsed = `‹` (всё свёрнуто), expanded = `›` (направление куда схлопнется)",
+      "Главное правило: твоя H | остаётся на месте всегда, скрывается то что между ней и chevron'ом"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.13/HelloWork-0.9.13.dmg"
+  },
+  {
     "version": "0.9.12",
     "date": "2026-04-27",
     "customMessage": "Hidden Bar approach: три status item'а, юзер сам ⌘+drag'ом ставит свои иконки между H и ›. Реально работает.",

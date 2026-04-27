@@ -36,18 +36,21 @@ final class MenubarHiderController: ObservableObject {
     func configure(hiderEnabled: Bool, initialCollapsed: Bool, iconStyle: StatusIconStyle) {
         tearDownItems()
 
-        // ВАЖНО: порядок создания влияет на default-позицию в menubar.
-        // По наблюдениям macOS: позже созданный = левее. Поэтому:
-        //   chevron первым → правее всех (ближе к Apple-зоне)
-        //   separator вторым → между
-        //   main последним → левее всех (terminator)
-        // Юзер cmd+drag'ом может перенастроить.
+        // ВАЖНО: порядок создания влияет на позицию в menubar.
+        // В macOS: позже созданный = ЛЕВЕЕ.
+        // Нам нужен такой layout (справа налево от Apple-зоны):
+        //   [chevron] [separator] [main]  [Apple zone]
+        //                                  ↑ rightmost, всегда видим
+        // При collapse separator расширяется → items LEFT of separator (chevron + что юзер
+        // ⌘+drag-нул в зону между main и chevron) уходят за край экрана. main остаётся.
+        //
+        // Поэтому создаём main ПЕРВЫМ (rightmost), separator вторым, chevron последним (leftmost).
 
-        if hiderEnabled {
-            createChevron()
-            createSeparator()
-        }
         createMain(iconStyle: iconStyle)
+        if hiderEnabled {
+            createSeparator()
+            createChevron()
+        }
 
         enabled = hiderEnabled
         if hiderEnabled {
@@ -184,7 +187,9 @@ final class MenubarHiderController: ObservableObject {
     // MARK: - Chevron icon
 
     private func chevronImage(collapsed: Bool) -> NSImage? {
-        let symbol = collapsed ? "chevron.right" : "chevron.left"
+        // collapsed (всё спрятано): `‹` — кнопка слева от main, как «свёрнуто»
+        // expanded (всё видно): `›` — указывает направление куда схлопнется при click
+        let symbol = collapsed ? "chevron.left" : "chevron.right"
         let img = NSImage(systemSymbolName: symbol, accessibilityDescription: "Toggle hidden menubar items")
         img?.isTemplate = true
         return img
