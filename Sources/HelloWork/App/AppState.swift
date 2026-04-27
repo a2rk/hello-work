@@ -512,11 +512,15 @@ final class AppState: ObservableObject {
     private func minuteSet(of slot: Slot) -> Set<Int> {
         var set = Set<Int>()
         let step = snapStep
+        // Защита от malformed slot'ов (например из corrupted JSON): clamp в
+        // допустимый диапазон. Внутри валидного state'а это no-op.
+        let s = max(0, min(minutesInDay - 1, slot.startMinutes))
+        let e = max(s, min(2 * minutesInDay, slot.endMinutes))
         let segments: [(Int, Int)]
-        if slot.endMinutes <= minutesInDay {
-            segments = [(slot.startMinutes, slot.endMinutes)]
+        if e <= minutesInDay {
+            segments = [(s, e)]
         } else {
-            segments = [(slot.startMinutes, minutesInDay), (0, slot.endMinutes - minutesInDay)]
+            segments = [(s, minutesInDay), (0, e - minutesInDay)]
         }
         for (a, b) in segments {
             var m = a

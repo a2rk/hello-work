@@ -278,7 +278,7 @@ HelloWork/
 
 ### Phase I — Edge cases
 
-- [ ] **TASK-041 [impl]** — Slot wraparound clamp
+- [x] **TASK-041 [impl]** — Slot wraparound clamp  → released as v0.9.62
   - Файл: `App/AppState.swift:412,447` (addSlot, slotsFromMinuteSet)
   - Проблема: `endMinutes - minutesInDay < 0` создаёт invalid range. `slotsFromMinuteSet` может вернуть `endMinutes > 2 * minutesInDay`.
   - Решение: явные clamp + assertion в debug.

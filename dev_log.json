@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.62",
+    "date": "2026-04-27",
+    "customMessage": "TASK-041: minuteSet(of slot:) клампит startMinutes/endMinutes в допустимый диапазон. Защита от malformed JSON (например после ручной правки).",
+    "main": "Внутри валидного state'а это no-op. Если кто-то ручками отредактировал managedApps в UserDefaults и поставил невалидные значения — больше не падаем infinite loop'ом или crashom.",
+    "points": [
+      "startMinutes ∈ [0, minutesInDay-1]",
+      "endMinutes ∈ [start, 2*minutesInDay]"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.62/HelloWork-0.9.62.dmg"
+  },
+  {
     "version": "0.9.61",
     "date": "2026-04-27",
     "customMessage": "TASK-040 verified: update-status protocol работает по всем 4 сценариям. Phase H закрыта.",
