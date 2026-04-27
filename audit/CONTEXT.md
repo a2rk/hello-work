@@ -304,7 +304,7 @@ HelloWork/
   - Файл: `Diagnostics/DevLogger.swift`
   - Решение: при append проверять file size, если > 10 MB — rename `devlog.txt` → `devlog.txt.1`, начать новый.
 
-- [ ] **TASK-048 [verify]** — TASK-047
+- [x] **TASK-048 [verify]** — TASK-047  → released as v0.9.69
 
 ### Phase K — UX polish
 

@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.9.69",
+    "date": "2026-04-27",
+    "customMessage": "TASK-048 verified: rotation корректен. Phase J полностью закрыта.",
+    "main": "Verification of TASK-047. Edge-cases (small/big/race-after-rotate) обрабатываются. Phase J done.",
+    "points": [
+      "Phase J complete (TASK-047..048)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.69/HelloWork-0.9.69.dmg"
+  },
+  {
     "version": "0.9.68",
     "date": "2026-04-27",
     "customMessage": "TASK-047: DevLogger ротейтит лог файл при превышении 10 MB. devlog.txt → devlog.txt.1, дальше fresh. Один retained backup.",
