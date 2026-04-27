@@ -291,7 +291,7 @@ HelloWork/
 
 - [x] **TASK-044 [verify]** — TASK-043  → released as v0.9.65
 
-- [ ] **TASK-045 [impl]** — `AppVersion.compare` — pre-release suffix
+- [x] **TASK-045 [impl]** — `AppVersion.compare` — pre-release suffix  → released as v0.9.66
   - Файл: `App/Version.swift`
   - Проблема: "0.9.10-beta" парсится как [0,9,10], "0.9.10" тоже как [0,9,10] → equal вместо «release > prerelease».
   - Решение: split на "-" сначала, основная часть → tuple компаренье; если остался suffix — prerelease, считается младше release без suffix'а.
