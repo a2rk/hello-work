@@ -230,7 +230,6 @@ struct Translation {
 
     // MARK: - Settings Tray tab
     let traySectionIcon: String
-    let traySectionDivider: String
     let traySectionBehavior: String
     let trayShowIconTitle: String
     let trayShowIconDesc: String
@@ -240,13 +239,6 @@ struct Translation {
     let trayIconStyleOutline: String
     let trayCountdownTitle: String
     let trayCountdownDesc: String
-    let trayShowChevronTitle: String
-    let trayShowChevronDesc: String
-    let trayChevronStyleTitle: String
-    let trayChevronStyleDesc: String
-    let trayChevronStyleChevron: String
-    let trayChevronStyleCircle: String
-    let trayChevronStyleMinus: String
     let trayPeekTitle: String
     let trayPeekDesc: String
     let trayPeekOff: String

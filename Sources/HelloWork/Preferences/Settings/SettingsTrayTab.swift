@@ -42,34 +42,6 @@ struct SettingsTrayTab: View {
                 }
             }
 
-            SettingsCard.section(title: t.traySectionDivider) {
-                SettingsCard.card {
-                    SettingsCard.row(
-                        title: t.trayShowChevronTitle,
-                        description: t.trayShowChevronDesc
-                    ) {
-                        Toggle("", isOn: $state.showHiderChevron)
-                            .toggleStyle(.switch).controlSize(.small)
-                            .tint(Theme.accent).labelsHidden()
-                            .disabled(!state.menubarHiderEnabled)
-                    }
-                    SettingsCard.divider()
-                    SettingsCard.row(
-                        title: t.trayChevronStyleTitle,
-                        description: t.trayChevronStyleDesc
-                    ) {
-                        Picker("", selection: $state.hiderChevronStyle) {
-                            Text(t.trayChevronStyleChevron).tag(HiderChevronStyle.chevron)
-                            Text(t.trayChevronStyleCircle).tag(HiderChevronStyle.circle)
-                            Text(t.trayChevronStyleMinus).tag(HiderChevronStyle.minus)
-                        }
-                        .labelsHidden().pickerStyle(.menu)
-                        .controlSize(.small).frame(width: 130)
-                        .disabled(!state.menubarHiderEnabled || !state.showHiderChevron)
-                    }
-                }
-            }
-
             SettingsCard.section(title: t.traySectionBehavior) {
                 SettingsCard.card {
                     SettingsCard.row(

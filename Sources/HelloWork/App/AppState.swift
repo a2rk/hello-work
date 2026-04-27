@@ -84,12 +84,6 @@ final class AppState: ObservableObject {
     @Published var statusIconStyle: StatusIconStyle {
         didSet { UserDefaults.standard.set(statusIconStyle.rawValue, forKey: Self.statusIconStyleKey) }
     }
-    @Published var showHiderChevron: Bool {
-        didSet { UserDefaults.standard.set(showHiderChevron, forKey: Self.showHiderChevronKey) }
-    }
-    @Published var hiderChevronStyle: HiderChevronStyle {
-        didSet { UserDefaults.standard.set(hiderChevronStyle.rawValue, forKey: Self.hiderChevronStyleKey) }
-    }
     @Published var menubarPeekSeconds: Int {
         didSet { UserDefaults.standard.set(menubarPeekSeconds, forKey: Self.menubarPeekKey) }
     }
@@ -119,8 +113,6 @@ final class AppState: ObservableObject {
     private static let showStatusBarIconKey = "helloWorkShowStatusBarIcon"
     private static let graceCountdownKey = "helloWorkGraceCountdownInBar"
     private static let statusIconStyleKey = "helloWorkStatusIconStyle"
-    private static let showHiderChevronKey = "helloWorkShowHiderChevron"
-    private static let hiderChevronStyleKey = "helloWorkHiderChevronStyle"
     private static let menubarPeekKey = "helloWorkMenubarPeekSeconds"
 
     static let menubarPeekOptions: [Int] = [0, 1, 2, 3, 5]
@@ -183,13 +175,6 @@ final class AppState: ObservableObject {
             self.statusIconStyle = parsed
         } else {
             self.statusIconStyle = .solid
-        }
-        self.showHiderChevron = (UserDefaults.standard.object(forKey: Self.showHiderChevronKey) as? Bool) ?? true
-        if let raw = UserDefaults.standard.string(forKey: Self.hiderChevronStyleKey),
-           let parsed = HiderChevronStyle(rawValue: raw) {
-            self.hiderChevronStyle = parsed
-        } else {
-            self.hiderChevronStyle = .chevron
         }
         self.menubarPeekSeconds = (UserDefaults.standard.object(forKey: Self.menubarPeekKey) as? Int) ?? 0
 

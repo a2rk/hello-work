@@ -1,14 +1,18 @@
 import AppKit
 
 enum MenuBarIcon {
-    static func make(style: StatusIconStyle = .solid) -> NSImage {
-        let size = NSSize(width: 18, height: 18)
+    /// Иконка для status bar. При `collapsed` иконка шире и содержит `›` справа от H.
+    static func make(style: StatusIconStyle = .solid, collapsed: Bool = false) -> NSImage {
+        let size = NSSize(width: collapsed ? 26 : 18, height: 18)
         let image = NSImage(size: size, flipped: false) { rect in
             switch style {
             case .solid:
                 drawSolid(in: rect)
             case .outline:
                 drawOutline(in: rect)
+            }
+            if collapsed {
+                drawChevron(in: rect)
             }
             return true
         }
@@ -24,15 +28,13 @@ enum MenuBarIcon {
         let str = NSAttributedString(string: "H", attributes: attrs)
         let strSize = str.size()
         let point = NSPoint(
-            x: (rect.width - strSize.width) / 2,
+            x: 2,
             y: (rect.height - strSize.height) / 2
         )
         str.draw(at: point)
     }
 
     private static func drawOutline(in rect: NSRect) {
-        // Тонкая «H» — обводка через NSStroke (negative stroke width — outline+fill, но мы хотим
-        // только outline, поэтому рисуем clear fill через .strokeWidth = 5, и .strokeColor.
         let attrs: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 14, weight: .bold),
             .foregroundColor: NSColor.clear,
@@ -42,7 +44,22 @@ enum MenuBarIcon {
         let str = NSAttributedString(string: "H", attributes: attrs)
         let strSize = str.size()
         let point = NSPoint(
-            x: (rect.width - strSize.width) / 2,
+            x: 2,
+            y: (rect.height - strSize.height) / 2
+        )
+        str.draw(at: point)
+    }
+
+    /// Маленький `›` справа — индикатор collapsed-состояния.
+    private static func drawChevron(in rect: NSRect) {
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 11, weight: .heavy),
+            .foregroundColor: NSColor.black
+        ]
+        let str = NSAttributedString(string: "›", attributes: attrs)
+        let strSize = str.size()
+        let point = NSPoint(
+            x: rect.width - strSize.width - 2,
             y: (rect.height - strSize.height) / 2
         )
         str.draw(at: point)

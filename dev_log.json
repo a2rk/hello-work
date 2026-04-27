@@ -1,5 +1,21 @@
 [
   {
+    "version": "0.9.8",
+    "date": "2026-04-27",
+    "customMessage": "Один статус-айтем вместо двух. Иконка H сама становится chevron'ом когда menubar скрыт.",
+    "main": "Сделали один менюбар-айтем универсальным: при скрытии menubar основная иконка H показывает «›» справа, ширина растёт до 10000pt и выталкивает чужие иконки. Никакого отдельного chevron-разделителя.",
+    "points": [
+      "Иконка H в трее теперь сама индикатор состояния hider'а — при скрытии справа появляется маленький «›» (template image, monochrome)",
+      "Ширина основного status item переключается между 24pt (нормально) и 10000pt (скрыто) — иконка остаётся слева, остальное пространство выталкивает чужие иконки",
+      "Toggle через хоткей (как раньше) или через первый пункт меню «Скрыть menubar» / «Показать menubar» с display'ом текущего хоткея",
+      "Удалён отдельный HiderStatusItem — больше нет дубликата в menubar",
+      "Settings → Трей: убрали секцию «Chevron-разделитель» (больше не нужна), осталось «Иконка Hello work» + «Поведение»",
+      "AppState очищен: showHiderChevron, hiderChevronStyle и их UserDefaults keys удалены",
+      "MenubarHiderController стал state-only — вся визуальная логика переехала в AppDelegate.applyMenubarHiderState через Combine bindings"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.8/HelloWork-0.9.8.dmg"
+  },
+  {
     "version": "0.9.7",
     "date": "2026-04-27",
     "customMessage": "Объясняю почему menubar показывал серые квадратики — нужны были разрешения. Теперь есть честный экран онбординга.",
