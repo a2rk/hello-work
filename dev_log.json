@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.39",
+    "date": "2026-04-27",
+    "customMessage": "TASK-018 verified: corruption-detection корректен, init order правильный, баннеры показываются.",
+    "main": "Verification of TASK-017. Stats и managedApps пути проверены: load order, backup file write, banner UI рендерит warnings, dismiss убирает. Translation labels в правильной позиции.",
+    "points": [
+      "stats.lastCorruptionBackupPath готов до тела AppState init",
+      "Translation field order validated by compiler"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.39/HelloWork-0.9.39.dmg"
+  },
+  {
     "version": "0.9.38",
     "date": "2026-04-27",
     "customMessage": "TASK-017: повреждённые managedApps/stats JSON больше не теряются молча. Битый файл переименовывается в .corrupt-<ts>, юзер видит баннер в Prefs с путём к резервной копии.",

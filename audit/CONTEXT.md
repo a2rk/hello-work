@@ -179,7 +179,7 @@ HelloWork/
     - Поднять флаг `state.lastCorruptionRecovery: String?` (категория данных, для UI banner).
     - В PrefsView в детали показать неблокирующий warning banner с «Старый файл сохранён в Application Support под именем X».
 
-- [ ] **TASK-018 [verify]** — TASK-017
+- [x] **TASK-018 [verify]** — TASK-017  → released as v0.9.39
 
 - [ ] **TASK-019 [impl]** — Schema versioning для managedApps + Stats JSON
   - Файлы: `Domain/ManagedApp.swift`, `Domain/Stats/StatsStore.swift`
