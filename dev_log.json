@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.31",
+    "date": "2026-04-27",
+    "customMessage": "TASK-010 verified: persist callback корректен. PHASE A полностью закрыта (TASK-001..010).",
+    "main": "Verification of TASK-009. Сценарии: старт+initialCollapsed=true → 1 write; user toggle → 1 write; auto signal change → 1 write; peek → 2 writes (intentional); re-configure → 0 writes (persisted state не меняется).",
+    "points": [
+      "Phase A (Hider state machine + perf) — COMPLETE",
+      "Все 5 impl + 5 verify в фазе зелёные",
+      "Готовы к Phase B (Permissions / TCC flow)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.31/HelloWork-0.9.31.dmg"
+  },
+  {
     "version": "0.9.30",
     "date": "2026-04-27",
     "customMessage": "TASK-009: устранён двойной disk-write при старте с initialCollapsed=true. Persist через callback (только на реальные collapse/expand) вместо $isCollapsed sink (срабатывал и на transient-сброс в configure).",

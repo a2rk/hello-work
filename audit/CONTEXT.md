@@ -144,7 +144,7 @@ HelloWork/
   - Проблема: `configure()` ставит `isCollapsed = false` → sink на `$isCollapsed` пишет UserDefaults. Потом collapse-internal через 1с — ещё один write.
   - Решение: добавить `private var suppressPersist: Bool` в controller, обнулять только после первого реального user-action или после deferred-collapse.
 
-- [ ] **TASK-010 [verify]** — TASK-009
+- [x] **TASK-010 [verify]** — TASK-009  → released as v0.9.31
 
 ### Phase B — Permissions / TCC flow
 
