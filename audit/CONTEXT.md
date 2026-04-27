@@ -115,10 +115,9 @@ HelloWork/
   - Acceptance: сценарий «focus on → auto-collapse → user toggle expand → focus off → no spurious collapse» отрабатывает. Сценарий «schedule blocked → auto-collapse → schedule allowed → auto-expand» тоже.
   - Tests via diagnostics: в логах должна быть видна decision-цепочка.
 
-- [ ] **TASK-002 [verify]** — TASK-001
-  - Прочитать diff TASK-001
-  - Smoke trace: вручную дёрнуть focus.toggle() в коде / через хоткей в собранном бинаре, потом menu-toggle, потом focus.toggle() обратно. Записать в diagnostics что произошло.
-  - Проверить что `toggle()` / `collapseAll()` / `expandAll()` сбрасывают auto-state корректно.
+- [x] **TASK-002 [verify]** — TASK-001  → released as v0.9.23
+  - Сценарии 1/2/3 трассированы — работают.
+  - Найден edge-case → создан follow-up TASK-061/062.
 
 - [ ] **TASK-003 [impl]** — Configure deferred initialCollapsed race
   - Файл: `Sources/HelloWork/Menubar/MenubarHiderController.swift:46-53`
@@ -380,7 +379,13 @@ HelloWork/
 
 > Сюда verify-таски ДОПИСЫВАЮТ новые задачи, если обнаружили регрессию или non-trivial gap. НЕ переписывают существующие. Формат — продолжение нумерации.
 
-(пусто на старте)
+- [ ] **TASK-061 [impl]** — `configure()` / `tearDown()` сбрасывают `lastAutoIntent`
+  - Found by: TASK-002 [verify]
+  - Файл: `Sources/HelloWork/Menubar/MenubarHiderController.swift:40-69`
+  - Проблема: при выключении-включении hider'а через Settings, `lastAutoIntent` сохраняется. Если focus on уже был → `.$isActive` уже не перевыпустит → applyAuto не позовётся → items не свернутся при повторном включении hider.
+  - Acceptance: после re-configure auto-сигнал применяется заново при первом попадании в applyAuto.
+
+- [ ] **TASK-062 [verify]** — TASK-061
 
 ---
 

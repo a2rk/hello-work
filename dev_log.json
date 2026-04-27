@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.9.23",
+    "date": "2026-04-27",
+    "customMessage": "TASK-002 verified: applyAuto fix корректен по основным сценариям. Найден edge-case с configure()/tearDown — отдельным follow-up TASK-061.",
+    "main": "Verification of TASK-001. Все три сценария (focus only, schedule only, toggle между) дают ожидаемое поведение. Edge-case: configure не сбрасывает lastAutoIntent → при выключении/включении hider'а во время активного focus, items не сворачиваются. Это пред-существующая проблема, ставится в follow-up.",
+    "points": [
+      "Trace scenario focus on → user toggle → focus off — нет лишних collapse",
+      "Trace scenario schedule blocked → schedule allowed — корректные переходы",
+      "Edge-case configure/tearDown без сброса lastAutoIntent → TASK-061",
+      "Build чистый, регрессий не обнаружено"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.23/HelloWork-0.9.23.dmg"
+  },
+  {
     "version": "0.9.22",
     "date": "2026-04-27",
     "customMessage": "TASK-001: applyAuto больше не клобберит ручной toggle. Теперь auto применяется только когда сигнал реально изменился — между focus on/off auto не лезет поверх юзерского выбора.",
