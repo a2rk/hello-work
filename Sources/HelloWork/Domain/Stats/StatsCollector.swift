@@ -7,6 +7,10 @@ import Combine
 final class StatsCollector: ObservableObject {
     @Published private(set) var store: StatsStore = StatsStore()
 
+    /// Если при `load()` файл оказался битым — сюда кладётся путь к резервной
+    /// копии. AppState читает это после init и поднимает баннер в UI.
+    private(set) var lastCorruptionBackupPath: String?
+
     private var dirty = false
     private var flushTimer: Timer?
     private var sessions: [String: SessionState] = [:]   // bundleID → state
@@ -196,14 +200,28 @@ final class StatsCollector: ObservableObject {
     }
 
     private func load() {
-        guard let url = Self.fileURL,
-              let data = try? Data(contentsOf: url),
-              let decoded = try? JSONDecoder().decode(StatsStore.self, from: data) else {
+        guard let url = Self.fileURL else { return }
+        guard FileManager.default.fileExists(atPath: url.path) else { return }
+        guard let data = try? Data(contentsOf: url) else { return }
+        if let decoded = try? JSONDecoder().decode(StatsStore.self, from: data) {
+            var s = decoded
+            s.prune()
+            store = s
             return
         }
-        var s = decoded
-        s.prune()
-        store = s
+        // Файл существует, но decode провалился. Не теряем — переименовываем
+        // в .corrupt-<timestamp>.json, начинаем с пустого state, запоминаем
+        // путь чтобы AppState поднял баннер юзеру.
+        let backup = url.deletingLastPathComponent()
+            .appendingPathComponent("stats.corrupt-\(Int(Date().timeIntervalSince1970)).json")
+        do {
+            try FileManager.default.moveItem(at: url, to: backup)
+            lastCorruptionBackupPath = backup.path
+        } catch {
+            // Не смогли переименовать — хотя бы попробуем сохранить рядом.
+            try? data.write(to: backup)
+            lastCorruptionBackupPath = backup.path
+        }
     }
 
     private func startFlushTimer() {

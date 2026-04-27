@@ -171,7 +171,7 @@ HelloWork/
 
 ### Phase C — Resilience (data corruption)
 
-- [ ] **TASK-017 [impl]** — Corruption detection для managedApps + StatsStore
+- [x] **TASK-017 [impl]** — Corruption detection для managedApps + StatsStore  → released as v0.9.38
   - Файлы: `App/AppState.swift:197-203`, `Domain/Stats/StatsCollector.swift` (load func)
   - Проблема: `try? JSONDecoder().decode(...)` — если JSON битый, юзер молча теряет всё.
   - Решение:

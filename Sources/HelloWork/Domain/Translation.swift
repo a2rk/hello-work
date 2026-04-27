@@ -237,6 +237,10 @@ struct Translation {
     let diagnosticsDisable: String
     let diagnosticsEmpty: String
     let diagnosticsUnlocked: String
+    let corruptionSchedulesTitle: String
+    let corruptionStatsTitle: String
+    let corruptionBackupAt: String
+    let corruptionDismiss: String
 
     // MARK: - Settings Tray tab
     let traySectionIcon: String

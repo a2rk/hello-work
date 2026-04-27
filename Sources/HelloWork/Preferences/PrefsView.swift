@@ -134,11 +134,73 @@ struct PrefsView: View {
     private var detail: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
+                if !state.corruptionWarnings.isEmpty {
+                    corruptionBanners
+                        .padding(.bottom, 14)
+                }
                 content
             }
             .padding(.horizontal, Layout.detailPaddingH)
             .padding(.vertical, Layout.detailPaddingV)
             .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    @ViewBuilder
+    private var corruptionBanners: some View {
+        VStack(spacing: 8) {
+            ForEach(state.corruptionWarnings) { warning in
+                let title: String = {
+                    switch warning.kind {
+                    case .schedules: return state.t.corruptionSchedulesTitle
+                    case .stats:     return state.t.corruptionStatsTitle
+                    }
+                }()
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(Theme.danger)
+                        .font(.system(size: 14))
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(title)
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(.white)
+                        HStack(spacing: 4) {
+                            Text(state.t.corruptionBackupAt)
+                                .font(.system(size: 11))
+                                .foregroundColor(Theme.textSecondary)
+                            Text(warning.backupPath)
+                                .font(.system(size: 11, design: .monospaced))
+                                .foregroundColor(Theme.textTertiary)
+                                .textSelection(.enabled)
+                                .lineLimit(1)
+                                .truncationMode(.middle)
+                        }
+                    }
+                    Spacer()
+                    Button {
+                        state.dismissCorruption(warning.id)
+                    } label: {
+                        Text(state.t.corruptionDismiss)
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 4)
+                            .background(Capsule().fill(Color.white.opacity(0.06)))
+                            .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Theme.danger.opacity(0.10))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(Theme.danger.opacity(0.45), lineWidth: 1)
+                )
+            }
         }
     }
 

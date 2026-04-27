@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.9.38",
+    "date": "2026-04-27",
+    "customMessage": "TASK-017: повреждённые managedApps/stats JSON больше не теряются молча. Битый файл переименовывается в .corrupt-<ts>, юзер видит баннер в Prefs с путём к резервной копии.",
+    "main": "Раньше try? JSONDecoder().decode → пустой массив без следов. Теперь: detect failure → backup file + AppState.corruptionWarnings + UI banner с dismiss-кнопкой.",
+    "points": [
+      "AppState.corruptionWarnings: [CorruptionWarning] @Published",
+      "managedApps load: backupCorruptManagedApps() → managedApps.corrupt-<ts>.json",
+      "StatsCollector.lastCorruptionBackupPath — picked up by AppState init",
+      "PrefsView.corruptionBanners — красный баннер с Reveal-friendly mono path и Dismiss",
+      "Translation: corruptionSchedulesTitle/StatsTitle/BackupAt/Dismiss (en/ru/zh)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.38/HelloWork-0.9.38.dmg"
+  },
+  {
     "version": "0.9.37",
     "date": "2026-04-27",
     "customMessage": "TASK-016 verified: onboarding-less-aggressive корректен. Phase B (Permissions/TCC flow) полностью закрыта.",

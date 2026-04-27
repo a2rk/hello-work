@@ -95,6 +95,20 @@ final class AppState: ObservableObject {
     }
     @Published private(set) var launchAtLogin: Bool
 
+    /// User-visible warnings о восстановлении после повреждения данных
+    /// (managedApps JSON / stats.json). Каждая запись = одна категория, путь
+    /// к резервной копии. UI показывает их баннером в Prefs до dismiss.
+    @Published var corruptionWarnings: [CorruptionWarning] = []
+
+    struct CorruptionWarning: Identifiable, Equatable {
+        let id = UUID()
+        /// `.schedules` / `.stats` — определяет message в UI.
+        let kind: Kind
+        let backupPath: String
+
+        enum Kind: String { case schedules, stats }
+    }
+
     private(set) var graceUntil: Date?
 
     private static let languageKey = "helloWorkLanguage"
@@ -194,18 +208,55 @@ final class AppState: ObservableObject {
         // enabled: дефолт true, если ключа нет
         self.enabled = (UserDefaults.standard.object(forKey: Self.enabledKey) as? Bool) ?? true
 
-        // managedApps: десериализуем JSON из UserDefaults; пустой массив, если ничего нет / битое
-        if let data = UserDefaults.standard.data(forKey: Self.managedAppsKey),
-           let apps = try? JSONDecoder().decode([ManagedApp].self, from: data) {
-            self.managedApps = apps
+        // managedApps: десериализуем JSON из UserDefaults. Если файл существует
+        // но битый — сохраняем blob в резервную копию и поднимаем баннер,
+        // чтобы юзер не «потерял» расписания тихо.
+        var initialWarnings: [CorruptionWarning] = []
+        if let data = UserDefaults.standard.data(forKey: Self.managedAppsKey) {
+            if let apps = try? JSONDecoder().decode([ManagedApp].self, from: data) {
+                self.managedApps = apps
+            } else {
+                self.managedApps = []
+                if let backupPath = Self.backupCorruptManagedApps(data) {
+                    initialWarnings.append(CorruptionWarning(kind: .schedules, backupPath: backupPath))
+                }
+            }
         } else {
             self.managedApps = []
         }
+        if let statsBackup = stats.lastCorruptionBackupPath {
+            initialWarnings.append(CorruptionWarning(kind: .stats, backupPath: statsBackup))
+        }
+        self.corruptionWarnings = initialWarnings
 
         // Сразу прокидываем настройки в controller.
         focus.dimOpacity = focusDimOpacity
         focus.useAccessibility = focusUseAccessibility
         focus.stats = stats
+    }
+
+    /// Сохраняет битый JSON managedApps в `~/Library/Application Support/HelloWork/managedApps.corrupt-<ts>.json`
+    /// и возвращает путь, чтобы UI мог его показать. nil если не удалось записать.
+    private static func backupCorruptManagedApps(_ data: Data) -> String? {
+        guard let base = try? FileManager.default.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        ) else { return nil }
+        let dir = base.appendingPathComponent("HelloWork", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let url = dir.appendingPathComponent("managedApps.corrupt-\(Int(Date().timeIntervalSince1970)).json")
+        do {
+            try data.write(to: url)
+            return url.path
+        } catch {
+            return nil
+        }
+    }
+
+    func dismissCorruption(_ id: UUID) {
+        corruptionWarnings.removeAll { $0.id == id }
     }
 
     private func saveManagedApps() {
