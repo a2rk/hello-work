@@ -296,7 +296,7 @@ HelloWork/
   - Проблема: "0.9.10-beta" парсится как [0,9,10], "0.9.10" тоже как [0,9,10] → equal вместо «release > prerelease».
   - Решение: split на "-" сначала, основная часть → tuple компаренье; если остался suffix — prerelease, считается младше release без suffix'а.
 
-- [ ] **TASK-046 [verify]** — TASK-045
+- [x] **TASK-046 [verify]** — TASK-045  → released as v0.9.67
 
 ### Phase J — DevLogger
 
