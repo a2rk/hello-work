@@ -9,9 +9,17 @@ struct SettingsDiagnosticsTab: View {
     @State private var refreshTimer: Timer?
     /// Last seen mtime файла лога — если не изменился, skip read+state-update.
     @State private var lastModificationDate: Date?
+    /// Welcome-баннер при первом unlock'е dev mode. Persistent до dismiss.
+    @State private var welcomeBannerHidden: Bool = UserDefaults.standard.bool(
+        forKey: "helloWorkDevModeWelcomeAck"
+    )
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
+            if !welcomeBannerHidden {
+                welcomeBanner
+            }
+
             VStack(alignment: .leading, spacing: 4) {
                 Text(t.diagnosticsTitle)
                     .font(.system(size: 16, weight: .semibold))
@@ -48,6 +56,44 @@ struct SettingsDiagnosticsTab: View {
             refreshTimer?.invalidate()
             refreshTimer = nil
         }
+    }
+
+    private var welcomeBanner: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "stethoscope")
+                .foregroundColor(Theme.accent)
+                .font(.system(size: 14))
+            Text(t.diagnosticsUnlocked)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundColor(.white)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer()
+            Button {
+                UserDefaults.standard.set(true, forKey: "helloWorkDevModeWelcomeAck")
+                withAnimation(.easeOut(duration: 0.2)) {
+                    welcomeBannerHidden = true
+                }
+            } label: {
+                Text(t.corruptionDismiss)
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(Capsule().fill(Color.white.opacity(0.10)))
+                    .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(Theme.accent.opacity(0.12))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(Theme.accent.opacity(0.50), lineWidth: 1)
+        )
     }
 
     private var controlsBar: some View {

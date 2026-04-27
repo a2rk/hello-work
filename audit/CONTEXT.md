@@ -308,7 +308,7 @@ HelloWork/
 
 ### Phase K — UX polish
 
-- [ ] **TASK-049 [impl]** — Dev-mode unlock — auto-jump в Diagnostics + persistent banner
+- [x] **TASK-049 [impl]** — Dev-mode unlock — auto-jump в Diagnostics + persistent banner  → released as v0.9.70
   - Файлы: `Preferences/Settings/SettingsView.swift:80-110`
   - Решение: убрать таймер автоскрытия, оставить banner в Diagnostics-tab сверху с кнопкой «Скрыть» / «Disable dev mode».
 

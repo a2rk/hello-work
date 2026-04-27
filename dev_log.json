@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.70",
+    "date": "2026-04-28",
+    "customMessage": "TASK-049: Welcome-баннер про unlock dev mode переехал в Diagnostics-tab и живёт persistent до dismiss. Юзер не пропустит уведомление за 3.5с.",
+    "main": "Раньше banner показывался на SettingsView сверху и через 3.5с исчезал. Теперь он внутри Diagnostics-tab, дорисуется при первом unlock'e (`helloWorkDevModeWelcomeAck` UserDefaults flag). У него своя кнопка Dismiss.",
+    "points": [
+      "SettingsView: убран showUnlockedToast + 3.5с auto-hide",
+      "SettingsDiagnosticsTab: welcomeBanner с persistence через UserDefaults",
+      "Tap-counter сбрасывает ack flag при новом unlock — banner появляется снова"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.70/HelloWork-0.9.70.dmg"
+  },
+  {
     "version": "0.9.69",
     "date": "2026-04-27",
     "customMessage": "TASK-048 verified: rotation корректен. Phase J полностью закрыта.",

@@ -7,19 +7,11 @@ struct SettingsView: View {
     /// Счётчик быстрых тапов по «Данные» — 10 кликов в окне 2с разблокируют Diagnostics.
     @State private var dataTapCount: Int = 0
     @State private var dataLastTap: Date = .distantPast
-    @State private var showUnlockedToast: Bool = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             header
-
-            if showUnlockedToast {
-                unlockedBanner
-                    .transition(.opacity)
-            }
-
             content
-
             Spacer(minLength: 0)
         }
     }
@@ -80,6 +72,8 @@ struct SettingsView: View {
         state.settingsTab = tab
         guard tab == .data else { return }
         // Easter-egg: 10 быстрых тапов подряд по «Данные» включают режим разработчика.
+        // Welcome-баннер про unlock живёт в самой Diagnostics-вкладке, пока юзер
+        // его не закроет — без auto-hide таймера.
         let now = Date()
         if now.timeIntervalSince(dataLastTap) > 2.0 {
             dataTapCount = 0
@@ -88,39 +82,11 @@ struct SettingsView: View {
         dataTapCount += 1
         if dataTapCount >= 10 && !state.developerMode {
             state.developerMode = true
-            withAnimation(.easeOut(duration: 0.2)) {
-                showUnlockedToast = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
-                withAnimation(.easeIn(duration: 0.4)) {
-                    showUnlockedToast = false
-                }
-            }
-            // Сразу ведём юзера в новую вкладку.
+            // Очищаем «уже видел welcome» — на новый unlock баннер появится снова.
+            UserDefaults.standard.removeObject(forKey: "helloWorkDevModeWelcomeAck")
             state.settingsTab = .diagnostics
             dataTapCount = 0
         }
-    }
-
-    private var unlockedBanner: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "stethoscope")
-                .foregroundColor(Theme.accent)
-            Text(t.diagnosticsUnlocked)
-                .font(.system(size: 12, weight: .medium))
-                .foregroundColor(.white)
-            Spacer()
-        }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 10)
-        .background(
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(Theme.accent.opacity(0.12))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .stroke(Theme.accent.opacity(0.5), lineWidth: 1)
-        )
     }
 
     // MARK: - Content
