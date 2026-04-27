@@ -255,7 +255,7 @@ HelloWork/
     - Timer оставить только для countdown'ов / time-based logic (grace expiry, scheduled boundaries).
     - Снизить timer до 1Hz, наверняка хватит.
 
-- [ ] **TASK-036 [verify]** — TASK-035
+- [x] **TASK-036 [verify]** — TASK-035  → released as v0.9.57
 
 - [ ] **TASK-037 [impl]** — `FrontmostWindowFinder` — single CGS call path
   - Файл: `Focus/FrontmostWindowFinder.swift:23-30,113-138`

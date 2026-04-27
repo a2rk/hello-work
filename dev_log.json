@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.57",
+    "date": "2026-04-27",
+    "customMessage": "TASK-036 verified: bulk findMultiple корректен, edge cases (empty / many apps / no matches) работают.",
+    "main": "Verification of TASK-035. Same algorithm в один проход. Build чистый.",
+    "points": [
+      "findMultiple == N×find но за 1 CGS call",
+      "find — теперь thin wrapper"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.57/HelloWork-0.9.57.dmg"
+  },
+  {
     "version": "0.9.56",
     "date": "2026-04-27",
     "customMessage": "TASK-035: refresh() переехал на bulk window discovery. Один CGWindowListCopyWindowInfo на N managed apps вместо N отдельных вызовов.",
