@@ -263,7 +263,7 @@ extension Translation {
         permsRefresh: "Re-check",
         permsDoneAll: "Done",
         permsDoneLater: "Skip for now",
-        permsFooter: "All permissions are optional. Hello work works without them — just with reduced features. Revoke any time in System Settings → Privacy & Security.",
+        permsFooter: "All permissions are optional. After granting, macOS may close Hello work — that's normal, the app will relaunch itself within a couple of seconds. Revoke any time in System Settings → Privacy & Security.",
         permsBannerTitle: "Grey placeholders instead of icons?",
         permsBannerDesc: "macOS doesn't share menubar item details until you allow Screen Recording.",
         permsBannerButton: "Fix"
@@ -534,7 +534,7 @@ extension Translation {
         permsRefresh: "Перепроверить",
         permsDoneAll: "Готово",
         permsDoneLater: "Пропустить",
-        permsFooter: "Все разрешения опциональны. Hello work работает и без них — просто с урезанным функционалом. Отозвать в любой момент в System Settings → Privacy & Security.",
+        permsFooter: "Все разрешения опциональны. После grant macOS может закрыть Hello work — это нормально, приложение само перезапустится через пару секунд. Отозвать в любой момент в System Settings → Privacy & Security.",
         permsBannerTitle: "Серые квадратики вместо иконок?",
         permsBannerDesc: "macOS не делится содержимым menubar пока ты не разрешишь Screen Recording.",
         permsBannerButton: "Исправить"
@@ -789,7 +789,7 @@ extension Translation {
         permsRefresh: "重新检查",
         permsDoneAll: "完成",
         permsDoneLater: "暂时跳过",
-        permsFooter: "所有权限均为可选。Hello work 即使没有这些也能工作 — 只是功能受限。可随时在「系统设置 → 隐私与安全」中撤销。",
+        permsFooter: "所有权限均为可选。授权后,macOS 可能会关闭 Hello work — 这是正常的,应用将在几秒内自动重启。可随时在「系统设置 → 隐私与安全」中撤销。",
         permsBannerTitle: "看到灰色占位符而不是图标?",
         permsBannerDesc: "在你允许「屏幕录制」之前,macOS 不会分享菜单栏内容。",
         permsBannerButton: "解决"

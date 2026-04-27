@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.9.9",
+    "date": "2026-04-27",
+    "customMessage": "Серьёзный баг: после выдачи прав иконка уезжала за экран. Чинено в трёх местах сразу.",
+    "main": "Чиним два бага в логике permissions: иконка H исчезала после grant, и приложение не перезапускалось после kill macOS.",
+    "points": [
+      "Главный баг: при collapsed состоянии menubar-hider'а иконка отрисовывалась в левой части 10000pt-widget'а — то есть на 10000 пикселей левее экрана. Невидимо. Фикс: imagePosition = .imageTrailing при collapsed",
+      "Safeguard на старт: даже если persist'нуто collapsed-state, на запуске иконка стартует expanded (1.2 секунды видимости), потом применяется persist. Юзер всегда видит что приложение запущено",
+      "Auto-relaunch после kill: macOS убивает процесс при изменении TCC (Screen Recording / Accessibility). Теперь спавним детач bash-скрипт перед request — он ждёт смерти PID и сам запускает app снова через open",
+      "Пересмотрен текст в permissions onboarding на 3 языках: явное предупреждение «macOS может закрыть приложение, оно само перезапустится через пару секунд»",
+      "Логика затрагивает: requestScreenRecording, requestAccessibility, openSystemSettings — все три могут вызвать kill, во всех трёх взводится auto-relaunch"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.9/HelloWork-0.9.9.dmg"
+  },
+  {
     "version": "0.9.8",
     "date": "2026-04-27",
     "customMessage": "Один статус-айтем вместо двух. Иконка H сама становится chevron'ом когда menubar скрыт.",

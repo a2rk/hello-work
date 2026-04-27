@@ -216,6 +216,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Применяет ширину и иконку основного status item под текущее состояние hider'а.
     /// При collapsed=true ширина 10000pt → правые иконки уезжают за край экрана.
+    /// КРИТИЧНО: при collapsed используем .imageTrailing — иначе иконка отрисуется
+    /// в левой части 10000pt-widget'a и уедет за границу экрана.
     private func applyMenubarHiderState() {
         guard let item = statusItem else { return }
         let collapsed = state.menubarHiderEnabled && state.menubarHider.isCollapsed
@@ -225,7 +227,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             style: state.statusIconStyle,
             collapsed: collapsed
         )
-        item.button?.imagePosition = .imageLeading
+        item.button?.imagePosition = collapsed ? .imageTrailing : .imageLeading
     }
 
     /// Обновляет видимый title рядом с иконкой — countdown grace в формате `0:47`.
@@ -507,9 +509,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func applyMenubarHiderEnabled() {
         if state.menubarHiderEnabled {
-            // initialCollapsed: persist'нутое состояние или true по умолчанию.
-            let initial = state.menubarPersistCollapsed ? state.menubarRestoredCollapsed : true
-            state.menubarHider.setEnabled(true, initialCollapsed: initial)
+            // SAFEGUARD: всегда стартуем в expanded — гарантия что юзер увидит иконку.
+            // Через 1.2 сек применяем persist'нутое состояние (если включено).
+            state.menubarHider.setEnabled(true, initialCollapsed: false)
+
+            if state.menubarPersistCollapsed {
+                let target = state.menubarRestoredCollapsed
+                if target {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { [weak self] in
+                        guard let self else { return }
+                        guard self.state.menubarHiderEnabled else { return }
+                        self.state.menubarHider.collapseAll()
+                    }
+                }
+            }
         } else {
             state.menubarHider.setEnabled(false, initialCollapsed: true)
         }
