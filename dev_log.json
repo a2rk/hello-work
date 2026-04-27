@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.58",
+    "date": "2026-04-27",
+    "customMessage": "TASK-037: FrontmostWindowFinder делает РОВНО одну CGS-enum независимо от пути (AX/CG). Раньше AX-path + fallback на CG = 2 call'а, теперь cgInfo пробрасывается между.",
+    "main": "find() делает один CGWindowListCopyWindowInfo, передаёт результат и в findViaAX (для matchCGWindowNumber) и в findViaCG (для основного scan'а). Всегда 1 CGS call.",
+    "points": [
+      "find() — единый CGS upfront",
+      "findViaAX/findViaCG/matchCGWindowNumber принимают cgInfo: [[String: Any]]",
+      "AX-fallback больше не делает второй call"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.58/HelloWork-0.9.58.dmg"
+  },
+  {
     "version": "0.9.57",
     "date": "2026-04-27",
     "customMessage": "TASK-036 verified: bulk findMultiple корректен, edge cases (empty / many apps / no matches) работают.",

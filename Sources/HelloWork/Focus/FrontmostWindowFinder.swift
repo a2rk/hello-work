@@ -14,32 +14,31 @@ enum FrontmostWindowFinder {
     }
 
     /// Находит frontmost-окно. Если useAccessibility=true и доступ есть — точное определение.
+    /// Делает РОВНО один CGWindowListCopyWindowInfo и переиспользует результат для AX и CG путей.
     static func find(useAccessibility: Bool = false) -> Target? {
         guard let app = NSWorkspace.shared.frontmostApplication else { return nil }
         guard let bundleID = app.bundleIdentifier else { return nil }
         let pid = app.processIdentifier
 
+        let options: CGWindowListOption = [.optionOnScreenOnly, .excludeDesktopElements]
+        let cgInfo = (CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]]) ?? []
+
         // 1. AX путь — точный focused window внутри app.
         if useAccessibility, AXIsProcessTrusted() {
-            if let target = findViaAX(pid: pid, bundleID: bundleID) {
+            if let target = findViaAX(pid: pid, bundleID: bundleID, cgInfo: cgInfo) {
                 return target
             }
         }
 
         // 2. CG путь — топ окно с layer=0 от этого pid.
-        return findViaCG(pid: pid, bundleID: bundleID)
+        return findViaCG(pid: pid, bundleID: bundleID, cgInfo: cgInfo)
     }
 
     // MARK: - CGWindowList
 
-    private static func findViaCG(pid: pid_t, bundleID: String) -> Target? {
-        let options: CGWindowListOption = [.optionOnScreenOnly, .excludeDesktopElements]
-        guard let info = CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]] else {
-            return nil
-        }
-
+    private static func findViaCG(pid: pid_t, bundleID: String, cgInfo: [[String: Any]]) -> Target? {
         // CGWindowList отдаёт окна сверху вниз z-order. Берём первое, принадлежащее pid с layer=0.
-        for w in info {
+        for w in cgInfo {
             guard
                 let layer = w[kCGWindowLayer as String] as? Int, layer == 0,
                 let bounds = w[kCGWindowBounds as String] as? [String: CGFloat],
@@ -69,7 +68,7 @@ enum FrontmostWindowFinder {
 
     // MARK: - AX
 
-    private static func findViaAX(pid: pid_t, bundleID: String) -> Target? {
+    private static func findViaAX(pid: pid_t, bundleID: String, cgInfo: [[String: Any]]) -> Target? {
         let appElement = AXUIElementCreateApplication(pid)
 
         var focused: CFTypeRef?
@@ -93,10 +92,8 @@ enum FrontmostWindowFinder {
         let frame = cgFrameToScreenFrame(cgRect)
         let screen = bestScreen(for: frame)
 
-        // Получаем CGWindowID через приватный API _AXUIElementGetWindow.
-        // Без него мы не можем сделать NSWindow.order(.below, relativeTo: ...).
-        // Fallback: ищем подходящее CG-окно по совпадению bounds.
-        let winNum = matchCGWindowNumber(pid: pid, frame: cgRect)
+        // Подбираем CGWindowID для AX-окна по совпадению bounds в уже полученном cgInfo.
+        let winNum = matchCGWindowNumber(pid: pid, frame: cgRect, cgInfo: cgInfo)
 
         let isFull = isFullScreen(frame: frame, screen: screen)
 
@@ -110,13 +107,9 @@ enum FrontmostWindowFinder {
         )
     }
 
-    /// Находит CGWindowID для AX-окна через сравнение bounds.
-    private static func matchCGWindowNumber(pid: pid_t, frame: CGRect) -> Int? {
-        let options: CGWindowListOption = [.optionOnScreenOnly, .excludeDesktopElements]
-        guard let info = CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]] else {
-            return nil
-        }
-        for w in info {
+    /// Находит CGWindowID для AX-окна через сравнение bounds в уже-полученном cgInfo.
+    private static func matchCGWindowNumber(pid: pid_t, frame: CGRect, cgInfo: [[String: Any]]) -> Int? {
+        for w in cgInfo {
             guard
                 let pidNum = w[kCGWindowOwnerPID as String] as? Int,
                 pid_t(pidNum) == pid,

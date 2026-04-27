@@ -257,7 +257,7 @@ HelloWork/
 
 - [x] **TASK-036 [verify]** — TASK-035  → released as v0.9.57
 
-- [ ] **TASK-037 [impl]** — `FrontmostWindowFinder` — single CGS call path
+- [x] **TASK-037 [impl]** — `FrontmostWindowFinder` — single CGS call path  → released as v0.9.58
   - Файл: `Focus/FrontmostWindowFinder.swift:23-30,113-138`
   - Проблема: при useAccessibility=true может два раза дёргать CGWindowListCopyWindowInfo.
   - Решение: пробросить CG-info между AX и CG путями.
