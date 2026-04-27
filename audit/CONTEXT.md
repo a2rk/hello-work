@@ -215,7 +215,7 @@ HelloWork/
   - Проблема: drag слайдера = десятки UserDefaults.set в секунду.
   - Решение: вынести focusDimOpacity на @State в FocusSettingsView (live UI), commit в AppState только на `.onChange(of: ... debounce 300ms)` или на отпускании слайдера. Альтернатива: throttle через Combine `.throttle(for: .milliseconds(300))`.
 
-- [ ] **TASK-026 [verify]** — TASK-025
+- [x] **TASK-026 [verify]** — TASK-025  → released as v0.9.47
 
 - [ ] **TASK-027 [impl]** — `ScheduleView` decouple от global `@ObservedObject`
   - Файлы: `Preferences/Schedule/ScheduleView.swift`, `Preferences/PrefsView.swift:144-147`

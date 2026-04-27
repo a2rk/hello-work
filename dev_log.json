@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.47",
+    "date": "2026-04-27",
+    "customMessage": "TASK-026 verified: debounced persist корректен — focus.updateDimOpacity sync, UserDefaults через 300ms.",
+    "main": "Verification of TASK-025. Cancel + reschedule pattern на DispatchWorkItem стабильный. Edge на quit в окне 300ms — cfprefsd обычно flush'ит. Build чистый.",
+    "points": [
+      "Slider real-time visual ✓",
+      "Persist 1 раз после остановки ✓"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.47/HelloWork-0.9.47.dmg"
+  },
+  {
     "version": "0.9.46",
     "date": "2026-04-27",
     "customMessage": "TASK-025: focusDimOpacity persist через debounced workitem (300ms). Drag слайдера обновляет overlay сразу, но cfprefsd дёргается один раз после остановки.",
