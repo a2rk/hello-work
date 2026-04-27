@@ -1,26 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# build.sh — собирает .app-бандл с Hello work engine из release-бинарника.
-# Результат: dist/engine/HelloWork.app
-# Engine — это «начинка», которую stub скачивает и кладёт в Application Support.
+# build_stub.sh — собирает stub-installer (то, что юзер ставит в /Applications).
+# Stub при первом запуске качает engine с GitHub Release и кладёт в
+# ~/Library/Application Support/HelloWork/. Дальше — silent launch engine.
+#
+# Результат: dist/stub/Hello work.app
 
 cd "$(dirname "$0")/.."
 
 VERSION=$(cat VERSION)
 BUILD=$(cat BUILD)
-BINARY_NAME="HelloWork"
+BINARY_NAME="HelloWorkStub"
 BUNDLE_NAME="HelloWork"
-DISPLAY_NAME="Hello work Engine"
-BUNDLE_ID="dev.helloworkapp.macos.engine"
+DISPLAY_NAME="Hello work"
+BUNDLE_ID="dev.helloworkapp.macos"
 
-DIST="dist/engine"
-APP_PATH="$DIST/HelloWork.app"
+DIST="dist/stub"
+APP_PATH="$DIST/Hello work.app"
 
-echo "▶ Building $DISPLAY_NAME $VERSION (build $BUILD)..."
+echo "▶ Building Stub installer $VERSION (build $BUILD)..."
 
 # 1. Compile release binary
-swift build -c release --product HelloWork
+swift build -c release --product HelloWorkStub
 
 # 2. Reset and build .app skeleton
 mkdir -p "$DIST"
@@ -31,12 +33,7 @@ mkdir -p "$APP_PATH/Contents/Resources"
 # 3. Copy binary
 cp ".build/release/$BINARY_NAME" "$APP_PATH/Contents/MacOS/$BINARY_NAME"
 
-# 4. Bundle compiled resources (asset catalog Assets.car) если есть
-if [ -d ".build/release/HelloWork_HelloWork.bundle" ]; then
-    cp -R ".build/release/HelloWork_HelloWork.bundle" "$APP_PATH/Contents/Resources/"
-fi
-
-# 5. Generate Info.plist from template
+# 4. Generate Info.plist from stub template (без LSUIElement — stub имеет окно).
 sed \
     -e "s/__VERSION__/$VERSION/g" \
     -e "s/__BUILD__/$BUILD/g" \
@@ -44,9 +41,9 @@ sed \
     -e "s/__BINARY_NAME__/$BINARY_NAME/g" \
     -e "s/__BUNDLE_NAME__/$BUNDLE_NAME/g" \
     -e "s/__DISPLAY_NAME__/$DISPLAY_NAME/g" \
-    scripts/Info.plist.template > "$APP_PATH/Contents/Info.plist"
+    scripts/Info.plist.stub.template > "$APP_PATH/Contents/Info.plist"
 
-# 6. Generate icon if missing
+# 5. Generate icon if missing
 if [ ! -f scripts/AppIcon.icns ]; then
     echo "▶ Generating icon set..."
     swift scripts/generate_icon.swift
@@ -54,8 +51,7 @@ if [ ! -f scripts/AppIcon.icns ]; then
 fi
 cp scripts/AppIcon.icns "$APP_PATH/Contents/Resources/AppIcon.icns"
 
-# 7. Ad-hoc codesign со стабильным identifier — нужен для TCC permissions
-#    (без stable identifier macOS не сохраняет grant между запусками).
+# 6. Ad-hoc codesign
 codesign --force --deep --sign - --identifier "$BUNDLE_ID" "$APP_PATH" 2>&1 | grep -v "replacing existing signature" || true
 
 echo "✓ $APP_PATH"

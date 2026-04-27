@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# package.sh — пакует dist/HelloWork.app в DMG.
-# Результат: dist/HelloWork-<VERSION>.dmg
+# package.sh — пакует engine .app в DMG для GitHub Release.
+# Имя версионированное: HelloWork-<VERSION>.dmg.
+# Stub скачивает этот DMG, копирует .app в Application Support.
 
 cd "$(dirname "$0")/.."
 
 VERSION=$(cat VERSION)
 APP_FILE="HelloWork.app"
-DIST="dist"
-DMG="$DIST/HelloWork-$VERSION.dmg"
+DIST="dist/engine"
+DMG="dist/HelloWork-$VERSION.dmg"
 STAGING="$DIST/.dmg_staging"
 
 if [ ! -d "$DIST/$APP_FILE" ]; then
@@ -17,18 +18,18 @@ if [ ! -d "$DIST/$APP_FILE" ]; then
     exit 1
 fi
 
-echo "▶ Packaging Hello work $VERSION..."
+echo "▶ Packaging engine $VERSION..."
 
-# Подготовим staging — туда .app + симлинк /Applications для drag-to-install
+# Engine DMG — без drag-to-Applications (юзер не должен сюда вручную лезть,
+# stub сам положит в Application Support).
 rm -rf "$STAGING"
 mkdir -p "$STAGING"
 cp -R "$DIST/$APP_FILE" "$STAGING/"
-ln -s /Applications "$STAGING/Applications"
 
 rm -f "$DMG"
 
 hdiutil create \
-    -volname "Hello work $VERSION" \
+    -volname "Hello work Engine $VERSION" \
     -srcfolder "$STAGING" \
     -ov -format UDZO \
     "$DMG" >/dev/null

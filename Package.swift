@@ -8,6 +8,9 @@ let package = Package(
         .executableTarget(
             name: "HelloWork",
             resources: [.process("Resources")]
+        ),
+        .executableTarget(
+            name: "HelloWorkStub"
         )
     ]
 )

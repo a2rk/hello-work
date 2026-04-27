@@ -1,5 +1,22 @@
 [
   {
+    "version": "0.9.11",
+    "date": "2026-04-27",
+    "customMessage": "Stub-installer + curl-install + Homebrew. Один маленький DMG ставится один раз и тянет всё остальное под капотом.",
+    "main": "Поменяли модель дистрибуции: HelloWork.dmg теперь stub-installer (~750KB), который скачивает основной модуль с GitHub Release и кладёт в Application Support. Плюс install.sh для curl|bash и Homebrew Cask — оба обходят Gatekeeper alert через bypass quarantine.",
+    "points": [
+      "Stub-installer: маленький .app в /Applications, при первом запуске показывает прогресс-бар, скачивает engine, копирует в ~/Library/Application Support/HelloWork/, запускает",
+      "При следующих запусках stub silent-launch'ит engine и сразу exits — никакого UI",
+      "install.sh: одна команда curl | bash. Качает stub через curl (без quarantine), кладёт в Applications, удаляет quarantine, запускает. Без Gatekeeper alert'ов",
+      "Homebrew Cask: brew tap a2rk/hello-work + brew install --cask hellowork. Тоже без alert'ов",
+      "Разделение Bundle ID: stub = dev.helloworkapp.macos, engine = dev.helloworkapp.macos.engine",
+      "TCC permissions у engine'а — стабильны между обновлениями за счёт codesign --identifier",
+      "Engine self-update через UpdateInstaller продолжает работать как раньше — теперь обновляет .app в Application Support",
+      "README обновлён с тремя способами установки"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.11/HelloWork-0.9.11.dmg"
+  },
+  {
     "version": "0.9.10",
     "date": "2026-04-27",
     "customMessage": "Серые квадратики были не багом permissions, а архитектурным ограничением CGWindowList. Перешли на NSWorkspace — иконки теперь честно настоящие.",
