@@ -8,6 +8,7 @@ final class AppState: ObservableObject {
     let stats = StatsCollector()
     let focus = FocusModeController()
     let menubarHider = MenubarHiderController()
+    let permissions = PermissionsManager()
     @Published var prefsSelection: SidebarSelection?
     @Published var enabled: Bool {
         didSet { UserDefaults.standard.set(enabled, forKey: Self.enabledKey) }

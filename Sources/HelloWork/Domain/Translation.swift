@@ -283,4 +283,24 @@ struct Translation {
     let combinedNobody: String
     let combinedNextChange: (_ appName: String, _ minutes: Int, _ willBlock: Bool) -> String
     let combinedTotalAllowed: (_ hours: Int, _ minutes: Int, _ apps: Int) -> String
+
+    // MARK: - Permissions
+    let permsTitle: String
+    let permsSubtitle: String
+    let permsScreenshotPlaceholder: String
+    let permsScreenRecordingTitle: String
+    let permsScreenRecordingDesc: String
+    let permsAccessibilityTitle: String
+    let permsAccessibilityDesc: String
+    let permsGrant: String
+    let permsOpenSettings: String
+    let permsGranted: String
+    let permsRefresh: String
+    let permsDoneAll: String
+    let permsDoneLater: String
+    let permsFooter: String
+
+    let permsBannerTitle: String
+    let permsBannerDesc: String
+    let permsBannerButton: String
 }

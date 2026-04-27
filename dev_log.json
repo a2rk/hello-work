@@ -1,5 +1,24 @@
 [
   {
+    "version": "0.9.7",
+    "date": "2026-04-27",
+    "customMessage": "Объясняю почему menubar показывал серые квадратики — нужны были разрешения. Теперь есть честный экран онбординга.",
+    "main": "Permissions: новый экран онбординга для Screen Recording и Accessibility. Без них menubar preview показывал заглушки вместо иконок чужих приложений (это ограничение macOS 14+, не баг).",
+    "points": [
+      "PermissionsManager — следит за состоянием Screen Recording и Accessibility. Refresh на старт + при возврате в приложение (NSApplication.didBecomeActive)",
+      "Экран онбординга с placeholder-картинкой (свой PNG можно положить в Resources/Media.xcassets/onboarding_permissions_<lang>.imageset/)",
+      "Триггеры показа: первый запуск, или при denied и не показывали раньше",
+      "Banner на странице «Меню бар» если SR denied — жёлтое предупреждение с кнопкой «Исправить»",
+      "Permission rows показывают состояние (✓ granted, ⚠ denied, ○ not determined) и нужное действие — Grant / Open Settings",
+      "Deep links в System Settings: x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture",
+      "Автоматическая проверка при возврате — если юзер забрал права, banner и onboarding появятся сами",
+      "Asset catalog с тремя image set'ами на en/ru/zh — пока пустые, можно добавить настоящие скриншоты",
+      "Apple-иконки (Battery, Wifi, Control Center) физически нельзя скрыть — это правая защищённая зона macOS, документировано в disclaimer",
+      "Иконки чужих приложений теперь будут видны после grant Screen Recording — уходит проблема серых квадратиков"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.7/HelloWork-0.9.7.dmg"
+  },
+  {
     "version": "0.9.6",
     "date": "2026-04-27",
     "customMessage": "Все приложения на одном круге. Концентрические кольца, пастельная палитра, иконки в центре каждого кусочка.",

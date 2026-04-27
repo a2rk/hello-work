@@ -19,6 +19,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var menubarCancellables: Set<AnyCancellable> = []
 
     private let firstLaunchKey = "helloWorkHasLaunchedBefore"
+    private let permissionsShownKey = "helloWorkPermissionsOnboardingShown"
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
@@ -40,7 +41,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refresh()
 
         showPrefsIfFirstLaunch()
+        setupPermissionsRefresh()
         Task { await state.checkForUpdates() }
+    }
+
+    /// При возврате в приложение перепроверяем разрешения — юзер мог изменить их в System Settings.
+    private func setupPermissionsRefresh() {
+        observers.append(NotificationCenter.default.addObserver(
+            forName: NSApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.state.permissions.refresh()
+            }
+        })
     }
 
     func applicationWillTerminate(_ notification: Notification) {
@@ -67,12 +82,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// (приложение accessory, без видимого UI кроме статус-бара).
     private func showPrefsIfFirstLaunch() {
         let defaults = UserDefaults.standard
-        guard !defaults.bool(forKey: firstLaunchKey) else { return }
-        defaults.set(true, forKey: firstLaunchKey)
+        let isFirstLaunch = !defaults.bool(forKey: firstLaunchKey)
+        if isFirstLaunch {
+            defaults.set(true, forKey: firstLaunchKey)
+        }
+
+        // Permissions onboarding показываем при первом запуске или если ещё не показывали.
+        let needsPermsOnboarding = !defaults.bool(forKey: permissionsShownKey)
+            && state.permissions.anyMissing
+
+        if isFirstLaunch || needsPermsOnboarding {
+            defaults.set(true, forKey: permissionsShownKey)
+        }
 
         // Небольшая задержка, чтобы статус-бар и обсерверы успели разогреться.
+        guard isFirstLaunch || needsPermsOnboarding else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
-            self?.openPreferences()
+            guard let self else { return }
+            if needsPermsOnboarding {
+                self.state.prefsSelection = .permissions
+            }
+            self.openPreferences()
         }
     }
 

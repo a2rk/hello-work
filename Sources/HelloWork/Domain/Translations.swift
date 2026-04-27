@@ -257,7 +257,24 @@ extension Translation {
         },
         combinedTotalAllowed: { h, m, apps in
             "Total allowed across \(apps) apps: \(h)h \(m)min per day."
-        }
+        },
+        permsTitle: "Permissions",
+        permsSubtitle: "For Hello work to do its job — read your menubar, find focus windows, count attempts — macOS needs your nod. Grant once, forget about it.",
+        permsScreenshotPlaceholder: "Screenshot will go here. For now — placeholder.",
+        permsScreenRecordingTitle: "Screen Recording",
+        permsScreenRecordingDesc: "Read real names and icons of menubar items. Without this — you'll see grey placeholders instead of your apps.",
+        permsAccessibilityTitle: "Accessibility",
+        permsAccessibilityDesc: "Precisely detect the focused window in apps with multiple windows (Xcode, VS Code, browsers).",
+        permsGrant: "Grant",
+        permsOpenSettings: "Open Settings",
+        permsGranted: "Granted",
+        permsRefresh: "Re-check",
+        permsDoneAll: "Done",
+        permsDoneLater: "Skip for now",
+        permsFooter: "All permissions are optional. Hello work works without them — just with reduced features. Revoke any time in System Settings → Privacy & Security.",
+        permsBannerTitle: "Grey placeholders instead of icons?",
+        permsBannerDesc: "macOS doesn't share menubar item details until you allow Screen Recording.",
+        permsBannerButton: "Fix"
     )
 
     static let ru = Translation(
@@ -519,7 +536,24 @@ extension Translation {
             let appsStr = ruPlural(apps, "приложению", "приложениям", "приложениям")
             let hStr = ruPlural(h, "час", "часа", "часов")
             return "Суммарно по \(apps) \(appsStr): \(h) \(hStr) \(m) мин в сутках."
-        }
+        },
+        permsTitle: "Разрешения",
+        permsSubtitle: "Чтобы Hello work работал как надо — читал menubar, точно находил окна фокуса, считал тыки — macOS должен дать добро. Разреши один раз и забудь.",
+        permsScreenshotPlaceholder: "Здесь будет скриншот. Пока заглушка.",
+        permsScreenRecordingTitle: "Запись экрана",
+        permsScreenRecordingDesc: "Чтобы видеть настоящие имена и иконки menubar-приложений. Без этого вместо твоих приложений будут серые квадратики.",
+        permsAccessibilityTitle: "Универсальный доступ",
+        permsAccessibilityDesc: "Точное определение фокусного окна внутри приложения с несколькими окнами (Xcode, VS Code, браузеры).",
+        permsGrant: "Разрешить",
+        permsOpenSettings: "Открыть настройки",
+        permsGranted: "Разрешено",
+        permsRefresh: "Перепроверить",
+        permsDoneAll: "Готово",
+        permsDoneLater: "Пропустить",
+        permsFooter: "Все разрешения опциональны. Hello work работает и без них — просто с урезанным функционалом. Отозвать в любой момент в System Settings → Privacy & Security.",
+        permsBannerTitle: "Серые квадратики вместо иконок?",
+        permsBannerDesc: "macOS не делится содержимым menubar пока ты не разрешишь Screen Recording.",
+        permsBannerButton: "Исправить"
     )
 
     static let zh = Translation(
@@ -765,6 +799,23 @@ extension Translation {
         },
         combinedTotalAllowed: { h, m, apps in
             "\(apps) 个应用每日总允许时间:\(h) 小时 \(m) 分钟。"
-        }
+        },
+        permsTitle: "权限",
+        permsSubtitle: "为了让 Hello work 正常工作 — 读取菜单栏、精准找到焦点窗口、统计尝试次数 — macOS 需要你的许可。授权一次,从此忘记。",
+        permsScreenshotPlaceholder: "截图将放在这里。暂为占位符。",
+        permsScreenRecordingTitle: "屏幕录制",
+        permsScreenRecordingDesc: "读取菜单栏项目的真实名称和图标。否则会看到灰色占位符而不是你的应用。",
+        permsAccessibilityTitle: "辅助功能",
+        permsAccessibilityDesc: "在多窗口应用(Xcode、VS Code、浏览器)中精准检测焦点窗口。",
+        permsGrant: "授权",
+        permsOpenSettings: "打开设置",
+        permsGranted: "已授权",
+        permsRefresh: "重新检查",
+        permsDoneAll: "完成",
+        permsDoneLater: "暂时跳过",
+        permsFooter: "所有权限均为可选。Hello work 即使没有这些也能工作 — 只是功能受限。可随时在「系统设置 → 隐私与安全」中撤销。",
+        permsBannerTitle: "看到灰色占位符而不是图标?",
+        permsBannerDesc: "在你允许「屏幕录制」之前,macOS 不会分享菜单栏内容。",
+        permsBannerButton: "解决"
     )
 }

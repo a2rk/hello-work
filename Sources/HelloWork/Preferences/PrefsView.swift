@@ -152,6 +152,10 @@ struct PrefsView: View {
             } else {
                 OnboardingView(action: openAppPicker)
             }
+        case .permissions:
+            PermissionsOnboardingView(state: state) {
+                state.prefsSelection = state.managedApps.first.map { .app($0.bundleID) } ?? .onboarding
+            }
         case .section(.stats):
             StatsView(state: state)
         case .section(.menubar):

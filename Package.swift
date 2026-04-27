@@ -5,6 +5,9 @@ let package = Package(
     name: "HelloWork",
     platforms: [.macOS(.v13)],
     targets: [
-        .executableTarget(name: "HelloWork")
+        .executableTarget(
+            name: "HelloWork",
+            resources: [.process("Resources")]
+        )
     ]
 )

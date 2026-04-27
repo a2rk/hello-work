@@ -6,6 +6,7 @@ struct MenubarView: View {
     @Environment(\.t) var t
     @ObservedObject var state: AppState
     @ObservedObject var hider: MenubarHiderController
+    @ObservedObject var perms: PermissionsManager
 
     @State private var items: [MenubarItemsScanner.Item] = []
     @State private var refreshTimer: Timer?
@@ -15,11 +16,16 @@ struct MenubarView: View {
     init(state: AppState) {
         self.state = state
         self.hider = state.menubarHider
+        self.perms = state.permissions
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             header
+
+            if perms.screenRecording != .granted {
+                permissionsBanner
+            }
 
             heroButtons
 
@@ -47,6 +53,51 @@ struct MenubarView: View {
                 }
             )
         }
+    }
+
+    // MARK: - Permissions banner
+
+    private var permissionsBanner: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 14))
+                .foregroundColor(Theme.danger.opacity(0.85))
+                .padding(.top, 1)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(t.permsBannerTitle)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.white)
+                Text(t.permsBannerDesc)
+                    .font(.system(size: 11))
+                    .foregroundColor(Theme.textSecondary)
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer()
+            Button {
+                state.prefsSelection = .permissions
+            } label: {
+                Text(t.permsBannerButton)
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Capsule().fill(Theme.danger.opacity(0.20)))
+                    .overlay(Capsule().stroke(Theme.danger.opacity(0.45), lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .frame(maxWidth: Layout.settingsCardMaxWidth, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Theme.danger.opacity(0.08))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .stroke(Theme.danger.opacity(0.30), lineWidth: 1)
+        )
     }
 
     // MARK: - Header

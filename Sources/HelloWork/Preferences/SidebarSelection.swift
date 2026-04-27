@@ -5,4 +5,5 @@ enum SidebarSelection: Hashable {
     case section(PrefSection)
     case onboarding
     case combined
+    case permissions
 }
