@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.9.63",
+    "date": "2026-04-27",
+    "customMessage": "TASK-042 verified: slot clamp корректен, valid input идёт без изменений.",
+    "main": "Verification of TASK-041. Edge cases (malformed s/e) обрабатываются safely.",
+    "points": [
+      "Identity на valid input"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.63/HelloWork-0.9.63.dmg"
+  },
+  {
     "version": "0.9.62",
     "date": "2026-04-27",
     "customMessage": "TASK-041: minuteSet(of slot:) клампит startMinutes/endMinutes в допустимый диапазон. Защита от malformed JSON (например после ручной правки).",

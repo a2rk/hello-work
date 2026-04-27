@@ -283,7 +283,7 @@ HelloWork/
   - Проблема: `endMinutes - minutesInDay < 0` создаёт invalid range. `slotsFromMinuteSet` может вернуть `endMinutes > 2 * minutesInDay`.
   - Решение: явные clamp + assertion в debug.
 
-- [ ] **TASK-042 [verify]** — TASK-041
+- [x] **TASK-042 [verify]** — TASK-041  → released as v0.9.63
 
 - [ ] **TASK-043 [impl]** — `StatsCollector.recordGrace` — guard ≥ 0
   - Файл: `Domain/Stats/StatsCollector.swift`
