@@ -208,6 +208,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Конфигурирует controller под текущие настройки.
     private func applyStatusBarConfiguration() {
+        devlog("appdelegate",
+               "applyStatusBarConfiguration — showIcon=\(state.showStatusBarIcon) hiderEnabled=\(state.menubarHiderEnabled) iconStyle=\(state.statusIconStyle.rawValue)")
         guard state.showStatusBarIcon else {
             state.menubarHider.tearDown()
             return
@@ -510,10 +512,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func registerMenubarHotkey() {
         menubarHotkeyManager.unregister()
-        guard state.menubarHiderEnabled else { return }
-        _ = menubarHotkeyManager.register(state.menubarHotkey.asFocusHotkey) { [weak self] in
+        guard state.menubarHiderEnabled else {
+            devlog("hotkey", "menubar hider disabled — hotkey not registered")
+            return
+        }
+        let hk = state.menubarHotkey
+        let ok = menubarHotkeyManager.register(hk.asFocusHotkey) { [weak self] in
+            devlog("hotkey", "menubar hotkey FIRED — calling toggle()")
             self?.state.menubarHider.toggle()
         }
+        devlog("hotkey", "registerMenubarHotkey \(hk.displayString()) success=\(ok)")
     }
 
     /// Авто-скрытие при изменении расписания. Вызывается из refresh().
@@ -646,6 +654,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func toggleMenubarHider() {
+        devlog("menu", "user clicked «Скрыть/Показать всё»")
         state.menubarHider.toggle()
     }
 

@@ -228,6 +228,15 @@ struct Translation {
     let settingsTabTray: String
     let settingsTabApp: String
     let settingsTabData: String
+    let settingsTabDiagnostics: String
+    let diagnosticsTitle: String
+    let diagnosticsSubtitle: String
+    let diagnosticsClear: String
+    let diagnosticsReveal: String
+    let diagnosticsRefresh: String
+    let diagnosticsDisable: String
+    let diagnosticsEmpty: String
+    let diagnosticsUnlocked: String
 
     // MARK: - Settings Tray tab
     let traySectionIcon: String

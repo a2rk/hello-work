@@ -1,5 +1,21 @@
 [
   {
+    "version": "0.9.18",
+    "date": "2026-04-27",
+    "customMessage": "Режим разработчика: 10 раз быстро тыкнуть в «Данные» → откроется вкладка «Диагностика» с живым логом всего status-bar pipeline'а. Чтобы ловить почему hider не двигает items.",
+    "main": "Подкапотный логгер DevLogger пишет события статус-бара в файл, но только когда юзер пометил себя разработчиком (10 быстрых тапов по «Данные»). Иначе log() — no-op, файл не растёт. На вкладке Диагностика — живой просмотр, очистка, reveal в Finder, выключение режима.",
+    "points": [
+      "Diagnostics/DevLogger.swift — файловый логгер с toggle. Файл живёт в ~/Library/Application Support/HelloWork/devlog.txt. Когда выключен — log() no-op, autoclosure'и не вычисляются",
+      "AppState.developerMode — UserDefaults helloWorkDeveloperMode, didSet синхронит DevLogger.shared.enabled",
+      "SettingsTab.diagnostics — новый кейс. SettingsView фильтрует tabPicker, показывая Diagnostics только при developerMode==true",
+      "SettingsView: 10 тапов по «Данные» в окне 2с включают режим. Сразу прыгаем на Диагностику, банер «Режим разработчика включён»",
+      "SettingsDiagnosticsTab: ScrollView с моноширинным просмотром, авто-обновление 0.8с, кнопки Refresh/Clear/Reveal/Disable",
+      "Логи в pipeline: hider.configure/toggle/collapse/expand, mover.move с before/after frame для каждого item, currentItems с per-item dump (wid/pid/bid/midX/hideable), hotkey FIRED, menu click",
+      "Translation.diagnostics* — en/ru/zh"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.18/HelloWork-0.9.18.dmg"
+  },
+  {
     "version": "0.9.17",
     "date": "2026-04-27",
     "customMessage": "Онбординг доступов теперь живёт постоянно: пункт «Доступы» в сайдбаре + красная точка пока что-то не выдано. Hider шлёт юзера на этот же экран, если AX не дано.",

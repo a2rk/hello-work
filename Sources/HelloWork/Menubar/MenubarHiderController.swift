@@ -35,6 +35,7 @@ final class MenubarHiderController: ObservableObject {
     // MARK: - Configuration
 
     func configure(hiderEnabled: Bool, initialCollapsed: Bool, iconStyle: StatusIconStyle) {
+        devlog("hider", "configure(hiderEnabled=\(hiderEnabled), initialCollapsed=\(initialCollapsed), iconStyle=\(iconStyle.rawValue))")
         tearDownItems()
         currentIconStyle = iconStyle
 
@@ -48,6 +49,7 @@ final class MenubarHiderController: ObservableObject {
             // Применяем persist через 1с после init — даём menubar layout устаканиться.
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 guard let self, self.enabled else { return }
+                devlog("hider", "deferred initialCollapsed → collapseInternal")
                 self.collapseInternal()
             }
         }
@@ -71,7 +73,11 @@ final class MenubarHiderController: ObservableObject {
     // MARK: - Public toggle API
 
     func toggle() {
-        guard enabled, !isToggling else { return }
+        devlog("hider", "toggle() called — enabled=\(enabled), isToggling=\(isToggling), isCollapsed=\(isCollapsed)")
+        guard enabled, !isToggling else {
+            devlog("hider", "toggle() — guard rejected")
+            return
+        }
         isToggling = true
         if isCollapsed {
             expandInternal()
@@ -131,35 +137,47 @@ final class MenubarHiderController: ObservableObject {
     // MARK: - Internal collapse/expand
 
     private func collapseInternal() {
-        guard !isCollapsed else { return }
+        guard !isCollapsed else {
+            devlog("hider", "collapseInternal — already collapsed, skip")
+            return
+        }
 
-        // Без Accessibility CGEvent.postToPid игнорится → постинг бесполезен.
-        guard AXIsProcessTrusted() else {
+        let trusted = AXIsProcessTrusted()
+        devlog("hider", "collapseInternal — AXIsProcessTrusted=\(trusted)")
+        guard trusted else {
             onAccessibilityRequired?()
             return
         }
 
-        // Сохраняем текущий список hideable items + их X-координаты.
-        let items = MenuBarItem.currentItems().filter { $0.isHideable }
-        guard !items.isEmpty else { return }
+        let all = MenuBarItem.currentItems()
+        let items = all.filter { $0.isHideable }
+        devlog("hider", "currentItems total=\(all.count) hideable=\(items.count)")
+        for item in all {
+            devlog("hider.item",
+                   "wid=\(item.windowID) pid=\(item.pid) bid=\(item.bundleID ?? "nil") owner=\(item.ownerName ?? "nil") midX=\(String(format: "%.0f", item.frame.midX)) hideable=\(item.isHideable)")
+        }
+        guard !items.isEmpty else {
+            devlog("hider", "collapseInternal — nothing hideable, abort")
+            return
+        }
 
         savedItems = items
         savedPositions = Dictionary(uniqueKeysWithValues: items.map { ($0.windowID, $0.frame.midX) })
 
-        // Двигаем справа налево — так каждый последующий item оказывается
-        // в актуальной позиции (предыдущие уже уехали и не сдвигают layout).
         var movedAny = false
         for item in items.sorted(by: { $0.frame.midX > $1.frame.midX }) {
-            // Берём актуальный frame — соседи могли подвинуться после предыдущего hide.
             let current = MenuBarItem.currentItems().first { $0.windowID == item.windowID } ?? item
-            if MenuBarItemMover.hide(current) {
-                movedAny = true
-            }
+            let beforeX = current.frame.midX
+            let ok = MenuBarItemMover.hide(current)
+            let afterX = MenuBarItem.currentItems().first { $0.windowID == item.windowID }?.frame.midX ?? .nan
+            devlog("hider.move",
+                   "hide wid=\(item.windowID) before=\(String(format: "%.0f", beforeX)) after=\(String(format: "%.0f", afterX)) success=\(ok)")
+            if ok { movedAny = true }
             Thread.sleep(forTimeInterval: 0.03)
         }
 
         guard movedAny else {
-            // Ни один item не съехал — откатываем сохранённое состояние, иконку не меняем.
+            devlog("hider", "collapseInternal — movedAny=false, rolling back")
             savedItems.removeAll()
             savedPositions.removeAll()
             return
@@ -167,13 +185,16 @@ final class MenubarHiderController: ObservableObject {
 
         isCollapsed = true
         updateMainIcon(style: currentIconStyle)
+        devlog("hider", "collapseInternal done — isCollapsed=true")
     }
 
     private func expandInternal() {
+        devlog("hider", "expandInternal — isCollapsed=\(isCollapsed) saved=\(savedItems.count)")
         guard isCollapsed else { return }
         restoreAllItems()
         isCollapsed = false
         updateMainIcon(style: currentIconStyle)
+        devlog("hider", "expandInternal done")
     }
 
     private func restoreAllItems() {
@@ -222,6 +243,6 @@ final class MenubarHiderController: ObservableObject {
         // sendAction(on:) ставим только .leftMouseUp выше → этот метод вызывается на клик
         // только при leftMouseUp. Обычный click открывает menu (если установлено).
         // Toggle делается через хоткей или menu item.
-        // Это упрощение — в дальнейшем можно добавить cmd+click → toggle.
+        devlog("hider", "mainClicked() fired (action selector — usually overshadowed by item.menu)")
     }
 }

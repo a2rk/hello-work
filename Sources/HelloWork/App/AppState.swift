@@ -87,6 +87,12 @@ final class AppState: ObservableObject {
     @Published var menubarPeekSeconds: Int {
         didSet { UserDefaults.standard.set(menubarPeekSeconds, forKey: Self.menubarPeekKey) }
     }
+    @Published var developerMode: Bool {
+        didSet {
+            UserDefaults.standard.set(developerMode, forKey: Self.developerModeKey)
+            DevLogger.shared.enabled = developerMode
+        }
+    }
     @Published private(set) var launchAtLogin: Bool
 
     private(set) var graceUntil: Date?
@@ -114,6 +120,7 @@ final class AppState: ObservableObject {
     private static let graceCountdownKey = "helloWorkGraceCountdownInBar"
     private static let statusIconStyleKey = "helloWorkStatusIconStyle"
     private static let menubarPeekKey = "helloWorkMenubarPeekSeconds"
+    private static let developerModeKey = "helloWorkDeveloperMode"
 
     static let menubarPeekOptions: [Int] = [0, 1, 2, 3, 5]
 
@@ -177,6 +184,10 @@ final class AppState: ObservableObject {
             self.statusIconStyle = .solid
         }
         self.menubarPeekSeconds = (UserDefaults.standard.object(forKey: Self.menubarPeekKey) as? Int) ?? 0
+
+        let dev = UserDefaults.standard.bool(forKey: Self.developerModeKey)
+        self.developerMode = dev
+        DevLogger.shared.enabled = dev
 
         self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
 

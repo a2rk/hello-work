@@ -16,16 +16,21 @@ enum MenuBarItemMover {
     /// Возвращает true, если item реально съехал (frame изменился).
     @discardableResult
     static func move(item: MenuBarItem, toX targetX: CGFloat) -> Bool {
-        guard item.isHideable else { return false }
-        guard let source = CGEventSource(stateID: .hidSystemState) else { return false }
+        guard item.isHideable else {
+            devlog("mover", "skip wid=\(item.windowID) — not hideable")
+            return false
+        }
+        guard let source = CGEventSource(stateID: .hidSystemState) else {
+            devlog("mover", "FAIL CGEventSource(hidSystemState) is nil — kernel rejected source creation")
+            return false
+        }
 
         let startPoint = CGPoint(x: item.frame.midX, y: item.frame.midY)
         let endPoint = CGPoint(x: targetX, y: item.frame.midY)
-        // Промежуточная точка — нужна, чтобы macOS зарегистрировал drag, а не click.
-        let midPoint = CGPoint(
-            x: (startPoint.x + endPoint.x) / 2,
-            y: startPoint.y
-        )
+        let midPoint = CGPoint(x: (startPoint.x + endPoint.x) / 2, y: startPoint.y)
+
+        devlog("mover",
+               "move wid=\(item.windowID) pid=\(item.pid) bid=\(item.bundleID ?? "nil") from=\(String(format: "%.0f", startPoint.x)) to=\(String(format: "%.0f", endPoint.x))")
 
         let events: [(MenuBarItemEventType, CGPoint)] = [
             (.move(.leftMouseDown),    startPoint),
@@ -34,7 +39,7 @@ enum MenuBarItemMover {
             (.move(.leftMouseUp),      endPoint),
         ]
 
-        for (type, location) in events {
+        for (idx, (type, location)) in events.enumerated() {
             guard let event = CGEvent.menuBarItemEvent(
                 type: type,
                 location: location,
@@ -42,18 +47,23 @@ enum MenuBarItemMover {
                 pid: item.pid,
                 source: source
             ) else {
+                devlog("mover", "FAIL event creation idx=\(idx) for wid=\(item.windowID)")
                 return false
             }
             event.postToPid(item.pid)
-            // Маленькая пауза — даём процессу-владельцу прочитать событие из своей очереди
-            // до того как кладём следующее. Без неё события склеиваются в click.
             Thread.sleep(forTimeInterval: 0.025)
         }
 
-        // Проверяем, что item реально переехал — frame обновился.
         let moved = MenuBarItem.currentItems().first { $0.windowID == item.windowID }
-        guard let nowFrame = moved?.frame else { return false }
-        return abs(nowFrame.midX - targetX) < abs(item.frame.midX - targetX)
+        guard let nowFrame = moved?.frame else {
+            devlog("mover", "post-move: item wid=\(item.windowID) исчез из списка — считаем успехом")
+            // Если item удалился из списка — это тоже валидно (например для hide, item ушёл за край).
+            return true
+        }
+        let success = abs(nowFrame.midX - targetX) < abs(item.frame.midX - targetX)
+        devlog("mover",
+               "post-move wid=\(item.windowID) midX=\(String(format: "%.0f", nowFrame.midX)) target=\(String(format: "%.0f", targetX)) success=\(success)")
+        return success
     }
 
     /// Перемещает item за левый край экрана (off-screen left).

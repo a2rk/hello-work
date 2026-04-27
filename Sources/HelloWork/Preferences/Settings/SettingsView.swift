@@ -4,9 +4,19 @@ struct SettingsView: View {
     @Environment(\.t) var t
     @ObservedObject var state: AppState
 
+    /// Счётчик быстрых тапов по «Данные» — 10 кликов в окне 2с разблокируют Diagnostics.
+    @State private var dataTapCount: Int = 0
+    @State private var dataLastTap: Date = .distantPast
+    @State private var showUnlockedToast: Bool = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             header
+
+            if showUnlockedToast {
+                unlockedBanner
+                    .transition(.opacity)
+            }
 
             content
 
@@ -22,7 +32,7 @@ struct SettingsView: View {
                 Text(t.settingsTitle)
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundColor(.white)
-                Text(headerSubtitle)
+                Text(t.settingsSubtitle)
                     .font(.system(size: 12))
                     .foregroundColor(Theme.textSecondary)
             }
@@ -31,17 +41,17 @@ struct SettingsView: View {
         }
     }
 
-    /// Подзаголовок — общее «параметры приложения» вместо подсказки про конкретную вкладку,
-    /// чтобы переключение не дёргалось.
-    private var headerSubtitle: String {
-        t.settingsSubtitle
+    private var visibleTabs: [SettingsTab] {
+        SettingsTab.allCases.filter { tab in
+            tab != .diagnostics || state.developerMode
+        }
     }
 
     private var tabPicker: some View {
         HStack(spacing: 4) {
-            ForEach(SettingsTab.allCases) { tab in
+            ForEach(visibleTabs) { tab in
                 Button {
-                    state.settingsTab = tab
+                    handleTabTap(tab)
                 } label: {
                     Text(tab.title(t))
                         .font(.system(size: 11, weight: state.settingsTab == tab ? .semibold : .regular))
@@ -66,16 +76,64 @@ struct SettingsView: View {
         .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
     }
 
+    private func handleTabTap(_ tab: SettingsTab) {
+        state.settingsTab = tab
+        guard tab == .data else { return }
+        // Easter-egg: 10 быстрых тапов подряд по «Данные» включают режим разработчика.
+        let now = Date()
+        if now.timeIntervalSince(dataLastTap) > 2.0 {
+            dataTapCount = 0
+        }
+        dataLastTap = now
+        dataTapCount += 1
+        if dataTapCount >= 10 && !state.developerMode {
+            state.developerMode = true
+            withAnimation(.easeOut(duration: 0.2)) {
+                showUnlockedToast = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+                withAnimation(.easeIn(duration: 0.4)) {
+                    showUnlockedToast = false
+                }
+            }
+            // Сразу ведём юзера в новую вкладку.
+            state.settingsTab = .diagnostics
+            dataTapCount = 0
+        }
+    }
+
+    private var unlockedBanner: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "stethoscope")
+                .foregroundColor(Theme.accent)
+            Text(t.diagnosticsUnlocked)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundColor(.white)
+            Spacer()
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(Theme.accent.opacity(0.12))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(Theme.accent.opacity(0.5), lineWidth: 1)
+        )
+    }
+
     // MARK: - Content
 
     @ViewBuilder
     private var content: some View {
         switch state.settingsTab {
-        case .schedule: SettingsScheduleTab(state: state)
-        case .focus:    SettingsFocusTab(state: state)
-        case .tray:     SettingsTrayTab(state: state)
-        case .app:      SettingsAppTab(state: state)
-        case .data:     SettingsDataTab(state: state)
+        case .schedule:    SettingsScheduleTab(state: state)
+        case .focus:       SettingsFocusTab(state: state)
+        case .tray:        SettingsTrayTab(state: state)
+        case .app:         SettingsAppTab(state: state)
+        case .data:        SettingsDataTab(state: state)
+        case .diagnostics: SettingsDiagnosticsTab(state: state)
         }
     }
 }
