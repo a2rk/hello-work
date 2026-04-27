@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.37",
+    "date": "2026-04-27",
+    "customMessage": "TASK-016 verified: onboarding-less-aggressive корректен. Phase B (Permissions/TCC flow) полностью закрыта.",
+    "main": "Verification of TASK-015. First-launch open ✓, subsequent silent ✓, sidebar+onAccessibilityRequired как точки возврата ✓. Phase B done.",
+    "points": [
+      "Phase B complete (TASK-011..016, 6 tasks)",
+      "Permissions UX: granted один раз — живёт; не лезет в лицо",
+      "Готовы к Phase C (resilience: corrupt JSON detection)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.37/HelloWork-0.9.37.dmg"
+  },
+  {
     "version": "0.9.36",
     "date": "2026-04-27",
     "customMessage": "TASK-015: Prefs больше не открываются автоматически на каждом запуске пока anyMissing. Только на первом запуске. Sidebar-row «Доступы» с красной точкой — ненавязчивая точка возврата.",
