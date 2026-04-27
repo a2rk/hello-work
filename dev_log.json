@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.43",
+    "date": "2026-04-27",
+    "customMessage": "TASK-022 verified: distinct hotkey IDs корректны. Phase D (Hotkey collisions) полностью закрыта.",
+    "main": "Verification of TASK-021. Каждый HotkeyManager имеет свой EventHotKeyID + свой EventHandler. Carbon не перезаписывает. Build чистый. Phase D done.",
+    "points": [
+      "Phase D complete (TASK-021..022, 2 tasks)",
+      "Hotkey collision устранён",
+      "Готовы к Phase E (Update fetch dedup)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.43/HelloWork-0.9.43.dmg"
+  },
+  {
     "version": "0.9.42",
     "date": "2026-04-27",
     "customMessage": "TASK-021: focus и menubar хоткеи получили distinct EventHotKeyID (1 и 2). Carbon больше не путает их при ре-регистрации.",

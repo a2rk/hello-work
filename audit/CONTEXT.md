@@ -194,7 +194,7 @@ HelloWork/
   - Проблема: оба инстанса (focus + menubar) используют одинаковый `EventHotKeyID(id: 1)`. Если юзер назначит одинаковый hotkey — Carbon перезапишет первый.
   - Решение: HotkeyManager init принимает `id: UInt32`. AppDelegate создаёт focus с id=1, menubar с id=2.
 
-- [ ] **TASK-022 [verify]** — TASK-021
+- [x] **TASK-022 [verify]** — TASK-021  → released as v0.9.43
 
 ### Phase E — Update fetch / Network
 
