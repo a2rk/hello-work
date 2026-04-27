@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.68",
+    "date": "2026-04-27",
+    "customMessage": "TASK-047: DevLogger ротейтит лог файл при превышении 10 MB. devlog.txt → devlog.txt.1, дальше fresh. Один retained backup.",
+    "main": "Перед каждым append проверяем размер. Если новая запись добавит > 10 MB — переименовываем в .1 (старый .1 выкидывается), создаём новый.",
+    "points": [
+      "maxFileSize = 10 MB",
+      "rotate(): старый .1 удаляется, current → .1",
+      "В dev mode на годы вперёд лог не растёт неограниченно"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.68/HelloWork-0.9.68.dmg"
+  },
+  {
     "version": "0.9.67",
     "date": "2026-04-27",
     "customMessage": "TASK-046 verified: AppVersion.compare semver-style корректен. Phase I (edge cases) полностью закрыта.",

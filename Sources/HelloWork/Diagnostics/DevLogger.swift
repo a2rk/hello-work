@@ -62,17 +62,38 @@ final class DevLogger: @unchecked Sendable {
         }
     }
 
+    /// Максимальный размер активного devlog.txt. При превышении делаем rotate:
+    /// devlog.txt → devlog.txt.1 (старый .1 удаляется), новый append начинается
+    /// с пустого файла. Один retained backup — не плодим бесконечно.
+    private static let maxFileSize: Int = 10 * 1024 * 1024
+
     private static func append(_ s: String, to url: URL) {
         guard let data = s.data(using: .utf8) else { return }
         if FileManager.default.fileExists(atPath: url.path) {
+            // Проверяем размер — если перевалили порог, ротейтим перед записью.
+            if let attrs = try? FileManager.default.attributesOfItem(atPath: url.path),
+               let size = attrs[.size] as? Int,
+               size + data.count > maxFileSize {
+                rotate(at: url)
+            }
             if let h = try? FileHandle(forWritingTo: url) {
                 defer { try? h.close() }
                 _ = try? h.seekToEnd()
                 try? h.write(contentsOf: data)
+            } else {
+                // Файл могли удалить ротацией — пишем заново.
+                try? data.write(to: url)
             }
         } else {
             try? data.write(to: url)
         }
+    }
+
+    private static func rotate(at url: URL) {
+        let backup = url.appendingPathExtension("1")
+        let fm = FileManager.default
+        try? fm.removeItem(at: backup)        // старый .1 — выкидываем
+        try? fm.moveItem(at: url, to: backup) // текущий → .1
     }
 
     private static let formatter: DateFormatter = {

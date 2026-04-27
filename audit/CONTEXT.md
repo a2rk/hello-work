@@ -300,7 +300,7 @@ HelloWork/
 
 ### Phase J — DevLogger
 
-- [ ] **TASK-047 [impl]** — DevLogger rotation (max 10 MB)
+- [x] **TASK-047 [impl]** — DevLogger rotation (max 10 MB)  → released as v0.9.68
   - Файл: `Diagnostics/DevLogger.swift`
   - Решение: при append проверять file size, если > 10 MB — rename `devlog.txt` → `devlog.txt.1`, начать новый.
 
