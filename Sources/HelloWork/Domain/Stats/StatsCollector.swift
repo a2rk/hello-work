@@ -199,26 +199,52 @@ final class StatsCollector: ObservableObject {
         return dir.appendingPathComponent("stats.json")
     }
 
+    /// Текущая версия on-disk схемы. При изменении — увеличить и добавить
+    /// миграцию ниже.
+    private static let schemaVersion = 1
+
+    private struct VersionedStatsStore: Codable {
+        let version: Int
+        let store: StatsStore
+    }
+
     private func load() {
         guard let url = Self.fileURL else { return }
         guard FileManager.default.fileExists(atPath: url.path) else { return }
         guard let data = try? Data(contentsOf: url) else { return }
-        if let decoded = try? JSONDecoder().decode(StatsStore.self, from: data) {
-            var s = decoded
+
+        // Сначала пробуем versioned wrapper.
+        if let v = try? JSONDecoder().decode(VersionedStatsStore.self, from: data) {
+            if v.version <= Self.schemaVersion {
+                var s = v.store
+                s.prune()
+                store = s
+                return
+            }
+            // Будущая версия (даунгрейд приложения) — backup + пустой state.
+            backupCorruptFile(at: url)
+            return
+        }
+        // Fallback на старый плоский формат (без обёртки).
+        if let legacy = try? JSONDecoder().decode(StatsStore.self, from: data) {
+            var s = legacy
             s.prune()
             store = s
             return
         }
-        // Файл существует, но decode провалился. Не теряем — переименовываем
-        // в .corrupt-<timestamp>.json, начинаем с пустого state, запоминаем
-        // путь чтобы AppState поднял баннер юзеру.
+        // Ни новая, ни старая схема не съелись — corrupt. Переносим в backup.
+        backupCorruptFile(at: url)
+    }
+
+    private func backupCorruptFile(at url: URL) {
         let backup = url.deletingLastPathComponent()
             .appendingPathComponent("stats.corrupt-\(Int(Date().timeIntervalSince1970)).json")
-        do {
-            try FileManager.default.moveItem(at: url, to: backup)
+        if (try? FileManager.default.moveItem(at: url, to: backup)) != nil {
             lastCorruptionBackupPath = backup.path
-        } catch {
-            // Не смогли переименовать — хотя бы попробуем сохранить рядом.
+            return
+        }
+        // Не смогли переименовать — хотя бы попробуем скопировать.
+        if let data = try? Data(contentsOf: url) {
             try? data.write(to: backup)
             lastCorruptionBackupPath = backup.path
         }
@@ -244,7 +270,8 @@ final class StatsCollector: ObservableObject {
         guard let url = Self.fileURL else { return }
         var s = store
         s.prune()
-        guard let data = try? JSONEncoder().encode(s) else { return }
+        let wrapped = VersionedStatsStore(version: Self.schemaVersion, store: s)
+        guard let data = try? JSONEncoder().encode(wrapped) else { return }
         let tmp = url.appendingPathExtension("tmp")
         do {
             try data.write(to: tmp, options: .atomic)

@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.9.40",
+    "date": "2026-04-27",
+    "customMessage": "TASK-019: managedApps + stats JSON получили version-wrapper. Будущие миграции схемы — без потери данных. Backward-compat для legacy-формата сохранён.",
+    "main": "Wrapped persistence: VersionedManagedApps {version, apps} и VersionedStatsStore {version, store}. Loader пробует versioned → fallback legacy → corrupt-backup. Saver всегда пишет версию.",
+    "points": [
+      "AppState.VersionedManagedApps — wrapper для UserDefaults",
+      "StatsCollector.VersionedStatsStore — wrapper для stats.json",
+      "Loaders: versioned → legacy plain → backup. Future-version (downgrade) тоже backup",
+      "currentVersion = 1 для обоих, готовы к миграциям"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.40/HelloWork-0.9.40.dmg"
+  },
+  {
     "version": "0.9.39",
     "date": "2026-04-27",
     "customMessage": "TASK-018 verified: corruption-detection корректен, init order правильный, баннеры показываются.",

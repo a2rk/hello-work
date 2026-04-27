@@ -136,6 +136,17 @@ final class AppState: ObservableObject {
     private static let menubarPeekKey = "helloWorkMenubarPeekSeconds"
     private static let developerModeKey = "helloWorkDeveloperMode"
 
+    /// Текущая версия persisted JSON для managedApps. При изменении схемы —
+    /// инкрементировать и добавить миграцию в loadManagedApps().
+    private static let managedAppsSchemaVersion = 1
+
+    /// Wrapper для persistence: позволяет в будущем мигрировать схему
+    /// без потери данных или confused-state'а.
+    private struct VersionedManagedApps: Codable {
+        let version: Int
+        let apps: [ManagedApp]
+    }
+
     static let menubarPeekOptions: [Int] = [0, 1, 2, 3, 5]
 
     static let gracePresetSeconds: [Int] = [30, 60, 180, 300, 600]
@@ -208,13 +219,25 @@ final class AppState: ObservableObject {
         // enabled: дефолт true, если ключа нет
         self.enabled = (UserDefaults.standard.object(forKey: Self.enabledKey) as? Bool) ?? true
 
-        // managedApps: десериализуем JSON из UserDefaults. Если файл существует
-        // но битый — сохраняем blob в резервную копию и поднимаем баннер,
-        // чтобы юзер не «потерял» расписания тихо.
+        // managedApps: пробуем decode versioned-wrapper, затем fallback на старый
+        // плоский формат [ManagedApp] (он перезапишется новым на следующем save).
+        // Если ничего не съелось — backup + warning, чтобы юзер не «потерял» данные тихо.
         var initialWarnings: [CorruptionWarning] = []
         if let data = UserDefaults.standard.data(forKey: Self.managedAppsKey) {
-            if let apps = try? JSONDecoder().decode([ManagedApp].self, from: data) {
-                self.managedApps = apps
+            if let v = try? JSONDecoder().decode(VersionedManagedApps.self, from: data) {
+                if v.version <= Self.managedAppsSchemaVersion {
+                    self.managedApps = v.apps
+                } else {
+                    // Будущая версия — даунгрейд приложения. Не пытаемся понять,
+                    // backup и пустой state.
+                    self.managedApps = []
+                    if let backupPath = Self.backupCorruptManagedApps(data) {
+                        initialWarnings.append(CorruptionWarning(kind: .schedules, backupPath: backupPath))
+                    }
+                }
+            } else if let legacyApps = try? JSONDecoder().decode([ManagedApp].self, from: data) {
+                // Старый плоский формат — миграция при первом save.
+                self.managedApps = legacyApps
             } else {
                 self.managedApps = []
                 if let backupPath = Self.backupCorruptManagedApps(data) {
@@ -260,7 +283,11 @@ final class AppState: ObservableObject {
     }
 
     private func saveManagedApps() {
-        guard let data = try? JSONEncoder().encode(managedApps) else { return }
+        let wrapped = VersionedManagedApps(
+            version: Self.managedAppsSchemaVersion,
+            apps: managedApps
+        )
+        guard let data = try? JSONEncoder().encode(wrapped) else { return }
         UserDefaults.standard.set(data, forKey: Self.managedAppsKey)
     }
 
