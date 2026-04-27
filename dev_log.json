@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.9.33",
+    "date": "2026-04-27",
+    "customMessage": "TASK-012 verified: requested-key семантика корректна по всем 4 сценариям.",
+    "main": "Verification of TASK-011. Granted-call → key not set, state .granted. Denied/closed → key set, .denied. AX-уже-granted после async dialog → key not set, .granted. Build чистый.",
+    "points": [
+      "All 4 trace scenarios correct"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.33/HelloWork-0.9.33.dmg"
+  },
+  {
     "version": "0.9.32",
     "date": "2026-04-27",
     "customMessage": "TASK-011: ключ «уже запросили» в PermissionsManager ставится ПОСЛЕ TCC-вызова и только если не granted. Защита от false-positive .denied при гипотетическом ранне-возврате.",

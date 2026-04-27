@@ -153,7 +153,7 @@ HelloWork/
   - Проблема: ключ `helloWorkPermissionsRequestedSR` ставится в `requestScreenRecording()` ДО результата → если юзер закрыл prompt без решения, на next refresh видим `.denied` хотя должно быть `.notDetermined`.
   - Решение: ставить ключ только если `CGPreflightScreenCaptureAccess()` вернул true после запроса. Аналогично для AX через `AXIsProcessTrusted()`.
 
-- [ ] **TASK-012 [verify]** — TASK-011
+- [x] **TASK-012 [verify]** — TASK-011  → released as v0.9.33
 
 - [ ] **TASK-013 [impl]** — `AutoRelauncher` infinite wait
   - Файл: `Permissions/AutoRelauncher.swift:13-16`
