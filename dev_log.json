@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.42",
+    "date": "2026-04-27",
+    "customMessage": "TASK-021: focus и menubar хоткеи получили distinct EventHotKeyID (1 и 2). Carbon больше не путает их при ре-регистрации.",
+    "main": "Раньше оба HotkeyManager инстанса использовали id=1 → если юзер ставил один и тот же хоткей на оба, Carbon мог переписать первую регистрацию. Теперь init принимает id, focus=1, menubar=2.",
+    "points": [
+      "HotkeyManager.init(id: UInt32 = 1)",
+      "AppDelegate: focus с id=1, menubar с id=2"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.42/HelloWork-0.9.42.dmg"
+  },
+  {
     "version": "0.9.41",
     "date": "2026-04-27",
     "customMessage": "TASK-020 verified: schema versioning все 5 путей корректны. Phase C (Resilience) полностью закрыта.",

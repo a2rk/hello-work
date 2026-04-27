@@ -16,8 +16,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var activityToken: NSObjectProtocol?
     private var prefsWindow: NSWindow?
     private var overlayWindows: [String: NSWindow] = [:]
-    private let hotkeyManager = HotkeyManager()
-    private let menubarHotkeyManager = HotkeyManager()
+    private let hotkeyManager = HotkeyManager(id: 1)         // focus mode
+    private let menubarHotkeyManager = HotkeyManager(id: 2)  // menubar hider
     private var hotkeyCancellables: Set<AnyCancellable> = []
     private var menubarCancellables: Set<AnyCancellable> = []
 

@@ -189,7 +189,7 @@ HelloWork/
 
 ### Phase D — Hotkey collisions
 
-- [ ] **TASK-021 [impl]** — `HotkeyManager` — distinct EventHotKeyID per instance
+- [x] **TASK-021 [impl]** — `HotkeyManager` — distinct EventHotKeyID per instance  → released as v0.9.42
   - Файлы: `Focus/HotkeyManager.swift:14-17`
   - Проблема: оба инстанса (focus + menubar) используют одинаковый `EventHotKeyID(id: 1)`. Если юзер назначит одинаковый hotkey — Carbon перезапишет первый.
   - Решение: HotkeyManager init принимает `id: UInt32`. AppDelegate создаёт focus с id=1, menubar с id=2.

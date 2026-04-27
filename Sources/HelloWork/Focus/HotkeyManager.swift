@@ -10,13 +10,16 @@ final class HotkeyManager {
     private var eventHandler: EventHandlerRef?
     private var onTrigger: (() -> Void)?
 
-    /// Уникальный signature/id для нашего хоткея.
-    private let hotKeyID: EventHotKeyID = EventHotKeyID(
-        signature: OSType(0x484B4559), // 'HKEY'
-        id: 1
-    )
+    /// Уникальный signature/id для этого менеджера. У каждого инстанса
+    /// должен быть свой `id` — иначе Carbon при двух регистрациях с одинаковым
+    /// EventHotKeyID не различит их и события могут перепутаться.
+    private let hotKeyID: EventHotKeyID
 
-    init() {
+    init(id: UInt32 = 1) {
+        self.hotKeyID = EventHotKeyID(
+            signature: OSType(0x484B4559), // 'HKEY'
+            id: id
+        )
         installHandler()
     }
 
