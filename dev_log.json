@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.10.19",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L18 verified: corruption-detection корректен. Phase B (Persistence) полностью закрыта.",
+    "main": "Verification of TASK-L17. Битый/future-version blob backup + warning. Phase B done. 18/76 + 2 follow-up.",
+    "points": [
+      "Phase B complete (TASK-L11..L18, 8 tasks)",
+      "18/76 done",
+      "Follow-ups: L77 chained-apply, L78 verify"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.19/HelloWork-0.10.19.dmg"
+  },
+  {
     "version": "0.10.18",
     "date": "2026-04-28",
     "customMessage": "TASK-L17: legends-state corruption detection. Битый blob → backup в legends-state.corrupt-<ts>.json + UI banner в Prefs.",

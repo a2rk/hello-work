@@ -215,7 +215,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L17 [impl]** — Legends-state corruption — backup в legends-state.corrupt-<ts>.json + warning в UI.  → released as v0.10.18
 
-- [ ] **TASK-L18 [verify]** — TASK-L17
+- [x] **TASK-L18 [verify]** — TASK-L17  → released as v0.10.19
 
 ### Phase C — Sidebar entry & routing (6 tasks)
 
