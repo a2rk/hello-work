@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.13.6",
+    "date": "2026-04-28",
+    "customMessage": "FIX: карточки исчезли в v0.13.5. Корень — GeometryReader снаружи nested ScrollView внутри outer PrefsView ScrollView коллапсировал свой width в 0 → cards рендерились с width=0, не видны. Заменил на PreferenceKey-based bottom-up measurement: invisible Color.clear в .background регистрирует actual width VStack'а, обновляет @State resultsWidth. Также убрал nested ScrollView (outer PrefsView.detail уже скроллит).",
+    "main": "Pattern теперь robust: первый кадр рисуется с fallback width 720pt (типичная Preferences width), второй кадр уже с измеренным actual.",
+    "points": [
+      "GeometryReader удалён",
+      "ResultsWidthKey: PreferenceKey для bottom-up width",
+      "Убран nested ScrollView (outer уже скроллит)",
+      "Fallback 720pt чтобы первый кадр не был empty"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.13.6/HelloWork-0.13.6.dmg"
+  },
+  {
     "version": "0.13.5",
     "date": "2026-04-28",
     "customMessage": "Legends grid редизайн — masonry/editorial layout. Каждые 11 карточек: 1 featured 2×2 (large card с bio-параграфом и avatar 80pt) + 4 small карточки сбоку + 6 small в 2 регулярных рядах. Featured side alternating (left → right → left...). Большой card spans 2 columns × 2 rows.",

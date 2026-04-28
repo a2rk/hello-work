@@ -35,6 +35,11 @@ struct LegendsListView: View {
         LegendsViewMode(rawValue: viewModeRaw) ?? .grid
     }
 
+    /// Measured width — пишется через PreferenceKey из background'а results.
+    /// GeometryReader внутри parent ScrollView коллапсирует width в 0,
+    /// поэтому bottom-up measurement через preference-key.
+    @State private var resultsWidth: CGFloat = 0
+
     /// Локальный enum для UI sort picker. Нельзя хранить LegendsLibrary.SortOrder
     /// напрямую как @State — у `.favoritesFirst(Set)` ассоциированное значение
     /// требует свежего set'а на каждый применение.
@@ -337,24 +342,40 @@ struct LegendsListView: View {
         if filteredItems.isEmpty {
             emptyResultsView
         } else {
-            // GeometryReader снаружи ScrollView — даёт нам actual width для
-            // расчёта masonry layout (smallW и bigW = 2 * smallW + spacing).
-            GeometryReader { geo in
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text(t.legendsResultsCount(filteredItems.count))
-                            .font(.system(size: 10, weight: .semibold))
-                            .tracking(1.2)
-                            .foregroundColor(Theme.textTertiary)
-                            .padding(.bottom, 4)
+            // Outer PrefsView.detail уже оборачивает в ScrollView — не вкладываем
+            // второй (nested ScrollView ломает hit-testing и bounce). Width
+            // измеряем через PreferenceKey: invisible Color.clear в .background
+            // регистрирует actual width у этого VStack'а.
+            VStack(alignment: .leading, spacing: 10) {
+                Text(t.legendsResultsCount(filteredItems.count))
+                    .font(.system(size: 10, weight: .semibold))
+                    .tracking(1.2)
+                    .foregroundColor(Theme.textTertiary)
+                    .padding(.bottom, 4)
 
-                        if viewMode == .grid {
-                            gridResults(width: geo.size.width)
-                        } else {
-                            listResults
-                        }
+                if viewMode == .grid {
+                    if resultsWidth > 0 {
+                        gridResults(width: resultsWidth)
+                    } else {
+                        // Первый кадр: width ещё не измерен. Минимальная
+                        // подставка чтобы layout не дёргался — рендерим
+                        // через типичную ширину Preferences detail panel.
+                        gridResults(width: 720)
                     }
+                } else {
+                    listResults
                 }
+            }
+            .background(
+                GeometryReader { geo in
+                    Color.clear.preference(
+                        key: ResultsWidthKey.self,
+                        value: geo.size.width
+                    )
+                }
+            )
+            .onPreferenceChange(ResultsWidthKey.self) { newValue in
+                resultsWidth = newValue
             }
         }
     }
@@ -598,3 +619,13 @@ struct LegendsListView: View {
 }
 
 // LegendDetailView вынесен в Sources/HelloWork/Preferences/Legends/LegendDetailView.swift
+
+/// PreferenceKey для bottom-up measurement ширины results-блока.
+/// Используется чтобы masonry layout знал actual container width
+/// без GeometryReader (тот коллапсирует внутри parent ScrollView).
+private struct ResultsWidthKey: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
+}
