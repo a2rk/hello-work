@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.13.4",
+    "date": "2026-04-28",
+    "customMessage": "FIX Mac mini crash. Логи показали что crash на доступе к Bundle.module — SwiftPM-сгенерированный Bundle.module делает fatalError() при failure поиска resource bundle. На Mac mini юзера resolution не работал. Заменил на custom resolveResourceBundle() который пробует 4 candidates (BundleFinder.resourceURL / Bundle.main.resourceURL / Bundle.main.bundleURL / BundleFinder.bundleURL.parent) и при failure возвращает nil вместо crash.",
+    "main": "Worst case на Mac mini: список Legends будет пустой, но app не выключится. Плюс в логе будет видно какие пути пробовались — поможет точнее найти где SwiftPM resource bundle потерялся.",
+    "points": [
+      "Custom resolveResourceBundle с 4 candidates",
+      "private final class BundleFinder для Bundle(for:) anchor",
+      "Все candidates логируются с результатом"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.13.4/HelloWork-0.13.4.dmg"
+  },
+  {
     "version": "0.13.3",
     "date": "2026-04-28",
     "customMessage": "Diagnostic logging для crash на Mac mini. Добавлены step-by-step devlog в LegendsLibrary init / loadFromBundle (включая bundle.bundlePath) + onAppear в LegendsListView body. Цель — увидеть в логе ровно где обрывается выполнение: bundle resolution, URL enumeration, JSON decode, sort, или ещё раньше в SwiftUI rendering.",

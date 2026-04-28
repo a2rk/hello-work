@@ -92,14 +92,23 @@ final class LegendsLibrary {
     }
 
     private static func loadFromBundle() -> ([Legend], Set<String>) {
-        devlog("legends", "loadFromBundle: enter — querying Bundle.module")
-        let bundle = Bundle.module
+        devlog("legends", "loadFromBundle: enter")
+
+        // SwiftPM-сгенерированный Bundle.module делает fatalError() если
+        // resource-bundle не найден — это убивает app мгновенно. На Mac mini
+        // юзера это происходило при первом доступе. Используем custom
+        // resolver который пробует несколько путей и graceful return nil.
+        guard let bundle = resolveResourceBundle() else {
+            devlog("legends", "loadFromBundle: ABORTED — resource bundle not found via any candidate")
+            return ([], [])
+        }
         devlog("legends", "loadFromBundle: bundle.bundlePath=\(bundle.bundlePath)")
+
         guard let urls = bundle.urls(
             forResourcesWithExtension: "json",
             subdirectory: "Legends"
         ) else {
-            devlog("legends", "loadFromBundle: Bundle.module.urls returned nil — empty subdir or unresolved bundle")
+            devlog("legends", "loadFromBundle: bundle.urls returned nil — empty Legends/ subdir")
             return ([], [])
         }
         devlog("legends", "loadFromBundle: found \(urls.count) URLs")
@@ -120,4 +129,37 @@ final class LegendsLibrary {
         devlog("legends", "loadFromBundle: complete — \(legends.count) ok, \(corrupt.count) corrupt")
         return (legends, corrupt)
     }
+
+    /// Defensive replacement для SwiftPM-сгенерированного `Bundle.module`.
+    /// Тот fatalError'ит при failure; мы возвращаем nil — caller'у решать.
+    /// Перебираем все известные candidates где SwiftPM может положить resource
+    /// bundle (рядом с binary, в Resources/, в build artifacts).
+    private static func resolveResourceBundle() -> Bundle? {
+        let bundleName = "HelloWork_HelloWork.bundle"
+
+        let candidates: [URL?] = [
+            Bundle(for: BundleFinder.self).resourceURL,
+            Bundle.main.resourceURL,
+            Bundle.main.bundleURL,
+            Bundle(for: BundleFinder.self).bundleURL.deletingLastPathComponent(),
+        ]
+
+        for (idx, candidate) in candidates.enumerated() {
+            guard let dir = candidate else {
+                devlog("legends", "resolveResourceBundle: candidate[\(idx)] is nil")
+                continue
+            }
+            let url = dir.appendingPathComponent(bundleName)
+            if let bundle = Bundle(url: url) {
+                devlog("legends", "resolveResourceBundle: resolved via candidate[\(idx)] = \(url.path)")
+                return bundle
+            }
+            devlog("legends", "resolveResourceBundle: candidate[\(idx)] tried \(url.path) — not a bundle")
+        }
+        return nil
+    }
 }
+
+/// Анкер для Bundle(for: ...) lookup. Должен быть в том же бинарнике что
+/// и resources, чтобы получить правильный resourceURL.
+private final class BundleFinder {}
