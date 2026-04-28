@@ -303,7 +303,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L56 [verify]** — TASK-L55  → finding: hasApps проверял activeManagedApps (не archived). Это давало misleading tooltip "Add apps first" в случае когда юзер добавил apps но все archived. Спека L55 говорит про managedApps.isEmpty — упростил, кейс all-archived оставлен L57's sheet'у. Released as v0.10.57
 
-- [ ] **TASK-L57 [impl]** — `LegendApplySheet`: список managedApps (active, не archived). Каждый row — app icon, name, picker { Skip / Work messenger / Personal messenger }. Внизу: предпросмотр (сколько slots будет создано на основе выбора + allowedSlots), Confirm/Cancel.
+- [x] **TASK-L57 [impl]** — `LegendApplySheet`: список managedApps (active, не archived). Каждый row — app icon, name, picker { Skip / Work messenger / Personal messenger }. Внизу: предпросмотр (сколько slots будет создано на основе выбора + allowedSlots), Confirm/Cancel.  → released as v0.10.58
 
 - [ ] **TASK-L58 [verify]** — TASK-L57
 

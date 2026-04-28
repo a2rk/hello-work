@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.58",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L57: LegendApplySheet наполнен. Список активных managedApps + Menu picker { Skip / Work / Personal } на каждом. Цветные pill (work=green, personal=purple, skip=transparent). Preview-bar: 'N apps → M slots'. Empty state если activeApps пуст.",
+    "main": "Confirm enabled только когда хотя бы один app != skip. Default state: всё .skip. onApply передаёт assignments dict вверх — TASK-L59 свяжет с engine.",
+    "points": [
+      "Phase G (3/10)",
+      "57/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.58/HelloWork-0.10.58.dmg"
+  },
+  {
     "version": "0.10.57",
     "date": "2026-04-27",
     "customMessage": "TASK-L56 verify: Apply button disabled-логика проверяла activeManagedApps (не archived) — misleading tooltip 'Add apps first' если все добавленные apps archived. Спека требовала managedApps.isEmpty — упростил.",

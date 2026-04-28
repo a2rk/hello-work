@@ -72,8 +72,8 @@ struct LegendDetailView: View {
         }
         .padding(.bottom, 4)
         .sheet(isPresented: $showApplySheet) {
-            LegendApplySheet(state: state, legend: legend) {
-                // TASK-L59 заменит на реальный apply call.
+            LegendApplySheet(state: state, legend: legend) { _ in
+                // TASK-L59 заменит на реальный LegendApplyEngine.apply.
             }
         }
     }
