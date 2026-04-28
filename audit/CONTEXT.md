@@ -197,7 +197,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L09 [impl]** — Cleanup: удалить `legens_module/` (был в parent FocusNap, вне HelloWork-git-репо — `git mv` неприменим). Папка удалена с диска.  → released as v0.10.10
 
-- [ ] **TASK-L10 [verify]** — TASK-L09
+- [x] **TASK-L10 [verify]** — TASK-L09  → released as v0.10.11
 
 ### Phase B — Persistence layer (8 tasks)
 

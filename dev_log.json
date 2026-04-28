@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.11",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L10 verified: cleanup корректен. PHASE A (data foundation) полностью закрыта.",
+    "main": "Verification of TASK-L09. Phase A done — domain models, library, 60 JSON в bundle, search/filter/sort, cleanup. Готовы к Phase B (persistence).",
+    "points": [
+      "Phase A complete (TASK-L01..L10, 10 tasks)",
+      "10/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.11/HelloWork-0.10.11.dmg"
+  },
+  {
     "version": "0.10.10",
     "date": "2026-04-28",
     "customMessage": "TASK-L09: legens_module/ в parent dir удалена. Источник правды теперь — Sources/HelloWork/Resources/Legends/.",
