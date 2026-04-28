@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.79",
+    "date": "2026-04-28",
+    "customMessage": "TASK-058 verified: lifecycle cleanup чистый. Phase M закрыта.",
+    "main": "Verification of TASK-057. Idempotent, safe ordering, на quit прибранно. Phase M done.",
+    "points": [
+      "Phase M complete (TASK-057..058)",
+      "59/60"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.79/HelloWork-0.9.79.dmg"
+  },
+  {
     "version": "0.9.78",
     "date": "2026-04-28",
     "customMessage": "TASK-057: applicationWillTerminate теперь явно чистит peek monitor, hider, overlay windows и notification observers. Чистый exit без orphan resources.",

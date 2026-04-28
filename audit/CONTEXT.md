@@ -343,7 +343,7 @@ HelloWork/
     - В `applicationWillTerminate(_:)` — `NSEvent.removeMonitor(peekMouseMonitor)`, `state.menubarHider.tearDown()` (уже есть?), focus overlay close-out.
     - При `managedApps` change — explicit cleanup overlays для удалённых bundleID.
 
-- [ ] **TASK-058 [verify]** — TASK-057
+- [x] **TASK-058 [verify]** — TASK-057  → released as v0.9.79
 
 ### Phase N — Final regression
 
