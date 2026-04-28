@@ -51,12 +51,99 @@ struct LegendsListView: View {
     // MARK: - List
 
     private var list: some View {
-        VStack(alignment: .leading, spacing: 18) {
+        VStack(alignment: .leading, spacing: 14) {
             header
             controlsBar
+            filtersBar
             results
             Spacer(minLength: 0)
         }
+    }
+
+    // MARK: - Filters bar
+
+    private var availableEras: [String] {
+        Array(Set(LegendsLibrary.shared.all.map { $0.era })).sorted()
+    }
+
+    private var availableFields: [String] {
+        Array(Set(LegendsLibrary.shared.all.map { $0.field })).sorted()
+    }
+
+    private var hasAnyFilter: Bool {
+        filterEra != nil || filterField != nil || filterTag != nil
+            || filterIntensity != nil || filterFavoritesOnly
+    }
+
+    private var filtersBar: some View {
+        HStack(spacing: 8) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 6) {
+                    ForEach(availableEras, id: \.self) { era in
+                        filterPill(
+                            label: era.replacingOccurrences(of: "_", with: " "),
+                            active: filterEra == era
+                        ) {
+                            filterEra = (filterEra == era) ? nil : era
+                        }
+                    }
+                    Divider().frame(height: 14).background(Theme.surfaceStroke)
+                    ForEach(availableFields, id: \.self) { field in
+                        filterPill(
+                            label: field.replacingOccurrences(of: "_", with: " "),
+                            active: filterField == field
+                        ) {
+                            filterField = (filterField == field) ? nil : field
+                        }
+                    }
+                    Divider().frame(height: 14).background(Theme.surfaceStroke)
+                    ForEach(1...5, id: \.self) { i in
+                        filterPill(
+                            label: String(repeating: "•", count: i),
+                            active: filterIntensity == (i...i)
+                        ) {
+                            filterIntensity = (filterIntensity == (i...i)) ? nil : (i...i)
+                        }
+                    }
+                }
+                .padding(.vertical, 1)
+            }
+            if hasAnyFilter {
+                Button {
+                    filterEra = nil
+                    filterField = nil
+                    filterTag = nil
+                    filterIntensity = nil
+                    filterFavoritesOnly = false
+                } label: {
+                    Text(t.legendsFilterClear)
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Capsule().fill(Theme.danger.opacity(0.15)))
+                        .overlay(Capsule().stroke(Theme.danger.opacity(0.4), lineWidth: 1))
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
+    private func filterPill(label: String, active: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(label)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(active ? .white : Theme.textSecondary)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    Capsule().fill(active ? Theme.accent.opacity(0.18) : Color.white.opacity(0.03))
+                )
+                .overlay(
+                    Capsule().stroke(active ? Theme.accent : Theme.surfaceStroke, lineWidth: 1)
+                )
+        }
+        .buttonStyle(.plain)
     }
 
     private var header: some View {

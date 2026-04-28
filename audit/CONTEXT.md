@@ -249,7 +249,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L32 [verify]** — TASK-L31  → released as v0.10.33
 
-- [ ] **TASK-L33 [impl]** — Filters bar: horizontal scroll с pills (era / field / intensity range). Click pill → toggles. Active pill — accent color stroke. Чёткая «Clear filters» кнопка справа.
+- [x] **TASK-L33 [impl]** — Filters bar: horizontal scroll с era/field/intensity pills + Clear-all.  → released as v0.10.34
 
 - [ ] **TASK-L34 [verify]** — TASK-L33
 

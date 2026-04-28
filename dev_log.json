@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.10.34",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L33: Filters bar — horizontal scroll с pills для era / field / intensity (1-5). Click toggle, active = accent stroke + bg. «Clear filters» кнопка справа когда есть active filters.",
+    "main": "Era/field options derived из LegendsLibrary.all (sorted unique). Intensity 1..5 фиксированы как dot-pills. Click toggles фильтр. filterIntensity использует ClosedRange — single-point i...i.",
+    "points": [
+      "ScrollView horizontal с era + divider + field + divider + intensity dots",
+      "Active state — accent stroke",
+      "Clear-all появляется только при hasAnyFilter"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.34/HelloWork-0.10.34.dmg"
+  },
+  {
     "version": "0.10.33",
     "date": "2026-04-28",
     "customMessage": "TASK-L32 verified: Avatar file present and used.",
