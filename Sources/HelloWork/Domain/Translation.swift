@@ -347,6 +347,7 @@ struct Translation {
     let legendsApplyAppCategorySkip: String
     let legendsApplyConfirm: String
     let legendsApplyCancel: String
+    let legendsApplyNoAppsHint: String
     let legendsCorruptHidden: (_ n: Int) -> String
     let legendsBlockTypeSleep: String
     let legendsBlockTypeMorning: String

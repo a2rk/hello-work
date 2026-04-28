@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.56",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L55: Apply schedule кнопка в LegendDetailView (рядом с fave star). Зелёная capsule с wand-иконкой. Disabled+grey + tooltip 'Add apps first' если managedApps пуст. Click открывает LegendApplySheet (skeleton — TASK-L57 наполнит).",
+    "main": "Phase G стартанула. Добавлен translation-ключ legendsApplyNoAppsHint EN/RU/ZH. ApplySheet skeleton с Cancel/Confirm — Confirm disabled, ждёт L57.",
+    "points": [
+      "Phase G (1/10)",
+      "55/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.56/HelloWork-0.10.56.dmg"
+  },
+  {
     "version": "0.10.55",
     "date": "2026-04-27",
     "customMessage": "TASK-L54 [verify]: OK. Sort persists через @AppStorage, fallback на .order при unknown rawValue, sortChoiceTitle локализован EN/RU/ZH, picker checkmark корректен. Регрессий нет.",

@@ -299,7 +299,7 @@ HelloWork/Sources/HelloWork/
 
 ### Phase G — Apply schedule flow (10 tasks)
 
-- [ ] **TASK-L55 [impl]** — «Apply schedule» кнопка в LegendDetailView (возле fave star). Disabled, если managedApps пустой (с tooltip «Add apps first»). Click → presents `LegendApplySheet`.
+- [x] **TASK-L55 [impl]** — «Apply schedule» кнопка в LegendDetailView (возле fave star). Disabled, если managedApps пустой (с tooltip «Add apps first»). Click → presents `LegendApplySheet`.  → released as v0.10.56
 
 - [ ] **TASK-L56 [verify]** — TASK-L55
 

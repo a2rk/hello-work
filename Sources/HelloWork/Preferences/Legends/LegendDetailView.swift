@@ -11,6 +11,8 @@ struct LegendDetailView: View {
     let legend: Legend
     let onBack: () -> Void
 
+    @State private var showApplySheet: Bool = false
+
     var body: some View {
         // Parent PrefsView.detail уже оборачивает в ScrollView. Не вкладываем второй
         // — иначе nested-scroll даёт неконсистентный bounce и мешает hit-testing.
@@ -65,9 +67,47 @@ struct LegendDetailView: View {
             }
 
             Spacer(minLength: 8)
+            applyButton
             favoriteStar
         }
         .padding(.bottom, 4)
+        .sheet(isPresented: $showApplySheet) {
+            LegendApplySheet(state: state, legend: legend) {
+                // TASK-L59 заменит на реальный apply call.
+            }
+        }
+    }
+
+    private var applyButton: some View {
+        let hasApps = !activeManagedApps.isEmpty
+        return Button {
+            showApplySheet = true
+        } label: {
+            HStack(spacing: 6) {
+                Image(systemName: "wand.and.stars")
+                    .font(.system(size: 11, weight: .semibold))
+                Text(t.legendsApply)
+                    .font(.system(size: 12, weight: .medium))
+            }
+            .foregroundColor(hasApps ? .black : Theme.textTertiary)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
+            .background(
+                Capsule().fill(hasApps ? Theme.accent : Color.white.opacity(0.04))
+            )
+            .overlay(
+                Capsule().stroke(hasApps ? Theme.accent.opacity(0.4) : Theme.surfaceStroke, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .disabled(!hasApps)
+        .help(hasApps ? t.legendsApply : t.legendsApplyNoAppsHint)
+    }
+
+    /// Активные managed-apps (не archived) — нужны как минимум для одного
+    /// assignment. Если пусто — apply-кнопка disabled.
+    private var activeManagedApps: [ManagedApp] {
+        state.managedApps.filter { !$0.isArchived }
     }
 
     private var metaRow: some View {
