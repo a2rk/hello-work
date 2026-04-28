@@ -201,8 +201,7 @@ HelloWork/Sources/HelloWork/
 
 ### Phase B — Persistence layer (8 tasks)
 
-- [ ] **TASK-L11 [impl]** — AppState поля: `@Published var favoriteLegendIds: Set<String>` + `@Published private(set) var appliedLegendId: String?` + `private var slotsBackupForApply: [String: [Slot]]?`. didSet → персист в UserDefaults. Schema-versioned wrapper.
-  - Acceptance: toggle favorite → persisted across launches; appliedLegendId persisted; backup тоже.
+- [x] **TASK-L11 [impl]** — AppState поля для legends: favoriteLegendIds + appliedLegendId + slotsBackupForApply, schema-versioned single-blob persist.  → released as v0.10.12
 
 - [ ] **TASK-L12 [verify]** — TASK-L11
 

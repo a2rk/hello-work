@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.10.12",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L11: AppState получил legends-state — favoriteLegendIds (@Published Set), appliedLegendId, slotsBackupForApply. Single-blob persist через VersionedLegendsState (schema v1).",
+    "main": "Persist в UserDefaults один JSON-blob со всеми тремя полями. Loader корректно обрабатывает missing/wrong-version → дефолты. Декодинг битого blob в TASK-L17 будет писать backup-file.",
+    "points": [
+      "@Published favoriteLegendIds: Set<String>",
+      "@Published private(set) appliedLegendId: String?",
+      "private(set) slotsBackupForApply: [String: [Slot]]?",
+      "VersionedLegendsState wrapper (schema v1)",
+      "_setLegendsApply(legendId:backup:) — атомарный сетер для ApplyEngine"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.12/HelloWork-0.10.12.dmg"
+  },
+  {
     "version": "0.10.11",
     "date": "2026-04-28",
     "customMessage": "TASK-L10 verified: cleanup корректен. PHASE A (data foundation) полностью закрыта.",

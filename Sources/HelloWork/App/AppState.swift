@@ -98,6 +98,26 @@ final class AppState: ObservableObject {
     }
     @Published private(set) var launchAtLogin: Bool
 
+    // MARK: - Legends module persisted state
+
+    /// Избранные легенды — `legend.id` set'ом. Persists через did-Set.
+    @Published var favoriteLegendIds: Set<String> = [] {
+        didSet { saveLegendsState() }
+    }
+
+    /// ID легенды чьё расписание сейчас «применено» к managed apps.
+    /// nil = ничего не применено. Меняется только через LegendApplyEngine.
+    @Published private(set) var appliedLegendId: String? {
+        didSet { saveLegendsState() }
+    }
+
+    /// Snapshot `managedApps[i].slots` перед apply, по bundleID.
+    /// nil = backup ещё не делали (значит revert невозможен — нечего откатывать).
+    /// Изменяется только через LegendApplyEngine.
+    private(set) var slotsBackupForApply: [String: [Slot]]? {
+        didSet { saveLegendsState() }
+    }
+
     /// User-visible warnings о восстановлении после повреждения данных
     /// (managedApps JSON / stats.json). Каждая запись = одна категория, путь
     /// к резервной копии. UI показывает их баннером в Prefs до dismiss.
@@ -148,6 +168,18 @@ final class AppState: ObservableObject {
     private struct VersionedManagedApps: Codable {
         let version: Int
         let apps: [ManagedApp]
+    }
+
+    private static let legendsStateKey = "helloWorkLegendsState"
+    private static let legendsStateSchemaVersion = 1
+
+    /// Persisted snapshot всех legends-related @Published полей.
+    /// Один blob — один write, чтобы избежать пушей цепочкой при apply.
+    private struct VersionedLegendsState: Codable {
+        let version: Int
+        let favoriteIds: [String]
+        let appliedLegendId: String?
+        let slotsBackup: [String: [Slot]]?
     }
 
     static let menubarPeekOptions: [Int] = [0, 1, 2, 3, 5]
@@ -253,6 +285,18 @@ final class AppState: ObservableObject {
         if let statsBackup = stats.lastCorruptionBackupPath {
             initialWarnings.append(CorruptionWarning(kind: .stats, backupPath: statsBackup))
         }
+
+        // Legends state — persisted blob с favorites + appliedLegendId + slotsBackup.
+        if let data = UserDefaults.standard.data(forKey: Self.legendsStateKey),
+           let decoded = try? JSONDecoder().decode(VersionedLegendsState.self, from: data),
+           decoded.version <= Self.legendsStateSchemaVersion {
+            self.favoriteLegendIds = Set(decoded.favoriteIds)
+            self.appliedLegendId = decoded.appliedLegendId
+            self.slotsBackupForApply = decoded.slotsBackup
+        }
+        // Если decode провалился — оставляем дефолты ([] / nil / nil).
+        // Битый blob сохранится в .corrupt-<ts>.json в TASK-L17.
+
         self.corruptionWarnings = initialWarnings
 
         // Сразу прокидываем настройки в controller.
@@ -304,6 +348,26 @@ final class AppState: ObservableObject {
         )
         guard let data = try? JSONEncoder().encode(wrapped) else { return }
         UserDefaults.standard.set(data, forKey: Self.managedAppsKey)
+    }
+
+    /// Single-blob persist всех legends-полей. Вызывается из didSet каждого
+    /// из трёх @Published. Дёшево (≤ kB), но избегаем 3 disk writes на одно apply.
+    private func saveLegendsState() {
+        let wrapped = VersionedLegendsState(
+            version: Self.legendsStateSchemaVersion,
+            favoriteIds: Array(favoriteLegendIds).sorted(),
+            appliedLegendId: appliedLegendId,
+            slotsBackup: slotsBackupForApply
+        )
+        guard let data = try? JSONEncoder().encode(wrapped) else { return }
+        UserDefaults.standard.set(data, forKey: Self.legendsStateKey)
+    }
+
+    /// Изменяет appliedLegendId + slotsBackup атомарно (один disk write).
+    /// Используется LegendApplyEngine; обходит didSet'ы каждого поля.
+    func _setLegendsApply(legendId: String?, backup: [String: [Slot]]?) {
+        appliedLegendId = legendId
+        slotsBackupForApply = backup
     }
 
     var t: Translation { L10n.resolved(language) }
