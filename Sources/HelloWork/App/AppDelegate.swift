@@ -44,6 +44,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refresh()
 
         state.installer.consumePreviousUpdateStatus()
+        L10n.validateAll()  // DEBUG-only: пишет в devlog об empty/placeholder strings
         showPrefsIfFirstLaunch()
         setupPermissionsRefresh()
         Task { await state.checkForUpdates() }

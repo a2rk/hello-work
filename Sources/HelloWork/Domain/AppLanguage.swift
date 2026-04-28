@@ -36,4 +36,27 @@ enum L10n {
         default:   return .en
         }
     }
+
+    /// Sanity-check всех локалей на пустые строки и placeholder'ы. Вызывается
+    /// в DEBUG-сборке при старте; в release — no-op. Падает не ассертом,
+    /// а через `devlog("i18n", ...)` чтобы было видно в Diagnostics-tab.
+    static func validateAll() {
+        #if DEBUG
+        let placeholders: Set<String> = ["TODO", "translate me", "FIXME", "TBD"]
+        for lang: Translation in [.en, .ru, .zh] {
+            let mirror = Mirror(reflecting: lang)
+            for child in mirror.children {
+                guard let label = child.label else { continue }
+                if let s = child.value as? String {
+                    if s.isEmpty {
+                        devlog("i18n", "EMPTY \(label) in locale at \(child.label ?? "?")")
+                    }
+                    if placeholders.contains(s) {
+                        devlog("i18n", "PLACEHOLDER \(label) — value '\(s)'")
+                    }
+                }
+            }
+        }
+        #endif
+    }
 }

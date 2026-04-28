@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.76",
+    "date": "2026-04-28",
+    "customMessage": "TASK-055: L10n.validateAll() в DEBUG-сборке при старте проходит все три локали и пишет в devlog empty / placeholder строки. Compile-time проверки (struct fields + init order) уже были.",
+    "main": "Translation — struct с let-полями: missing key или wrong order = compile error. Runtime: walk via Mirror, проверяем что String values не пустые и не содержат TODO/translate me/FIXME/TBD. Отчёт в devlog (Diagnostics-tab).",
+    "points": [
+      "L10n.validateAll() — Mirror над .en/.ru/.zh",
+      "DEBUG-only — release-сборка не дёргает",
+      "Empty / placeholder pattern → devlog 'i18n' категория"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.76/HelloWork-0.9.76.dmg"
+  },
+  {
     "version": "0.9.75",
     "date": "2026-04-28",
     "customMessage": "TASK-054 verified: scroll-identity корректен. Phase K (UX polish) полностью закрыта.",
