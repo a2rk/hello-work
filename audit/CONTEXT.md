@@ -225,7 +225,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
   - Файлы: `Sources/HelloWork/App/AppDelegate.swift`.
   - Acceptance: Migration runs once per fresh install of v0.12. На второй запуск — return-on-flag, devlog показывает «already migrated».
 
-- [ ] **TASK-A04 [verify]** — TASK-A03
+- [x] **TASK-A04 [verify]** — TASK-A03  → OK. Order corretly: consumePreviousUpdateStatus → MigrationManager.runIfNeeded → checkForUpdates. Sync вызов оправдан (миграция fast, не async). Edge: NSWorkspace.recycle завершается callback'ом; флаг ставится до его completion → если recycle silently failed, HWInstaller может остаться в /Applications, девлог запишет ошибку. Acceptable. Released as v0.11.9
 
 - [ ] **TASK-A05 [impl]** — Добавить `AppState.queueMigrationToast: Bool` (`@Published`, persists в UserDefaults НЕ нужно — one-time-flag в migration сам по себе).
   - 3 translation keys: `migrationToastTitle`, `migrationToastBody`, `migrationToastDismiss`. EN/RU/ZH.

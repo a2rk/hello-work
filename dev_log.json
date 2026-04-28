@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.9",
+    "date": "2026-04-28",
+    "customMessage": "TASK-A04 [verify]: OK. AppDelegate-wiring корректен — order правильный. NSWorkspace.recycle async callback с set'ом флага до его completion — если recycle silently failed (in-use, permission), HWInstaller останется в /Applications, девлог запишет; acceptable.",
+    "main": "Verification of TASK-A03.",
+    "points": [
+      "Phase A (4/8)",
+      "Cycle: 4/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.9/HelloWork-0.11.9.dmg"
+  },
+  {
     "version": "0.11.8",
     "date": "2026-04-28",
     "customMessage": "TASK-A03: MigrationManager.runIfNeeded подключён в AppDelegate.applicationDidFinishLaunching ПОСЛЕ consumePreviousUpdateStatus и ДО checkForUpdates/permissions. Sync-вызов (миграция быстрая, не async). Существующие юзеры со stub-engine layout получат migration на первом запуске v0.12.",
