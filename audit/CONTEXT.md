@@ -295,7 +295,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L53 [impl]** — Sort: `order` (default), `alphabetical(name локали)`, `favoritesFirst`. Picker в header. Persists.  → released as v0.10.54
 
-- [ ] **TASK-L54 [verify]** — TASK-L53
+- [x] **TASK-L54 [verify]** — TASK-L53  → OK, регрессий нет. Sort persists, fallback на .order при unknown rawValue, sortChoiceTitle лoкализован во всех 3 языках, sortPicker checkmark корректен. Released as v0.10.55
 
 ### Phase G — Apply schedule flow (10 tasks)
 

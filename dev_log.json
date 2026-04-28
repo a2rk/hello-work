@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.55",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L54 [verify]: OK. Sort persists через @AppStorage, fallback на .order при unknown rawValue, sortChoiceTitle локализован EN/RU/ZH, picker checkmark корректен. Регрессий нет.",
+    "main": "Verification of TASK-L53. Phase F закрыта (6/6).",
+    "points": [
+      "Phase F COMPLETE (6/6)",
+      "54/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.55/HelloWork-0.10.55.dmg"
+  },
+  {
     "version": "0.10.54",
     "date": "2026-04-27",
     "customMessage": "TASK-L53: sortChoice теперь persists через @AppStorage('helloWorkLegendsSortChoice'). Зеркальный паттерн viewModeRaw — храним rawValue, computed getter возвращает enum с фолбэком на .order.",
