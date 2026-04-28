@@ -247,7 +247,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
 
 Удаляем stub-инфраструктуру. Build выдаёт один `dist/HelloWork.app`.
 
-- [ ] **TASK-B01 [impl]** — `Package.swift`: убрать `.executableTarget(name: "HelloWorkStub")`. Только HelloWork target остаётся.
+- [x] **TASK-B01 [impl]** — `Package.swift`: убрать `.executableTarget(name: "HelloWorkStub")`. Только HelloWork target остаётся.  → released as v0.11.14 (с этого момента pipeline только build.sh + package.sh, stub-скрипты перестают вызываться)
   - Файл: `Package.swift`.
   - Acceptance: `swift build --product HelloWork` собирается, `swift build --product HelloWorkStub` падает с «product not found».
 

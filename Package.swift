@@ -11,9 +11,6 @@ let package = Package(
                 .process("Resources/Media.xcassets"),
                 .copy("Resources/Legends")
             ]
-        ),
-        .executableTarget(
-            name: "HelloWorkStub"
         )
     ]
 )

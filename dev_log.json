@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.14",
+    "date": "2026-04-28",
+    "customMessage": "TASK-B01: Package.swift cleaned up — убран .executableTarget(name: 'HelloWorkStub'). Только HelloWork target остаётся. Sources/HelloWorkStub/ файлы пока на диске, но не компилируются (orphaned до TASK-B03). Pipeline теперь build.sh + package.sh only.",
+    "main": "Phase B started. swift build --product HelloWorkStub теперь падает 'no product named HelloWorkStub' — ожидаемо.",
+    "points": [
+      "Phase B (1/8)",
+      "Cycle: 9/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.14/HelloWork-0.11.14.dmg"
+  },
+  {
     "version": "0.11.13",
     "date": "2026-04-28",
     "customMessage": "TASK-A08 [verify]: OK. MigrationToastBanner проверен — show conditionally, auto-dismiss DispatchWorkItem 8s cancel'ится onDisappear (rapid nav safe), click button сетит false → SwiftUI убирает banner. Phase A ЗАКРЫТА (8/8 tasks).",
