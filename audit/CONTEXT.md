@@ -318,7 +318,7 @@ HelloWork/
   - Файл: `Preferences/PrefsView.swift:96-123`
   - Решение: при click если selection уже `.onboarding` — пульсация рамки (subtle scale animation).
 
-- [ ] **TASK-052 [verify]** — TASK-051
+- [x] **TASK-052 [verify]** — TASK-051  → released as v0.9.73
 
 - [ ] **TASK-053 [impl]** — Sidebar scroll position memo
   - Файл: `Preferences/Schedule/ScheduleView.swift` или PrefsView detail

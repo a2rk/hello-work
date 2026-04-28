@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.9.73",
+    "date": "2026-04-28",
+    "customMessage": "TASK-052 verified: + pulse корректен.",
+    "main": "Verification of TASK-051. Trivial.",
+    "points": [
+      "Pulse only on repeat tap"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.73/HelloWork-0.9.73.dmg"
+  },
+  {
     "version": "0.9.72",
     "date": "2026-04-28",
     "customMessage": "TASK-051: «+» кнопка в сайдбаре пульсирует когда юзер тыкает её повторно (уже на .onboarding) — даёт visual feedback что клик зарегистрирован.",
