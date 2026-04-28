@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.29",
+    "date": "2026-04-28",
+    "customMessage": "TASK-D04 [verify]: OK. Volume icon правильно встроен в DMG: .VolumeIcon.icns копируется на mount, SetFile attributes выставлены. DMG в Finder с HelloWork иконкой. Phase D ЗАКРЫТА (4/4).",
+    "main": "Verification of TASK-D03.",
+    "points": [
+      "Phase D COMPLETE (4/4)",
+      "Cycle: 24/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.29/HelloWork-0.11.29.dmg"
+  },
+  {
     "version": "0.11.28",
     "date": "2026-04-28",
     "customMessage": "TASK-D03: volume icon. cp scripts/AppIcon.icns → /Volumes/HelloWork/.VolumeIcon.icns + SetFile -a C для custom-icon-aware флага. DMG в Finder теперь показывается с HelloWork иконкой а не generic.",
