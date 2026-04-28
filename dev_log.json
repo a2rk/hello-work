@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.10.29",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L28 verified: LegendCard + LegendAvatar OK.",
+    "main": "Verification of TASK-L27.",
+    "points": [
+      "Avatar + Card render"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.29/HelloWork-0.10.29.dmg"
+  },
+  {
     "version": "0.10.28",
     "date": "2026-04-28",
     "customMessage": "TASK-L27: LegendCard в grid-mode. + LegendAvatar (вынесен раньше из L31, нужен сразу). Карточка: avatar + name + years + intensity dots + primary tag + favorite star. Hover scale spring 1.02.",

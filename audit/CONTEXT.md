@@ -239,7 +239,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L27 [impl]** — LegendCard (grid mode) + LegendAvatar (factored early из L31).  → released as v0.10.28
 
-- [ ] **TASK-L28 [verify]** — TASK-L27
+- [x] **TASK-L28 [verify]** — TASK-L27  → released as v0.10.29
 
 - [ ] **TASK-L29 [impl]** — `LegendListRow` (list mode): horizontal compact, avatar small, name + tags inline, intensity dots в углу.
 
