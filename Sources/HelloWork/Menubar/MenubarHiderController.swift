@@ -179,6 +179,11 @@ final class MenubarHiderController: ObservableObject {
             return
         }
 
+        // Input Monitoring permission — без него CGEvent.tapCreate вернёт nil
+        // и scrombleEvent в Mover'е не сработает. На первом вызове system
+        // покажет prompt, юзер выдаст grant — на втором вызове всё пойдёт.
+        _ = MenuBarItemMover.ensureInputMonitoring()
+
         let all = MenuBarItem.currentItems()
         let items = all.filter { $0.isHideable }
         devlog("hider", "currentItems total=\(all.count) hideable=\(items.count)")

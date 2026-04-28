@@ -1,21 +1,18 @@
 // MenuBarItemMover.swift — Ice-style menubar item drag.
 // Адаптация подхода Ice (https://github.com/jordanbaird/Ice) — GPLv3.
 //
-// Ключевые принципы (выученные методом сравнения с Ice):
-//   1. Sequence из 2 событий: mouseDown с cmd на off-screen + mouseUp без cmd.
-//      Никаких Dragged событий — Sequoia их фильтрует.
-//   2. windowID-field на mouseDown указывает на ITEM который двигаем.
-//      windowID-field на mouseUp указывает на ANCHOR-item рядом с которым
-//      ставим. Это даёт WindowServer'у «move-relative-to» команду.
-//   3. CGEventSource(.hidSystemState) для самих событий + permitAllEvents
-//      на CGEventSource(.combinedSessionState) чтобы Sequoia не подавлял
-//      synth-mouse возле menubar.
-//   4. Постим в .cgSessionEventTap (не .cghidEventTap — Sequoia на hid-уровне
-//      синтетику фильтрует).
-//   5. Pause между Down и Up должна давать WindowServer'у время войти в
-//      menubar-drag mode. 80-100ms пока эмпирически.
+// Ключевые принципы:
+//   1. Sequence: mouseDown (off-screen + cmd) + mouseUp (anchor location, no cmd).
+//   2. windowID-field на Down = item, на Up = ANCHOR (relative-to команда WS).
+//   3. CGEventSource(.hidSystemState) для events + permitAllEvents на
+//      CGEventSource(.combinedSessionState).
+//   4. scrombleEvent через double-tap chain (.pid → .session → .pid)
+//      — Sequoia принимает как valid relay вместо external injection.
+//   5. Permissions: AX (Accessibility) + IOHID listen access (Input Monitoring).
+//      Без Input Monitoring — CGEvent.tapCreate возвращает nil.
 
 import Cocoa
+import IOKit.hid
 
 @MainActor
 enum MenuBarItemMover {
@@ -39,11 +36,40 @@ enum MenuBarItemMover {
         }
     }
 
+    /// Проверяет и при необходимости запрашивает Input Monitoring permission.
+    /// CGEvent.tapCreate / tapCreateForPid требуют либо kIOHIDRequestTypeListenEvent,
+    /// либо AX trust. На Sequoia для menubar-уровня обычно нужны ОБА.
+    /// Возвращает текущий статус после возможного запроса.
+    @discardableResult
+    static func ensureInputMonitoring() -> IOHIDAccessType {
+        let current = IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
+        devlog("mover", "IOHIDCheckAccess(ListenEvent) = \(inputMonitoringName(current))")
+        if current == kIOHIDAccessTypeUnknown || current == kIOHIDAccessTypeDenied {
+            devlog("mover", "IOHIDRequestAccess(ListenEvent) — system prompt should appear")
+            let granted = IOHIDRequestAccess(kIOHIDRequestTypeListenEvent)
+            devlog("mover", "IOHIDRequestAccess returned granted=\(granted)")
+            let after = IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
+            devlog("mover", "IOHIDCheckAccess after request = \(inputMonitoringName(after))")
+            return after
+        }
+        return current
+    }
+
+    private static func inputMonitoringName(_ t: IOHIDAccessType) -> String {
+        switch t {
+        case kIOHIDAccessTypeGranted: return "GRANTED"
+        case kIOHIDAccessTypeDenied:  return "DENIED"
+        case kIOHIDAccessTypeUnknown: return "UNKNOWN(not-asked)"
+        default:                       return "raw=\(t.rawValue)"
+        }
+    }
+
     @discardableResult
     static func move(item: MenuBarItem, to destination: Destination) -> Bool {
         let trusted = AXIsProcessTrusted()
+        let imAccess = IOHIDCheckAccess(kIOHIDRequestTypeListenEvent)
         let anchor = destination.anchor
-        devlog("mover", "ENTER move wid=\(item.windowID) bid=\(item.bundleID ?? "nil") AX=\(trusted) → \(destinationLogString(destination)) anchor wid=\(anchor.windowID) bid=\(anchor.bundleID ?? "nil")")
+        devlog("mover", "ENTER move wid=\(item.windowID) bid=\(item.bundleID ?? "nil") AX=\(trusted) IM=\(inputMonitoringName(imAccess)) → \(destinationLogString(destination)) anchor wid=\(anchor.windowID) bid=\(anchor.bundleID ?? "nil")")
 
         guard item.isHideable else {
             devlog("mover", "skip wid=\(item.windowID) — not hideable")

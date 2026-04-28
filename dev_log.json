@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.12.5",
+    "date": "2026-04-28",
+    "customMessage": "Menubar hider — добавлены 2 ключевые причины: (1) entitlements file scripts/HelloWork.entitlements (как у Ice — app-sandbox=false + files.user-selected.read-only), вшивается через codesign --entitlements; (2) Input Monitoring permission check + request через IOHIDCheckAccess/IOHIDRequestAccess. Без Input Monitoring CGEvent.tapCreate возвращает nil и scrombleEvent невозможен.",
+    "main": "В первом запуске v0.12.5 при попытке скрыть menubar появится system prompt 'Allow Input Monitoring' — выдай grant, попробуй снова. Diagnostics покажет IM=GRANTED/DENIED/UNKNOWN.",
+    "points": [
+      "Entitlements file (как у Ice — без app-sandbox)",
+      "IOHIDCheckAccess + IOHIDRequestAccess для Input Monitoring",
+      "ensureInputMonitoring() вызывается в Settings test-кнопке + collapseInternal",
+      "devlog mover: AX + IM статусы в ENTER строке"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.12.5/HelloWork-0.12.5.dmg"
+  },
+  {
     "version": "0.12.4",
     "date": "2026-04-28",
     "customMessage": "Menubar hider — Ice-style rewrite. Sequoia блокирует прямой event.post() как 'external injection'. Перешли на double-tap-chain scrombleEvent: null→pid → real→session → real→pid. Sequence 2 события (Down off-screen с cmd + Up на anchor без cmd) с разными windowID-field на Down (item) и Up (anchor — Apple-managed neighbor). MoveDestination = .leftOf/.rightOf для relative-to команды. permitAllEvents для suppression filter.",

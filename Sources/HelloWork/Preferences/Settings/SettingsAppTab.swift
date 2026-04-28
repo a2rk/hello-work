@@ -64,6 +64,10 @@ struct SettingsAppTab: View {
     }
 
     private func runSingleHideTest() {
+        // Проверяем + запрашиваем Input Monitoring permission перед попыткой.
+        // Без него CGEvent.tapCreate возвращает nil и scrombleEvent невозможен.
+        _ = MenuBarItemMover.ensureInputMonitoring()
+
         let all = MenuBarItem.currentItems()
         let hideable = all.filter { $0.isHideable }
         devlog("hider.test", "currentItems total=\(all.count) hideable=\(hideable.count)")

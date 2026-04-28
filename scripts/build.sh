@@ -63,15 +63,18 @@ cp scripts/AppIcon.icns "$APP_PATH/Contents/Resources/AppIcon.icns"
 SIGN_NAME="HelloWork Self-Signed"
 SIGN_HASH=$(security find-identity -p codesigning ~/Library/Keychains/login.keychain-db 2>/dev/null \
     | awk -v name="$SIGN_NAME" '$0 ~ name {print $2; exit}')
+ENTITLEMENTS="scripts/HelloWork.entitlements"
 if [ -n "$SIGN_HASH" ]; then
-    echo "▶ Подписываю '$SIGN_NAME' ($SIGN_HASH)..."
+    echo "▶ Подписываю '$SIGN_NAME' ($SIGN_HASH) с entitlements..."
     codesign --force --deep --sign "$SIGN_HASH" --identifier "$BUNDLE_ID" \
+        --entitlements "$ENTITLEMENTS" \
         --options runtime --timestamp=none "$APP_PATH" 2>&1 \
         | grep -v "replacing existing signature" || true
 else
     echo "⚠️  Идентичность '$SIGN_NAME' не найдена → подписываю ad-hoc"
     echo "    Запусти scripts/setup_signing.sh чтобы grants выживали через апдейты."
-    codesign --force --deep --sign - --identifier "$BUNDLE_ID" "$APP_PATH" 2>&1 \
+    codesign --force --deep --sign - --identifier "$BUNDLE_ID" \
+        --entitlements "$ENTITLEMENTS" "$APP_PATH" 2>&1 \
         | grep -v "replacing existing signature" || true
 fi
 
