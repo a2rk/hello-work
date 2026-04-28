@@ -16,20 +16,39 @@ struct MenuBarItem: Equatable {
         NSRunningApplication(processIdentifier: pid)?.bundleIdentifier
     }
 
-    /// Apple-managed menubar items нельзя двигать (Time, Control Center, Spotlight, IME и т.п.).
-    /// Это immutable secured zone — попытка двинуть приведёт к ошибке или ничему.
+    /// Apple-managed items внутри controlcenter/systemuiserver: только конкретные
+    /// (Clock, Siri, BentoBox) — secured zone которую WindowServer не двигает.
+    /// Остальные controlcenter items (Sound, Wi-Fi, Battery, FaceTime и т.п.)
+    /// — двигаемы. (Так фильтрует Ice — наш предыдущий bundle-ID-фильтр был
+    /// слишком широким, отрезал все 9 CC items как immovable.)
     var isMovable: Bool {
+        // Drag-handle / separator между sections (Finder в menubar) — owner
+        // == "Window Server", не реальный app process. Не двигаем.
+        if ownerName == "Window Server" { return false }
+
         guard let bid = bundleID else { return true }
-        // Bundle IDs системных process'ов с защищёнными menubar items.
-        let immovable: Set<String> = [
-            "com.apple.controlcenter",
-            "com.apple.systemuiserver",
+
+        // Системные процессы которые целиком immovable
+        let immovableBundles: Set<String> = [
             "com.apple.Spotlight",
             "com.apple.TextInputMenuAgent",
             "com.apple.notificationcenterui",
             "com.apple.dock"
         ]
-        return !immovable.contains(bid)
+        if immovableBundles.contains(bid) { return false }
+
+        // controlcenter и systemuiserver — фильтр по title окна (как у Ice).
+        if bid == "com.apple.controlcenter" {
+            // Точные title для immovable CC sub-items
+            let immovableCCTitles: Set<String> = ["Clock", "BentoBox"]
+            if let t = title, immovableCCTitles.contains(t) { return false }
+        }
+        if bid == "com.apple.systemuiserver" {
+            let immovableSUITitles: Set<String> = ["Siri"]
+            if let t = title, immovableSUITitles.contains(t) { return false }
+        }
+
+        return true
     }
 
     /// Не двигаем сам Hello work — нашу H-иконку.

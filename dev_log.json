@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.12.6",
+    "date": "2026-04-28",
+    "customMessage": "Ice-style isMovable filter. Раньше мы помечали все 9 controlcenter items как immovable по bundleID — это слишком жёстко. Ice фильтрует по (bundleID, title) парам: только Clock + Siri + BentoBox immovable, остальные (Sound, Wi-Fi, Battery, FaceTime, Bluetooth, Focus, ...) ДВИЖИМЫ. Также добавил guard на ownerName='Window Server' — это system drag-handles (типа того wid=33 com.apple.finder который мы пытались двигать), их нельзя двигать никаким способом.",
+    "main": "Раньше у юзера в логах был только 1 hideable (system handle, неподвижный). Теперь должно быть 6+ hideable items. Лог hider.item получил title-поле — увидим что за items в menubar.",
+    "points": [
+      "isMovable теперь фильтрует по (bundleID, title) как Ice",
+      "ownerName='Window Server' → immovable (system drag-handles)",
+      "controlcenter immovable только {Clock, BentoBox}; systemuiserver — {Siri}",
+      "Все остальные CC items (Sound/WiFi/Battery/...) теперь movable",
+      "Devlog hider.item получил поле title='...'"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.12.6/HelloWork-0.12.6.dmg"
+  },
+  {
     "version": "0.12.5",
     "date": "2026-04-28",
     "customMessage": "Menubar hider — добавлены 2 ключевые причины: (1) entitlements file scripts/HelloWork.entitlements (как у Ice — app-sandbox=false + files.user-selected.read-only), вшивается через codesign --entitlements; (2) Input Monitoring permission check + request через IOHIDCheckAccess/IOHIDRequestAccess. Без Input Monitoring CGEvent.tapCreate возвращает nil и scrombleEvent невозможен.",

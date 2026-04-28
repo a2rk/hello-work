@@ -189,7 +189,7 @@ final class MenubarHiderController: ObservableObject {
         devlog("hider", "currentItems total=\(all.count) hideable=\(items.count)")
         for item in all {
             devlog("hider.item",
-                   "wid=\(item.windowID) pid=\(item.pid) bid=\(item.bundleID ?? "nil") owner=\(item.ownerName ?? "nil") midX=\(String(format: "%.0f", item.frame.midX)) hideable=\(item.isHideable)")
+                   "wid=\(item.windowID) pid=\(item.pid) bid=\(item.bundleID ?? "nil") title='\(item.title ?? "nil")' owner=\(item.ownerName ?? "nil") midX=\(String(format: "%.0f", item.frame.midX)) hideable=\(item.isHideable)")
         }
         guard !items.isEmpty else {
             devlog("hider", "collapseInternal — nothing hideable, abort")
