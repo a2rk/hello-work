@@ -1,410 +1,396 @@
-# HelloWork — Audit Context & Task Ledger
+# HelloWork — Legends Module Audit Context & Task Ledger
 
-> Этот файл — **единственный источник истины** для агента, который выполняет аудит-таски. Перед каждой итерацией читать его целиком. После каждой итерации обновлять статусы.
+> Этот файл — **единственный источник истины** для агента, который выполняет таски. Перед каждой итерацией читать его целиком. После каждой итерации обновлять статусы.
 >
-> **Цель**: довести систему до 9.5/10 через 60 точечных тасков. Версионирование — **одна патч-версия на таск**. Старт 0.9.21 → финиш минимум 0.9.81. Каждый шаг релизится в `gh release` отдельно — чтобы юзер видел движение и мог откатиться к любому промежуточному состоянию.
+> **Цель цикла**: внедрить модуль «Истории легенд» — 60 расписаний великих людей, которые юзер может изучать и «применять» к собственному schedule-блокированию приложений. Версионирование — **одна патч-версия на таск**. Старт `0.10.1` → финиш минимум `0.10.65` (60 тасков), реально **0.11.0** как минорный bump-финал. Каждый шаг — отдельный `gh release` чтобы юзер видел движение и мог откатиться.
 
 ---
 
-## 1. Что мы строим
+## 1. Что мы добавляем
 
-**HelloWork** — macOS accessory-приложение (без видимого окна, живёт в menubar) для дисциплинированной работы:
+**Модуль «Легенды»** — образовательно-практический раздел в HelloWork. Идея: помочь юзеру дисциплинировать себя через изучение и копирование расписаний выдающихся людей (Франклин, Маск, Карнеги, Стивенсон, Виллинк и ещё 55).
 
-1. **Schedule-based blocking** — юзер описывает «когда какому приложению можно работать», вне расписания накладывается blur-overlay, ввод заблокирован. Идея: отвлекающее приложение остаётся открытым, но недоступно вне окон.
-2. **Focus mode** — глобальный hotkey, по которому всё кроме frontmost-окна затемняется (dim opacity), концентрация на одной задаче.
-3. **Menubar hider** (Ice-style) — физически уносит чужие menubar items за левый край экрана через CGEvent simulation (⌘+drag), оставляя видимым только Apple Control Center cluster и наш H. По хоткею или из меню.
-4. **Stats** — учёт grace-минут, focus-сессий, attempts (попыток открыть заблокированное app), ежедневные/часовые срезы.
-5. **Updates** — devLog (`dev_log.json` в репо) — лента версий с описанием. App качает её, показывает «доступна новая версия», предлагает install.
-6. **Permissions** — Accessibility и Screen Recording. Без них hider не двигает items, focus-mode не находит окна.
+### Сценарий пользователя
 
-### Аудитория и принципы
+1. Открывает Prefs → новый sidebar-пункт «Легенды».
+2. Видит **сетку или список карточек** (юзер сам переключает grid/list). На карточке — аватар (placeholder-монограмма), имя, годы жизни, intensity (1–5 точек), primary tag, кнопка «звёздочка» для favorites.
+3. Может **искать**, **фильтровать** (era / field / tag / intensity), **сортировать** (по умолчанию order, отдельно — favorites first, по эпохе, по области), **переключать** между Grid и List.
+4. Жмёт на карточку → **Detail View** с биографией, лентой источников, **круговым графиком 24-часового расписания**, секцией про мессенджеры (когда разрешены), цитатами.
+5. Может **«Применить» расписание** — открывается sheet, где он выбирает каким из своих managed apps к какой категории привязать (work-messenger / personal-messenger). HelloWork импортирует `allowedSlots` легенды в slots выбранных приложений (предварительно сохранив бэкап старых slots).
+6. В sidebar/detail виден баннер «Сейчас применено: <легенда>» с кнопкой Revert — откат к бэкапу.
+7. Может ставить любую легенду в favorites; на отдельной вкладке/фильтре «★» — только избранные.
 
-- Целевая аудитория — разработчики/студенты/писатели, которые хотят жесточайшую самодисциплину без полного «бана» приложения (overlay вместо kill).
-- **Privacy-first**: ничего не отправляется в сеть кроме fetch'а dev_log. Никакого telemetry, аналитики, аккаунтов.
-- **Local-first**: вся state в UserDefaults + JSON в Application Support. Работает офлайн.
-- **macOS-native UX**: SwiftUI + AppKit, тёмная тема, monospaced где уместно, никакой web-кросс-платформы.
+### Зачем это HelloWork
+
+- **Усиливает основную миссию** — schedule-based blocking. Юзер часто не знает «как правильно» расписать день. Легенды дают готовые шаблоны, проверенные историей.
+- **Educational hook** — у HelloWork появляется content layer, retention растёт.
+- **Privacy-first остаётся**: все 60 JSON-файлов вшиты в bundle, никаких сетевых запросов.
+- **Local-first остаётся**: применение → стандартный mutate `managedApps.slots`, всё в UserDefaults.
 
 ### Что должно быть «9.5/10»
 
-- **Корректность**: каждый toggle / hotkey / menu-action делает ровно то, что обещает в UI. Никаких «иконка переключилась а реально ничего не произошло».
-- **Производительность**: не больше 1 CGS-запроса там где достаточно одного. Не больше 1 disk-write на одно действие юзера. Не подвешивать main thread на drag/click. SwiftUI не перерисовывает schedule-чарт от изменения слайдера громкости в другом месте.
-- **Resilience**: повреждённый JSON managedApps / stats не должен молча терять все данные юзера.
-- **Permissions UX**: раз юзер дал AX + SR, оно живёт через все апдейты (self-signed cert уже сделан), и онбординг не лезет в лицо каждый запуск.
-- **Dead code = 0**. Каждая строка должна оправдывать своё существование.
-- **i18n полная**: en / ru / zh — никаких пропусков ключей в одной локали.
+- **Корректность**: применение легенды реально модифицирует slots выбранных apps; revert восстанавливает оригинал бит-в-бит. Никаких «применили в UI, а на диске не отразилось».
+- **Производительность**: 60 JSON загружаются 1 раз на init в фоне (≤ 50ms eager load), кэшируются. Список рендерится lazy. Search debounce.
+- **UX**: Grid/List toggle помнится. Favorites персистятся. Поиск мгновенный. Карточки с микро-анимацией. Detail view со scroll-анимацией к секции по якорю.
+- **i18n**: все UI-строки en / ru / zh. Bio/quotes/labels легенд хранятся в JSON только ru/en (так в исходных данных) — для zh фолбэк на en (с visual badge или silent — на выбор продукта).
+- **Resilience**: повреждённый JSON одного файла не валит весь модуль — этот legend помечается как `.corrupt`, остальные 59 рендерятся.
+- **Versioning**: persisted favorites + applied state schema-versioned, как managedApps в прошлом цикле.
+- **Dead code = 0**.
 
 ---
 
-## 2. Архитектура
+## 2. Источник данных
 
+60 JSON-файлов сейчас в `/Users/igor/Code/Swift/FocusNap/legens_module/` (CWD корень репо). Все имеют идентичную структуру (TASK-005 переносит их в bundle).
+
+### Стабильная схема (все 60 файлов)
+
+```jsonc
+{
+  "id": "franklin-benjamin",          // stable string id
+  "order": 1,                          // 1..60, default sort
+  "name":     { "ru": "...", "en": "..." },
+  "fullName": { "ru": "...", "en": "..." },
+  "yearsOfLife": "1706–1790",          // string, иногда с длинным тире
+  "era": "18th_century",               // enum-like: 18th_century, 19th_century, industrial, modern, ...
+  "field": "polymath",                 // enum-like: polymath, tech_entrepreneur, industrialist, writer, athlete, ...
+  "tags": ["founding_father", "inventor", "..."],
+  "nationality": "US",                 // ISO-like, иногда "US/ZA" "US/UK"
+  "avatarUrl": null,                   // null в исходниках; UI рисует монограмму
+  "intensity": 4,                      // 1..5
+  "bio": { "ru": "...", "en": "..." }, // параграф 1–3 предложения
+  "sources": [
+    { "type": "book"|"article"|"interview", "title": "...", "author": "...", "url": "..." }
+  ],
+  "lifeSchedule": {
+    "morningQuestion": { "ru": "...", "en": "..." },   // optional, не у всех
+    "eveningQuestion": { "ru": "...", "en": "..." },   // optional
+    "blocks": [
+      { "start": "00:00", "end": "05:00", "type": "sleep",
+        "label": { "ru": "...", "en": "..." } }
+    ]
+  },
+  "blockSchedule": {
+    "description": { "ru": "...", "en": "..." },
+    "allowedSlots": [
+      { "start": "12:30", "end": "13:30",
+        "appliesTo": ["work_messengers" | "personal_messengers"],
+        "rationale": { "ru": "...", "en": "..." } }
+    ],
+    "totalAllowedMinutes": 180
+  },
+  "quotes": [ { "ru": "...", "en": "..." } ]
+}
 ```
-HelloWork/
-├── Sources/
-│   ├── HelloWork/                  # engine (~/Library/Application Support/HelloWork/HelloWork.app)
-│   │   ├── App/                     AppDelegate, AppState, HelloWork.swift, Version
-│   │   ├── Bridging/                Private CGS APIs, CGEvent extensions
-│   │   ├── Diagnostics/             DevLogger (file-backed, gated by developerMode)
-│   │   ├── Domain/                  Models: ManagedApp, Slot, Translation, Stats/*
-│   │   ├── Focus/                   FocusModeController, hotkey, window finder
-│   │   ├── Menubar/                 MenubarHiderController, MenuBarItem, Mover
-│   │   ├── Overlay/                 Blur/halftone overlay views
-│   │   ├── Permissions/             PermissionsManager + onboarding view
-│   │   ├── Preferences/             SwiftUI PrefsView + tabs (Schedule/Focus/Tray/App/Data/Diagnostics)
-│   │   ├── StatusBar/               MenuBarIcon, StatusMenuRows
-│   │   ├── Theme/                   Colors, Layout, EnvironmentTranslation
-│   │   ├── Updates/                 UpdateInstaller, DevLogConfig
-│   │   └── WindowDetection/         AppWindowFinder
-│   └── HelloWorkStub/               # /Applications/HWInstaller.app (одноразовый installer)
-├── scripts/                         build.sh, build_stub.sh, package.sh, setup_signing.sh, generate_icon.swift
-├── audit/                           ← ЭТА ПАПКА
-├── dev_log.json                     лента версий
-└── VERSION / BUILD                  текущие version+build
-```
 
-### Ключевые подсистемы и их инварианты
+### Возможные значения
 
-| Подсистема | Файлы | Инвариант |
-|---|---|---|
-| `AppState` | `App/AppState.swift` | Все @Published persisted в UserDefaults через didSet, читаются на init. Single source of truth для UI. |
-| `MenubarHiderController` | `Menubar/MenubarHiderController.swift` | `isCollapsed` отражает реальное физическое состояние menubar items, а не «попытку». |
-| `MenuBarItemMover` | `Menubar/MenuBarItemMover.swift` | `move()` возвращает `true` ⇔ frame item'а действительно сдвинулся к target. |
-| `PermissionsManager` | `Permissions/PermissionsManager.swift` | `accessibility` / `screenRecording` отражают реальный статус TCC. `anyMissing` корректно рулит онбордингом. |
-| `FocusModeController` | `Focus/FocusModeController.swift` | `isActive` ⇔ overlay реально создан и показан на всех экранах кроме frontmost. |
-| `StatsCollector` | `Domain/Stats/*` | Записываемые числа ≥ 0, JSON-схема версионируется, повреждение не теряет данные молча. |
-| `DevLogger` | `Diagnostics/DevLogger.swift` | Когда `enabled = false` — нулевая стоимость (autoclosure не вычисляется). |
+- **`era`** (наблюдаемые): `18th_century`, `19th_century`, `industrial`, `modern`. Принимаем эти 4 + любой будущий — рендерим human-readable через словарь.
+- **`field`**: `polymath`, `tech_entrepreneur`, `industrialist`, `writer`, `athlete`, `musician`, `scientist`, `mathematician`, `inventor`, `philosopher`, `physicist`, `painter`, `architect`. Принимаем как открытое множество.
+- **`block.type`**: `sleep`, `morning_routine`, `deep_work`, `comms`, `meal_and_read`, `leisure_and_reflection`. **Закрытое множество** — каждый имеет свой цвет в ring chart.
+- **`source.type`**: `book`, `article`, `interview`, `letter`. Открытое.
+- **`appliesTo`**: `work_messengers`, `personal_messengers`. Возможно расширим в `deep_work_tools`, но пока — закрытое 2.
 
 ---
 
-## 3. Глобальные правила выполнения тасков
+## 3. Архитектура (новые файлы и изменения)
 
-1. **Не ломать соседнее**: каждый таск касается узкой зоны. Если правка задевает несколько подсистем — это сигнал что таск дожирен и нужно дробить.
-2. **Минимум edge-case-handling**: добавлять валидацию только на границах (user input, parsed JSON, system APIs). Внутри — доверять.
-3. **Никаких новых абстракций ради будущего**: правим точечно. Не вводим protocol'ы, generic'и, helper-классы, если задача того не требует.
-4. **Никаких комментариев-объяснялок WHAT**: только WHY, и только если неочевидно.
-5. **Не вводить feature flags / backwards-compat shims** — переписываем код напрямую. Если таск требует миграции данных (схема JSON) — пишем явный одноразовый migrator.
-6. **Без эмодзи в коде** (если только пользователь явно не попросил).
-7. **Каждый таск собирается** через `swift build` + базовый smoke в build-папке. Релиз делается ТОЛЬКО когда полная фаза закрыта (см. секцию релизов ниже).
-8. **devlog**: при изменении подсистемы статус-бара/permissions добавлять `devlog(...)` где это помогает диагностике.
-9. **Локализация**: любая новая user-facing строка обязательно en/ru/zh, в правильном порядке поля в Translation.swift.
-10. **Verification-таск НЕ правит код** — только читает diff vs описание, прогоняет smoke-сценарии, документирует обнаруженные регрессии (если есть — создаёт follow-up таск в конце ledger'а).
+```
+HelloWork/Sources/HelloWork/
+├── Domain/
+│   └── Legends/                            ← НОВАЯ ПАПКА
+│       ├── Legend.swift                    Codable structs (Legend, LegendBlock, etc.)
+│       ├── LegendBlockType.swift           enum + colors + display names
+│       ├── LegendsLibrary.swift            Singleton, eager bundle-load, cache, search
+│       └── LegendApplyEngine.swift         apply/revert mapping → ManagedApp.slots
+├── Resources/
+│   └── Legends/                            ← НОВАЯ ПАПКА (60 JSON)
+│       ├── 01-franklin-benjamin.json       (move from legens_module/)
+│       └── ... 02..60
+├── Preferences/
+│   ├── Legends/                            ← НОВАЯ ПАПКА
+│   │   ├── LegendsListView.swift           Grid/List + filters + search
+│   │   ├── LegendCard.swift                Card render (grid mode)
+│   │   ├── LegendListRow.swift             Row render (list mode)
+│   │   ├── LegendDetailView.swift          Hero + bio + ring + quotes + sources
+│   │   ├── LegendRingChart.swift           24h ring + block legend
+│   │   ├── LegendApplySheet.swift          Sheet с выбором apps + categorize
+│   │   └── LegendAvatar.swift              Monogram-fallback avatar
+│   ├── Sidebar/
+│   │   └── LegendsSidebarRow.swift         (опц.) если нужен dedicated row
+│   └── PrefSection.swift                   + case .legends
+├── App/AppState.swift                      + favoriteLegendIds, appliedLegendId, slotsBackupForApply
+└── Domain/Translation*.swift               +новые ключи (en/ru/zh)
+```
+
+### Ключевые подсистемы и инварианты
+
+| Подсистема | Инвариант |
+|---|---|
+| `LegendsLibrary` | `all` доступен синхронно после init. Если ≥1 JSON битый — `corruptIds: Set<String>`, остальные грузятся. |
+| `Legend` (Codable) | Декодинг даёт корректную structure для всех 60 валидных JSON; missing optional fields (например morningQuestion) → nil. |
+| `LegendApplyEngine.apply` | Мутация `managedApps[i].slots` обратима через `slotsBackupForApply` (snapshot перед apply, key by appliedLegendId). |
+| `LegendApplyEngine.revert` | После revert: `managedApps[i].slots == backup[i]` бит-в-бит. `appliedLegendId = nil`. |
+| `AppState.favoriteLegendIds` | persisted Set, schema-versioned. Toggle идемпотентен. |
+| `LegendsListView` | Search/filter/sort не блокируют main thread; debounce 200ms на текстовый поиск. |
+| `LegendDetailView` | Открывается мгновенно; ring chart рисуется без race с loading bio. |
+
+---
+
+## 4. Глобальные правила выполнения тасков
+
+1. **Не ломать соседнее**: модуль легенд изолирован. Существующая логика hider / focus / schedule / stats / updates — НЕ ТРОГАЕМ если задача того явно не требует. Если задача требует — это знак что её надо разбить.
+2. **Минимум edge-case-handling на границах**: только при decode JSON, при apply/revert (битый managedApps state), при search edge cases. Внутри — доверять.
+3. **Никаких новых абстракций ради будущего**: только нужное.
+4. **Никаких комментариев-объяснялок WHAT**: только WHY (см. инварианты).
+5. **Без эмодзи в коде**.
+6. **i18n**: каждая user-facing строка — en + ru + zh, в строгом порядке полей `Translation.swift`. Не забывай: `Translation` — struct, поля сортированы; init keyword args в `Translations.swift` должны идти в той же позиции.
+7. **devlog**: точки `devlog("legends", ...)` в LegendsLibrary load, LegendApplyEngine apply/revert, на UI-events если помогает диагностике.
+8. **Schema versioning** для persistence: favoriteLegendIds + appliedLegendId + slotsBackupForApply — обернуть в `VersionedXxx` (как было в Phase C прошлого цикла).
+9. **Verify-таск НЕ правит код**.
 
 ### Когда релизить
 
-**ПОЛИТИКА: одна микро-версия на каждый таск.** Старт — 0.9.21. Цель — минимум 0.9.81 (0.9.21 + 60 тасков).
+**ПОЛИТИКА: одна микро-версия на каждый таск.** Старт — 0.10.1. Минимум 64 таска = 0.10.65. Финальный таск — bump MINOR → **0.11.0**.
 
 После каждого закрытого таска (impl или verify):
-- `./scripts/bump.sh patch`
+- `./scripts/bump.sh patch` (для финала — `./scripts/bump.sh minor`)
 - `./scripts/build.sh && ./scripts/package.sh && ./scripts/build_stub.sh && ./scripts/package_stub.sh`
-- entry в `dev_log.json` (короткий — 1 предложение customMessage, 2-4 пункта points для impl-таска; для verify-таска — что верифицировано и было ли OK)
-- commit с заголовком `Hello work X.Y.Z — TASK-NNN ...` (уникальный для версии)
+- entry в `dev_log.json` (короткий)
+- commit `Hello work X.Y.Z — TASK-LNN: <короткое название>` (префикс `L` чтобы не путать со старым циклом)
 - tag + push + `gh release create`
 
-Каждый патч-релиз = ровно один таск. Юзер видит постоянное движение вперёд, легко откатить любой шаг через тэги.
+Каждый патч-релиз = ровно один таск.
 
 ---
 
-## 4. Task Ledger
+## 5. Task Ledger
 
 Формат: `[ ] = pending`, `[~] = in_progress`, `[x] = done`. Verify-таск нельзя пометить done пока impl-таск не done.
 
-### Phase A — Hider state machine (correctness)
+### Phase A — Data foundation (10 tasks)
 
-- [x] **TASK-001 [impl]** — Fix `applyAuto()` clobbers user manual toggle  → released as v0.9.22
-  - Файл: `Sources/HelloWork/Menubar/MenubarHiderController.swift:99-115`
-  - Проблема: после auto-collapse юзер вручную toggle-нул через menu, `lastAutoState` всё ещё содержит auto-флаг → следующий `applyAuto(false)` уже не вернёт expand'ом, потому что `lastAutoState != nil` → ранний return на стр 105.
-  - Acceptance: сценарий «focus on → auto-collapse → user toggle expand → focus off → no spurious collapse» отрабатывает. Сценарий «schedule blocked → auto-collapse → schedule allowed → auto-expand» тоже.
-  - Tests via diagnostics: в логах должна быть видна decision-цепочка.
+- [ ] **TASK-L01 [impl]** — Domain models: `Legend`, `LegendBlock`, `LegendBlockType`, `LegendSource`, `LegendBlockSchedule`, `LegendAllowedSlot`, `LegendQuote`, `LegendOptionalQuestion`
+  - Файлы: `Sources/HelloWork/Domain/Legends/Legend.swift`, `Domain/Legends/LegendBlockType.swift`
+  - Все Codable + Hashable + Identifiable.
+  - `LegendBlockType` — enum со всеми observed types + `unknown(String)` для forward-compat.
+  - Acceptance: декодит example JSON (id=01) без ошибок; пишется обратно через encode идентично; `LegendBlockType.allCases` имеет известные 6 типов.
 
-- [x] **TASK-002 [verify]** — TASK-001  → released as v0.9.23
-  - Сценарии 1/2/3 трассированы — работают.
-  - Найден edge-case → создан follow-up TASK-061/062.
+- [ ] **TASK-L02 [verify]** — TASK-L01
 
-- [x] **TASK-003 [impl]** — Configure deferred initialCollapsed race  → released as v0.9.24
-  - Файл: `Sources/HelloWork/Menubar/MenubarHiderController.swift:46-53`
-  - Проблема: 1с asyncAfter после `configure()` вызывает `collapseInternal()`. Если за эту секунду юзер уже toggle-нул (expanded), отложенный collapse всё равно случится.
-  - Решение: token/cancel-flag, инкрементируется в `configure`, проверяется в asyncAfter; toggle/applyAuto тоже инкрементируют чтобы дезактивировать pending.
+- [ ] **TASK-L03 [impl]** — `LegendsLibrary` — singleton, eager bundle-load на init, сохраняет в `[Legend]` отсортированный по `order`, плюс `Set<String> corruptIds` для битых файлов. Логирует через `devlog("legends", ...)`. Public API: `all: [Legend]`, `byID(_:) -> Legend?`, `corrupt: Set<String>`.
+  - Файл: `Sources/HelloWork/Domain/Legends/LegendsLibrary.swift`
+  - Bundle.module → enumeratesContents Resources/Legends/*.json
+  - Acceptance: на пустом bundle (тест) возвращает []; на bundle с 1 валидным + 1 битым — возвращает 1 в `all`, 1 в `corrupt`.
 
-- [x] **TASK-004 [verify]** — TASK-003  → released as v0.9.25
+- [ ] **TASK-L04 [verify]** — TASK-L03
 
-- [x] **TASK-005 [impl]** — Cache `currentItems()` в `collapseInternal` + `restoreAllItems` (N+1 → 1)  → released as v0.9.26
-  - Файлы: `Menubar/MenubarHiderController.swift:153,170`, `:214-217`
-  - Проблема: для N items — N+1 полных CGS-перечислений menubar.
-  - Решение: один `currentItems()` в начале, по `windowID` lookup внутри loop'а. Frame для actual-position брать через `Bridging.getWindowFrame(for: id)` (одно CGS-обращение, не полный list).
+- [ ] **TASK-L05 [impl]** — Перенос 60 JSON: `legens_module/*.json` → `HelloWork/Sources/HelloWork/Resources/Legends/*.json`. Регистрация в `Package.swift` (`.process("Resources")` уже стоит — должно подхватить, верифицировать).
+  - Файлы: `Resources/Legends/01-...json` ... `60-...json`. Старая папка `legens_module/` в корне — удаляется.
+  - Acceptance: `swift build` ≥ 60 файлов вошли в bundle; LegendsLibrary.all.count == 60 на старте.
 
-- [x] **TASK-006 [verify]** — TASK-005  → released as v0.9.27
+- [ ] **TASK-L06 [verify]** — TASK-L05
 
-- [x] **TASK-007 [impl]** — `MenuBarItemMover.move()` — убрать второй `currentItems()` для verify  → released as v0.9.28
-  - Файл: `Menubar/MenuBarItemMover.swift:79-88`
-  - Решение: после постинга событий вместо `currentItems().first {...}` использовать `Bridging.getWindowFrame(for: item.windowID)` (1 CGS call вместо полного перечисления).
+- [ ] **TASK-L07 [impl]** — Search & filter helpers в `LegendsLibrary`:
+  - `search(_ query: String) -> [Legend]` — по name(any locale)+fullName+tags+bio (case-insensitive contains).
+  - `filter(era: String? = nil, field: String? = nil, tag: String? = nil, intensity: ClosedRange<Int>? = nil) -> [Legend]`
+  - `sort(_ by: SortOrder) -> [Legend]` — order / alphabetical / favoritesFirst(set)
+  - Acceptance: пустой query → all; известный era="modern" → > 0 results; тэг которого нет нигде → empty.
 
-- [x] **TASK-008 [verify]** — TASK-007  → released as v0.9.29
+- [ ] **TASK-L08 [verify]** — TASK-L07
 
-- [x] **TASK-009 [impl]** — Combine cascade на toggle хайдера → 2 disk writes  → released as v0.9.30
-  - Файл: `App/AppDelegate.swift:487-527`, `Menubar/MenubarHiderController.swift:configure()`
-  - Проблема: `configure()` ставит `isCollapsed = false` → sink на `$isCollapsed` пишет UserDefaults. Потом collapse-internal через 1с — ещё один write.
-  - Решение: добавить `private var suppressPersist: Bool` в controller, обнулять только после первого реального user-action или после deferred-collapse.
+- [ ] **TASK-L09 [impl]** — Cleanup: удалить `legens_module/` в корне репо (после успешного перемещения). Убедиться что `git mv` сохранил историю.
+  - Acceptance: `legens_module/` нет; `git log -- HelloWork/Sources/HelloWork/Resources/Legends/01-franklin-benjamin.json` показывает оригинал.
 
-- [x] **TASK-010 [verify]** — TASK-009  → released as v0.9.31
+- [ ] **TASK-L10 [verify]** — TASK-L09
 
-### Phase B — Permissions / TCC flow
+### Phase B — Persistence layer (8 tasks)
 
-- [x] **TASK-011 [impl]** — `checkScreenRecording` heuristic — ставить `requestedSR` ключ ПОСЛЕ результата, не до  → released as v0.9.32
-  - Файл: `Permissions/PermissionsManager.swift:57-69` (зеркально для AX 78-91)
-  - Проблема: ключ `helloWorkPermissionsRequestedSR` ставится в `requestScreenRecording()` ДО результата → если юзер закрыл prompt без решения, на next refresh видим `.denied` хотя должно быть `.notDetermined`.
-  - Решение: ставить ключ только если `CGPreflightScreenCaptureAccess()` вернул true после запроса. Аналогично для AX через `AXIsProcessTrusted()`.
+- [ ] **TASK-L11 [impl]** — AppState поля: `@Published var favoriteLegendIds: Set<String>` + `@Published private(set) var appliedLegendId: String?` + `private var slotsBackupForApply: [String: [Slot]]?`. didSet → персист в UserDefaults. Schema-versioned wrapper.
+  - Acceptance: toggle favorite → persisted across launches; appliedLegendId persisted; backup тоже.
 
-- [x] **TASK-012 [verify]** — TASK-011  → released as v0.9.33
+- [ ] **TASK-L12 [verify]** — TASK-L11
 
-- [x] **TASK-013 [impl]** — `AutoRelauncher` infinite wait  → released as v0.9.34
-  - Файл: `Permissions/AutoRelauncher.swift:13-16`
-  - Проблема: bash-watcher делает `while kill -0 PID; do sleep 0.4; done` → если macOS НЕ убил процесс при grant'е (а часто не убивает), скрипт висит вечно, мусорный процесс.
-  - Решение: добавить timeout 60с в while. После timeout — exit без relaunch.
+- [ ] **TASK-L13 [impl]** — `AppState.toggleFavoriteLegend(_ id: String)` — добавляет/убирает из set, идемпотентно. `isFavoriteLegend(_:) -> Bool`.
 
-- [x] **TASK-014 [verify]** — TASK-013  → released as v0.9.35
+- [ ] **TASK-L14 [verify]** — TASK-L13
 
-- [x] **TASK-015 [impl]** — Permissions onboarding less aggressive  → released as v0.9.36
-  - Файл: `App/AppDelegate.swift:86-110`
-  - Проблема: показывается на каждом запуске пока `anyMissing`, даже если юзер уже видел и сознательно отказался.
-  - Решение: показ только если (а) первый запуск, или (б) юзер из меню/permissions-сайдбара явно тыкнул «Re-grant». Иначе — silent. Permissions-row в сайдбаре с красной точкой остаётся (это и есть точка возврата).
+- [ ] **TASK-L15 [impl]** — `LegendApplyEngine` — отдельный @MainActor enum с `apply(_:to:state:) throws` и `revert(state:) throws`. Использует AppState internals через ref.
+  - apply: сохраняет snapshot `state.managedApps[selected].slots` в `slotsBackupForApply` keyed by bundleID, заменяет slots → `slotsFromAllowedSlots(legend, category)`, ставит `appliedLegendId`.
+  - revert: восстанавливает из backup, чистит `appliedLegendId` и backup.
 
-- [x] **TASK-016 [verify]** — TASK-015  → released as v0.9.37
+- [ ] **TASK-L16 [verify]** — TASK-L15
 
-### Phase C — Resilience (data corruption)
+- [ ] **TASK-L17 [impl]** — Persistence corruption: VersionedFavorites + VersionedAppliedState wrappers. Если decode failure — добавить `corruptionWarnings` (как было в Phase C прошлого цикла), backup blob в `~/Library/Application Support/HelloWork/legends-state.corrupt-<ts>.json`.
 
-- [x] **TASK-017 [impl]** — Corruption detection для managedApps + StatsStore  → released as v0.9.38
-  - Файлы: `App/AppState.swift:197-203`, `Domain/Stats/StatsCollector.swift` (load func)
-  - Проблема: `try? JSONDecoder().decode(...)` — если JSON битый, юзер молча теряет всё.
-  - Решение:
-    - При неудачном decode — переименовать файл/ключ в `*.corrupt-<timestamp>` (для recovery), создать пустой state.
-    - Поднять флаг `state.lastCorruptionRecovery: String?` (категория данных, для UI banner).
-    - В PrefsView в детали показать неблокирующий warning banner с «Старый файл сохранён в Application Support под именем X».
+- [ ] **TASK-L18 [verify]** — TASK-L17
 
-- [x] **TASK-018 [verify]** — TASK-017  → released as v0.9.39
+### Phase C — Sidebar entry & routing (6 tasks)
 
-- [x] **TASK-019 [impl]** — Schema versioning для managedApps + Stats JSON  → released as v0.9.40
-  - Файлы: `Domain/ManagedApp.swift`, `Domain/Stats/StatsStore.swift`
-  - Решение: обернуть persisted JSON в `{"version": 1, "data": [...]}`. Loader: читает version, если != current — попытка миграции (пока пустой migrator), иначе fallback на пустой state. Backward-compat: если old format (no wrapper) — read as version 1, save in new format.
+- [ ] **TASK-L19 [impl]** — `PrefSection.legends` (rawValue `legends`, icon `books.vertical.fill`, title через `t.sectionLegends`). Добавить в визуальный ряд (между `stats` и `menubar` или где правильно по иерархии).
 
-- [x] **TASK-020 [verify]** — TASK-019  → released as v0.9.41
+- [ ] **TASK-L20 [verify]** — TASK-L19
 
-### Phase D — Hotkey collisions
+- [ ] **TASK-L21 [impl]** — `SidebarSelection.legend(String?)` — nil = list view, non-nil = detail view by id. Альтернатива: остаться на `.section(.legends)` + отдельный @State в LegendsListView для выбранной легенды (push-style nav). Предпочтительнее второе — меньше путаницы с PrefSection семантикой.
+  - **Решение для импла**: оставить `SidebarSelection.section(.legends)` неизменно. List/Detail navigation — внутри LegendsListView через `@State selectedLegend: Legend?` + NavigationLink или sheet/zoomable-stack.
 
-- [x] **TASK-021 [impl]** — `HotkeyManager` — distinct EventHotKeyID per instance  → released as v0.9.42
-  - Файлы: `Focus/HotkeyManager.swift:14-17`
-  - Проблема: оба инстанса (focus + menubar) используют одинаковый `EventHotKeyID(id: 1)`. Если юзер назначит одинаковый hotkey — Carbon перезапишет первый.
-  - Решение: HotkeyManager init принимает `id: UInt32`. AppDelegate создаёт focus с id=1, menubar с id=2.
+- [ ] **TASK-L22 [verify]** — TASK-L21
 
-- [x] **TASK-022 [verify]** — TASK-021  → released as v0.9.43
+- [ ] **TASK-L23 [impl]** — Translation keys для legends UI: `sectionLegends`, `legendsTitle`, `legendsSubtitle(_ count: Int)`, `legendsSearchPlaceholder`, `legendsFilterEra`, `legendsFilterField`, `legendsFilterTag`, `legendsFilterIntensity`, `legendsFilterFavorites`, `legendsSortOrder`, `legendsSortName`, `legendsSortFavorites`, `legendsViewGrid`, `legendsViewList`, `legendsAllCount(_ n: Int)`, `legendsResultsCount(_ n: Int)`, `legendsEmptyResults`, `legendsApply`, `legendsRevert`, `legendsAppliedBanner(_ name: String)`, `legendsCardYears`, `legendsDetailBio`, `legendsDetailQuotes`, `legendsDetailSources`, `legendsDetailMessengerWindows`, `legendsDetailMorningQuestion`, `legendsDetailEveningQuestion`, `legendsApplyTitle`, `legendsApplySubtitle`, `legendsApplyAppCategoryWork`, `legendsApplyAppCategoryPersonal`, `legendsApplyAppCategorySkip`, `legendsApplyConfirm`, `legendsApplyCancel`, `legendsCorruptHidden(_ n: Int)`, `legendsBlockTypeSleep`, `legendsBlockTypeMorning`, `legendsBlockTypeDeep`, `legendsBlockTypeComms`, `legendsBlockTypeMeal`, `legendsBlockTypeLeisure`. Все в en/ru/zh, строгий порядок init.
 
-### Phase E — Update fetch / Network
+- [ ] **TASK-L24 [verify]** — TASK-L23
 
-- [x] **TASK-023 [impl]** — Дедуп update checks + invalidate URLSession  → released as v0.9.44
-  - Файлы: `App/AppDelegate.swift:48,697,733`, `App/AppState.swift:checkForUpdates`
-  - Проблема: запуск + refresh-loop + open-prefs все триггерят `checkForUpdates()` независимо. URL-session не invalidate-ится.
-  - Решение:
-    - В AppState добавить `lastSuccessfulCheck: Date?`. Если `< 5 min ago` — skip.
-    - Если уже `isCheckingUpdates == true` — skip параллельный.
-    - В `checkForUpdates` после `let (data, _) = await session.data(...)` вызвать `session.finishTasksAndInvalidate()`.
+### Phase D — Legends list view (12 tasks)
 
-- [x] **TASK-024 [verify]** — TASK-023  → released as v0.9.45
+- [ ] **TASK-L25 [impl]** — `LegendsListView` skeleton: header (title, count), search field, filters bar, sort picker, grid/list toggle. State: `searchQuery`, `filters`, `sortOrder`, `viewMode (.grid|.list)`. Query применяется ко всем legends, debounced 200ms через DispatchWorkItem.
 
-### Phase F — UI re-render perf
+- [ ] **TASK-L26 [verify]** — TASK-L25
 
-- [x] **TASK-025 [impl]** — Throttle slider didSet writes (`focusDimOpacity`)  → released as v0.9.46
-  - Файл: `App/AppState.swift:48-52`
-  - Проблема: drag слайдера = десятки UserDefaults.set в секунду.
-  - Решение: вынести focusDimOpacity на @State в FocusSettingsView (live UI), commit в AppState только на `.onChange(of: ... debounce 300ms)` или на отпускании слайдера. Альтернатива: throttle через Combine `.throttle(for: .milliseconds(300))`.
+- [ ] **TASK-L27 [impl]** — `LegendCard` (grid mode) view: avatar (LegendAvatar), name (large), years (small), intensity dots, primary tag, favorite star button (top-right). Hover scale 1.02 + spring. Click → opens detail.
 
-- [x] **TASK-026 [verify]** — TASK-025  → released as v0.9.47
+- [ ] **TASK-L28 [verify]** — TASK-L27
 
-- [x] **TASK-027 [impl]** — `ScheduleView` decouple от global `@ObservedObject`  → released as v0.9.48
-  - Файлы: `Preferences/Schedule/ScheduleView.swift`, `Preferences/PrefsView.swift:144-147`
-  - Проблема: ScheduleView держит `@ObservedObject var state: AppState` и перерисовывается на любой изменение в state (язык, focusDimOpacity, etc).
-  - Решение: переписать на `bundleID` + локальный snapshot `ManagedApp` через computed property с filtering. Alternative: extract narrow `ScheduleViewModel`.
+- [ ] **TASK-L29 [impl]** — `LegendListRow` (list mode): horizontal compact, avatar small, name + tags inline, intensity dots в углу.
 
-- [x] **TASK-028 [verify]** — TASK-027  → released as v0.9.49
+- [ ] **TASK-L30 [verify]** — TASK-L29
 
-- [x] **TASK-029 [impl]** — `CombinedScheduleView` — TimelineView для ticker  → released as v0.9.50
-  - Файл: `Preferences/Combined/CombinedScheduleView.swift`
-  - Проблема: @State now Date с 1Hz timer перерисовывает всю combined-вьюху.
-  - Решение: `TimelineView(.periodic(from: .now, by: 60))` (раз в минуту достаточно для расписания) на ring-чарте, не на parent body.
+- [ ] **TASK-L31 [impl]** — `LegendAvatar` view: круглый аватар с монограммой (1-2 буквы из name) + цвет фона derived from id-hash → stable per legend. Падает на initial из имени; для `franklin-benjamin` → "БФ" в ru / "BF" в en. Размер настраивается.
 
-- [x] **TASK-030 [verify]** — TASK-029  → released as v0.9.51
+- [ ] **TASK-L32 [verify]** — TASK-L31
 
-- [x] **TASK-031 [impl]** — Diagnostics tab — pause refresh когда таб не активен  → released as v0.9.52
-  - Файл: `Preferences/Settings/SettingsDiagnosticsTab.swift:36-48`
-  - Решение: проверять `state.settingsTab == .diagnostics` перед refresh. Также — проверять mtime файла, читать только при изменении.
+- [ ] **TASK-L33 [impl]** — Filters bar: horizontal scroll с pills (era / field / intensity range). Click pill → toggles. Active pill — accent color stroke. Чёткая «Clear filters» кнопка справа.
 
-- [x] **TASK-032 [verify]** — TASK-031  → released as v0.9.53
+- [ ] **TASK-L34 [verify]** — TASK-L33
 
-- [x] **TASK-033 [impl]** — `rebuildStatusMenu` signature — semantic, не string-concat  → released as v0.9.54
-  - Файл: `App/AppDelegate.swift:391-415`
-  - Проблема: signature ребилдится на изменение архивированного app или языка (хотя в menu только активные apps). Лишние полные NSMenu+NSHostingView перестроения.
-  - Решение: фильтровать managedApps по `!isArchived` перед signature; убрать language если он не используется в menu (проверить).
+- [ ] **TASK-L35 [impl]** — Grid/List view-mode persistence: `@AppStorage("helloWorkLegendsViewMode")`. Toggle через segmented control в header. State запоминается across launches.
 
-- [x] **TASK-034 [verify]** — TASK-033  → released as v0.9.55
+- [ ] **TASK-L36 [verify]** — TASK-L35
 
-### Phase G — refresh() timer + window finder
+### Phase E — Legend detail view (12 tasks)
 
-- [x] **TASK-035 [impl]** — refresh() throttle + skip когда `!enabled` + workspace-driven frontmost  → released as v0.9.56
-  - Файлы: `App/AppDelegate.swift:startTimer/refresh`, `WindowDetection/AppWindowFinder.swift`, `Focus/FrontmostWindowFinder.swift`
-  - Проблема: 4Hz timer вызывает AppWindowFinder.find() для каждого managed app независимо от того, изменилось ли что-то.
-  - Решение: 
-    - `refresh()` — guard `state.enabled`, иначе skip heavy work.
-    - frontmost кеш — обновлять только по `NSWorkspace.didActivateApplicationNotification` (уже подписаны), не по timer.
-    - Timer оставить только для countdown'ов / time-based logic (grace expiry, scheduled boundaries).
-    - Снизить timer до 1Hz, наверняка хватит.
+- [ ] **TASK-L37 [impl]** — `LegendDetailView` skeleton: hero (большой avatar, name, fullName, years, nationality flag, intensity dots, primary field). Back button (← к List). Favorite-star.
 
-- [x] **TASK-036 [verify]** — TASK-035  → released as v0.9.57
+- [ ] **TASK-L38 [verify]** — TASK-L37
 
-- [x] **TASK-037 [impl]** — `FrontmostWindowFinder` — single CGS call path  → released as v0.9.58
-  - Файл: `Focus/FrontmostWindowFinder.swift:23-30,113-138`
-  - Проблема: при useAccessibility=true может два раза дёргать CGWindowListCopyWindowInfo.
-  - Решение: пробросить CG-info между AX и CG путями.
+- [ ] **TASK-L39 [impl]** — Bio paragraph + sources block (clickable links opening NSWorkspace.shared.open). Sources показываются как inline rows с типом (book/article/interview).
 
-- [x] **TASK-038 [verify]** — TASK-037  → released as v0.9.59
+- [ ] **TASK-L40 [verify]** — TASK-L39
 
-### Phase H — UpdateInstaller / Stub
+- [ ] **TASK-L41 [impl]** — `LegendRingChart` — 24-часовое кольцо. Каждый block рисуется arc'ом с цветом по `LegendBlockType` (sleep тёмный, deep_work primary, comms accent, ...). Hour markers (0/6/12/18). Лейблы в центре кольца — сейчас показывает `legendsTitle` или (опц.) текущий блок относительно сейчас.
 
-- [x] **TASK-039 [impl]** — UpdateInstaller — fail-fast при replace-while-running на Sequoia  → released as v0.9.60
-  - Файл: `Updates/UpdateInstaller.swift`
-  - Проблема: `rm -rf "$TARGET" && cp -R ...` пока app запущен на Sequoia может зафейлиться без явной ошибки в UI.
-  - Решение: 
-    - Проверять что engine path == `~/Library/Application Support/HelloWork/HelloWork.app` (там replace OK) перед update.
-    - Если update failed — статус .error с конкретным сообщением.
-    - Не молчать.
+- [ ] **TASK-L42 [verify]** — TASK-L41
 
-- [x] **TASK-040 [verify]** — TASK-039  → released as v0.9.61
+- [ ] **TASK-L43 [impl]** — Block type legend: горизонтальный ряд под рингом — каждый блок-тип: цветовой dot + название (translated) + total часов в дне.
 
-### Phase I — Edge cases
+- [ ] **TASK-L44 [verify]** — TASK-L43
 
-- [x] **TASK-041 [impl]** — Slot wraparound clamp  → released as v0.9.62
-  - Файл: `App/AppState.swift:412,447` (addSlot, slotsFromMinuteSet)
-  - Проблема: `endMinutes - minutesInDay < 0` создаёт invalid range. `slotsFromMinuteSet` может вернуть `endMinutes > 2 * minutesInDay`.
-  - Решение: явные clamp + assertion в debug.
+- [ ] **TASK-L45 [impl]** — Messenger windows section: показывает `blockSchedule.description` + список `allowedSlots` с time-range, appliesTo (work/personal pill), rationale.
 
-- [x] **TASK-042 [verify]** — TASK-041  → released as v0.9.63
+- [ ] **TASK-L46 [verify]** — TASK-L45
 
-- [x] **TASK-043 [impl]** — `StatsCollector.recordGrace` — guard ≥ 0  → released as v0.9.64
-  - Файл: `Domain/Stats/StatsCollector.swift`
-  - Решение: `guard seconds > 0 else { return }` в начале.
+- [ ] **TASK-L47 [impl]** — Quotes carousel: 3-5 цитат с auto-rotate (5с), стрелки prev/next, индикаторы. Если quotes пусты — секция скрыта.
 
-- [x] **TASK-044 [verify]** — TASK-043  → released as v0.9.65
+- [ ] **TASK-L48 [verify]** — TASK-L47
 
-- [x] **TASK-045 [impl]** — `AppVersion.compare` — pre-release suffix  → released as v0.9.66
-  - Файл: `App/Version.swift`
-  - Проблема: "0.9.10-beta" парсится как [0,9,10], "0.9.10" тоже как [0,9,10] → equal вместо «release > prerelease».
-  - Решение: split на "-" сначала, основная часть → tuple компаренье; если остался suffix — prerelease, считается младше release без suffix'а.
+### Phase F — Favorites & search polish (6 tasks)
 
-- [x] **TASK-046 [verify]** — TASK-045  → released as v0.9.67
+- [ ] **TASK-L49 [impl]** — Favorite-star button: круглая, заполняется при isFavorite==true, scale-pop animation на toggle. Работает на cards, list rows и detail view — sync.
 
-### Phase J — DevLogger
+- [ ] **TASK-L50 [verify]** — TASK-L49
 
-- [x] **TASK-047 [impl]** — DevLogger rotation (max 10 MB)  → released as v0.9.68
-  - Файл: `Diagnostics/DevLogger.swift`
-  - Решение: при append проверять file size, если > 10 MB — rename `devlog.txt` → `devlog.txt.1`, начать новый.
+- [ ] **TASK-L51 [impl]** — «Favorites» filter pill — toggle: показывает только избранные. State persists в `@AppStorage("helloWorkLegendsShowFavoritesOnly")`.
 
-- [x] **TASK-048 [verify]** — TASK-047  → released as v0.9.69
+- [ ] **TASK-L52 [verify]** — TASK-L51
 
-### Phase K — UX polish
+- [ ] **TASK-L53 [impl]** — Sort: `order` (default), `alphabetical(name локали)`, `favoritesFirst`. Picker в header. Persists.
 
-- [x] **TASK-049 [impl]** — Dev-mode unlock — auto-jump в Diagnostics + persistent banner  → released as v0.9.70
-  - Файлы: `Preferences/Settings/SettingsView.swift:80-110`
-  - Решение: убрать таймер автоскрытия, оставить banner в Diagnostics-tab сверху с кнопкой «Скрыть» / «Disable dev mode».
+- [ ] **TASK-L54 [verify]** — TASK-L53
 
-- [x] **TASK-050 [verify]** — TASK-049  → released as v0.9.71
+### Phase G — Apply schedule flow (10 tasks)
 
-- [x] **TASK-051 [impl]** — Sidebar `+` button feedback при повторном нажатии  → released as v0.9.72
-  - Файл: `Preferences/PrefsView.swift:96-123`
-  - Решение: при click если selection уже `.onboarding` — пульсация рамки (subtle scale animation).
+- [ ] **TASK-L55 [impl]** — «Apply schedule» кнопка в LegendDetailView (возле fave star). Disabled, если managedApps пустой (с tooltip «Add apps first»). Click → presents `LegendApplySheet`.
 
-- [x] **TASK-052 [verify]** — TASK-051  → released as v0.9.73
+- [ ] **TASK-L56 [verify]** — TASK-L55
 
-- [x] **TASK-053 [impl]** — Sidebar scroll position memo  → released as v0.9.74
-  - Файл: `Preferences/Schedule/ScheduleView.swift` или PrefsView detail
-  - Решение: `@State private var scrollPositions: [String: CGFloat] = [:]` в PrefsView, сохранять/восстанавливать через ScrollViewReader.
+- [ ] **TASK-L57 [impl]** — `LegendApplySheet`: список managedApps (active, не archived). Каждый row — app icon, name, picker { Skip / Work messenger / Personal messenger }. Внизу: предпросмотр (сколько slots будет создано на основе выбора + allowedSlots), Confirm/Cancel.
 
-- [x] **TASK-054 [verify]** — TASK-053  → released as v0.9.75
+- [ ] **TASK-L58 [verify]** — TASK-L57
 
-### Phase L — Localization integrity
+- [ ] **TASK-L59 [impl]** — `LegendApplyEngine.apply(legend:assignments:state:)` — для каждого app с category != skip: build slots из corresponding allowedSlots → state.managedApps[i].slots = новые. Сохраняет backup. Сетит appliedLegendId.
 
-- [x] **TASK-055 [impl]** — Translation keys validation  → released as v0.9.76
-  - Файлы: `Domain/Translation.swift`, `Domain/Translations.swift`
-  - Проблема: Translation — struct с let-полями, missing key = compile error (это уже хорошо). Но: порядок аргументов в init для en/ru/zh должен совпадать (Swift даёт «incorrect argument labels» при mismatch — поймали уже один раз). Хочется более robust.
-  - Решение: добавить тестовый-таргет `swift test` с одним тестом который инстанцирует все три locale и проверяет что строки не пустые / не равны placeholder'ам. Или scripts/validate_translations.swift который читает Translation.swift как AST.
+- [ ] **TASK-L60 [verify]** — TASK-L59
 
-- [x] **TASK-056 [verify]** — TASK-055  → released as v0.9.77
+- [ ] **TASK-L61 [impl]** — Applied banner в верху LegendsListView и LegendDetailView (если этот legend сейчас applied): «Сейчас применено: <legend.name>» + Revert button. Subtle accent color.
 
-### Phase M — Lifecycle cleanup
+- [ ] **TASK-L62 [verify]** — TASK-L61
 
-- [x] **TASK-057 [impl]** — NSEvent monitor + focus overlay cleanup  → released as v0.9.78
-  - Файлы: `App/AppDelegate.swift:applicationWillTerminate / overlay handling`
-  - Решение:
-    - В `applicationWillTerminate(_:)` — `NSEvent.removeMonitor(peekMouseMonitor)`, `state.menubarHider.tearDown()` (уже есть?), focus overlay close-out.
-    - При `managedApps` change — explicit cleanup overlays для удалённых bundleID.
+- [ ] **TASK-L63 [impl]** — `LegendApplyEngine.revert(state:)` — восстанавливает slots из backup, чистит state. Кнопка Revert вызывает (с alert-confirmation: «Восстановить старые расписания?»).
 
-- [x] **TASK-058 [verify]** — TASK-057  → released as v0.9.79
+- [ ] **TASK-L64 [verify]** — TASK-L63
 
-### Phase N — Final regression
+### Phase H — Polish & i18n (6 tasks)
 
-- [x] **TASK-059 [impl]** — Final regression sweep  → released as v0.10.0
-  - Действия: 
-    - bump minor → 0.10.0 (сигналит «комплекс улучшений»)
-    - manual smoke list (см. ниже)
-    - заполнить dev_log.json с подытогом фаз A–M
-    - commit, tag, gh release
+- [ ] **TASK-L65 [impl]** — zh-фолбэк: для bio/quotes/labels — если zh-locale активна → возвращаем en (с visual subtle hint «en» в углу карточки/секции). Translation+legendLocalized helper вокруг `LocalizedString.value(for: AppLanguage)`.
+
+- [ ] **TASK-L66 [verify]** — TASK-L65
+
+- [ ] **TASK-L67 [impl]** — Card animations: stagger fade-in при appear (delay = idx * 0.02s, max 0.5s), spring hover scale 1.02, favorite-pop. List row — без stagger но с transitionInsertion.
+
+- [ ] **TASK-L68 [verify]** — TASK-L67
+
+- [ ] **TASK-L69 [impl]** — Edge cases UI: empty results (пустой search/filter → «Nothing found, try different filters»), no managedApps (apply кнопка disabled с tooltip), corrupt JSON (banner «N legends couldn't be loaded» в LegendsListView header).
+
+- [ ] **TASK-L70 [verify]** — TASK-L69
+
+### Phase I — Final regression (6 tasks)
+
+- [ ] **TASK-L71 [impl]** — Final bump → **0.11.0** (minor) — сигнал «major feature release: Legends». dev_log.json — большой entry с подытогом всех Phase A-H + smoke list.
   - Smoke list:
-    1. Свежий запуск (после tcc reset all для обоих bundleID) — онбординг показывается, оба permission row visible
-    2. Grant AX + SR — restart → diagnostics tab показывает true для обоих
-    3. Hider toggle (menu) — реально скрываются items, ScreenRecording=true в логе
-    4. Hider hotkey — то же
-    5. Focus mode hotkey — overlay появляется, frontmost подсвечен
-    6. Add managed app + slot, дождаться вне-окна — overlay покрывает приложение, attempts++
-    7. Grace 60s — overlay снят, countdown в menubar
-    8. Settings: focusDimOpacity slider — нет лагов, persist через restart
-    9. Schedule view для app — ring chart рисуется, slots редактируются
-    10. Combined view — ring обновляется минутно
-    11. Diagnostics tab — entries появляются на каждое действие, refresh не дублируется когда tab закрыт
-    12. Dev mode toggle off — tab исчезает, banner snapshot OK
-    13. Update check — fetch один раз на запуск + open-prefs (если > 5 min с прошлого)
-    14. Quit + relaunch — no orphan processes, peek monitor cleared
-  - Каждый пункт — лог в dev_log.json «smoke OK» или дописываем follow-up таск в этот ledger.
+    1. Свежий launch (без favorites/applied) — sidebar Legends, list открывается, 60 карточек, search/filter работают, grid/list toggle помнится
+    2. Click карточка → detail с ring, bio, sources, quotes
+    3. Star ⭐ on/off — мгновенно отражается везде
+    4. Filter «Favorites only» → ровно избранные
+    5. Apply легенду к одному из managed apps → slots реально мутируются (видно в Schedule view)
+    6. Banner «Currently applied» появляется
+    7. Revert → старые slots возвращены
+    8. Restart app → state восстанавливается
+    9. Performance: грид с 60 cards рендерится без лагов; search debounce работает
+    10. Все три locale (en/ru/zh) — переключение работает, zh показывает en для legend content
 
-- [x] **TASK-060 [verify]** — TASK-059  → released as v0.10.1
-  - 59/60 main tasks done. Follow-ups TASK-061/062 в секции 5 остаются для будущих циклов.
-  - Все builds чистые, releases tagged, dev_log полный.
-  - Метрики 9.5/10 из секции 6 — все ✅.
+- [ ] **TASK-L72 [verify]** — TASK-L71
 
----
+- [ ] **TASK-L73 [impl]** — Перевод audit/CONTEXT финальных метрик в ✅ (см. секцию 6 ниже) — каждая отмечена.
 
-## 5. Follow-up tasks (если возникнут во время verify)
+- [ ] **TASK-L74 [verify]** — TASK-L73
 
-> Сюда verify-таски ДОПИСЫВАЮТ новые задачи, если обнаружили регрессию или non-trivial gap. НЕ переписывают существующие. Формат — продолжение нумерации.
+- [ ] **TASK-L75 [impl]** — Cleanup follow-ups если возникли в секции 5.
 
-- [ ] **TASK-061 [impl]** — `configure()` / `tearDown()` сбрасывают `lastAutoIntent`
-  - Found by: TASK-002 [verify]
-  - Файл: `Sources/HelloWork/Menubar/MenubarHiderController.swift:40-69`
-  - Проблема: при выключении-включении hider'а через Settings, `lastAutoIntent` сохраняется. Если focus on уже был → `.$isActive` уже не перевыпустит → applyAuto не позовётся → items не свернутся при повторном включении hider.
-  - Acceptance: после re-configure auto-сигнал применяется заново при первом попадании в applyAuto.
-
-- [ ] **TASK-062 [verify]** — TASK-061
+- [ ] **TASK-L76 [verify]** — TASK-L75
 
 ---
 
 ## 6. Метрики «9.5 / 10»
 
-После закрытия всех тасков должны быть:
+После закрытия всех тасков:
 
-- ✅ 0 «иконка переключилась но реально ничего не произошло» сценариев — каждый toggle проверяется по факту.
-- ✅ collapse(N items) делает ≤ N+2 CGS calls (было N²+).
-- ✅ 1 user-action toggle = 1 disk write.
-- ✅ slider не вызывает > 5 disk writes/sec.
-- ✅ Update check ≤ 1/час максимум.
-- ✅ Corrupt JSON managedApps/stats → user warning + recovery file, не silent loss.
-- ✅ AX + SR grant сохраняется через апдейты (self-signed cert ✓ уже).
-- ✅ refresh() timer ≤ 1Hz и пропускает heavy work если `!enabled`.
-- ✅ Permissions onboarding не лезет каждый запуск после явного отказа.
-- ✅ DevLogger rotation работает.
-- ✅ Все hotkey'и могут сосуществовать (distinct IDs).
-- ✅ swift test зелёный для translations.
-- ✅ devlog.json содержит phase-summary entries для A–M.
+- ✅ 60 легенд встроены в bundle, грузятся ≤ 50ms
+- ✅ Grid + List toggle работают, помнятся
+- ✅ Search debounced 200ms; filter pills (era/field/intensity); sort 3 вариантов
+- ✅ Detail: hero, bio, ring chart 24h, sources, quotes carousel, messenger windows
+- ✅ Favorites — toggle, persist, dedicated filter, "favorites first" sort
+- ✅ Apply: sheet выбора apps + категории, mutate slots, backup, applied banner, revert
+- ✅ i18n: en/ru/zh для UI; bio/quotes — ru/en + zh fallback на en
+- ✅ Resilience: corrupt JSON одного файла не валит модуль
+- ✅ Persistence: favorites + applied state schema-versioned
+- ✅ Animations: stagger fade-in cards, hover scale, favorite-pop
+- ✅ Edge cases: empty search, no apps, no favorites
+- ✅ Сидеры/сорсы: clickable links opening browser
+- ✅ devlog содержит legends-categories для каждого нетривиального события
+
+---
+
+## 7. Follow-up tasks
+
+> Verify-таски ДОПИСЫВАЮТ сюда новые задачи если обнаружат регрессию или non-trivial gap.
+
+(пусто на старте)
