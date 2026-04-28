@@ -9,9 +9,9 @@ cd "$(dirname "$0")/.."
 
 VERSION=$(cat VERSION)
 APP_FILE="HelloWork.app"
-DIST="dist/engine"
+DIST="dist"
 DMG="dist/HelloWork-$VERSION.dmg"
-STAGING="$DIST/.dmg_staging"
+STAGING="dist/.dmg_staging"
 
 if [ ! -d "$DIST/$APP_FILE" ]; then
     echo "✗ $DIST/$APP_FILE не найден. Сначала запусти scripts/build.sh."

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# build.sh — собирает .app-бандл с Hello work engine из release-бинарника.
-# Результат: dist/engine/HelloWork.app
-# Engine — это «начинка», которую stub скачивает и кладёт в Application Support.
+# build.sh — собирает HelloWork.app из release-бинарника.
+# Результат: dist/HelloWork.app
+# Этот .app ставится drag-to-Applications через DMG (см. package.sh).
 
 cd "$(dirname "$0")/.."
 
@@ -12,9 +12,11 @@ BUILD=$(cat BUILD)
 BINARY_NAME="HelloWork"
 BUNDLE_NAME="HelloWork"
 DISPLAY_NAME="HelloWork"
+# Bundle ID сохраняется как был — TCC permissions и UserDefaults у
+# существующих юзеров переживают миграцию со stub+engine layout.
 BUNDLE_ID="dev.helloworkapp.macos.engine"
 
-DIST="dist/engine"
+DIST="dist"
 APP_PATH="$DIST/HelloWork.app"
 
 echo "▶ Building $DISPLAY_NAME $VERSION (build $BUILD)..."

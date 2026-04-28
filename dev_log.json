@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.18",
+    "date": "2026-04-28",
+    "customMessage": "TASK-B05: build.sh refactor. DIST='dist' (без подпапки engine/), output dist/HelloWork.app. Engine-терминология вычищена в комментариях. package.sh path-consumer обновлён согласно (изначально TASK-B07 территория но требовалось в этом же таске чтобы pipeline работал).",
+    "main": "Single .app workflow: ./scripts/build.sh && ./scripts/package.sh → dist/HelloWork-X.Y.Z.dmg.",
+    "points": [
+      "Phase B (5/8)",
+      "Cycle: 13/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.18/HelloWork-0.11.18.dmg"
+  },
+  {
     "version": "0.11.17",
     "date": "2026-04-28",
     "customMessage": "TASK-B04 [verify]: OK. Stub-инфраструктура удалена полностью — grep по Sources/, scripts/, Package.swift даёт 0 hits для всех stub-related identifiers. Build clean.",

@@ -264,7 +264,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
 
 - [x] **TASK-B04 [verify]** — TASK-B03  → OK. Grep по всем Sources/, scripts/, Package.swift даёт 0 stub-references. Build clean. Released as v0.11.17
 
-- [ ] **TASK-B05 [impl]** — Refactor `scripts/build.sh`:
+- [x] **TASK-B05 [impl]** — Refactor `scripts/build.sh`:  → released as v0.11.18 (DIST=dist убрана подпапка engine/, engine-терминология чищена в комментах + package.sh's path-consumer обновлён)
   - Убрать комменты про «engine» / «stub скачивает». Это просто `HelloWork.app`.
   - Output path: `dist/HelloWork.app` (без подпапки `dist/engine/`).
   - Остальное — bundle ID, sign flow, icons — без изменений.
