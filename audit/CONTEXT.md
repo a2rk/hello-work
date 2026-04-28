@@ -241,7 +241,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L28 [verify]** — TASK-L27  → released as v0.10.29
 
-- [ ] **TASK-L29 [impl]** — `LegendListRow` (list mode): horizontal compact, avatar small, name + tags inline, intensity dots в углу.
+- [x] **TASK-L29 [impl]** — LegendListRow compact + интегрирован в listResults.  → released as v0.10.30
 
 - [ ] **TASK-L30 [verify]** — TASK-L29
 

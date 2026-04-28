@@ -225,43 +225,10 @@ struct LegendsListView: View {
     private var listResults: some View {
         VStack(alignment: .leading, spacing: 6) {
             ForEach(filteredItems) { legend in
-                // TASK-L29 заменит на LegendListRow.
-                placeholderRow(legend)
+                LegendListRow(state: state, legend: legend) {
+                    selectedLegend = legend
+                }
             }
-        }
-    }
-
-    private func placeholderRow(_ legend: Legend) -> some View {
-        Button {
-            selectedLegend = legend
-        } label: {
-            HStack {
-                Text("\(legend.order). \(localizedName(legend))")
-                    .font(.system(size: 13))
-                    .foregroundColor(.white)
-                Spacer()
-                Text(legend.yearsOfLife)
-                    .font(.system(size: 11))
-                    .foregroundColor(Theme.textTertiary)
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(
-                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                    .fill(Color.white.opacity(0.03))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                    .stroke(Theme.surfaceStroke, lineWidth: 1)
-            )
-        }
-        .buttonStyle(.plain)
-    }
-
-    private func localizedName(_ legend: Legend) -> String {
-        switch state.language {
-        case .ru:                  return legend.name.ru
-        case .en, .zh, .system:    return legend.name.en
         }
     }
 

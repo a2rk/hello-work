@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.30",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L29: LegendListRow — compact list-mode row. Avatar small + name + (years · primary tag) inline + intensity dots + favorite star. Hover background.",
+    "main": "List-mode теперь полноценный — параллельно grid'у.",
+    "points": [
+      "LegendListRow.swift",
+      "LegendsListView.listResults использует ListRow"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.30/HelloWork-0.10.30.dmg"
+  },
+  {
     "version": "0.10.29",
     "date": "2026-04-28",
     "customMessage": "TASK-L28 verified: LegendCard + LegendAvatar OK.",
