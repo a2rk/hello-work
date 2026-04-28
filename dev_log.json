@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.6",
+    "date": "2026-04-28",
+    "customMessage": "TASK-A01: создан MigrationManager. Идемпотентная миграция со stub+engine layout на single-app: чистит ~/Library/Application Support/HelloWork/HelloWork.app, recycle'ит /Applications/HWInstaller.app, unregister'ит SMAppService на старом пути. Флаг helloWorkDistributionMigratedTo_0_12 в UserDefaults — повторно не запускается.",
+    "main": "Старт нового цикла distribution refactor. Manager не подключён в AppDelegate (TASK-A03), toast UI ещё нет (A05/A07). Result enum: .migrated/.alreadyDone/.skippedNotInApplications.",
+    "points": [
+      "Phase A (1/8)",
+      "Cycle: 1/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.6/HelloWork-0.11.6.dmg"
+  },
+  {
     "version": "0.11.5",
     "date": "2026-04-27",
     "customMessage": "🎯 AUDIT CYCLE COMPLETE — 76/76 tasks + L77/L78 follow-ups closed. TASK-L76 verify: guard L75 срабатывал только при prev != legend.id — re-apply того же legend с новыми assignments всё равно корраптил backup. Изменил: auto-revert при ЛЮБОМ appliedLegendId. Re-apply теперь корректно сохраняет original backup.",

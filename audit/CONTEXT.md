@@ -206,7 +206,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
 
 Безопасность существующих юзеров — **первая** фаза. Если миграция не работает — нельзя катить ничего другого.
 
-- [ ] **TASK-A01 [impl]** — Создать `Sources/HelloWork/App/MigrationManager.swift`. Public API: `static func runIfNeeded(state: AppState) async`. Основной алгоритм:
+- [x] **TASK-A01 [impl]** — Создать `Sources/HelloWork/App/MigrationManager.swift`. Public API: `static func runIfNeeded(state: AppState) async`. Основной алгоритм:  → released as v0.11.6
   1. Проверка UserDefaults `helloWorkDistributionMigratedTo_0_12 == true` → return immediately.
   2. Проверка `Bundle.main.bundleURL.path.hasPrefix("/Applications/")` → если нет (dev build, AppTranslocation), флаг НЕ ставим, return.
   3. Detection блок: `oldEnginePath = ~/Library/Application Support/HelloWork/HelloWork.app`, `oldStubPath = /Applications/HWInstaller.app`. Логируем что нашли через `devlog("migration", ...)`.
