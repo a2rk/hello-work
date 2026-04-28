@@ -225,7 +225,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L21 [impl]** — LegendsListView/Detail skeleton с in-view push-nav (selectedLegend @State). PrefsView routing на LegendsListView.  → released as v0.10.22
 
-- [ ] **TASK-L22 [verify]** — TASK-L21
+- [x] **TASK-L22 [verify]** — TASK-L21  → released as v0.10.23
 
 - [ ] **TASK-L23 [impl]** — Translation keys для legends UI: `sectionLegends`, `legendsTitle`, `legendsSubtitle(_ count: Int)`, `legendsSearchPlaceholder`, `legendsFilterEra`, `legendsFilterField`, `legendsFilterTag`, `legendsFilterIntensity`, `legendsFilterFavorites`, `legendsSortOrder`, `legendsSortName`, `legendsSortFavorites`, `legendsViewGrid`, `legendsViewList`, `legendsAllCount(_ n: Int)`, `legendsResultsCount(_ n: Int)`, `legendsEmptyResults`, `legendsApply`, `legendsRevert`, `legendsAppliedBanner(_ name: String)`, `legendsCardYears`, `legendsDetailBio`, `legendsDetailQuotes`, `legendsDetailSources`, `legendsDetailMessengerWindows`, `legendsDetailMorningQuestion`, `legendsDetailEveningQuestion`, `legendsApplyTitle`, `legendsApplySubtitle`, `legendsApplyAppCategoryWork`, `legendsApplyAppCategoryPersonal`, `legendsApplyAppCategorySkip`, `legendsApplyConfirm`, `legendsApplyCancel`, `legendsCorruptHidden(_ n: Int)`, `legendsBlockTypeSleep`, `legendsBlockTypeMorning`, `legendsBlockTypeDeep`, `legendsBlockTypeComms`, `legendsBlockTypeMeal`, `legendsBlockTypeLeisure`. Все в en/ru/zh, строгий порядок init.
 
