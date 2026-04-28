@@ -245,7 +245,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L30 [verify]** — TASK-L29  → released as v0.10.31
 
-- [ ] **TASK-L31 [impl]** — `LegendAvatar` view: круглый аватар с монограммой (1-2 буквы из name) + цвет фона derived from id-hash → stable per legend. Падает на initial из имени; для `franklin-benjamin` → "БФ" в ru / "BF" в en. Размер настраивается.
+- [x] **TASK-L31 [impl]** — LegendAvatar — реализован раньше в TASK-L27 (зависимость по сборке). Файл `Sources/HelloWork/Preferences/Legends/LegendAvatar.swift`.  → released as v0.10.32
 
 - [ ] **TASK-L32 [verify]** — TASK-L31
 

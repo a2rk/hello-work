@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.32",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L31: LegendAvatar формально закрыт — реализован раньше в TASK-L27 как dependency. Маркер для ledger.",
+    "main": "LegendCard в L27 нуждался в Avatar для рендеринга, поэтому LegendAvatar.swift был сделан тогда же. L31 теперь — formal close.",
+    "points": [
+      "Avatar uses ru/en monogram (zh fallback на en)",
+      "Stable bg color from id hash (12 oттенков)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.32/HelloWork-0.10.32.dmg"
+  },
+  {
     "version": "0.10.31",
     "date": "2026-04-28",
     "customMessage": "TASK-L30 verified: LegendListRow OK.",
