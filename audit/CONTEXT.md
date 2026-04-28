@@ -203,7 +203,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L11 [impl]** — AppState поля для legends: favoriteLegendIds + appliedLegendId + slotsBackupForApply, schema-versioned single-blob persist.  → released as v0.10.12
 
-- [ ] **TASK-L12 [verify]** — TASK-L11
+- [x] **TASK-L12 [verify]** — TASK-L11  → released as v0.10.13
 
 - [ ] **TASK-L13 [impl]** — `AppState.toggleFavoriteLegend(_ id: String)` — добавляет/убирает из set, идемпотентно. `isFavoriteLegend(_:) -> Bool`.
 

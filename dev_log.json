@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.13",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L12 verified: legends-state persistence корректен. Minor write amplification на launch (3 didSet fires) — приемлемо.",
+    "main": "Verification of TASK-L11. Init loads blob, applies fields. didSet перенесён triggers per-field — 3 writes на старте. cfprefsd batches → real cost negligible. Build чистый.",
+    "points": [
+      "Single-blob persist works",
+      "Schema v1 ready"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.13/HelloWork-0.10.13.dmg"
+  },
+  {
     "version": "0.10.12",
     "date": "2026-04-28",
     "customMessage": "TASK-L11: AppState получил legends-state — favoriteLegendIds (@Published Set), appliedLegendId, slotsBackupForApply. Single-blob persist через VersionedLegendsState (schema v1).",
