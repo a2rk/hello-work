@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.17",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L16 verified: apply/revert main path работает. Найден gap — chained apply перезатирает backup. Follow-up TASK-L77 создан.",
+    "main": "Verification of TASK-L15. Edge: chained apply без revert ломает revert. Решение в TASK-L77 (guard или auto-revert).",
+    "points": [
+      "Main paths apply/revert OK",
+      "Edge: chained apply → follow-up TASK-L77/78"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.17/HelloWork-0.10.17.dmg"
+  },
+  {
     "version": "0.10.16",
     "date": "2026-04-28",
     "customMessage": "TASK-L15: LegendApplyEngine — apply/revert mapping. apply сохраняет slots-backup, заменяет на legend.allowedSlots. revert бит-в-бит восстанавливает.",
