@@ -68,9 +68,6 @@ struct LegendListRow: View {
     }
 
     private var localizedName: String {
-        switch state.language {
-        case .ru:                  return legend.name.ru
-        case .en, .zh, .system:    return legend.name.en
-        }
+        LegendLocalized.text(legend.name, in: state.language)
     }
 }

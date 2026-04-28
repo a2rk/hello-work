@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.66",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L65: zh fallback unified. LegendLocalized.resolve/text helper заменяет inline switch'и в 6 местах (LegendDetailView, LegendCard, LegendListRow, LegendMessengerWindows, LegendQuotesCarousel, LegendAppliedBanner). При zh или system→zh — возвращает .en и isFallback=true. Hero-секция показывает «EN» badge при fallback.",
+    "main": "Helper Resolved struct содержит text + isFallback. Для zh всегда fallback; для system fallback только если system locale = zh. Removed ~30 lines duplicate switch logic.",
+    "points": [
+      "Phase H (1/6)",
+      "65/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.66/HelloWork-0.10.66.dmg"
+  },
+  {
     "version": "0.10.65",
     "date": "2026-04-27",
     "customMessage": "TASK-L64 verify: revert при corrupt state (appliedLegendId set но backup nil/empty) early-return'ил без чистки appliedLegendId. Banner с Revert застревал навечно. Fix: appliedLegendId всегда чистится, даже если slots восстанавливать нечем. Phase G ЗАКРЫТА (10/10).",

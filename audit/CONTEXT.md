@@ -321,7 +321,7 @@ HelloWork/Sources/HelloWork/
 
 ### Phase H — Polish & i18n (6 tasks)
 
-- [ ] **TASK-L65 [impl]** — zh-фолбэк: для bio/quotes/labels — если zh-locale активна → возвращаем en (с visual subtle hint «en» в углу карточки/секции). Translation+legendLocalized helper вокруг `LocalizedString.value(for: AppLanguage)`.
+- [x] **TASK-L65 [impl]** — zh-фолбэк: для bio/quotes/labels — если zh-locale активна → возвращаем en (с visual subtle hint «en» в углу карточки/секции). Translation+legendLocalized helper вокруг `LocalizedString.value(for: AppLanguage)`.  → released as v0.10.66
 
 - [ ] **TASK-L66 [verify]** — TASK-L65
 

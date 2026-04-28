@@ -134,17 +134,17 @@ struct LegendQuotesCarousel: View {
     }
 
     private func localized(_ q: LegendQuote) -> String {
-        switch state.language {
-        case .ru:                  return q.ru.isEmpty ? q.en : q.ru
-        case .en, .zh, .system:    return q.en.isEmpty ? q.ru : q.en
-        }
+        // LegendQuote — самостоятельная struct (ru/en поля), не LocalizedRuEn,
+        // поэтому inline mapping. Empty-fallback на противоположный язык.
+        let ruEn = LocalizedRuEn(ru: q.ru, en: q.en)
+        let resolved = LegendLocalized.text(ruEn, in: state.language)
+        return resolved.isEmpty
+            ? (state.language == .ru ? q.en : q.ru)
+            : resolved
     }
 
     private var legendShortName: String {
-        switch state.language {
-        case .ru:                  return legend.name.ru
-        case .en, .zh, .system:    return legend.name.en
-        }
+        LegendLocalized.text(legend.name, in: state.language)
     }
 }
 

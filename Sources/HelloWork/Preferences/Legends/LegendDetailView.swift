@@ -115,8 +115,24 @@ struct LegendDetailView: View {
             metaItem(nationalityFlag(legend.nationality))
             metaDivider
             metaItem(legend.field.replacingOccurrences(of: "_", with: " "))
+            if isFallbackToEn {
+                fallbackBadge
+            }
         }
         .padding(.top, 2)
+    }
+
+    /// Subtle подсказка что контент в EN потому что нет родного перевода.
+    private var fallbackBadge: some View {
+        Text("EN")
+            .font(.system(size: 9, weight: .bold, design: .monospaced))
+            .tracking(0.5)
+            .foregroundColor(Theme.textTertiary)
+            .padding(.horizontal, 5)
+            .padding(.vertical, 1)
+            .overlay(
+                Capsule().stroke(Theme.textTertiary.opacity(0.40), lineWidth: 1)
+            )
     }
 
     /// "US" → 🇺🇸, "US/ZA" → 🇺🇸 🇿🇦. Невалидный код → исходная строка.
@@ -180,10 +196,7 @@ struct LegendDetailView: View {
     }
 
     private var localizedBio: String {
-        switch state.language {
-        case .ru:                  return legend.bio.ru
-        case .en, .zh, .system:    return legend.bio.en
-        }
+        LegendLocalized.text(legend.bio, in: state.language)
     }
 
     // MARK: - Sources
@@ -266,16 +279,16 @@ struct LegendDetailView: View {
     }
 
     private var localizedName: String {
-        switch state.language {
-        case .ru:                  return legend.name.ru
-        case .en, .zh, .system:    return legend.name.en
-        }
+        LegendLocalized.text(legend.name, in: state.language)
     }
 
     private var localizedFullName: String {
-        switch state.language {
-        case .ru:                  return legend.fullName.ru
-        case .en, .zh, .system:    return legend.fullName.en
-        }
+        LegendLocalized.text(legend.fullName, in: state.language)
+    }
+
+    /// True если контент рисуется на en потому что родного перевода нет
+    /// (zh-locale или system locale = zh). Используется для «EN» badge в hero.
+    private var isFallbackToEn: Bool {
+        LegendLocalized.resolve(legend.name, in: state.language).isFallback
     }
 }

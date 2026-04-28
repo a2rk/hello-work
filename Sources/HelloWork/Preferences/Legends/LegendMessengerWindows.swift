@@ -138,16 +138,10 @@ struct LegendMessengerWindows: View {
     }
 
     private var localizedDescription: String {
-        switch state.language {
-        case .ru:                  return legend.blockSchedule.description.ru
-        case .en, .zh, .system:    return legend.blockSchedule.description.en
-        }
+        LegendLocalized.text(legend.blockSchedule.description, in: state.language)
     }
 
     private func localizedRationale(_ slot: LegendAllowedSlot) -> String {
-        switch state.language {
-        case .ru:                  return slot.rationale.ru
-        case .en, .zh, .system:    return slot.rationale.en
-        }
+        LegendLocalized.text(slot.rationale, in: state.language)
     }
 }
