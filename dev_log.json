@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.52",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L51: Favorites filter pill в LegendsListView. Toggle ★/☆ + надпись 'Favorites/Избранное/收藏'. State persists в @AppStorage('helloWorkLegendsShowFavoritesOnly') — выживает между запусками. Уже подключён к filteredItems pipeline.",
+    "main": "Pill стилизован зелёным accent при active. Расположен после intensity dots, отделён divider'ом.",
+    "points": [
+      "Phase F (3/6)",
+      "51/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.52/HelloWork-0.10.52.dmg"
+  },
+  {
     "version": "0.10.51",
     "date": "2026-04-27",
     "customMessage": "TASK-L50 verify: hit-area звёздочки в LegendListRow regressed с 24×24 → 20×20 (background=nil branch использовал size+8 = 20 для size=12). Поднял до max(size+12, 24) — Apple HIG минимум.",

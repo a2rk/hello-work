@@ -21,7 +21,8 @@ struct LegendsListView: View {
     @State private var filterField: String? = nil
     @State private var filterTag: String? = nil
     @State private var filterIntensity: ClosedRange<Int>? = nil
-    @State private var filterFavoritesOnly: Bool = false
+    /// Persists across launches — TASK-L51.
+    @AppStorage("helloWorkLegendsShowFavoritesOnly") private var filterFavoritesOnly: Bool = false
 
     @State private var sortChoice: SortChoice = .order
     /// Persists across launches — UserDefaults key.
@@ -109,6 +110,8 @@ struct LegendsListView: View {
                             filterIntensity = (filterIntensity == (i...i)) ? nil : (i...i)
                         }
                     }
+                    Divider().frame(height: 14).background(Theme.surfaceStroke)
+                    favoritesFilterPill
                 }
                 .padding(.vertical, 1)
             }
@@ -131,6 +134,29 @@ struct LegendsListView: View {
                 .buttonStyle(.plain)
             }
         }
+    }
+
+    private var favoritesFilterPill: some View {
+        Button {
+            filterFavoritesOnly.toggle()
+        } label: {
+            HStack(spacing: 4) {
+                Image(systemName: filterFavoritesOnly ? "star.fill" : "star")
+                    .font(.system(size: 9, weight: .semibold))
+                Text(t.legendsFilterFavorites)
+                    .font(.system(size: 10, weight: .medium))
+            }
+            .foregroundColor(filterFavoritesOnly ? .white : Theme.textSecondary)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(
+                Capsule().fill(filterFavoritesOnly ? Theme.accent.opacity(0.18) : Color.white.opacity(0.03))
+            )
+            .overlay(
+                Capsule().stroke(filterFavoritesOnly ? Theme.accent : Theme.surfaceStroke, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
     }
 
     private func filterPill(label: String, active: Bool, action: @escaping () -> Void) -> some View {
