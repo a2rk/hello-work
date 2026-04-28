@@ -281,7 +281,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L47 [impl]** — Quotes carousel: 3-5 цитат с auto-rotate (5с), стрелки prev/next, индикаторы. Если quotes пусты — секция скрыта.  → released as v0.10.48
 
-- [ ] **TASK-L48 [verify]** — TASK-L47
+- [x] **TASK-L48 [verify]** — TASK-L47  → finding: timer не сбрасывался на manual nav — клик на стрелку при t=4s триггерил auto-advance через 1s (пользователь не успевал прочитать). Добавил pauseUntil — manual nav даёт 5с тишины. Released as v0.10.49
 
 ### Phase F — Favorites & search polish (6 tasks)
 

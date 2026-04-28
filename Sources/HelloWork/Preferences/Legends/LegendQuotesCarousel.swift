@@ -10,6 +10,9 @@ struct LegendQuotesCarousel: View {
 
     @State private var currentIndex: Int = 0
     @State private var hovered: Bool = false
+    /// До этого времени auto-rotate не срабатывает — даёт юзеру время прочитать
+    /// цитату, на которую он перешёл вручную через стрелки или dots.
+    @State private var pauseUntil: Date = .distantPast
 
     /// Каждый тик публикуется только когда .autoconnect; .onReceive хэндлит инкремент.
     private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
@@ -23,13 +26,11 @@ struct LegendQuotesCarousel: View {
                     controls
                 }
             }
-            .onReceive(timer) { _ in
-                guard !hovered, legend.quotes.count > 1 else { return }
-                advance(by: 1)
+            .onReceive(timer) { now in
+                guard !hovered, legend.quotes.count > 1, now >= pauseUntil else { return }
+                advance(by: 1, manual: false)
             }
             .onAppear {
-                // Гарантия, что индекс в пределах диапазона при случайных изменениях
-                // legend (не должно происходить, но defensive — нулевой UI cost).
                 clampIndex()
             }
         }
@@ -79,11 +80,12 @@ struct LegendQuotesCarousel: View {
 
     private var controls: some View {
         HStack(spacing: 12) {
-            arrowButton(system: "chevron.left") { advance(by: -1) }
+            arrowButton(system: "chevron.left") { advance(by: -1, manual: true) }
             HStack(spacing: 6) {
                 ForEach(0..<legend.quotes.count, id: \.self) { idx in
                     Button {
                         withAnimation { currentIndex = idx }
+                        pauseUntil = Date().addingTimeInterval(5)
                     } label: {
                         Circle()
                             .fill(idx == currentIndex ? Theme.accent : Color.white.opacity(0.20))
@@ -92,7 +94,7 @@ struct LegendQuotesCarousel: View {
                     .buttonStyle(.plain)
                 }
             }
-            arrowButton(system: "chevron.right") { advance(by: 1) }
+            arrowButton(system: "chevron.right") { advance(by: 1, manual: true) }
             Spacer()
             Text("\(currentIndex + 1) / \(legend.quotes.count)")
                 .font(.system(size: 10, weight: .medium, design: .monospaced))
@@ -114,11 +116,15 @@ struct LegendQuotesCarousel: View {
 
     // MARK: - Helpers
 
-    private func advance(by step: Int) {
+    private func advance(by step: Int, manual: Bool) {
         let n = legend.quotes.count
         guard n > 0 else { return }
         let next = ((currentIndex + step) % n + n) % n
         withAnimation { currentIndex = next }
+        if manual {
+            // Юзер кликнул — даём 5с прочитать без перебивки auto-rotate'ом.
+            pauseUntil = Date().addingTimeInterval(5)
+        }
     }
 
     private func clampIndex() {

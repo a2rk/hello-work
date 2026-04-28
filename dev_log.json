@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.49",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L48 verify: carousel timer не сбрасывался на manual nav. Клик на стрелку при t=4s триггерил auto-advance через 1s — юзер не успевал прочитать выбранную цитату. Ввёл pauseUntil: любой manual nav (стрелки или dots) даёт 5с paused window.",
+    "main": "Verification of TASK-L47.",
+    "points": [
+      "Phase E COMPLETE (12/12)",
+      "48/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.49/HelloWork-0.10.49.dmg"
+  },
+  {
     "version": "0.10.48",
     "date": "2026-04-27",
     "customMessage": "TASK-L47: Quotes carousel в detail view. 3-5 цитат с auto-rotate (5с) через Timer.publish + onReceive. Hover паузит ротацию. Стрелки prev/next с wrap-around, кликабельные dots, '1/N' индикатор.",
