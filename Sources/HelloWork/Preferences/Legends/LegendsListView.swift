@@ -61,6 +61,7 @@ struct LegendsListView: View {
 
     private var list: some View {
         VStack(alignment: .leading, spacing: 14) {
+            LegendAppliedBanner(state: state)
             header
             controlsBar
             filtersBar

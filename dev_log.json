@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.62",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L61: Applied banner. Subtle-accent capsule с иконкой wand + 'Сейчас применено: <name>' + Revert button. В LegendsListView показывается для любого applied; в LegendDetailView — только если открыт именно applied legend.",
+    "main": "Component reusable: legendIdFilter параметр. Lookup legend по id через LegendsLibrary.shared.all. Revert callback (по умолчанию no-op) — TASK-L63 свяжет с alert + engine.revert.",
+    "points": [
+      "Phase G (7/10)",
+      "61/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.62/HelloWork-0.10.62.dmg"
+  },
+  {
     "version": "0.10.61",
     "date": "2026-04-27",
     "customMessage": "TASK-L60 [verify]: OK. Wired apply flow проверен — sheet onApply правильно зовёт LegendApplyEngine.apply, backup snapshots работают, persist через _setLegendsApply. Chained-apply gap уже на учёте как TASK-L77 follow-up.",

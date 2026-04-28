@@ -18,6 +18,7 @@ struct LegendDetailView: View {
         // — иначе nested-scroll даёт неконсистентный bounce и мешает hit-testing.
         VStack(alignment: .leading, spacing: 18) {
             backButton
+            LegendAppliedBanner(state: state, legendIdFilter: legend.id)
             hero
             ringSection
             bioSection

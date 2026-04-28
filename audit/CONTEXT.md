@@ -311,7 +311,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L60 [verify]** — TASK-L59  → OK. Sheet onApply корректно зовёт engine, backup snapshots срабатывают, _setLegendsApply пишет atomic-ish (2 disk writes — known acceptable). Chained-apply gap уже задокументирован как TASK-L77 follow-up. Released as v0.10.61
 
-- [ ] **TASK-L61 [impl]** — Applied banner в верху LegendsListView и LegendDetailView (если этот legend сейчас applied): «Сейчас применено: <legend.name>» + Revert button. Subtle accent color.
+- [x] **TASK-L61 [impl]** — Applied banner в верху LegendsListView и LegendDetailView (если этот legend сейчас applied): «Сейчас применено: <legend.name>» + Revert button. Subtle accent color.  → released as v0.10.62
 
 - [ ] **TASK-L62 [verify]** — TASK-L61
 
