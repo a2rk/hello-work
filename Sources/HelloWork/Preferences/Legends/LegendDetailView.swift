@@ -124,17 +124,8 @@ struct LegendDetailView: View {
     }
 
     private var favoriteStar: some View {
-        Button {
-            state.toggleFavoriteLegend(legend.id)
-        } label: {
-            Image(systemName: state.isFavoriteLegend(legend.id) ? "star.fill" : "star")
-                .font(.system(size: 16))
-                .foregroundColor(state.isFavoriteLegend(legend.id) ? Theme.accent : Theme.textTertiary)
-                .frame(width: 36, height: 36)
-                .background(Circle().fill(Color.white.opacity(0.04)))
-                .overlay(Circle().stroke(Theme.surfaceStroke, lineWidth: 1))
-        }
-        .buttonStyle(.plain)
+        LegendFavoriteStar(state: state, legendId: legend.id, size: 16, background: 36)
+            .overlay(Circle().stroke(Theme.surfaceStroke, lineWidth: 1).frame(width: 36, height: 36))
     }
 
     // MARK: - Bio

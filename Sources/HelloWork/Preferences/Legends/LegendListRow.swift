@@ -64,15 +64,7 @@ struct LegendListRow: View {
     }
 
     private var favoriteButton: some View {
-        Button {
-            state.toggleFavoriteLegend(legend.id)
-        } label: {
-            Image(systemName: state.isFavoriteLegend(legend.id) ? "star.fill" : "star")
-                .font(.system(size: 12))
-                .foregroundColor(state.isFavoriteLegend(legend.id) ? Theme.accent : Theme.textTertiary)
-        }
-        .buttonStyle(.plain)
-        .frame(width: 24, height: 24)
+        LegendFavoriteStar(state: state, legendId: legend.id, size: 12, background: nil)
     }
 
     private var localizedName: String {

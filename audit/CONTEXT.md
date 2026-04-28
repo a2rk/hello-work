@@ -285,7 +285,7 @@ HelloWork/Sources/HelloWork/
 
 ### Phase F — Favorites & search polish (6 tasks)
 
-- [ ] **TASK-L49 [impl]** — Favorite-star button: круглая, заполняется при isFavorite==true, scale-pop animation на toggle. Работает на cards, list rows и detail view — sync.
+- [x] **TASK-L49 [impl]** — Favorite-star button: круглая, заполняется при isFavorite==true, scale-pop animation на toggle. Работает на cards, list rows и detail view — sync.  → released as v0.10.50
 
 - [ ] **TASK-L50 [verify]** — TASK-L49
 

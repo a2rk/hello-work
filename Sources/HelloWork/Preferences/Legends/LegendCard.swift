@@ -43,16 +43,7 @@ struct LegendCard: View {
     }
 
     private var favoriteButton: some View {
-        Button {
-            state.toggleFavoriteLegend(legend.id)
-        } label: {
-            Image(systemName: state.isFavoriteLegend(legend.id) ? "star.fill" : "star")
-                .font(.system(size: 13))
-                .foregroundColor(state.isFavoriteLegend(legend.id) ? Theme.accent : Theme.textTertiary)
-                .frame(width: 24, height: 24)
-                .background(Circle().fill(Color.white.opacity(0.04)))
-        }
-        .buttonStyle(.plain)
+        LegendFavoriteStar(state: state, legendId: legend.id, size: 13, background: 24)
     }
 
     private var nameBlock: some View {
