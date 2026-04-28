@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.12.3",
+    "date": "2026-04-28",
+    "customMessage": "🎯 AUDIT CYCLE COMPLETE — 32/32 tasks. TASK-F04 [verify]: OK. Phase A-F все закрыты. Distribution overhaul ready: single HelloWork.app в /Applications, drag-to-install DMG, automatic migration co stub+engine, in-place updates, post-update toast, README обновлён. Interactive smoke на real machine — за user'ом.",
+    "main": "Cycle закрыт: A migration safety (8) + B build cleanup (8) + C update flow (4) + D DMG polish (4) + E docs (4) + F final regression (4) = 32 tasks. Все releases v0.11.6 → v0.12.3.",
+    "points": [
+      "Phase F COMPLETE (4/4)",
+      "AUDIT CYCLE COMPLETE 32/32",
+      "Ready for user smoke test"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.12.3/HelloWork-0.12.3.dmg"
+  },
+  {
     "version": "0.12.2",
     "date": "2026-04-28",
     "customMessage": "TASK-F03: smoke pass-by-code-inspection. Все 6 scenarios имеют code paths: (1) fresh install — DMG layout + drag, (2) migration — MigrationManager + UserDefaults flag, (3) auto-update — UpdateInstaller helper-script для /Applications + post-update toast, (4) manual fresh download — UpdateInstaller path-aware, (5) idempotent — flag check на step 1, (6) clean uninstall — drag-to-Trash универсально.",
