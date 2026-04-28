@@ -247,7 +247,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L31 [impl]** — LegendAvatar — реализован раньше в TASK-L27 (зависимость по сборке). Файл `Sources/HelloWork/Preferences/Legends/LegendAvatar.swift`.  → released as v0.10.32
 
-- [ ] **TASK-L32 [verify]** — TASK-L31
+- [x] **TASK-L32 [verify]** — TASK-L31  → released as v0.10.33
 
 - [ ] **TASK-L33 [impl]** — Filters bar: horizontal scroll с pills (era / field / intensity range). Click pill → toggles. Active pill — accent color stroke. Чёткая «Clear filters» кнопка справа.
 

@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.10.33",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L32 verified: Avatar file present and used.",
+    "main": "Verification of TASK-L31.",
+    "points": [
+      "LegendAvatar используется в Card + Row"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.33/HelloWork-0.10.33.dmg"
+  },
+  {
     "version": "0.10.32",
     "date": "2026-04-28",
     "customMessage": "TASK-L31: LegendAvatar формально закрыт — реализован раньше в TASK-L27 как dependency. Маркер для ledger.",
