@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.14",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L13: AppState.toggleFavoriteLegend(_:) + isFavoriteLegend(_:). Idempotent toggle.",
+    "main": "Простые helpers вокруг favoriteLegendIds.",
+    "points": [
+      "toggleFavoriteLegend — insert/remove",
+      "isFavoriteLegend — contains check"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.14/HelloWork-0.10.14.dmg"
+  },
+  {
     "version": "0.10.13",
     "date": "2026-04-28",
     "customMessage": "TASK-L12 verified: legends-state persistence корректен. Minor write amplification на launch (3 didSet fires) — приемлемо.",

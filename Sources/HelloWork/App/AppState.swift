@@ -370,6 +370,21 @@ final class AppState: ObservableObject {
         slotsBackupForApply = backup
     }
 
+    // MARK: - Legends helpers
+
+    /// Идемпотентный toggle favorite. Если был — убираем, иначе — добавляем.
+    func toggleFavoriteLegend(_ id: String) {
+        if favoriteLegendIds.contains(id) {
+            favoriteLegendIds.remove(id)
+        } else {
+            favoriteLegendIds.insert(id)
+        }
+    }
+
+    func isFavoriteLegend(_ id: String) -> Bool {
+        favoriteLegendIds.contains(id)
+    }
+
     var t: Translation { L10n.resolved(language) }
 
     // MARK: - Menubar persistence helpers

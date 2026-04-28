@@ -205,7 +205,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L12 [verify]** — TASK-L11  → released as v0.10.13
 
-- [ ] **TASK-L13 [impl]** — `AppState.toggleFavoriteLegend(_ id: String)` — добавляет/убирает из set, идемпотентно. `isFavoriteLegend(_:) -> Bool`.
+- [x] **TASK-L13 [impl]** — `AppState.toggleFavoriteLegend(_ id: String)` — добавляет/убирает из set, идемпотентно. `isFavoriteLegend(_:) -> Bool`.  → released as v0.10.14
 
 - [ ] **TASK-L14 [verify]** — TASK-L13
 
