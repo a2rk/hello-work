@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.9.71",
+    "date": "2026-04-28",
+    "customMessage": "TASK-050 verified: welcome banner persistence работает. Уже-опытный юзер не видит banner, новый unlock — видит до Dismiss.",
+    "main": "Verification of TASK-049. Trivially correct.",
+    "points": [
+      "Persistent UserDefaults flag — banner state shared between sessions"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.71/HelloWork-0.9.71.dmg"
+  },
+  {
     "version": "0.9.70",
     "date": "2026-04-28",
     "customMessage": "TASK-049: Welcome-баннер про unlock dev mode переехал в Diagnostics-tab и живёт persistent до dismiss. Юзер не пропустит уведомление за 3.5с.",

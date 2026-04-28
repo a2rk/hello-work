@@ -312,7 +312,7 @@ HelloWork/
   - Файлы: `Preferences/Settings/SettingsView.swift:80-110`
   - Решение: убрать таймер автоскрытия, оставить banner в Diagnostics-tab сверху с кнопкой «Скрыть» / «Disable dev mode».
 
-- [ ] **TASK-050 [verify]** — TASK-049
+- [x] **TASK-050 [verify]** — TASK-049  → released as v0.9.71
 
 - [ ] **TASK-051 [impl]** — Sidebar `+` button feedback при повторном нажатии
   - Файл: `Preferences/PrefsView.swift:96-123`
