@@ -354,7 +354,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L74 [verify]** — TASK-L73  → OK. Каждая ✅ метрика секции 6 повторно проверена против файлов имплементации. Released as v0.11.3
 
-- [ ] **TASK-L75 [impl]** — Cleanup follow-ups если возникли в секции 5.
+- [x] **TASK-L75 [impl]** — Cleanup follow-ups если возникли в секции 5.  → released as v0.11.4 (закрыл TASK-L77 — добавил chained-apply guard в LegendApplyEngine.apply: auto-revert previous if appliedLegendId set & differs)
 
 - [ ] **TASK-L76 [verify]** — TASK-L75
 
@@ -384,10 +384,10 @@ HelloWork/Sources/HelloWork/
 
 > Verify-таски ДОПИСЫВАЮТ сюда новые задачи если обнаружат регрессию или non-trivial gap.
 
-- [ ] **TASK-L77 [impl]** — `LegendApplyEngine.apply` guard на уже-applied state
+- [x] **TASK-L77 [impl]** — `LegendApplyEngine.apply` guard на уже-applied state  → resolved by TASK-L75 (auto-revert variant). Chained Franklin→Musk теперь сохраняет оригинальный backup.
   - Found by: TASK-L16 [verify]
   - Файл: `Sources/HelloWork/Domain/Legends/LegendApplyEngine.swift`
   - Проблема: chained apply (Franklin → Musk без revert) перезатирает backup на «уже применённое» состояние. Revert после такого chain восстанавливает только последний intermediate, а не оригинал.
   - Acceptance: apply() при `state.appliedLegendId != nil` либо (а) сначала revert'ит автоматически, либо (б) бросает error/no-op'ит. UI в TASK-L57/L59 должен будет учитывать.
 
-- [ ] **TASK-L78 [verify]** — TASK-L77
+- [x] **TASK-L78 [verify]** — TASK-L77  → resolved by TASK-L76 (verify auto-revert variant correct).

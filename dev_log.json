@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.4",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L75 cleanup: закрыл TASK-L77 (chained-apply guard). LegendApplyEngine.apply теперь при наличии state.appliedLegendId != nil & != legend.id auto-revert'ит предыдущую легенду перед применением новой. Backup новой apply содержит ОРИГИНАЛЬНЫЕ slots, не post-A snapshot. Chained apply Franklin→Musk теперь корректно восстанавливает изначальные расписания через Revert.",
+    "main": "Closes follow-up TASK-L77/L78. Auto-revert variant выбран — UX seamless, юзеру не нужно вручную revert'ить перед сменой легенды.",
+    "points": [
+      "Phase I (5/6)",
+      "75/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.4/HelloWork-0.11.4.dmg"
+  },
+  {
     "version": "0.11.3",
     "date": "2026-04-27",
     "customMessage": "TASK-L74 [verify]: OK. Метрики секции 6 повторно сверены — каждая ✅ соответствует реальной имплементации.",

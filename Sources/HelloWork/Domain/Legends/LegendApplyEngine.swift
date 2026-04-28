@@ -18,11 +18,19 @@ enum LegendApplyEngine {
     ///   1. Сохраняет snapshot текущих slots в backup;
     ///   2. Заменяет slots на slots, выведенные из allowedSlots легенды.
     /// После — `state.appliedLegendId = legend.id`, `state.slotsBackupForApply = backup`.
+    ///
+    /// Chained-apply guard (TASK-L77): если уже applied какой-то legend и
+    /// мы пытаемся applied'нуть другой — сначала revert'ним текущий, чтобы
+    /// backup нового apply содержал ОРИГИНАЛЬНЫЕ slots, а не post-A snapshot.
     static func apply(
         _ legend: Legend,
         assignments: [String: LegendApplyCategory],
         state: AppState
     ) {
+        if let prev = state.appliedLegendId, prev != legend.id {
+            devlog("legends", "apply '\(legend.id)' — auto-revert previous '\(prev)' before chain")
+            revert(state: state)
+        }
         var backup: [String: [Slot]] = [:]
         for (bid, category) in assignments where category != .skip {
             guard let idx = state.managedApps.firstIndex(where: { $0.bundleID == bid }) else {
