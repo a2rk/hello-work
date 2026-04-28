@@ -38,9 +38,11 @@ struct LegendCard: View {
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 6)
         .onAppear {
-            // Stagger: каждая следующая карточка на 20ms позже, потолок 500ms,
-            // чтобы grid из 60 не растягивал ввод на секунды.
-            let delay = min(Double(index) * 0.02, 0.5)
+            // Stagger только для первых ~25 карточек — это покрывает первичный
+            // viewport. Всё что дальше — карточки lazily инициализирующиеся при
+            // скролле; для них stagger выглядит как лаг (юзер скроллит, а они
+            // пол-секунды не показываются). Без delay — мгновенный fade.
+            let delay = index < 25 ? Double(index) * 0.02 : 0.0
             withAnimation(.easeOut(duration: 0.30).delay(delay)) {
                 appeared = true
             }

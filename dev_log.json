@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.69",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L68 verify: stagger fade-in пропускал scrolling test. LazyVGrid тригерит onAppear при lazy-load когда юзер скроллит — карточки с idx>25 ждали 500ms (потолок min(idx*0.02, 0.5)) уже во время активного скролла. Lag-feel. Cap'нул: stagger только idx<25 (первичный viewport), остальные — instant fade-in.",
+    "main": "Verification of TASK-L67.",
+    "points": [
+      "Phase H (4/6)",
+      "68/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.69/HelloWork-0.10.69.dmg"
+  },
+  {
     "version": "0.10.68",
     "date": "2026-04-27",
     "customMessage": "TASK-L67: card animations. LegendCard fade-in + slide-up через @State appeared с stagger-delay = min(idx*0.02s, 0.5s). LegendListRow получил .transition(opacity+move) на filtered items animation. Hover scale 1.02 spring и favorite-pop остаются.",

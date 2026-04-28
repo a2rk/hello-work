@@ -327,7 +327,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L67 [impl]** — Card animations: stagger fade-in при appear (delay = idx * 0.02s, max 0.5s), spring hover scale 1.02, favorite-pop. List row — без stagger но с transitionInsertion.  → released as v0.10.68
 
-- [ ] **TASK-L68 [verify]** — TASK-L67
+- [x] **TASK-L68 [verify]** — TASK-L67  → finding: stagger срабатывал на каждый onAppear, в т.ч. lazy-load при скролле — карточки с idx>25 ждали 500ms когда пользователь скроллит к ним. Изменил: stagger только для idx<25 (первичный viewport), остальные — no delay. Released as v0.10.69
 
 - [ ] **TASK-L69 [impl]** — Edge cases UI: empty results (пустой search/filter → «Nothing found, try different filters»), no managedApps (apply кнопка disabled с tooltip), corrupt JSON (banner «N legends couldn't be loaded» в LegendsListView header).
 
