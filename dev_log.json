@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.60",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L59: wired apply flow. LegendApplySheet.onApply теперь зовёт LegendApplyEngine.apply(legend:assignments:state:). Engine был готов с TASK-L15: бэкапит slots, заменяет на slots из allowedSlots, сетит appliedLegendId. Click 'Apply' в sheet'е реально меняет расписание managed apps.",
+    "main": "Engine методы apply/revert уже были implementированы. Сегодня просто свазал UI с engine. Persist цепочка проходит через AppState helpers (_setLegendsApply).",
+    "points": [
+      "Phase G (5/10)",
+      "59/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.60/HelloWork-0.10.60.dmg"
+  },
+  {
     "version": "0.10.59",
     "date": "2026-04-27",
     "customMessage": "TASK-L58 verify: previewText когда всё ещё skip рисовал 'Skip — 0 slots' (concat localizedSkip + ' — 0 slots'). Уродливо. Переписал previewBar в @ViewBuilder: em-dash placeholder если nApps==0, нормальный 'N apps → M slots' иначе.",

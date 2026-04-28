@@ -72,8 +72,8 @@ struct LegendDetailView: View {
         }
         .padding(.bottom, 4)
         .sheet(isPresented: $showApplySheet) {
-            LegendApplySheet(state: state, legend: legend) { _ in
-                // TASK-L59 заменит на реальный LegendApplyEngine.apply.
+            LegendApplySheet(state: state, legend: legend) { assignments in
+                LegendApplyEngine.apply(legend, assignments: assignments, state: state)
             }
         }
     }

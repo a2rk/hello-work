@@ -307,7 +307,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L58 [verify]** — TASK-L57  → finding: previewText в случае «всё ещё skip» рисовал странное «Skip — 0 slots» (concat'ил локализованный label с числом). Переписал previewBar как @ViewBuilder с em-dash placeholder когда nApps==0. Released as v0.10.59
 
-- [ ] **TASK-L59 [impl]** — `LegendApplyEngine.apply(legend:assignments:state:)` — для каждого app с category != skip: build slots из corresponding allowedSlots → state.managedApps[i].slots = новые. Сохраняет backup. Сетит appliedLegendId.
+- [x] **TASK-L59 [impl]** — `LegendApplyEngine.apply(legend:assignments:state:)` — для каждого app с category != skip: build slots из corresponding allowedSlots → state.managedApps[i].slots = новые. Сохраняет backup. Сетит appliedLegendId.  → released as v0.10.60 (engine был готов с TASK-L15, sheet onApply теперь зовёт engine)
 
 - [ ] **TASK-L60 [verify]** — TASK-L59
 
