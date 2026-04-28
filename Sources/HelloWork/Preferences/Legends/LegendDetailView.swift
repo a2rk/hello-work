@@ -1,8 +1,10 @@
 import SwiftUI
+import AppKit
 
 /// Detail view легенды: hero + bio + sources + ring chart + quotes + messenger windows.
-/// TASK-L37 закладывает hero + back-button + fav-star skeleton.
-/// L39/L41/L43/L45/L47 наполняют секции ниже hero.
+/// TASK-L37 заложил hero + back-button + fav-star.
+/// TASK-L39 добавил bio + sources.
+/// L41/L43/L45/L47 наполняют остальные секции.
 struct LegendDetailView: View {
     @Environment(\.t) var t
     @ObservedObject var state: AppState
@@ -10,10 +12,14 @@ struct LegendDetailView: View {
     let onBack: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            backButton
-            hero
-            Spacer(minLength: 0)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 18) {
+                backButton
+                hero
+                bioSection
+                sourcesSection
+                Spacer(minLength: 0)
+            }
         }
     }
 
@@ -116,6 +122,105 @@ struct LegendDetailView: View {
                 .overlay(Circle().stroke(Theme.surfaceStroke, lineWidth: 1))
         }
         .buttonStyle(.plain)
+    }
+
+    // MARK: - Bio
+
+    private var bioSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            sectionHeader(t.legendsDetailBio)
+            Text(localizedBio)
+                .font(.system(size: 12))
+                .foregroundColor(.white.opacity(0.85))
+                .lineSpacing(3)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private var localizedBio: String {
+        switch state.language {
+        case .ru:                  return legend.bio.ru
+        case .en, .zh, .system:    return legend.bio.en
+        }
+    }
+
+    // MARK: - Sources
+
+    @ViewBuilder
+    private var sourcesSection: some View {
+        if !legend.sources.isEmpty {
+            VStack(alignment: .leading, spacing: 6) {
+                sectionHeader(t.legendsDetailSources)
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(legend.sources) { src in
+                        sourceRow(src)
+                    }
+                }
+            }
+        }
+    }
+
+    private func sourceRow(_ src: LegendSource) -> some View {
+        Button {
+            if let url = URL(string: src.url) {
+                NSWorkspace.shared.open(url)
+            }
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: sourceIcon(src.type))
+                    .font(.system(size: 11))
+                    .foregroundColor(Theme.textTertiary)
+                    .frame(width: 14)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(src.title)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                    Text(src.author)
+                        .font(.system(size: 10))
+                        .foregroundColor(Theme.textTertiary)
+                        .lineLimit(1)
+                }
+                Spacer(minLength: 8)
+                Image(systemName: "arrow.up.right.square")
+                    .font(.system(size: 10))
+                    .foregroundColor(Theme.textTertiary)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(
+                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    .fill(Color.white.opacity(0.03))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    .stroke(Theme.surfaceStroke, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .help(src.url)
+    }
+
+    private func sourceIcon(_ type: String) -> String {
+        switch type.lowercased() {
+        case "book":      return "book"
+        case "article":   return "doc.text"
+        case "interview": return "mic"
+        case "letter":    return "envelope"
+        case "video":     return "play.rectangle"
+        case "podcast":   return "headphones"
+        default:          return "link"
+        }
+    }
+
+    // MARK: - Section header
+
+    private func sectionHeader(_ title: String) -> some View {
+        Text(title)
+            .font(.system(size: 10, weight: .semibold))
+            .tracking(1.2)
+            .foregroundColor(Theme.textTertiary)
     }
 
     private var localizedName: String {

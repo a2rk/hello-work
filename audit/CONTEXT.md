@@ -263,7 +263,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L38 [verify]** — TASK-L37  → finding: nationality рисовался plain text вместо флага. Добавил nationalityFlag() helper (ISO-2 → regional indicator). Released as v0.10.39
 
-- [ ] **TASK-L39 [impl]** — Bio paragraph + sources block (clickable links opening NSWorkspace.shared.open). Sources показываются как inline rows с типом (book/article/interview).
+- [x] **TASK-L39 [impl]** — Bio paragraph + sources block (clickable links opening NSWorkspace.shared.open). Sources показываются как inline rows с типом (book/article/interview).  → released as v0.10.40
 
 - [ ] **TASK-L40 [verify]** — TASK-L39
 

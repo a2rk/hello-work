@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.40",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L39: Bio + sources секции в detail view. ScrollView обернут вокруг content. Sources — clickable rows с иконкой по типу (book/article/interview/letter/video/podcast), открывают URL через NSWorkspace.",
+    "main": "Bio локализуется ru/en (zh→en фолбэк по схеме L65). Sources — inline rows; пустой массив скрывает секцию полностью.",
+    "points": [
+      "Phase E (3/12)",
+      "39/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.40/HelloWork-0.10.40.dmg"
+  },
+  {
     "version": "0.10.39",
     "date": "2026-04-27",
     "customMessage": "TASK-L38 verify: hero рисовал nationality как 'US' текстом — а спека требовала флаг. Добавил конвертер ISO-2 → regional indicator emoji ('US' → 🇺🇸, 'US/ZA' → 🇺🇸 🇿🇦).",
