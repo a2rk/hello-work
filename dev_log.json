@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.21",
+    "date": "2026-04-28",
+    "customMessage": "TASK-B08 [verify]: OK. Two-artifact pipeline стабилен — versioned + static DMG создаются одной командой. Mount-test через hdiutil attach подтвердил drag-to-Applications layout. Phase B ЗАКРЫТА (8/8 tasks). Build pipeline теперь single-app полностью.",
+    "main": "Verification of TASK-B07.",
+    "points": [
+      "Phase B COMPLETE (8/8)",
+      "Cycle: 16/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.21/HelloWork-0.11.21.dmg"
+  },
+  {
     "version": "0.11.20",
     "date": "2026-04-28",
     "customMessage": "TASK-B07: package.sh редизайн. Drag-to-Applications layout: HelloWork.app + ln -s /Applications. Volume name 'HelloWork'. ДВА DMG артефакта одной командой: HelloWork-X.Y.Z.dmg (versioned для UpdateInstaller) + HelloWork.dmg (static latest для landing). Static = cp versioned.",

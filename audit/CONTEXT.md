@@ -283,7 +283,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
   - Файлы: `scripts/package.sh`.
   - Acceptance: после `./scripts/build.sh && ./scripts/package.sh` — два .dmg-файла существуют. Mount каждого показывает HelloWork.app + Applications symlink. Drag работает.
 
-- [ ] **TASK-B08 [verify]** — TASK-B07
+- [x] **TASK-B08 [verify]** — TASK-B07  → OK. Smoke: mount DMG, layout {HelloWork.app, Applications→/Applications}, drag works в Finder. Two artifacts created. Released as v0.11.21. **Phase B CLOSED (8/8).**
 
 ### Phase C — Update flow validation (4 tasks)
 
