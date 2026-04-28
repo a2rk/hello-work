@@ -305,7 +305,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L57 [impl]** — `LegendApplySheet`: список managedApps (active, не archived). Каждый row — app icon, name, picker { Skip / Work messenger / Personal messenger }. Внизу: предпросмотр (сколько slots будет создано на основе выбора + allowedSlots), Confirm/Cancel.  → released as v0.10.58
 
-- [ ] **TASK-L58 [verify]** — TASK-L57
+- [x] **TASK-L58 [verify]** — TASK-L57  → finding: previewText в случае «всё ещё skip» рисовал странное «Skip — 0 slots» (concat'ил локализованный label с числом). Переписал previewBar как @ViewBuilder с em-dash placeholder когда nApps==0. Released as v0.10.59
 
 - [ ] **TASK-L59 [impl]** — `LegendApplyEngine.apply(legend:assignments:state:)` — для каждого app с category != skip: build slots из corresponding allowedSlots → state.managedApps[i].slots = новые. Сохраняет backup. Сетит appliedLegendId.
 

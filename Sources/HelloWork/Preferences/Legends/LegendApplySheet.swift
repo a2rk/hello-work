@@ -168,26 +168,25 @@ struct LegendApplySheet: View {
         }
     }
 
+    @ViewBuilder
     private var previewBar: some View {
+        let nApps = assignments.values.filter { $0 != .skip }.count
+        let total = previewSlotCount
         HStack(spacing: 8) {
             Image(systemName: "calendar")
                 .font(.system(size: 11))
                 .foregroundColor(Theme.textTertiary)
-            Text(previewText)
-                .font(.system(size: 11))
-                .foregroundColor(Theme.textSecondary)
+            if nApps == 0 {
+                Text("—")
+                    .font(.system(size: 11))
+                    .foregroundColor(Theme.textTertiary)
+            } else {
+                Text("\(nApps) apps → \(total) slots")
+                    .font(.system(size: 11))
+                    .foregroundColor(Theme.textSecondary)
+            }
             Spacer()
         }
-    }
-
-    private var previewText: String {
-        // Inline format: «3 apps × 2 windows = 6 slots»
-        let nApps = assignments.values.filter { $0 != .skip }.count
-        let total = previewSlotCount
-        if nApps == 0 || total == 0 {
-            return t.legendsApplyAppCategorySkip + " — " + "\(0) slots"
-        }
-        return "\(nApps) apps → \(total) slots"
     }
 
     private var actionRow: some View {
