@@ -42,20 +42,21 @@ enum LegendApplyEngine {
     }
 
     /// Откат предыдущего apply. Восстанавливает slots из backup, очищает state.
-    /// Если backup nil — no-op (нечего откатывать).
+    /// Если backup nil/пуст — slots не трогаем, но appliedLegendId всё равно
+    /// чистим: иначе banner с Revert-кнопкой останется навсегда (corrupt state).
     static func revert(state: AppState) {
-        guard let backup = state.slotsBackupForApply, !backup.isEmpty else {
-            devlog("legends", "revert — backup пустой, skip")
-            return
-        }
-        for (bid, slots) in backup {
-            guard let idx = state.managedApps.firstIndex(where: { $0.bundleID == bid }) else {
-                continue
+        if let backup = state.slotsBackupForApply, !backup.isEmpty {
+            for (bid, slots) in backup {
+                guard let idx = state.managedApps.firstIndex(where: { $0.bundleID == bid }) else {
+                    continue
+                }
+                state.managedApps[idx].slots = slots
             }
-            state.managedApps[idx].slots = slots
+            devlog("legends", "revert — restored \(backup.count) apps from backup")
+        } else {
+            devlog("legends", "revert — backup пустой, slots оставлены, appliedLegendId чистим")
         }
         state._setLegendsApply(legendId: nil, backup: nil)
-        devlog("legends", "revert — restored \(backup.count) apps from backup")
     }
 
     /// Конструирует Slot[] из `legend.blockSchedule.allowedSlots`, отфильтрованных

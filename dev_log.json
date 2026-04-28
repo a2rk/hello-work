@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.65",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L64 verify: revert при corrupt state (appliedLegendId set но backup nil/empty) early-return'ил без чистки appliedLegendId. Banner с Revert застревал навечно. Fix: appliedLegendId всегда чистится, даже если slots восстанавливать нечем. Phase G ЗАКРЫТА (10/10).",
+    "main": "Verification of TASK-L63. Defensive guard для recovery из corrupt state.",
+    "points": [
+      "Phase G COMPLETE (10/10)",
+      "64/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.65/HelloWork-0.10.65.dmg"
+  },
+  {
     "version": "0.10.64",
     "date": "2026-04-27",
     "customMessage": "TASK-L63: revert wired with alert. Click Revert в banner'е → alert 'Восстановить старые расписания?' с описанием → destructive button зовёт LegendApplyEngine.revert(state:). Engine был готов с L17. 2 новых translation keys EN/RU/ZH.",

@@ -317,7 +317,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L63 [impl]** — `LegendApplyEngine.revert(state:)` — восстанавливает slots из backup, чистит state. Кнопка Revert вызывает (с alert-confirmation: «Восстановить старые расписания?»).  → released as v0.10.64 (engine был с TASK-L17, добавлен alert wrap + 2 translation keys: legendsRevertConfirmTitle / Message)
 
-- [ ] **TASK-L64 [verify]** — TASK-L63
+- [x] **TASK-L64 [verify]** — TASK-L63  → finding: revert при corrupt state (appliedLegendId set, backup nil) early-return'ил без clear'а appliedLegendId — banner оставался навсегда. Fix: appliedLegendId всегда чистится, даже если slots не восстанавливать. Released as v0.10.65. **Phase G CLOSED (10/10).**
 
 ### Phase H — Polish & i18n (6 tasks)
 
