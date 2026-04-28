@@ -170,7 +170,7 @@ HelloWork/Sources/HelloWork/
 
 ### Phase A — Data foundation (10 tasks)
 
-- [ ] **TASK-L01 [impl]** — Domain models: `Legend`, `LegendBlock`, `LegendBlockType`, `LegendSource`, `LegendBlockSchedule`, `LegendAllowedSlot`, `LegendQuote`, `LegendOptionalQuestion`
+- [x] **TASK-L01 [impl]** — Domain models: `Legend`, `LegendBlock`, `LegendBlockType`, `LegendSource`, `LegendBlockSchedule`, `LegendAllowedSlot`, `LegendQuote`, `LegendOptionalQuestion`  → released as v0.10.2
   - Файлы: `Sources/HelloWork/Domain/Legends/Legend.swift`, `Domain/Legends/LegendBlockType.swift`
   - Все Codable + Hashable + Identifiable.
   - `LegendBlockType` — enum со всеми observed types + `unknown(String)` для forward-compat.

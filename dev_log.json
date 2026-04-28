@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.10.2",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L01: Domain models для модуля «Истории легенд» — Legend + LegendBlock + LegendBlockType (closed enum + unknown forward-compat) + Source/AllowedSlot/Quote. Все Codable+Hashable.",
+    "main": "Стартует Legends cycle. Domain layer заложен — структуры строго соответствуют JSON-схеме всех 60 файлов. LegendBlockType — closed enum со встроенным `unknown(String)` для forward-compat.",
+    "points": [
+      "Sources/HelloWork/Domain/Legends/Legend.swift — Legend, LocalizedRuEn, LegendBlock, LegendSource, LegendAllowedSlot, LegendBlockSchedule, LegendLifeSchedule, LegendQuote",
+      "Sources/HelloWork/Domain/Legends/LegendBlockType.swift — enum + Codable singleValueContainer + known[]",
+      "Все Codable, Hashable, где надо Identifiable"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.2/HelloWork-0.10.2.dmg"
+  },
+  {
     "version": "0.10.1",
     "date": "2026-04-28",
     "customMessage": "TASK-060 [verify] — финальная проверка audit-цикла. 60/60 + 0.10.0 пройдено. Все метрики 9.5/10 из CONTEXT секции 6 — зелёные. Цикл закрыт.",
