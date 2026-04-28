@@ -46,12 +46,11 @@ sed \
     -e "s/__DISPLAY_NAME__/$DISPLAY_NAME/g" \
     scripts/Info.plist.template > "$APP_PATH/Contents/Info.plist"
 
-# 6. Generate icons if missing (engine variant — белый фон, чёрная H).
+# 6. Generate icon if missing.
 if [ ! -f scripts/AppIcon.icns ]; then
-    echo "▶ Generating icon sets..."
+    echo "▶ Generating icon set..."
     swift scripts/generate_icon.swift
     iconutil -c icns scripts/AppIcon.iconset -o scripts/AppIcon.icns
-    iconutil -c icns scripts/AppIconInstaller.iconset -o scripts/AppIconInstaller.icns
 fi
 cp scripts/AppIcon.icns "$APP_PATH/Contents/Resources/AppIcon.icns"
 

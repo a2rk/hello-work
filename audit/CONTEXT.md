@@ -253,7 +253,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
 
 - [x] **TASK-B02 [verify]** — TASK-B01  → OK. swift build --product HelloWork → success. swift build --product HelloWorkStub → 'no product named HelloWorkStub' (acceptance criteria match). Released as v0.11.15
 
-- [ ] **TASK-B03 [impl]** — Удалить файлы:
+- [x] **TASK-B03 [impl]** — Удалить файлы:  → released as v0.11.16 (Sources/HelloWorkStub/, build_stub.sh, package_stub.sh, Info.plist.stub.template, AppIconInstaller.iconset/, AppIconInstaller.icns удалены через git rm; build.sh и generate_icon.swift очищены от installer-icon refs)
   - `Sources/HelloWorkStub/` (вся папка)
   - `scripts/build_stub.sh`
   - `scripts/package_stub.sh`

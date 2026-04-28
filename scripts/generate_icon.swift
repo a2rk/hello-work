@@ -2,9 +2,8 @@
 
 import AppKit
 
-// generate_icon.swift — генерит ДВА icon set'а:
-//   AppIcon.iconset           — белый фон, чёрная H (engine)
-//   AppIconInstaller.iconset  — чёрный фон, белая H (installer/stub)
+// generate_icon.swift — генерит icon set:
+//   AppIcon.iconset — белый фон, чёрная H
 
 let sizes: [(name: String, px: Int)] = [
     ("icon_16x16.png",       16),
@@ -28,8 +27,7 @@ struct IconVariant {
 }
 
 let variants: [IconVariant] = [
-    IconVariant(outDirName: "AppIcon.iconset",          bg: .white, fg: .black),
-    IconVariant(outDirName: "AppIconInstaller.iconset", bg: .black, fg: .white),
+    IconVariant(outDirName: "AppIcon.iconset", bg: .white, fg: .black),
 ]
 
 for variant in variants {
