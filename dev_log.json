@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.25",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L24 verified: i18n keys корректны. Phase C полностью закрыта.",
+    "main": "Verification of TASK-L23. Compiler ловит несовпадение order/type init args. Phase C done — sidebar entry, routing, all i18n keys.",
+    "points": [
+      "Phase C complete (TASK-L19..L24, 6 tasks)",
+      "24/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.25/HelloWork-0.10.25.dmg"
+  },
+  {
     "version": "0.10.24",
     "date": "2026-04-28",
     "customMessage": "TASK-L23: 41 translation key для legends UI (en/ru/zh). Все будущие views Phase D-G готовы тянуть строки через t.legends*.",

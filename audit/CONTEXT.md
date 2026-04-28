@@ -229,7 +229,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L23 [impl]** — 41 Translation key для legends UI (en/ru/zh).  → released as v0.10.24
 
-- [ ] **TASK-L24 [verify]** — TASK-L23
+- [x] **TASK-L24 [verify]** — TASK-L23  → released as v0.10.25
 
 ### Phase D — Legends list view (12 tasks)
 
