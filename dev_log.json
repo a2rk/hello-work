@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.13.7",
+    "date": "2026-04-28",
+    "customMessage": "FIX masonry overflow. v0.13.6 показывал big card 2-col + 4 small в 2×2 = total 4 columns → выходило за правый край screen. Теперь featured занимает РОВНО 3 columns: big 2-col + 1 column со stack из 2 smalls один над другим. Featured = 3 items (1 big + 2 small). Каждый 3-й block = featured, alternating сторона.",
+    "main": "smallStack(2 rows × 2 small) → smallColumn(2 small один над другим). computeBlocks теперь даёт 3-item featured вместо 5-item. Высоты совпадают: 2*smallH + spacing = bigH.",
+    "points": [
+      "Featured row: 3 columns, 2 rows",
+      "Big = 2 col wide × 2 rows tall",
+      "smallColumn = 1 col wide × 2 rows = 2 cards вертикально",
+      "Каждые 9 items = 1 featured (3) + 2 regular (6)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.13.7/HelloWork-0.13.7.dmg"
+  },
+  {
     "version": "0.13.6",
     "date": "2026-04-28",
     "customMessage": "FIX: карточки исчезли в v0.13.5. Корень — GeometryReader снаружи nested ScrollView внутри outer PrefsView ScrollView коллапсировал свой width в 0 → cards рендерились с width=0, не видны. Заменил на PreferenceKey-based bottom-up measurement: invisible Color.clear в .background регистрирует actual width VStack'а, обновляет @State resultsWidth. Также убрал nested ScrollView (outer PrefsView.detail уже скроллит).",

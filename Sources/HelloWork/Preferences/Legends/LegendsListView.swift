@@ -470,6 +470,8 @@ struct LegendsListView: View {
         }
     }
 
+    /// Featured row занимает ровно те же 3 columns что regular: big = 2 columns,
+    /// рядом 1 column со stack из 2 small cards (один над другим).
     private func featuredRow(
         big: Legend, smalls: [Legend],
         bigOnLeft: Bool, baseIndex: Int,
@@ -483,10 +485,10 @@ struct LegendsListView: View {
                     selectedLegend = big
                 }
                 .frame(width: bigW, height: bigH)
-                smallStack(smalls: smalls, baseIndex: baseIndex + 1, smallW: smallW, smallH: smallH, spacing: spacing)
+                smallColumn(smalls: smalls, baseIndex: baseIndex + 1, smallW: smallW, smallH: smallH, spacing: spacing)
             } else {
-                smallStack(smalls: smalls, baseIndex: baseIndex, smallW: smallW, smallH: smallH, spacing: spacing)
-                LegendCard(state: state, legend: big, index: baseIndex + 4, size: .large) {
+                smallColumn(smalls: smalls, baseIndex: baseIndex, smallW: smallW, smallH: smallH, spacing: spacing)
+                LegendCard(state: state, legend: big, index: baseIndex + 2, size: .large) {
                     selectedLegend = big
                 }
                 .frame(width: bigW, height: bigH)
@@ -494,26 +496,18 @@ struct LegendsListView: View {
         }
     }
 
-    private func smallStack(
+    /// Колонка из 2 small cards (один над другим) — занимает 1 grid-column,
+    /// высотой совпадает с big card (2 * smallH + spacing).
+    private func smallColumn(
         smalls: [Legend], baseIndex: Int,
         smallW: CGFloat, smallH: CGFloat, spacing: CGFloat
     ) -> some View {
         VStack(spacing: spacing) {
-            HStack(spacing: spacing) {
-                ForEach(Array(smalls.prefix(2).enumerated()), id: \.element.id) { offset, legend in
-                    LegendCard(state: state, legend: legend, index: baseIndex + offset) {
-                        selectedLegend = legend
-                    }
-                    .frame(width: smallW, height: smallH)
+            ForEach(Array(smalls.prefix(2).enumerated()), id: \.element.id) { offset, legend in
+                LegendCard(state: state, legend: legend, index: baseIndex + offset) {
+                    selectedLegend = legend
                 }
-            }
-            HStack(spacing: spacing) {
-                ForEach(Array(smalls.dropFirst(2).prefix(2).enumerated()), id: \.element.id) { offset, legend in
-                    LegendCard(state: state, legend: legend, index: baseIndex + 2 + offset) {
-                        selectedLegend = legend
-                    }
-                    .frame(width: smallW, height: smallH)
-                }
+                .frame(width: smallW, height: smallH)
             }
         }
     }
@@ -545,21 +539,24 @@ struct LegendsListView: View {
         case regular(trio: [Legend], baseIndex: Int)
     }
 
-    /// Раз в 3 блока — featured (5 items, alternating сторона).
-    /// Остальные — regular row (3 items). Если items не хватает на featured —
-    /// graceful downgrade на regular.
+    /// Раз в 3 блока — featured (1 big + 2 smalls = 3 items, занимает
+    /// 3 columns × 2 rows). Остальные — regular row (3 items, 1 row).
+    /// Каждый featured block alternates сторону: left → right → left → ...
+    /// Если items не хватает на featured (<3) — graceful downgrade на regular.
     private func computeBlocks(items: [Legend]) -> [LayoutBlock] {
         var blocks: [LayoutBlock] = []
         var idx = 0
         var blockCounter = 0
+        var featuredCounter = 0
         while idx < items.count {
             let isFeaturedSlot = (blockCounter % 3 == 0)
-            if isFeaturedSlot, idx + 5 <= items.count {
+            if isFeaturedSlot, idx + 3 <= items.count {
                 let big = items[idx]
-                let smalls = Array(items[(idx + 1)..<(idx + 5)])
-                let bigOnLeft = ((blockCounter / 3) % 2 == 0)
+                let smalls = Array(items[(idx + 1)..<(idx + 3)])
+                let bigOnLeft = (featuredCounter % 2 == 0)
                 blocks.append(.featured(big: big, smalls: smalls, bigOnLeft: bigOnLeft, baseIndex: idx))
-                idx += 5
+                idx += 3
+                featuredCounter += 1
             } else {
                 let end = min(idx + 3, items.count)
                 let trio = Array(items[idx..<end])
