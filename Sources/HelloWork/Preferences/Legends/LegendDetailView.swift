@@ -24,10 +24,13 @@ struct LegendDetailView: View {
     }
 
     private var ringSection: some View {
-        HStack {
-            Spacer()
-            LegendRingChart(legend: legend)
-            Spacer()
+        VStack(spacing: 10) {
+            HStack {
+                Spacer()
+                LegendRingChart(legend: legend)
+                Spacer()
+            }
+            LegendBlockTypeLegend(legend: legend)
         }
     }
 

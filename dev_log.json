@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.44",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L43: Block-type legend под рингом — горизонтальный ряд (dot + название + total часов в сутках). Стабильный порядок по LegendBlockType.known + unknown в конце. Horizontal scroll на узких экранах.",
+    "main": "Аггрегация total minutes по rawKey. formatTotal обрабатывает целые часы ('8h') и half-hours ('7h 30m'). Локализованные названия типов через t.legendsBlockType*.",
+    "points": [
+      "Phase E (7/12)",
+      "43/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.44/HelloWork-0.10.44.dmg"
+  },
+  {
     "version": "0.10.43",
     "date": "2026-04-27",
     "customMessage": "TASK-L42 verify: 2 finding'а в RingChart. (1) hour-markers схлопывались в верхнюю позицию из-за неверного порядка modifier'ов: правильно pre-rotate(-angle) → offset → rotate(+angle). (2) HH:mm в центре не обновлялся — обернул в TimelineView(.periodic(60)).",

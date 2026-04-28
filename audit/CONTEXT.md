@@ -271,7 +271,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L42 [verify]** — TASK-L41  → 2 finding'а: (1) hour-marker rotation order (.offset → rotate → counter-rotate) был неверен — modifier-стек inner-to-outer схлопывал все позиции в top. Исправлен на pre-rotate(-angle) → offset → rotate(+angle). (2) currentTimeText не обновлялся — обернул centerLabel в TimelineView(.periodic(60s)). Released as v0.10.43
 
-- [ ] **TASK-L43 [impl]** — Block type legend: горизонтальный ряд под рингом — каждый блок-тип: цветовой dot + название (translated) + total часов в дне.
+- [x] **TASK-L43 [impl]** — Block type legend: горизонтальный ряд под рингом — каждый блок-тип: цветовой dot + название (translated) + total часов в дне.  → released as v0.10.44
 
 - [ ] **TASK-L44 [verify]** — TASK-L43
 
