@@ -128,6 +128,11 @@ final class AppState: ObservableObject {
     /// сбрасывается в false (в памяти; не возвращается).
     @Published var queueMigrationToast: Bool = false
 
+    /// Если != nil — UI показывает one-time toast «Updated to vX.Y.Z» после
+    /// успешного auto-update'а. Сравнение текущей версии с persisted
+    /// previousLaunchVersion в UserDefaults.
+    @Published var queueUpdateToastVersion: String? = nil
+
     struct CorruptionWarning: Identifiable, Equatable {
         let id = UUID()
         /// `.schedules` / `.stats` — определяет message в UI.
@@ -139,6 +144,7 @@ final class AppState: ObservableObject {
 
     private(set) var graceUntil: Date?
 
+    private static let previousLaunchVersionKey = "helloWorkPreviousLaunchVersion"
     private static let languageKey = "helloWorkLanguage"
     private static let autoUpdateKey = "helloWorkAutoUpdate"
     private static let snapStepKey = "helloWorkSnapStep"
@@ -255,6 +261,15 @@ final class AppState: ObservableObject {
         DevLogger.shared.enabled = dev
 
         self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
+
+        // Post-update toast detection: сравниваем текущую CFBundleShortVersionString
+        // с persisted значением. Различие = auto-update только что произошёл.
+        let currentVersion = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "?"
+        let previousVersion = UserDefaults.standard.string(forKey: Self.previousLaunchVersionKey)
+        if let prev = previousVersion, prev != currentVersion {
+            self.queueUpdateToastVersion = currentVersion
+        }
+        UserDefaults.standard.set(currentVersion, forKey: Self.previousLaunchVersionKey)
 
         // enabled: дефолт true, если ключа нет
         self.enabled = (UserDefaults.standard.object(forKey: Self.enabledKey) as? Bool) ?? true

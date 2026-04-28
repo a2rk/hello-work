@@ -360,4 +360,5 @@ struct Translation {
     let migrationToastTitle: String
     let migrationToastBody: String
     let migrationToastDismiss: String
+    let updateCompletedToast: (_ version: String) -> String
 }

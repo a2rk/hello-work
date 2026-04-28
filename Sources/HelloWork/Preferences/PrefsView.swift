@@ -149,6 +149,10 @@ struct PrefsView: View {
                     MigrationToastBanner(state: state)
                         .padding(.bottom, 14)
                 }
+                if state.queueUpdateToastVersion != nil {
+                    UpdateCompletedToastBanner(state: state)
+                        .padding(.bottom, 14)
+                }
                 if !state.corruptionWarnings.isEmpty {
                     corruptionBanners
                         .padding(.bottom, 14)

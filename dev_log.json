@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.24",
+    "date": "2026-04-28",
+    "customMessage": "TASK-C03: post-update toast. AppState.init читает CFBundleShortVersionString и сравнивает с persisted helloWorkPreviousLaunchVersion. Если differs — queueUpdateToastVersion=current. UpdateCompletedToastBanner показывает 'Updated to vX.Y.Z' с auto-dismiss 5s. Translation closure EN/RU/ZH.",
+    "main": "Banner размещается между migration-toast и corruption-banners. Detection срабатывает при свежем install (previousVersion=nil → no toast) и при upgrade (previousVersion≠currentVersion → toast).",
+    "points": [
+      "Phase C (3/4)",
+      "Cycle: 19/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.24/HelloWork-0.11.24.dmg"
+  },
+  {
     "version": "0.11.23",
     "date": "2026-04-28",
     "customMessage": "TASK-C02 [verify]: OK. UpdateInstaller cleanup проверен — fallback path обновлён, engine-references удалены, core replace logic не тронута. canSelfInstall для /Applications/HelloWork.app корректен.",
