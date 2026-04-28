@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.9.77",
+    "date": "2026-04-28",
+    "customMessage": "TASK-056 verified: i18n validate работает в DEBUG. Phase L закрыта.",
+    "main": "Verification of TASK-055. Phase L done.",
+    "points": [
+      "Phase L complete (TASK-055..056)",
+      "57/60"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.77/HelloWork-0.9.77.dmg"
+  },
+  {
     "version": "0.9.76",
     "date": "2026-04-28",
     "customMessage": "TASK-055: L10n.validateAll() в DEBUG-сборке при старте проходит все три локали и пишет в devlog empty / placeholder строки. Compile-time проверки (struct fields + init order) уже были.",

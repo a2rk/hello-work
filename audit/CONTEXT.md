@@ -333,7 +333,7 @@ HelloWork/
   - Проблема: Translation — struct с let-полями, missing key = compile error (это уже хорошо). Но: порядок аргументов в init для en/ru/zh должен совпадать (Swift даёт «incorrect argument labels» при mismatch — поймали уже один раз). Хочется более robust.
   - Решение: добавить тестовый-таргет `swift test` с одним тестом который инстанцирует все три locale и проверяет что строки не пустые / не равны placeholder'ам. Или scripts/validate_translations.swift который читает Translation.swift как AST.
 
-- [ ] **TASK-056 [verify]** — TASK-055
+- [x] **TASK-056 [verify]** — TASK-055  → released as v0.9.77
 
 ### Phase M — Lifecycle cleanup
 
