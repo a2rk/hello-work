@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.61",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L60 [verify]: OK. Wired apply flow проверен — sheet onApply правильно зовёт LegendApplyEngine.apply, backup snapshots работают, persist через _setLegendsApply. Chained-apply gap уже на учёте как TASK-L77 follow-up.",
+    "main": "Verification of TASK-L59. Регрессий нет.",
+    "points": [
+      "Phase G (6/10)",
+      "60/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.61/HelloWork-0.10.61.dmg"
+  },
+  {
     "version": "0.10.60",
     "date": "2026-04-27",
     "customMessage": "TASK-L59: wired apply flow. LegendApplySheet.onApply теперь зовёт LegendApplyEngine.apply(legend:assignments:state:). Engine был готов с TASK-L15: бэкапит slots, заменяет на slots из allowedSlots, сетит appliedLegendId. Click 'Apply' в sheet'е реально меняет расписание managed apps.",

@@ -309,7 +309,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L59 [impl]** — `LegendApplyEngine.apply(legend:assignments:state:)` — для каждого app с category != skip: build slots из corresponding allowedSlots → state.managedApps[i].slots = новые. Сохраняет backup. Сетит appliedLegendId.  → released as v0.10.60 (engine был готов с TASK-L15, sheet onApply теперь зовёт engine)
 
-- [ ] **TASK-L60 [verify]** — TASK-L59
+- [x] **TASK-L60 [verify]** — TASK-L59  → OK. Sheet onApply корректно зовёт engine, backup snapshots срабатывают, _setLegendsApply пишет atomic-ish (2 disk writes — known acceptable). Chained-apply gap уже задокументирован как TASK-L77 follow-up. Released as v0.10.61
 
 - [ ] **TASK-L61 [impl]** — Applied banner в верху LegendsListView и LegendDetailView (если этот legend сейчас applied): «Сейчас применено: <legend.name>» + Revert button. Subtle accent color.
 
