@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.15",
+    "date": "2026-04-28",
+    "customMessage": "TASK-B02 [verify]: OK. Package.swift cleanup проверен — HelloWork product собирается, HelloWorkStub product не существует (acceptance match).",
+    "main": "Verification of TASK-B01.",
+    "points": [
+      "Phase B (2/8)",
+      "Cycle: 10/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.15/HelloWork-0.11.15.dmg"
+  },
+  {
     "version": "0.11.14",
     "date": "2026-04-28",
     "customMessage": "TASK-B01: Package.swift cleaned up — убран .executableTarget(name: 'HelloWorkStub'). Только HelloWork target остаётся. Sources/HelloWorkStub/ файлы пока на диске, но не компилируются (orphaned до TASK-B03). Pipeline теперь build.sh + package.sh only.",

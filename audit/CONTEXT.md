@@ -251,7 +251,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
   - Файл: `Package.swift`.
   - Acceptance: `swift build --product HelloWork` собирается, `swift build --product HelloWorkStub` падает с «product not found».
 
-- [ ] **TASK-B02 [verify]** — TASK-B01
+- [x] **TASK-B02 [verify]** — TASK-B01  → OK. swift build --product HelloWork → success. swift build --product HelloWorkStub → 'no product named HelloWorkStub' (acceptance criteria match). Released as v0.11.15
 
 - [ ] **TASK-B03 [impl]** — Удалить файлы:
   - `Sources/HelloWorkStub/` (вся папка)
