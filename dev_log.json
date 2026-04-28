@@ -1,5 +1,29 @@
 [
   {
+    "version": "0.10.0",
+    "date": "2026-04-28",
+    "customMessage": "0.10.0 — финал большого audit-sweep'а. 59 точечных правок (Phase A-M) сделали систему заметно крепче по корректности, perf, resilience и UX. Сигнал «major polish pass».",
+    "main": "Финал работы по audit/CONTEXT.md. От 0.9.21 до 0.10.0 — 59 point-fixes в 13 фазах. Каждый закрыл узкую дыру: hider state machine, permissions UX, schema versioning, hotkey IDs, update-fetch dedup, SwiftUI re-render perf, refresh timer, UpdateInstaller, edge cases, DevLogger rotation, UX polish, i18n integrity, lifecycle cleanup. Релиз — bump MINOR, чтобы сигнализировать значимое улучшение.",
+    "points": [
+      "Phase A (10) — Hider state machine: applyAuto не клобберит ручной toggle, deferred-collapse cancel, N+1 CGS убран, 1 disk-write per action",
+      "Phase B (6) — Permissions: requested-key timing fix, AutoRelauncher 60s timeout, onboarding less aggressive",
+      "Phase C (4) — Resilience: corrupt JSON detection + backup + UI banner, schema versioning",
+      "Phase D (2) — Hotkey IDs distinct (focus=1, menubar=2)",
+      "Phase E (2) — Update-fetch dedup 5min throttle + URLSession invalidate",
+      "Phase F (10) — UI re-render perf: slider debounce, ScheduleView decouple, TimelineView в Combined, diagnostics mtime gate, Hasher menu sig",
+      "Phase G (4) — Refresh perf: bulk findMultiple, FrontmostWindowFinder single CGS",
+      "Phase H (2) — UpdateInstaller fail-fast + self-signed re-sign",
+      "Phase I (6) — Edge cases: slot clamp, recordGrace guard, AppVersion semver",
+      "Phase J (2) — DevLogger 10MB rotation",
+      "Phase K (6) — UX polish: dev-mode welcome banner persistent, + button pulse, scroll identity",
+      "Phase L (2) — i18n DEBUG-time validate via Mirror",
+      "Phase M (2) — Lifecycle cleanup на applicationWillTerminate",
+      "Smoke list в audit/CONTEXT.md TASK-059 описывает рекомендуемые проверки перед публикацией",
+      "Self-signed cert: TCC grants выживают через все апдейты"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.0/HelloWork-0.10.0.dmg"
+  },
+  {
     "version": "0.9.79",
     "date": "2026-04-28",
     "customMessage": "TASK-058 verified: lifecycle cleanup чистый. Phase M закрыта.",

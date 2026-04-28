@@ -347,7 +347,7 @@ HelloWork/
 
 ### Phase N — Final regression
 
-- [ ] **TASK-059 [impl]** — Final regression sweep
+- [x] **TASK-059 [impl]** — Final regression sweep  → released as v0.10.0
   - Действия: 
     - bump minor → 0.10.0 (сигналит «комплекс улучшений»)
     - manual smoke list (см. ниже)
