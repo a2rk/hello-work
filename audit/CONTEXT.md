@@ -350,7 +350,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L72 [verify]** — TASK-L71  → smoke pass-by-code-inspection: 60/60 JSON в bundle, 132 legends* keys в Translations.swift (44×3 langs), build чистый, все code paths существуют (apply/revert/banner/quotes carousel/filter pipeline/animations). Регрессий нет. Released as v0.11.1
 
-- [ ] **TASK-L73 [impl]** — Перевод audit/CONTEXT финальных метрик в ✅ (см. секцию 6 ниже) — каждая отмечена.
+- [x] **TASK-L73 [impl]** — Перевод audit/CONTEXT финальных метрик в ✅ (см. секцию 6 ниже) — каждая отмечена.  → released as v0.11.2 (метрики секции 6 уже были ✅ как проектные цели; verified что каждая соответствует реальной импликации: 60 JSON, grid/list, debounce/filter/sort, detail sections, fav-flow, apply/revert, i18n+EN-badge, corrupt-tolerance, persistence, animations, edge-cases, sources clickable, 7 devlog calls в legends modules)
 
 - [ ] **TASK-L74 [verify]** — TASK-L73
 

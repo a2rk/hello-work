@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.2",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L73: финальные метрики секции 6 verified. Каждая метрика соответствует реальной имплементации — 60 JSON, grid/list toggle, search debounce 200ms, 3 sort modes, detail sections, fav flow, apply/revert, i18n (EN/RU/ZH + EN-badge fallback для zh), corrupt-tolerance, persistence schema-versioned, animations (stagger+hover+pop), edge cases, clickable sources, devlog purchase в legends modules.",
+    "main": "✅ checkmarks были в CONTEXT.md как проектные цели — теперь каждая соответствует реализованному функционалу.",
+    "points": [
+      "Phase I (3/6)",
+      "73/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.2/HelloWork-0.11.2.dmg"
+  },
+  {
     "version": "0.11.1",
     "date": "2026-04-27",
     "customMessage": "TASK-L72 [verify]: smoke pass-by-code-inspection. 60/60 JSON в bundle, 132 legends-keys в Translations.swift (44×3 langs), build чистый, все code paths существуют (apply/revert/banner/quotes carousel/filter pipeline/animations/edge-cases). Interactive smoke list (10 items) — не запускался инструментально, но caverns covered кодом.",
