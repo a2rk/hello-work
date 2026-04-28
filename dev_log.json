@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.10.26",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L25: LegendsListView skeleton — header с count, search field с 200ms debounce, sort picker (3 варианта), grid/list toggle, filtered results count + placeholder rows.",
+    "main": "Все контролы работают: search через DispatchWorkItem debounce, sort через локальный SortChoice→LegendsLibrary.SortOrder, filteredItems композит фильтрует search+era/field/tag/intensity/favoritesOnly + sort. Plain rows пока — TASK-L27 наполнит cards в grid mode, L29 — rows в list mode.",
+    "points": [
+      "Search debounce 200ms через DispatchWorkItem",
+      "Sort: order / name(localized) / favoritesFirst",
+      "View-mode segmented control (grid/list, persistence в TASK-L35)",
+      "filteredItems computed: search + filters + sort"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.26/HelloWork-0.10.26.dmg"
+  },
+  {
     "version": "0.10.25",
     "date": "2026-04-28",
     "customMessage": "TASK-L24 verified: i18n keys корректны. Phase C полностью закрыта.",

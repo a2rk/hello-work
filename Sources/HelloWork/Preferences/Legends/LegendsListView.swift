@@ -3,13 +3,40 @@ import SwiftUI
 /// Корневой view модуля «Легенды». Внутри своя push-style навигация
 /// (List ↔ Detail) через @State selectedLegend — без дополнительных
 /// SidebarSelection-кейсов.
-///
-/// На этом этапе skeleton: TASK-L25 наполняет list, TASK-L37 — detail.
 struct LegendsListView: View {
     @Environment(\.t) var t
     @ObservedObject var state: AppState
 
     @State private var selectedLegend: Legend?
+
+    // MARK: - Filters / search / sort / view-mode state
+
+    /// Live raw text из text-field. На каждое изменение перезапускается debounce.
+    @State private var searchInput: String = ""
+    /// Debounced (200ms) копия — это то, по чему реально фильтруем.
+    @State private var debouncedQuery: String = ""
+    @State private var searchWorkItem: DispatchWorkItem?
+
+    @State private var filterEra: String? = nil
+    @State private var filterField: String? = nil
+    @State private var filterTag: String? = nil
+    @State private var filterIntensity: ClosedRange<Int>? = nil
+    @State private var filterFavoritesOnly: Bool = false
+
+    @State private var sortChoice: SortChoice = .order
+    @State private var viewMode: LegendsViewMode = .grid
+
+    /// Локальный enum для UI sort picker. Нельзя хранить LegendsLibrary.SortOrder
+    /// напрямую как @State — у `.favoritesFirst(Set)` ассоциированное значение
+    /// требует свежего set'а на каждый применение.
+    enum SortChoice: String, CaseIterable, Identifiable {
+        case order, name, favoritesFirst
+        var id: String { rawValue }
+    }
+
+    enum LegendsViewMode: String { case grid, list }
+
+    // MARK: - Body
 
     var body: some View {
         if let legend = selectedLegend {
@@ -17,56 +44,228 @@ struct LegendsListView: View {
                 selectedLegend = nil
             })
         } else {
-            listPlaceholder
+            list
         }
     }
 
-    private var listPlaceholder: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(t.sectionLegends)
-                    .font(.system(size: 22, weight: .semibold))
-                    .foregroundColor(.white)
-                Text("\(LegendsLibrary.shared.all.count) loaded")
-                    .font(.system(size: 12))
-                    .foregroundColor(Theme.textSecondary)
-            }
+    // MARK: - List
 
-            // Минимальный preview-список — TASK-L25..L36 заменят на полноценный
-            // grid/list с поиском и фильтрами.
-            ScrollView {
-                VStack(alignment: .leading, spacing: 6) {
-                    ForEach(LegendsLibrary.shared.all) { legend in
-                        Button {
-                            selectedLegend = legend
-                        } label: {
-                            HStack {
-                                Text("\(legend.order). \(legend.name.en)")
-                                    .font(.system(size: 13))
-                                    .foregroundColor(.white)
-                                Spacer()
-                                Text(legend.yearsOfLife)
-                                    .font(.system(size: 11))
-                                    .foregroundColor(Theme.textTertiary)
-                            }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                    .fill(Color.white.opacity(0.03))
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                    .stroke(Theme.surfaceStroke, lineWidth: 1)
-                            )
+    private var list: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            header
+            controlsBar
+            results
+            Spacer(minLength: 0)
+        }
+    }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(t.legendsTitle)
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundColor(.white)
+            Text(t.legendsSubtitle(LegendsLibrary.shared.all.count))
+                .font(.system(size: 12))
+                .foregroundColor(Theme.textSecondary)
+        }
+    }
+
+    private var controlsBar: some View {
+        HStack(spacing: 10) {
+            searchField
+                .frame(maxWidth: 280)
+            sortPicker
+            Spacer()
+            viewModeToggle
+        }
+    }
+
+    private var searchField: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 11))
+                .foregroundColor(Theme.textTertiary)
+            TextField(t.legendsSearchPlaceholder, text: $searchInput)
+                .textFieldStyle(.plain)
+                .font(.system(size: 12))
+                .foregroundColor(.white)
+                .onChange(of: searchInput) { newValue in
+                    scheduleSearchDebounce(newValue)
+                }
+            if !searchInput.isEmpty {
+                Button {
+                    searchInput = ""
+                    debouncedQuery = ""
+                    searchWorkItem?.cancel()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 11))
+                        .foregroundColor(Theme.textTertiary)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+        .background(
+            Capsule().fill(Color.white.opacity(0.04))
+        )
+        .overlay(
+            Capsule().stroke(Theme.surfaceStroke, lineWidth: 1)
+        )
+    }
+
+    private var sortPicker: some View {
+        Menu {
+            ForEach(SortChoice.allCases) { choice in
+                Button {
+                    sortChoice = choice
+                } label: {
+                    HStack {
+                        Text(sortChoiceTitle(choice))
+                        if sortChoice == choice {
+                            Image(systemName: "checkmark")
                         }
-                        .buttonStyle(.plain)
                     }
                 }
             }
-
-            Spacer(minLength: 0)
+        } label: {
+            HStack(spacing: 5) {
+                Image(systemName: "arrow.up.arrow.down")
+                    .font(.system(size: 10, weight: .semibold))
+                Text(sortChoiceTitle(sortChoice))
+                    .font(.system(size: 11, weight: .medium))
+            }
+            .foregroundColor(.white.opacity(0.85))
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(Capsule().fill(Color.white.opacity(0.04)))
+            .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
         }
+        .buttonStyle(.plain)
+    }
+
+    private func sortChoiceTitle(_ c: SortChoice) -> String {
+        switch c {
+        case .order:          return t.legendsSortOrder
+        case .name:           return t.legendsSortName
+        case .favoritesFirst: return t.legendsSortFavorites
+        }
+    }
+
+    private var viewModeToggle: some View {
+        HStack(spacing: 0) {
+            modeButton(.grid, system: "square.grid.2x2", title: t.legendsViewGrid)
+            modeButton(.list, system: "list.bullet", title: t.legendsViewList)
+        }
+        .padding(2)
+        .background(Capsule().fill(Color.white.opacity(0.03)))
+        .overlay(Capsule().stroke(Theme.surfaceStroke, lineWidth: 1))
+    }
+
+    private func modeButton(_ mode: LegendsViewMode, system: String, title: String) -> some View {
+        Button {
+            viewMode = mode
+        } label: {
+            Image(systemName: system)
+                .font(.system(size: 11, weight: .medium))
+                .foregroundColor(viewMode == mode ? .white : Theme.textSecondary)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(
+                    Capsule().fill(viewMode == mode ? Color.white.opacity(0.10) : Color.clear)
+                )
+        }
+        .buttonStyle(.plain)
+        .help(title)
+    }
+
+    // MARK: - Results
+
+    private var results: some View {
+        Group {
+            if filteredItems.isEmpty {
+                Text(t.legendsEmptyResults)
+                    .font(.system(size: 12))
+                    .foregroundColor(Theme.textTertiary)
+                    .padding(.top, 20)
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(t.legendsResultsCount(filteredItems.count))
+                            .font(.system(size: 10, weight: .semibold))
+                            .tracking(1.2)
+                            .foregroundColor(Theme.textTertiary)
+                            .padding(.bottom, 4)
+                        ForEach(filteredItems) { legend in
+                            // TASK-L27 заменит на LegendCard, TASK-L29 — на LegendListRow.
+                            placeholderRow(legend)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func placeholderRow(_ legend: Legend) -> some View {
+        Button {
+            selectedLegend = legend
+        } label: {
+            HStack {
+                Text("\(legend.order). \(legend.name.en)")
+                    .font(.system(size: 13))
+                    .foregroundColor(.white)
+                Spacer()
+                Text(legend.yearsOfLife)
+                    .font(.system(size: 11))
+                    .foregroundColor(Theme.textTertiary)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(
+                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    .fill(Color.white.opacity(0.03))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    .stroke(Theme.surfaceStroke, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: - Computed filter result
+
+    private var filteredItems: [Legend] {
+        var items = LegendsLibrary.shared.search(debouncedQuery)
+        items = items.filter { legend in
+            if let era = filterEra, legend.era != era { return false }
+            if let field = filterField, legend.field != field { return false }
+            if let tag = filterTag, !legend.tags.contains(tag) { return false }
+            if let r = filterIntensity, !r.contains(legend.intensity) { return false }
+            if filterFavoritesOnly, !state.isFavoriteLegend(legend.id) { return false }
+            return true
+        }
+        return LegendsLibrary.shared.sort(items, by: sortOrderForChoice(sortChoice))
+    }
+
+    private func sortOrderForChoice(_ c: SortChoice) -> LegendsLibrary.SortOrder {
+        switch c {
+        case .order:          return .order
+        case .name:           return .alphabetical(state.language == .ru ? .ru : .en)
+        case .favoritesFirst: return .favoritesFirst(state.favoriteLegendIds)
+        }
+    }
+
+    // MARK: - Search debounce
+
+    private func scheduleSearchDebounce(_ value: String) {
+        searchWorkItem?.cancel()
+        let work = DispatchWorkItem { [value] in
+            self.debouncedQuery = value
+        }
+        searchWorkItem = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: work)
     }
 }
 

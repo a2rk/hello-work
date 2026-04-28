@@ -233,7 +233,7 @@ HelloWork/Sources/HelloWork/
 
 ### Phase D — Legends list view (12 tasks)
 
-- [ ] **TASK-L25 [impl]** — `LegendsListView` skeleton: header (title, count), search field, filters bar, sort picker, grid/list toggle. State: `searchQuery`, `filters`, `sortOrder`, `viewMode (.grid|.list)`. Query применяется ко всем legends, debounced 200ms через DispatchWorkItem.
+- [x] **TASK-L25 [impl]** — LegendsListView skeleton: header + search debounced 200ms + sort picker + grid/list toggle + filtered results.  → released as v0.10.26
 
 - [ ] **TASK-L26 [verify]** — TASK-L25
 
