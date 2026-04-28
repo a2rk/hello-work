@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.30",
+    "date": "2026-04-28",
+    "customMessage": "TASK-E01: README rewritten. Install: download HelloWork.dmg → drag → Applications → first-launch right-click Open. Update: Settings → Updates → Install latest. Uninstall: Trash + manual cleanup snippet. Build: single-app pipeline. Сохранён migration history раздел — explainer для апгрейда с pre-0.12.",
+    "main": "Install instructions не содержат HWInstaller / stub / Application Support как install location.",
+    "points": [
+      "Phase E (1/4)",
+      "Cycle: 25/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.30/HelloWork-0.11.30.dmg"
+  },
+  {
     "version": "0.11.29",
     "date": "2026-04-28",
     "customMessage": "TASK-D04 [verify]: OK. Volume icon правильно встроен в DMG: .VolumeIcon.icns копируется на mount, SetFile attributes выставлены. DMG в Finder с HelloWork иконкой. Phase D ЗАКРЫТА (4/4).",
