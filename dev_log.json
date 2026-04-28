@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.7",
+    "date": "2026-04-28",
+    "customMessage": "TASK-A02 [verify]: OK. MigrationManager логика проверена — идемпотентность через UserDefaults flag, partial-failure tolerance каждого шага, корректный path-guard для dev-сборок и AppTranslocation. SMAppService orphaned-регистрация старого engine path — macOS auto-cleanup, acceptable.",
+    "main": "Verification of TASK-A01.",
+    "points": [
+      "Phase A (2/8)",
+      "Cycle: 2/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.7/HelloWork-0.11.7.dmg"
+  },
+  {
     "version": "0.11.6",
     "date": "2026-04-28",
     "customMessage": "TASK-A01: создан MigrationManager. Идемпотентная миграция со stub+engine layout на single-app: чистит ~/Library/Application Support/HelloWork/HelloWork.app, recycle'ит /Applications/HWInstaller.app, unregister'ит SMAppService на старом пути. Флаг helloWorkDistributionMigratedTo_0_12 в UserDefaults — повторно не запускается.",

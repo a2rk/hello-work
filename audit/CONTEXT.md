@@ -219,7 +219,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
   - Файлы: `Sources/HelloWork/App/MigrationManager.swift` (новый).
   - Acceptance: Unit-thinkable scenarios (ниже Phase F): чистый new install — no-op без ошибок и без флага = false. Stub-engine layout — все три действия выполняются, флаг = true. Повторный запуск — return на step 1.
 
-- [ ] **TASK-A02 [verify]** — TASK-A01
+- [x] **TASK-A02 [verify]** — TASK-A01  → OK. Subtle: SMAppService.mainApp ключуется к текущему bundle path, поэтому orphaned регистрация старого engine очищается macOS auto-cleanup'ом — наш unregister идёт для нового пути (no-op если не registered, не падает). Acceptable. Released as v0.11.7
 
 - [ ] **TASK-A03 [impl]** — Подключить `MigrationManager.runIfNeeded(state:)` в `AppDelegate.applicationDidFinishLaunching` ПОСЛЕ `state` initialized но ДО `state.checkForUpdates()` и до permissions onboarding. Внутри Task { await ... }.
   - Файлы: `Sources/HelloWork/App/AppDelegate.swift`.
