@@ -193,7 +193,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L07 [impl]** — Search & filter helpers в `LegendsLibrary`  → released as v0.10.8
 
-- [ ] **TASK-L08 [verify]** — TASK-L07
+- [x] **TASK-L08 [verify]** — TASK-L07  → released as v0.10.9
 
 - [ ] **TASK-L09 [impl]** — Cleanup: удалить `legens_module/` в корне репо (после успешного перемещения). Убедиться что `git mv` сохранил историю.
   - Acceptance: `legens_module/` нет; `git log -- HelloWork/Sources/HelloWork/Resources/Legends/01-franklin-benjamin.json` показывает оригинал.
