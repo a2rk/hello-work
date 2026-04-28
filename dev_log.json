@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.64",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L63: revert wired with alert. Click Revert в banner'е → alert 'Восстановить старые расписания?' с описанием → destructive button зовёт LegendApplyEngine.revert(state:). Engine был готов с L17. 2 новых translation keys EN/RU/ZH.",
+    "main": "Alert state @State в самом banner'е — parents не дублируют логику. End-to-end revert flow live.",
+    "points": [
+      "Phase G (9/10)",
+      "63/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.64/HelloWork-0.10.64.dmg"
+  },
+  {
     "version": "0.10.63",
     "date": "2026-04-27",
     "customMessage": "TASK-L62 [verify]: OK. Banner правильно появляется/исчезает через if-let appliedLegend. legendIdFilter в detail view работает. Translation closure ru/en/zh ok. Revert callback пока no-op — TASK-L63 свяжет с alert + engine.revert.",

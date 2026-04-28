@@ -348,6 +348,8 @@ struct Translation {
     let legendsApplyConfirm: String
     let legendsApplyCancel: String
     let legendsApplyNoAppsHint: String
+    let legendsRevertConfirmTitle: String
+    let legendsRevertConfirmMessage: String
     let legendsCorruptHidden: (_ n: Int) -> String
     let legendsBlockTypeSleep: String
     let legendsBlockTypeMorning: String

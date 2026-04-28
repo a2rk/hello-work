@@ -9,9 +9,8 @@ struct LegendAppliedBanner: View {
     /// Если задан — показывать только когда `appliedLegendId == legendId`.
     /// nil — показывать для любого applied.
     var legendIdFilter: String? = nil
-    /// Callback на клик Revert. TASK-L61 — UI only, parent в TASK-L63 заменит
-    /// на показ alert + engine.revert.
-    var onRevert: () -> Void = {}
+
+    @State private var showRevertAlert: Bool = false
 
     private var appliedLegend: Legend? {
         guard let id = state.appliedLegendId else { return nil }
@@ -42,12 +41,20 @@ struct LegendAppliedBanner: View {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .stroke(Theme.accent.opacity(0.35), lineWidth: 1)
             )
+            .alert(t.legendsRevertConfirmTitle, isPresented: $showRevertAlert) {
+                Button(t.legendsApplyCancel, role: .cancel) {}
+                Button(t.legendsRevert, role: .destructive) {
+                    LegendApplyEngine.revert(state: state)
+                }
+            } message: {
+                Text(t.legendsRevertConfirmMessage)
+            }
         }
     }
 
     private var revertButton: some View {
         Button {
-            onRevert()
+            showRevertAlert = true
         } label: {
             HStack(spacing: 4) {
                 Image(systemName: "arrow.uturn.backward")
