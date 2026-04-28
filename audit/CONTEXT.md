@@ -178,7 +178,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L02 [verify]** — TASK-L01  → released as v0.10.3
 
-- [ ] **TASK-L03 [impl]** — `LegendsLibrary` — singleton, eager bundle-load на init, сохраняет в `[Legend]` отсортированный по `order`, плюс `Set<String> corruptIds` для битых файлов. Логирует через `devlog("legends", ...)`. Public API: `all: [Legend]`, `byID(_:) -> Legend?`, `corrupt: Set<String>`.
+- [x] **TASK-L03 [impl]** — `LegendsLibrary` — singleton, eager bundle-load на init, сохраняет в `[Legend]` отсортированный по `order`, плюс `Set<String> corruptIds` для битых файлов. Логирует через `devlog("legends", ...)`. Public API: `all: [Legend]`, `byID(_:) -> Legend?`, `corrupt: Set<String>`.  → released as v0.10.4
   - Файл: `Sources/HelloWork/Domain/Legends/LegendsLibrary.swift`
   - Bundle.module → enumeratesContents Resources/Legends/*.json
   - Acceptance: на пустом bundle (тест) возвращает []; на bundle с 1 валидным + 1 битым — возвращает 1 в `all`, 1 в `corrupt`.

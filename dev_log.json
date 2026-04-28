@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.10.4",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L03: LegendsLibrary singleton — eager bundle-load JSON-файлов из Resources/Legends/, сортировка по order, изоляция битых через corruptIds. Public API: all, byID(_:), corruptIds.",
+    "main": "Реализовали data layer для модуля. На init читаем все *.json из Bundle.module Legends-подпапки, decode каждый. Один битый файл попадает в corruptIds (остальные грузятся). devlog логирует count и failure'ы.",
+    "points": [
+      "Sources/HelloWork/Domain/Legends/LegendsLibrary.swift",
+      "Bundle.module.urls(forResourcesWithExtension:subdirectory:) — bundle path",
+      "Resilient decode: один битый файл не валит модуль"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.4/HelloWork-0.10.4.dmg"
+  },
+  {
     "version": "0.10.3",
     "date": "2026-04-28",
     "customMessage": "TASK-L02 verified: domain models схема соответствует JSON всех 6 проверенных sample-файлов. Build чистый.",
