@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.48",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L47: Quotes carousel в detail view. 3-5 цитат с auto-rotate (5с) через Timer.publish + onReceive. Hover паузит ротацию. Стрелки prev/next с wrap-around, кликабельные dots, '1/N' индикатор.",
+    "main": "Cross-fade animation между slide'ами через .id(currentIndex) + transition. Если quotes пуст — секция скрыта. Defensive clampIndex onAppear.",
+    "points": [
+      "Phase E COMPLETE (12/12)",
+      "47/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.48/HelloWork-0.10.48.dmg"
+  },
+  {
     "version": "0.10.47",
     "date": "2026-04-27",
     "customMessage": "TASK-L46 verify: stephenson-neal в JSON имеет allowedSlots обратном хроно-порядке (21:00 перед 20:00). Добавил sortedSlots сортировку в UI — resilience против любых reverse/random orderings в данных.",

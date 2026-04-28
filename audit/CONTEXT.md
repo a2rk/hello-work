@@ -279,7 +279,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L46 [verify]** — TASK-L45  → finding: stephenson-neal в JSON имеет allowedSlots в reverse chrono (21:00 перед 20:00). Добавил sortedSlots сортировку в UI для resilience. Released as v0.10.47
 
-- [ ] **TASK-L47 [impl]** — Quotes carousel: 3-5 цитат с auto-rotate (5с), стрелки prev/next, индикаторы. Если quotes пусты — секция скрыта.
+- [x] **TASK-L47 [impl]** — Quotes carousel: 3-5 цитат с auto-rotate (5с), стрелки prev/next, индикаторы. Если quotes пусты — секция скрыта.  → released as v0.10.48
 
 - [ ] **TASK-L48 [verify]** — TASK-L47
 
