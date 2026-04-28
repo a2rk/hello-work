@@ -13,7 +13,9 @@ final class LegendsLibrary {
     let corruptIds: Set<String>
 
     private init() {
+        devlog("legends", "init: enter")
         let (legends, corrupt) = Self.loadFromBundle()
+        devlog("legends", "init: loadFromBundle returned legends=\(legends.count) corrupt=\(corrupt.count) — sorting")
         self.all = legends.sorted { lhs, rhs in
             if lhs.order != rhs.order { return lhs.order < rhs.order }
             return lhs.id < rhs.id
@@ -90,13 +92,17 @@ final class LegendsLibrary {
     }
 
     private static func loadFromBundle() -> ([Legend], Set<String>) {
-        guard let urls = Bundle.module.urls(
+        devlog("legends", "loadFromBundle: enter — querying Bundle.module")
+        let bundle = Bundle.module
+        devlog("legends", "loadFromBundle: bundle.bundlePath=\(bundle.bundlePath)")
+        guard let urls = bundle.urls(
             forResourcesWithExtension: "json",
             subdirectory: "Legends"
         ) else {
-            devlog("legends", "bundle has no Legends/ subdir or empty — 0 loaded")
+            devlog("legends", "loadFromBundle: Bundle.module.urls returned nil — empty subdir or unresolved bundle")
             return ([], [])
         }
+        devlog("legends", "loadFromBundle: found \(urls.count) URLs")
         var legends: [Legend] = []
         var corrupt: Set<String> = []
         let decoder = JSONDecoder()
@@ -111,6 +117,7 @@ final class LegendsLibrary {
                 devlog("legends", "FAILED decode \(stem): \(error.localizedDescription)")
             }
         }
+        devlog("legends", "loadFromBundle: complete — \(legends.count) ok, \(corrupt.count) corrupt")
         return (legends, corrupt)
     }
 }

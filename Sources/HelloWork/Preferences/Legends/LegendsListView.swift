@@ -54,6 +54,9 @@ struct LegendsListView: View {
             })
         } else {
             list
+                .onAppear {
+                    devlog("legends", "LegendsListView body — onAppear (selectedLegend=nil)")
+                }
         }
     }
 

@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.13.3",
+    "date": "2026-04-28",
+    "customMessage": "Diagnostic logging для crash на Mac mini. Добавлены step-by-step devlog в LegendsLibrary init / loadFromBundle (включая bundle.bundlePath) + onAppear в LegendsListView body. Цель — увидеть в логе ровно где обрывается выполнение: bundle resolution, URL enumeration, JSON decode, sort, или ещё раньше в SwiftUI rendering.",
+    "main": "Прошлый лог пользователя оборвался на [migration] already done — нет ни одной [legends] записи. Значит crash до loadFromBundle или внутри. Step-logs покажут.",
+    "points": [
+      "[legends] init: enter / loadFromBundle: enter / bundlePath / found N URLs / complete",
+      "[legends] LegendsListView body — onAppear",
+      "Если на 0.13.3 в логе будет 'init: enter' но не дойдёт до 'loadFromBundle' — crash в Bundle.module access",
+      "Если дойдёт до 'found N URLs' — crash в decode loop (определим какой URL последний)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.13.3/HelloWork-0.13.3.dmg"
+  },
+  {
     "version": "0.13.2",
     "date": "2026-04-28",
     "customMessage": "Defensive fix в LegendQuotesCarousel: legend.quotes[0] (force-index access) → quotes[safe:] ?? quotes.first. Если legend.quotes пуст и UI всё-таки попадает в quoteCard — больше не крашит. Поиск crash'а на Mac mini продолжается через crash log.",
