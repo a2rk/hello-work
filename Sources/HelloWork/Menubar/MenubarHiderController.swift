@@ -14,11 +14,11 @@ final class MenubarHiderController: ObservableObject {
     private(set) var mainItem: NSStatusItem?
     private var currentIconStyle: StatusIconStyle = .solid
 
-    /// Сохранённые позиции items при collapse — для восстановления при expand.
-    /// Key: windowID, Value: original X на экране.
-    private var savedPositions: [CGWindowID: CGFloat] = [:]
-    /// Сохранённые items с их полными данными (нужны для restore через mover).
+    /// Сохранённые items с их полными данными (нужны для restore).
     private var savedItems: [MenuBarItem] = []
+    /// Map: windowID нашего item → windowID соседа справа (anchor для restore).
+    /// При restore делаем `mover.restore(item, rightOf: neighbor)`.
+    private var savedRightNeighbors: [CGWindowID: MenuBarItem] = [:]
 
     /// Последний auto-сигнал, переданный в `applyAuto` (focus-mode / schedule).
     /// Семантика: применяем auto только когда СИГНАЛ изменился. Если сигнал
@@ -191,13 +191,29 @@ final class MenubarHiderController: ObservableObject {
             return
         }
 
-        savedItems = items
-        savedPositions = Dictionary(uniqueKeysWithValues: items.map { ($0.windowID, $0.frame.midX) })
+        // Park anchor — самый левый Apple-managed item. Hideable items
+        // двигаем «leftOf parkAnchor» — они уезжают левее, за край.
+        guard let parkAnchor = MenuBarItemMover.findParkAnchor(in: all) else {
+            devlog("hider", "collapseInternal — no park anchor (no immovable items?), abort")
+            return
+        }
+        devlog("hider", "park anchor wid=\(parkAnchor.windowID) bid=\(parkAnchor.bundleID ?? "nil") midX=\(String(format: "%.0f", parkAnchor.frame.midX))")
 
-        // Берём актуальный frame через дешёвый CGS-запрос на ОДНО окно
-        // (Bridging.getWindowFrame) вместо полного перечисления menubar
-        // (MenuBarItem.currentItems) на каждой итерации цикла.
+        // Сохраняем для restore: map'им каждый hideable item на его правого
+        // соседа (Apple-managed или другой), чтобы знать куда вернуть.
+        // Сортируем all по midX, для каждого hideable находим следующего справа.
+        let sortedAll = all.sorted(by: { $0.frame.midX < $1.frame.midX })
+        savedRightNeighbors.removeAll()
+        for item in items {
+            if let idx = sortedAll.firstIndex(where: { $0.windowID == item.windowID }),
+               idx + 1 < sortedAll.count {
+                savedRightNeighbors[item.windowID] = sortedAll[idx + 1]
+            }
+        }
+        savedItems = items
+
         var movedAny = false
+        // Двигаем справа налево — правые первыми укатываются в park-зону.
         for item in items.sorted(by: { $0.frame.midX > $1.frame.midX }) {
             let liveFrame = Bridging.getWindowFrame(for: item.windowID) ?? item.frame
             let current = MenuBarItem(
@@ -208,23 +224,19 @@ final class MenubarHiderController: ObservableObject {
                 ownerName: item.ownerName
             )
             let beforeX = current.frame.midX
-            let ok = MenuBarItemMover.hide(current)
+            let ok = MenuBarItemMover.hide(current, parkAnchor: parkAnchor)
             let afterFrame = Bridging.getWindowFrame(for: item.windowID)
             let afterX = afterFrame?.midX ?? .nan
             devlog("hider.move",
                    "hide wid=\(item.windowID) before=\(String(format: "%.0f", beforeX)) after=\(String(format: "%.0f", afterX)) success=\(ok)")
             if ok { movedAny = true }
-            Thread.sleep(forTimeInterval: 0.03)
+            Thread.sleep(forTimeInterval: 0.05)
         }
 
         guard movedAny else {
             devlog("hider", "collapseInternal — movedAny=false, rolling back")
-            if !CGPreflightScreenCaptureAccess() {
-                devlog("hider", "hint: Screen Recording НЕ выдан — Sequoia требует его для drag'а menubar items")
-                onAccessibilityRequired?()
-            }
             savedItems.removeAll()
-            savedPositions.removeAll()
+            savedRightNeighbors.removeAll()
             return
         }
 
@@ -246,14 +258,12 @@ final class MenubarHiderController: ObservableObject {
 
     private func restoreAllItems() {
         guard AXIsProcessTrusted() else {
-            // Без AX откатить не сможем — просто чистим state, чтобы не зависнуть.
             savedItems.removeAll()
-            savedPositions.removeAll()
+            savedRightNeighbors.removeAll()
             return
         }
-        // Восстанавливаем слева направо: сначала те что были левее,
-        // чтобы они «упёрлись» в левый край и более правые встали корректно.
-        // Frame обновляем через лёгкий per-window CGS-запрос вместо полного перечисления.
+        // Восстанавливаем слева направо: каждый item ставим «слева от своего
+        // right-соседа», в том порядке как они были.
         for item in savedItems.sorted(by: { $0.frame.midX < $1.frame.midX }) {
             let liveFrame = Bridging.getWindowFrame(for: item.windowID) ?? item.frame
             let current = MenuBarItem(
@@ -263,13 +273,13 @@ final class MenubarHiderController: ObservableObject {
                 title: item.title,
                 ownerName: item.ownerName
             )
-            if let originalX = savedPositions[item.windowID] {
-                MenuBarItemMover.restore(current, toX: originalX)
-                Thread.sleep(forTimeInterval: 0.03)
+            if let neighbor = savedRightNeighbors[item.windowID] {
+                MenuBarItemMover.move(item: current, to: .leftOf(neighbor))
+                Thread.sleep(forTimeInterval: 0.05)
             }
         }
         savedItems.removeAll()
-        savedPositions.removeAll()
+        savedRightNeighbors.removeAll()
     }
 
     // MARK: - Build items

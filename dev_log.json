@@ -1,5 +1,20 @@
 [
   {
+    "version": "0.12.4",
+    "date": "2026-04-28",
+    "customMessage": "Menubar hider — Ice-style rewrite. Sequoia блокирует прямой event.post() как 'external injection'. Перешли на double-tap-chain scrombleEvent: null→pid → real→session → real→pid. Sequence 2 события (Down off-screen с cmd + Up на anchor без cmd) с разными windowID-field на Down (item) и Up (anchor — Apple-managed neighbor). MoveDestination = .leftOf/.rightOf для relative-to команды. permitAllEvents для suppression filter.",
+    "main": "Полный rewrite MenuBarItemMover + новый Bridging/EventTap.swift с scrombleEvent + tapCreateForPid. Restore через savedRightNeighbors. Debug-кнопка 'Test single hide' в dev-mode для итерации. Если этот патч не работает — следующий цикл с Input Monitoring permission диагностикой.",
+    "points": [
+      "scrombleEvent через double-tap chain",
+      "Down+Up sequence (no Dragged)",
+      "Different windowID-field на Down vs Up",
+      "permitAllEvents для Sequoia suppression",
+      "MoveDestination model + park anchor",
+      "Debug button в dev-mode для smoke-test одного item'а"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.12.4/HelloWork-0.12.4.dmg"
+  },
+  {
     "version": "0.12.3",
     "date": "2026-04-28",
     "customMessage": "🎯 AUDIT CYCLE COMPLETE — 32/32 tasks. TASK-F04 [verify]: OK. Phase A-F все закрыты. Distribution overhaul ready: single HelloWork.app в /Applications, drag-to-install DMG, automatic migration co stub+engine, in-place updates, post-update toast, README обновлён. Interactive smoke на real machine — за user'ом.",

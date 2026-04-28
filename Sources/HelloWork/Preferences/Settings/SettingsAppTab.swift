@@ -46,7 +46,39 @@ struct SettingsAppTab: View {
                     updateRow
                 }
             }
+
+            if state.developerMode {
+                SettingsCard.section(title: "Menubar Hider Debug") {
+                    SettingsCard.card {
+                        SettingsCard.row(
+                            title: "Test single hide",
+                            description: "Pick leftmost hideable item and try to move it off-screen. Watch Diagnostics tab for full devlog trace."
+                        ) {
+                            Button("Test") { runSingleHideTest() }
+                                .controlSize(.small)
+                        }
+                    }
+                }
+            }
         }
+    }
+
+    private func runSingleHideTest() {
+        let all = MenuBarItem.currentItems()
+        let hideable = all.filter { $0.isHideable }
+        devlog("hider.test", "currentItems total=\(all.count) hideable=\(hideable.count)")
+        guard let target = hideable.first else {
+            devlog("hider.test", "no hideable item — abort")
+            return
+        }
+        guard let parkAnchor = MenuBarItemMover.findParkAnchor(in: all) else {
+            devlog("hider.test", "no park anchor — abort")
+            return
+        }
+        devlog("hider.test", "target wid=\(target.windowID) bid=\(target.bundleID ?? "nil") midX=\(String(format: "%.0f", target.frame.midX))")
+        devlog("hider.test", "park anchor wid=\(parkAnchor.windowID) bid=\(parkAnchor.bundleID ?? "nil") midX=\(String(format: "%.0f", parkAnchor.frame.midX))")
+        let ok = MenuBarItemMover.hide(target, parkAnchor: parkAnchor)
+        devlog("hider.test", "result success=\(ok)")
     }
 
     private var launchAtLoginBinding: Binding<Bool> {

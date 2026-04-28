@@ -67,7 +67,10 @@ extension CGEventField {
 
 extension CGEvent {
     /// Создаёт mouse event адресованный конкретному menubar item.
-    /// pid — owner процесса item'а; мы маршалируем event как будто пришёл от его процесса.
+    /// pid — owner процесса item'а; мы маршалируем event как будто пришёл
+    /// от его процесса. windowID может быть от разного item'а на Down vs Up
+    /// (Ice: Down таргетит item который двигаем, Up таргетит neighbor рядом
+    /// с которым ставим — это и даёт WindowServer'у команду «move relative to»).
     static func menuBarItemEvent(
         type: MenuBarItemEventType,
         location: CGPoint,
