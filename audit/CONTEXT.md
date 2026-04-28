@@ -323,7 +323,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L65 [impl]** — zh-фолбэк: для bio/quotes/labels — если zh-locale активна → возвращаем en (с visual subtle hint «en» в углу карточки/секции). Translation+legendLocalized helper вокруг `LocalizedString.value(for: AppLanguage)`.  → released as v0.10.66
 
-- [ ] **TASK-L66 [verify]** — TASK-L65
+- [x] **TASK-L66 [verify]** — TASK-L65  → finding: LegendLocalized.resolve(.system) дублировал locale-detection логику из L10n.resolveSystem — risk of drift при добавлении локалей. Извлёк L10n.resolveSystemLanguage() → AppLanguage helper, оба сайта используют его. Released as v0.10.67
 
 - [ ] **TASK-L67 [impl]** — Card animations: stagger fade-in при appear (delay = idx * 0.02s, max 0.5s), spring hover scale 1.02, favorite-pop. List row — без stagger но с transitionInsertion.
 

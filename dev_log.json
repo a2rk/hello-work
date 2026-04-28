@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.67",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L66 verify: LegendLocalized.resolve(.system) дублировал locale-detection логику из L10n.resolveSystem — risk drift'а при добавлении локалей. Извлёк L10n.resolveSystemLanguage() → AppLanguage. Оба сайта используют один helper.",
+    "main": "Verification of TASK-L65. DRY refactor.",
+    "points": [
+      "Phase H (2/6)",
+      "66/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.67/HelloWork-0.10.67.dmg"
+  },
+  {
     "version": "0.10.66",
     "date": "2026-04-27",
     "customMessage": "TASK-L65: zh fallback unified. LegendLocalized.resolve/text helper заменяет inline switch'и в 6 местах (LegendDetailView, LegendCard, LegendListRow, LegendMessengerWindows, LegendQuotesCarousel, LegendAppliedBanner). При zh или system→zh — возвращает .en и isFallback=true. Hero-секция показывает «EN» badge при fallback.",

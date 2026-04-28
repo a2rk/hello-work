@@ -22,14 +22,9 @@ enum LegendLocalized {
         case .zh:
             return Resolved(text: ru_en.en, isFallback: true)
         case .system:
-            // System locale: resolve через preferredLanguages.
-            let pref = Locale.preferredLanguages.first ?? "en"
-            let code = Locale(identifier: pref).language.languageCode?.identifier ?? "en"
-            if code == "ru" {
-                return Resolved(text: ru_en.ru, isFallback: false)
-            }
-            // EN или zh-system: показываем EN, fallback только если zh-system.
-            return Resolved(text: ru_en.en, isFallback: code == "zh")
+            // .system делегирует L10n.resolveSystemLanguage чтобы не дублировать
+            // locale-detection. Recursive call даёт правильный fallback флаг.
+            return resolve(ru_en, in: L10n.resolveSystemLanguage())
         }
     }
 

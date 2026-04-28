@@ -28,6 +28,17 @@ enum L10n {
     }
 
     static func resolveSystem() -> Translation {
+        switch resolveSystemLanguage() {
+        case .ru: return .ru
+        case .zh: return .zh
+        case .en, .system: return .en
+        }
+    }
+
+    /// Резолвит .system → конкретный AppLanguage по primary system locale.
+    /// Используется и в L10n.resolveSystem (для UI Translation), и в
+    /// LegendLocalized (для fallback решения по контенту легенд).
+    static func resolveSystemLanguage() -> AppLanguage {
         let preferred = Locale.preferredLanguages.first ?? "en"
         let code = Locale(identifier: preferred).language.languageCode?.identifier ?? "en"
         switch code {
