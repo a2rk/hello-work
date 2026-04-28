@@ -275,7 +275,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L44 [verify]** — TASK-L43  → finding: formatTotal(30) рисовал "0h 30m" — для 35 блоков <60m в датасете это уродский формат. Добавлен sub-hour branch → "30m". Released as v0.10.45
 
-- [ ] **TASK-L45 [impl]** — Messenger windows section: показывает `blockSchedule.description` + список `allowedSlots` с time-range, appliesTo (work/personal pill), rationale.
+- [x] **TASK-L45 [impl]** — Messenger windows section: показывает `blockSchedule.description` + список `allowedSlots` с time-range, appliesTo (work/personal pill), rationale.  → released as v0.10.46
 
 - [ ] **TASK-L46 [verify]** — TASK-L45
 

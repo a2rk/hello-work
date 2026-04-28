@@ -19,6 +19,7 @@ struct LegendDetailView: View {
             hero
             ringSection
             bioSection
+            LegendMessengerWindows(state: state, legend: legend)
             sourcesSection
         }
     }
