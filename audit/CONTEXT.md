@@ -1,393 +1,484 @@
-# HelloWork — Legends Module Audit Context & Task Ledger
+# HelloWork — Single-App Distribution Refactor (v0.12)
 
-> Этот файл — **единственный источник истины** для агента, который выполняет таски. Перед каждой итерацией читать его целиком. После каждой итерации обновлять статусы.
+> Этот файл — **единственный источник истины** для агента, выполняющего таски. Перед каждой итерацией читать целиком, после — обновлять статусы.
 >
-> **Цель цикла**: внедрить модуль «Истории легенд» — 60 расписаний великих людей, которые юзер может изучать и «применять» к собственному schedule-блокированию приложений. Версионирование — **одна патч-версия на таск**. Старт `0.10.1` → финиш минимум `0.10.65` (60 тасков), реально **0.11.0** как минорный bump-финал. Каждый шаг — отдельный `gh release` чтобы юзер видел движение и мог откатиться.
+> **Цель цикла**: убрать stub-installer pattern. Перейти к **одному `HelloWork.app`** в `/Applications`, который ставится drag-to-Applications, обновляется in-place через UpdateInstaller, переживает обновления без потери TCC/UserDefaults. Существующих юзеров (которые ставили stub) — мигрируем тихо.
+>
+> **Версионирование**: одна патч-версия на таск. Старт `0.11.6` → финиш **`0.12.0`** (минорный bump-флаг distribution-overhaul). Каждый таск = `gh release create`.
 
 ---
 
-## 1. Что мы добавляем
+## 1. Зачем рефакторинг
 
-**Модуль «Легенды»** — образовательно-практический раздел в HelloWork. Идея: помочь юзеру дисциплинировать себя через изучение и копирование расписаний выдающихся людей (Франклин, Маск, Карнеги, Стивенсон, Виллинк и ещё 55).
+### Симптом, который ловит юзер
 
-### Сценарий пользователя
+1. Скачивает `HelloWork.dmg` (статичное имя) — внутри `HWInstaller.app`.
+2. Тащит `HWInstaller` в `/Applications`, выдаёт права на запуск (Gatekeeper).
+3. Stub запускается, качает engine (~3.6 MB), кладёт в `~/Library/Application Support/HelloWork/HelloWork.app`, запускает.
+4. **Engine виден в Spotlight, но НЕТ в `/Applications`**. Юзер не понимает где приложение, как его повторно открыть, как обновить вручную, как удалить.
+5. `/Applications/HWInstaller.app` остаётся торчать после установки — выглядит как мусор.
 
-1. Открывает Prefs → новый sidebar-пункт «Легенды».
-2. Видит **сетку или список карточек** (юзер сам переключает grid/list). На карточке — аватар (placeholder-монограмма), имя, годы жизни, intensity (1–5 точек), primary tag, кнопка «звёздочка» для favorites.
-3. Может **искать**, **фильтровать** (era / field / tag / intensity), **сортировать** (по умолчанию order, отдельно — favorites first, по эпохе, по области), **переключать** между Grid и List.
-4. Жмёт на карточку → **Detail View** с биографией, лентой источников, **круговым графиком 24-часового расписания**, секцией про мессенджеры (когда разрешены), цитатами.
-5. Может **«Применить» расписание** — открывается sheet, где он выбирает каким из своих managed apps к какой категории привязать (work-messenger / personal-messenger). HelloWork импортирует `allowedSlots` легенды в slots выбранных приложений (предварительно сохранив бэкап старых slots).
-6. В sidebar/detail виден баннер «Сейчас применено: <легенда>» с кнопкой Revert — откат к бэкапу.
-7. Может ставить любую легенду в favorites; на отдельной вкладке/фильтре «★» — только избранные.
+### Что с этим не так на уровне архитектуры
 
-### Зачем это HelloWork
+- **Two-bundle setup**: `dev.helloworkapp.macos` (stub) + `dev.helloworkapp.macos.engine` (engine). Два разных code-signing identifier, две иконки (ещё и инвертированные «чтобы отличать»), двойная путаница в TCC-настройках.
+- **Engine в нестандартной локации**: `~/Library/Application Support/HelloWork/HelloWork.app`. macOS не предполагает .app в этой папке. Spotlight, Launchpad, Dock, drag-to-trash — всё ломается или работает странно.
+- **UpdateInstaller уже умеет in-place self-update** (`Sources/HelloWork/Updates/UpdateInstaller.swift`) — скачивает DMG, заменяет `Bundle.main.bundleURL` через детач-скрипт. Stub стал ненужным.
+- **Discoverability нулевая**: новый юзер качает DMG → видит «HWInstaller» → ставит → больше никогда не видит «HWInstaller», вместо него где-то «HelloWork». Cognitive cost высокий.
 
-- **Усиливает основную миссию** — schedule-based blocking. Юзер часто не знает «как правильно» расписать день. Легенды дают готовые шаблоны, проверенные историей.
-- **Educational hook** — у HelloWork появляется content layer, retention растёт.
-- **Privacy-first остаётся**: все 60 JSON-файлов вшиты в bundle, никаких сетевых запросов.
-- **Local-first остаётся**: применение → стандартный mutate `managedApps.slots`, всё в UserDefaults.
+### Что должно стать
+
+- Один `/Applications/HelloWork.app`. Ставится drag-to-Applications. Запускается из Spotlight, Launchpad, Dock как любая нормальная mac-аппа.
+- Обновления — кнопка «Install update» в Preferences → Updates. UpdateInstaller заменяет себя в `/Applications` через helper-скрипт (механика уже работает).
+- Существующим юзерам со stub-engine layout — тихая авто-миграция при первом запуске новой версии: убираем `~/Library/Application Support/HelloWork/HelloWork.app`, убираем `/Applications/HWInstaller.app`, перерегистрируем LoginItem на новый путь. Toast-уведомление: «HelloWork moved to /Applications».
+- `dev.helloworkapp.macos.engine` остаётся bundle ID единственного приложения — TCC grants и UserDefaults сохраняются у существующих юзеров. Stub-ID `dev.helloworkapp.macos` забывается.
 
 ### Что должно быть «9.5/10»
 
-- **Корректность**: применение легенды реально модифицирует slots выбранных apps; revert восстанавливает оригинал бит-в-бит. Никаких «применили в UI, а на диске не отразилось».
-- **Производительность**: 60 JSON загружаются 1 раз на init в фоне (≤ 50ms eager load), кэшируются. Список рендерится lazy. Search debounce.
-- **UX**: Grid/List toggle помнится. Favorites персистятся. Поиск мгновенный. Карточки с микро-анимацией. Detail view со scroll-анимацией к секции по якорю.
-- **i18n**: все UI-строки en / ru / zh. Bio/quotes/labels легенд хранятся в JSON только ru/en (так в исходных данных) — для zh фолбэк на en (с visual badge или silent — на выбор продукта).
-- **Resilience**: повреждённый JSON одного файла не валит весь модуль — этот legend помечается как `.corrupt`, остальные 59 рендерятся.
-- **Versioning**: persisted favorites + applied state schema-versioned, как managedApps в прошлом цикле.
-- **Dead code = 0**.
+- **Discoverability**: новый юзер за <30с понимает где приложение и как его запускать. DMG имеет background-image со стрелкой и `/Applications` shortcut.
+- **Migration safety**: апгрейд со stub-engine на новый single-app — без потери favoriteLegendIds, managedApps, applied state, settings, devlog. TCC permissions не сбрасываются.
+- **Update path**: UpdateInstaller замещает себя в `/Applications` через helper-скрипт без app-translocation проблем. После update — корректный relaunch.
+- **Rollback**: если что-то сломалось — юзер тащит .app из старого DMG в /Applications, всё работает (потому что UserDefaults+TCC keyed по bundle ID, не по пути).
+- **Clean uninstall**: drag-to-trash → Move to Trash → готово. UserDefaults и App Support чистятся отдельно (без in-app кнопки в этом цикле — out of scope).
+- **Documentation**: README.md обновлён, в нём чёткая инструкция «download → drag → run».
+- **Dead code = 0**. Stub-source, stub-scripts, инвертированная иконка — удалены полностью.
 
 ---
 
-## 2. Источник данных
+## 2. Текущая инфраструктура (что трогаем)
 
-60 JSON-файлов сейчас в `/Users/igor/Code/Swift/FocusNap/legens_module/` (CWD корень репо). Все имеют идентичную структуру (TASK-005 переносит их в bundle).
+### Файлы, которые удаляются полностью
 
-### Стабильная схема (все 60 файлов)
+```
+HelloWork/
+├── Sources/HelloWorkStub/             ← удаляется вся папка
+│   ├── EngineManager.swift
+│   ├── StubAppDelegate.swift
+│   ├── StubL10n.swift
+│   ├── StubView.swift
+│   └── main.swift
+├── scripts/
+│   ├── build_stub.sh                  ← удаляется
+│   ├── package_stub.sh                ← удаляется
+│   ├── Info.plist.stub.template       ← удаляется
+│   ├── AppIconInstaller.iconset/      ← удаляется
+│   └── AppIconInstaller.icns          ← удаляется
+└── Package.swift                      ← убираем target HelloWorkStub
+```
 
-```jsonc
-{
-  "id": "franklin-benjamin",          // stable string id
-  "order": 1,                          // 1..60, default sort
-  "name":     { "ru": "...", "en": "..." },
-  "fullName": { "ru": "...", "en": "..." },
-  "yearsOfLife": "1706–1790",          // string, иногда с длинным тире
-  "era": "18th_century",               // enum-like: 18th_century, 19th_century, industrial, modern, ...
-  "field": "polymath",                 // enum-like: polymath, tech_entrepreneur, industrialist, writer, athlete, ...
-  "tags": ["founding_father", "inventor", "..."],
-  "nationality": "US",                 // ISO-like, иногда "US/ZA" "US/UK"
-  "avatarUrl": null,                   // null в исходниках; UI рисует монограмму
-  "intensity": 4,                      // 1..5
-  "bio": { "ru": "...", "en": "..." }, // параграф 1–3 предложения
-  "sources": [
-    { "type": "book"|"article"|"interview", "title": "...", "author": "...", "url": "..." }
-  ],
-  "lifeSchedule": {
-    "morningQuestion": { "ru": "...", "en": "..." },   // optional, не у всех
-    "eveningQuestion": { "ru": "...", "en": "..." },   // optional
-    "blocks": [
-      { "start": "00:00", "end": "05:00", "type": "sleep",
-        "label": { "ru": "...", "en": "..." } }
-    ]
-  },
-  "blockSchedule": {
-    "description": { "ru": "...", "en": "..." },
-    "allowedSlots": [
-      { "start": "12:30", "end": "13:30",
-        "appliesTo": ["work_messengers" | "personal_messengers"],
-        "rationale": { "ru": "...", "en": "..." } }
-    ],
-    "totalAllowedMinutes": 180
-  },
-  "quotes": [ { "ru": "...", "en": "..." } ]
+### Файлы, которые меняются
+
+```
+HelloWork/
+├── scripts/
+│   ├── build.sh                       ← убираем "engine"-терминологию,
+│   │                                     dist/HelloWork.app (без подпапки engine/)
+│   ├── package.sh                     ← DMG с /Applications symlink + drag-layout,
+│   │                                     volume name "HelloWork", статичный
+│   │                                     HelloWork.dmg + версионный HelloWork-X.Y.Z.dmg
+│   └── Info.plist.template            ← остаётся, но проверим нет ли stub-only ключей
+├── Sources/HelloWork/
+│   ├── App/AppDelegate.swift          ← + одноразовая миграция при старте
+│   └── App/AppState.swift             ← + одноразовый toast «migrated to /Applications»
+└── README.md                          ← инструкция установки переписывается
+```
+
+### Файлы, которые не трогаем
+
+- `Sources/HelloWork/Updates/UpdateInstaller.swift` — уже работает с `/Applications` через helper-скрипт. `canSelfInstall` корректно проверяет writability родителя `Bundle.main.bundleURL`.
+- Bundle ID `dev.helloworkapp.macos.engine` — **сохраняется**. Это критично для TCC grants и UserDefaults continuity у существующих юзеров.
+- `setup_signing.sh` + `HelloWork Self-Signed` cert — те же. TCC ключуется по cert hash + bundle ID, оба не меняются → grants выживают.
+- Legends/focus/schedule/stats/permissions/menubar — НЕ ТРОГАЕМ.
+
+### Что кладём пользователю на диск (новый layout)
+
+```
+/Applications/HelloWork.app                    ← единственное место установки
+~/Library/Preferences/dev.helloworkapp.macos.engine.plist   ← сохраняется как было
+~/Library/Application Support/HelloWork/       ← сохраняется (devlog.txt, stats.json),
+│                                                 БЕЗ HelloWork.app внутри после миграции
+└── (HelloWork.app удалён)
+~/Library/Caches/dev.helloworkapp.macos.engine/        ← сохраняется
+~/Library/HTTPStorages/dev.helloworkapp.macos.engine/  ← сохраняется
+```
+
+### Migration matrix (что бывает с существующими юзерами)
+
+| Старое состояние | Действие при первом запуске v0.12 из /Applications |
+|---|---|
+| `/Applications/HelloWork.app` есть, `~/Library/Application Support/HelloWork/HelloWork.app` есть, `/Applications/HWInstaller.app` есть | Тихо удаляем engine-копию из App Support и HWInstaller из /Applications. Re-register SMAppService на новый путь. Показать toast «moved to /Applications». |
+| `/Applications/HelloWork.app` есть, App Support пустой от .app, HWInstaller отсутствует | Чистый новый юзер — ничего не делаем, миграция no-op. |
+| `/Applications/HelloWork.app` нет, App Support содержит HelloWork.app, HWInstaller есть | Юзер запустил старый stub-flow — игнорируем (мы запускаемся из /Applications, иначе нас здесь не было бы). Не наш кейс. |
+| `/Applications/HelloWork.app` есть, App Support contains HelloWork.app, HWInstaller отсутствует | Юзер мигрировал .app вручную ранее — стандартная миграция (удалить App Support .app). |
+
+### LoginItem (SMAppService)
+
+Если у юзера было включено «Launch at Login», SMAppService зарегистрирован на путь `~/Library/Application Support/HelloWork/HelloWork.app`. После миграции этот путь удалится — login item зависнет битый. Решение в Phase B: в migration step вызываем `SMAppService.mainApp.unregister()` ДО удаления старой engine-копии (чтобы система знала старый path и удалила запись), потом — если юзер хочет — `register()` с новым путём (Bundle.main укажет на /Applications). Но безопаснее: после миграции `launchAtLogin` сбрасывается в false, юзер сам включает повторно. Это коммуницируется в toast'е.
+
+---
+
+## 3. Архитектура миграционного флоу
+
+### Точка входа: `AppDelegate.applicationDidFinishLaunching`
+
+```swift
+// pseudo-code порядка действий при старте
+1. consumePreviousUpdateStatus()  // существующий механизм UpdateInstaller
+2. MigrationManager.runIfNeeded() // НОВОЕ
+3. ... остальной existing bootstrap (state init, permissions, etc.)
+```
+
+### `MigrationManager` (новый файл)
+
+`Sources/HelloWork/App/MigrationManager.swift`:
+
+```
+@MainActor
+enum MigrationManager {
+    static let migrationFlagKey = "helloWorkDistributionMigratedTo_0_12"
+
+    static func runIfNeeded(state: AppState) async
+    // 1. Если UserDefaults флаг migrationFlagKey == true → return.
+    // 2. Если Bundle.main.bundleURL не в /Applications → return (we're in dev or
+    //    weird location; не мигрируем).
+    // 3. Detect и cleanup:
+    //    a. Если Application Support/HelloWork/HelloWork.app — удалить
+    //    b. Если /Applications/HWInstaller.app — переместить в Trash через
+    //       NSWorkspace.recycle (юзер увидит и сможет восстановить если что)
+    //    c. Если SMAppService был зарегистрирован — unregister (state перечитает)
+    // 4. Set флаг в true.
+    // 5. Запланировать toast: state.queueMigrationToast = true
 }
 ```
 
-### Возможные значения
+### Toast после миграции
 
-- **`era`** (наблюдаемые): `18th_century`, `19th_century`, `industrial`, `modern`. Принимаем эти 4 + любой будущий — рендерим human-readable через словарь.
-- **`field`**: `polymath`, `tech_entrepreneur`, `industrialist`, `writer`, `athlete`, `musician`, `scientist`, `mathematician`, `inventor`, `philosopher`, `physicist`, `painter`, `architect`. Принимаем как открытое множество.
-- **`block.type`**: `sleep`, `morning_routine`, `deep_work`, `comms`, `meal_and_read`, `leisure_and_reflection`. **Закрытое множество** — каждый имеет свой цвет в ring chart.
-- **`source.type`**: `book`, `article`, `interview`, `letter`. Открытое.
-- **`appliesTo`**: `work_messengers`, `personal_messengers`. Возможно расширим в `deep_work_tools`, но пока — закрытое 2.
+`AppState.queueMigrationToast: Bool` — @Published, set MigrationManager после успешной миграции, читает PrefsView/MainView и показывает one-time pill «HelloWork moved to /Applications. Old installer removed.» с кнопкой «Got it» и автодисмиссом 8с.
 
----
+### Update flow (без изменений)
 
-## 3. Архитектура (новые файлы и изменения)
+UpdateInstaller уже работает корректно когда `Bundle.main.bundleURL` в `/Applications`:
+- `canSelfInstall == true` (parent /Applications writable obviously)
+- helper-script `rm -rf /Applications/HelloWork.app && cp -R /Volumes/.../HelloWork.app /Applications/ && codesign && open` — рабочий путь
+- TCC grants persist (тот же cert + bundle ID + bundle path)
 
-```
-HelloWork/Sources/HelloWork/
-├── Domain/
-│   └── Legends/                            ← НОВАЯ ПАПКА
-│       ├── Legend.swift                    Codable structs (Legend, LegendBlock, etc.)
-│       ├── LegendBlockType.swift           enum + colors + display names
-│       ├── LegendsLibrary.swift            Singleton, eager bundle-load, cache, search
-│       └── LegendApplyEngine.swift         apply/revert mapping → ManagedApp.slots
-├── Resources/
-│   └── Legends/                            ← НОВАЯ ПАПКА (60 JSON)
-│       ├── 01-franklin-benjamin.json       (move from legens_module/)
-│       └── ... 02..60
-├── Preferences/
-│   ├── Legends/                            ← НОВАЯ ПАПКА
-│   │   ├── LegendsListView.swift           Grid/List + filters + search
-│   │   ├── LegendCard.swift                Card render (grid mode)
-│   │   ├── LegendListRow.swift             Row render (list mode)
-│   │   ├── LegendDetailView.swift          Hero + bio + ring + quotes + sources
-│   │   ├── LegendRingChart.swift           24h ring + block legend
-│   │   ├── LegendApplySheet.swift          Sheet с выбором apps + categorize
-│   │   └── LegendAvatar.swift              Monogram-fallback avatar
-│   ├── Sidebar/
-│   │   └── LegendsSidebarRow.swift         (опц.) если нужен dedicated row
-│   └── PrefSection.swift                   + case .legends
-├── App/AppState.swift                      + favoriteLegendIds, appliedLegendId, slotsBackupForApply
-└── Domain/Translation*.swift               +новые ключи (en/ru/zh)
-```
-
-### Ключевые подсистемы и инварианты
-
-| Подсистема | Инвариант |
-|---|---|
-| `LegendsLibrary` | `all` доступен синхронно после init. Если ≥1 JSON битый — `corruptIds: Set<String>`, остальные грузятся. |
-| `Legend` (Codable) | Декодинг даёт корректную structure для всех 60 валидных JSON; missing optional fields (например morningQuestion) → nil. |
-| `LegendApplyEngine.apply` | Мутация `managedApps[i].slots` обратима через `slotsBackupForApply` (snapshot перед apply, key by appliedLegendId). |
-| `LegendApplyEngine.revert` | После revert: `managedApps[i].slots == backup[i]` бит-в-бит. `appliedLegendId = nil`. |
-| `AppState.favoriteLegendIds` | persisted Set, schema-versioned. Toggle идемпотентен. |
-| `LegendsListView` | Search/filter/sort не блокируют main thread; debounce 200ms на текстовый поиск. |
-| `LegendDetailView` | Открывается мгновенно; ring chart рисуется без race с loading bio. |
+В цикле верифицируем end-to-end через manual smoke (Phase F).
 
 ---
 
 ## 4. Глобальные правила выполнения тасков
 
-1. **Не ломать соседнее**: модуль легенд изолирован. Существующая логика hider / focus / schedule / stats / updates — НЕ ТРОГАЕМ если задача того явно не требует. Если задача требует — это знак что её надо разбить.
-2. **Минимум edge-case-handling на границах**: только при decode JSON, при apply/revert (битый managedApps state), при search edge cases. Внутри — доверять.
-3. **Никаких новых абстракций ради будущего**: только нужное.
-4. **Никаких комментариев-объяснялок WHAT**: только WHY (см. инварианты).
-5. **Без эмодзи в коде**.
-6. **i18n**: каждая user-facing строка — en + ru + zh, в строгом порядке полей `Translation.swift`. Не забывай: `Translation` — struct, поля сортированы; init keyword args в `Translations.swift` должны идти в той же позиции.
-7. **devlog**: точки `devlog("legends", ...)` в LegendsLibrary load, LegendApplyEngine apply/revert, на UI-events если помогает диагностике.
-8. **Schema versioning** для persistence: favoriteLegendIds + appliedLegendId + slotsBackupForApply — обернуть в `VersionedXxx` (как было в Phase C прошлого цикла).
-9. **Verify-таск НЕ правит код**.
+1. **Ничего вне scope**: только distribution / migration / build-pipeline / docs. Legends, hider, focus, schedule, stats, permissions, menubar — НЕ ТРОГАЕМ.
+2. **Bundle ID не меняем**. Никогда. Даже если очень хочется. Это сломает TCC и UserDefaults у тысяч юзеров (потенциально).
+3. **Self-signed cert не пересоздаём**. То же — TCC keys из login keychain не теряем.
+4. **Migration идемпотентен**. Запуск дважды = no-op после первого. Флаг в UserDefaults.
+5. **Никаких новых абстракций ради будущего**. MigrationManager — один файл, минимум кода.
+6. **Comments — только WHY**. Не описываем что делает `removeItem`.
+7. **i18n**: все user-facing строки (toast, README) — en + ru + zh, в строгом порядке полей `Translation.swift`.
+8. **devlog**: точки `devlog("migration", ...)` в MigrationManager (start, each step success/fail, finish).
+9. **Verify-таск НЕ правит код продакта**. Только смотрит diff, тестит, документирует.
+10. **Релиз каждый таск**. Старт 0.11.6, финал 0.12.0 (минорный).
 
-### Когда релизить
-
-**ПОЛИТИКА: одна микро-версия на каждый таск.** Старт — 0.10.1. Минимум 64 таска = 0.10.65. Финальный таск — bump MINOR → **0.11.0**.
+### Когда релизить (per-task политика)
 
 После каждого закрытого таска (impl или verify):
-- `./scripts/bump.sh patch` (для финала — `./scripts/bump.sh minor`)
-- `./scripts/build.sh && ./scripts/package.sh && ./scripts/build_stub.sh && ./scripts/package_stub.sh`
-- entry в `dev_log.json` (короткий)
-- commit `Hello work X.Y.Z — TASK-LNN: <короткое название>` (префикс `L` чтобы не путать со старым циклом)
-- tag + push + `gh release create`
+```bash
+./scripts/bump.sh patch       # для финального TASK-D01: bump.sh minor
+./scripts/build.sh && ./scripts/package.sh
+# (build_stub.sh / package_stub.sh — удалены в TASK-B03)
+# entry в dev_log.json (1-3 sentence customMessage, 2-4 points)
+git add -A && git commit -m "Hello work X.Y.Z — TASK-NNN: <name>"
+git tag vX.Y.Z && git push origin main && git push origin vX.Y.Z
+gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
+    --title "..." --notes "..."
+```
 
-Каждый патч-релиз = ровно один таск.
+В новом цикле — два DMG-артефакта в релизе:
+- `HelloWork-X.Y.Z.dmg` — версионный, для UpdateInstaller fetch'а
+- `HelloWork.dmg` — статичная копия latest (для landing page / README link)
 
 ---
 
 ## 5. Task Ledger
 
-Формат: `[ ] = pending`, `[~] = in_progress`, `[x] = done`. Verify-таск нельзя пометить done пока impl-таск не done.
+Формат: `[ ] = pending`, `[~] = in_progress`, `[x] = done`. Verify-таск нельзя пометить done пока impl выше не done.
+
+### Phase A — Migration safety net (8 tasks)
+
+Безопасность существующих юзеров — **первая** фаза. Если миграция не работает — нельзя катить ничего другого.
+
+- [ ] **TASK-A01 [impl]** — Создать `Sources/HelloWork/App/MigrationManager.swift`. Public API: `static func runIfNeeded(state: AppState) async`. Основной алгоритм:
+  1. Проверка UserDefaults `helloWorkDistributionMigratedTo_0_12 == true` → return immediately.
+  2. Проверка `Bundle.main.bundleURL.path.hasPrefix("/Applications/")` → если нет (dev build, AppTranslocation), флаг НЕ ставим, return.
+  3. Detection блок: `oldEnginePath = ~/Library/Application Support/HelloWork/HelloWork.app`, `oldStubPath = /Applications/HWInstaller.app`. Логируем что нашли через `devlog("migration", ...)`.
+  4. Cleanup блок (each в отдельном do-catch, partial-failure tolerant):
+     - Если oldEnginePath exists → `try FileManager.default.removeItem(at:)`.
+     - Если oldStubPath exists → `try NSWorkspace.shared.recycle(at:)` (в Trash, не permanent).
+  5. SMAppService: если `state.launchAtLogin == true` → `try? SMAppService.mainApp.unregister()` (старая регистрация на удалённый path). Сбрасываем `state.launchAtLogin = false` через helper, юзер сам пере-включит из new path.
+  6. Set флаг `helloWorkDistributionMigratedTo_0_12 = true`.
+  7. `state.queueMigrationToast = true` (через @MainActor).
+  - Файлы: `Sources/HelloWork/App/MigrationManager.swift` (новый).
+  - Acceptance: Unit-thinkable scenarios (ниже Phase F): чистый new install — no-op без ошибок и без флага = false. Stub-engine layout — все три действия выполняются, флаг = true. Повторный запуск — return на step 1.
 
-### Phase A — Data foundation (10 tasks)
+- [ ] **TASK-A02 [verify]** — TASK-A01
 
-- [x] **TASK-L01 [impl]** — Domain models: `Legend`, `LegendBlock`, `LegendBlockType`, `LegendSource`, `LegendBlockSchedule`, `LegendAllowedSlot`, `LegendQuote`, `LegendOptionalQuestion`  → released as v0.10.2
-  - Файлы: `Sources/HelloWork/Domain/Legends/Legend.swift`, `Domain/Legends/LegendBlockType.swift`
-  - Все Codable + Hashable + Identifiable.
-  - `LegendBlockType` — enum со всеми observed types + `unknown(String)` для forward-compat.
-  - Acceptance: декодит example JSON (id=01) без ошибок; пишется обратно через encode идентично; `LegendBlockType.allCases` имеет известные 6 типов.
+- [ ] **TASK-A03 [impl]** — Подключить `MigrationManager.runIfNeeded(state:)` в `AppDelegate.applicationDidFinishLaunching` ПОСЛЕ `state` initialized но ДО `state.checkForUpdates()` и до permissions onboarding. Внутри Task { await ... }.
+  - Файлы: `Sources/HelloWork/App/AppDelegate.swift`.
+  - Acceptance: Migration runs once per fresh install of v0.12. На второй запуск — return-on-flag, devlog показывает «already migrated».
 
-- [x] **TASK-L02 [verify]** — TASK-L01  → released as v0.10.3
+- [ ] **TASK-A04 [verify]** — TASK-A03
 
-- [x] **TASK-L03 [impl]** — `LegendsLibrary` — singleton, eager bundle-load на init, сохраняет в `[Legend]` отсортированный по `order`, плюс `Set<String> corruptIds` для битых файлов. Логирует через `devlog("legends", ...)`. Public API: `all: [Legend]`, `byID(_:) -> Legend?`, `corrupt: Set<String>`.  → released as v0.10.4
-  - Файл: `Sources/HelloWork/Domain/Legends/LegendsLibrary.swift`
-  - Bundle.module → enumeratesContents Resources/Legends/*.json
-  - Acceptance: на пустом bundle (тест) возвращает []; на bundle с 1 валидным + 1 битым — возвращает 1 в `all`, 1 в `corrupt`.
+- [ ] **TASK-A05 [impl]** — Добавить `AppState.queueMigrationToast: Bool` (`@Published`, persists в UserDefaults НЕ нужно — one-time-flag в migration сам по себе).
+  - 3 translation keys: `migrationToastTitle`, `migrationToastBody`, `migrationToastDismiss`. EN/RU/ZH.
+    - EN: «HelloWork moved to /Applications» / «Old installer removed. Launch at Login was reset — re-enable it in Settings if needed.» / «Got it»
+    - RU: «HelloWork переехал в /Applications» / «Старый инсталлер убран в Корзину. Автозапуск сброшен — включи заново в Настройках если нужно.» / «Понятно»
+    - ZH: «HelloWork 已移至 /Applications» / «旧安装器已移至废纸篓。登录启动已重置 — 如需要请在设置中重新启用。» / «知道了»
+  - Файлы: `Sources/HelloWork/App/AppState.swift`, `Sources/HelloWork/Domain/Translation.swift`, `Sources/HelloWork/Domain/Translations.swift`.
+  - Acceptance: 3 ключа добавлены в strict order в Translation struct и во все 3 локали Translations.swift. Build clean.
 
-- [x] **TASK-L04 [verify]** — TASK-L03  → released as v0.10.5
+- [ ] **TASK-A06 [verify]** — TASK-A05
 
-- [x] **TASK-L05 [impl]** — Перенос 60 JSON: `legens_module/*.json` → `HelloWork/Sources/HelloWork/Resources/Legends/*.json`. Регистрация в `Package.swift` (`.process("Resources")` уже стоит — должно подхватить, верифицировать).  → released as v0.10.6
-  - Файлы: `Resources/Legends/01-...json` ... `60-...json`. Старая папка `legens_module/` в корне — удаляется.
-  - Acceptance: `swift build` ≥ 60 файлов вошли в bundle; LegendsLibrary.all.count == 60 на старте.
+- [ ] **TASK-A07 [impl]** — Toast UI: subtle banner-card в верхней части PrefsView (или там где сейчас отображается corruption banner — паттерн уже есть). Auto-dismiss через 8 сек ИЛИ click «Got it». Только если `state.queueMigrationToast == true`. После dismiss — set false (в памяти; не возвращается).
+  - Файлы: `Sources/HelloWork/Preferences/PrefsView.swift` (или новый MigrationToastView если правильнее модульно).
+  - Acceptance: При запуске после миграции — toast виден один раз, dismissible, не возвращается. Не появляется на чистом install.
 
-- [x] **TASK-L06 [verify]** — TASK-L05  → released as v0.10.7
+- [ ] **TASK-A08 [verify]** — TASK-A07
 
-- [x] **TASK-L07 [impl]** — Search & filter helpers в `LegendsLibrary`  → released as v0.10.8
+### Phase B — Build pipeline cleanup (8 tasks)
 
-- [x] **TASK-L08 [verify]** — TASK-L07  → released as v0.10.9
+Удаляем stub-инфраструктуру. Build выдаёт один `dist/HelloWork.app`.
 
-- [x] **TASK-L09 [impl]** — Cleanup: удалить `legens_module/` (был в parent FocusNap, вне HelloWork-git-репо — `git mv` неприменим). Папка удалена с диска.  → released as v0.10.10
+- [ ] **TASK-B01 [impl]** — `Package.swift`: убрать `.executableTarget(name: "HelloWorkStub")`. Только HelloWork target остаётся.
+  - Файл: `Package.swift`.
+  - Acceptance: `swift build --product HelloWork` собирается, `swift build --product HelloWorkStub` падает с «product not found».
 
-- [x] **TASK-L10 [verify]** — TASK-L09  → released as v0.10.11
+- [ ] **TASK-B02 [verify]** — TASK-B01
 
-### Phase B — Persistence layer (8 tasks)
+- [ ] **TASK-B03 [impl]** — Удалить файлы:
+  - `Sources/HelloWorkStub/` (вся папка)
+  - `scripts/build_stub.sh`
+  - `scripts/package_stub.sh`
+  - `scripts/Info.plist.stub.template`
+  - `scripts/AppIconInstaller.iconset/` (вся папка)
+  - `scripts/AppIconInstaller.icns`
+  - Acceptance: `git rm -r` отрабатывает, `swift build` чистый, ничего не ссылается на удалённые файлы.
 
-- [x] **TASK-L11 [impl]** — AppState поля для legends: favoriteLegendIds + appliedLegendId + slotsBackupForApply, schema-versioned single-blob persist.  → released as v0.10.12
+- [ ] **TASK-B04 [verify]** — TASK-B03
 
-- [x] **TASK-L12 [verify]** — TASK-L11  → released as v0.10.13
+- [ ] **TASK-B05 [impl]** — Refactor `scripts/build.sh`:
+  - Убрать комменты про «engine» / «stub скачивает». Это просто `HelloWork.app`.
+  - Output path: `dist/HelloWork.app` (без подпапки `dist/engine/`).
+  - Остальное — bundle ID, sign flow, icons — без изменений.
+  - Файлы: `scripts/build.sh`.
+  - Acceptance: `./scripts/build.sh` создаёт `dist/HelloWork.app`, существующая `dist/engine/HelloWork.app` (если осталась) либо удаляется в скрипте, либо игнорируется.
 
-- [x] **TASK-L13 [impl]** — `AppState.toggleFavoriteLegend(_ id: String)` — добавляет/убирает из set, идемпотентно. `isFavoriteLegend(_:) -> Bool`.  → released as v0.10.14
+- [ ] **TASK-B06 [verify]** — TASK-B05
 
-- [x] **TASK-L14 [verify]** — TASK-L13  → released as v0.10.15
+- [ ] **TASK-B07 [impl]** — Refactor `scripts/package.sh`:
+  - Output: TWO DMG'ов:
+    - `dist/HelloWork-X.Y.Z.dmg` — версионный (для UpdateInstaller).
+    - `dist/HelloWork.dmg` — статичная latest-копия (для landing / README).
+  - DMG layout: `HelloWork.app` + symlink `Applications` → `/Applications`. Volume name «HelloWork». UDZO compression.
+  - (Background image с стрелкой — out of scope этого таска; добавим только если останется время в Phase D.)
+  - Источник: `dist/HelloWork.app` (новый путь после TASK-B05).
+  - Файлы: `scripts/package.sh`.
+  - Acceptance: после `./scripts/build.sh && ./scripts/package.sh` — два .dmg-файла существуют. Mount каждого показывает HelloWork.app + Applications symlink. Drag работает.
 
-- [x] **TASK-L15 [impl]** — `LegendApplyEngine` — apply/revert с backup snapshot.  → released as v0.10.16
+- [ ] **TASK-B08 [verify]** — TASK-B07
 
-- [x] **TASK-L16 [verify]** — TASK-L15  → released as v0.10.17
+### Phase C — Update flow validation (4 tasks)
 
-- [x] **TASK-L17 [impl]** — Legends-state corruption — backup в legends-state.corrupt-<ts>.json + warning в UI.  → released as v0.10.18
+UpdateInstaller уже работает. Но мы убрали stub — надо убедиться что ничего не сломалось и devlog message не упоминают engine.
 
-- [x] **TASK-L18 [verify]** — TASK-L17  → released as v0.10.19
+- [ ] **TASK-C01 [impl]** — Pass через `UpdateInstaller.swift` + `UpdatesView.swift`:
+  - Убрать упоминания «engine» в comments / log strings (если есть).
+  - Проверить `canSelfInstall` логику для нового пути `/Applications/HelloWork.app` (visually).
+  - Helper-скрипт внутри `spawnHelperAndExit` — fallback path был `/Applications/HWInstaller-fallback.app`. Поменять на `/Applications/HelloWork-fallback.app`.
+  - НЕ менять core логику замены — она проверена прошлым циклом.
+  - Файлы: `Sources/HelloWork/Updates/UpdateInstaller.swift`, `Sources/HelloWork/Preferences/Updates/UpdatesView.swift` (если есть текст).
+  - Acceptance: `swift build` clean. UpdateInstaller код больше не упоминает engine/stub. Fallback path обновлён.
 
-### Phase C — Sidebar entry & routing (6 tasks)
+- [ ] **TASK-C02 [verify]** — TASK-C01
 
-- [x] **TASK-L19 [impl]** — `PrefSection.legends` + sectionLegends translation key (en/ru/zh) + placeholder routing в PrefsView.  → released as v0.10.20
+- [ ] **TASK-C03 [impl]** — Post-update verification: после relaunch новой версии (детектируется через сравнение `Bundle.main.shortVersion` с `state.previousLaunchVersion` из UserDefaults), показываем кратковременный info banner «Updated to vX.Y.Z». Auto-dismiss 5с. Сохраняем version after dismiss.
+  - 1 translation key `updateCompletedToast(_ version: String) -> String`. EN/RU/ZH.
+    - EN: «Updated to v\(version)»
+    - RU: «Обновлено до v\(version)»
+    - ZH: «已更新至 v\(version)»
+  - Файлы: `AppState.swift` (поле previousLaunchVersion + queueUpdateToast), `Translation.swift`, `Translations.swift`, `PrefsView.swift` (rendering — рядом с migration toast).
+  - Acceptance: В первом запуске после `bump.sh patch` + UpdateInstaller-цикла → toast «Updated to v0.11.X». Во втором — нет.
 
-- [x] **TASK-L20 [verify]** — TASK-L19  → released as v0.10.21
+- [ ] **TASK-C04 [verify]** — TASK-C03
 
-- [x] **TASK-L21 [impl]** — LegendsListView/Detail skeleton с in-view push-nav (selectedLegend @State). PrefsView routing на LegendsListView.  → released as v0.10.22
+### Phase D — DMG polish (опционально, но в скоупе) (4 tasks)
 
-- [x] **TASK-L22 [verify]** — TASK-L21  → released as v0.10.23
+Лучше выглядящий DMG → меньше вопросов «куда тащить».
 
-- [x] **TASK-L23 [impl]** — 41 Translation key для legends UI (en/ru/zh).  → released as v0.10.24
+- [ ] **TASK-D01 [impl]** — DMG background image: 600×400 PNG с логотипом + стрелкой → Applications. Положить в `scripts/dmg-background.png`. В `package.sh` — после mount staging, копируем PNG в `.background/background.png` внутри volume + AppleScript для positioning через `osascript`. Если background-image нет (graceful) — DMG как был после B07. Не падать.
+  - Файлы: `scripts/dmg-background.png` (новый, художник или placeholder), `scripts/package.sh` (обновление).
+  - Acceptance: mount DMG → красивый layout. Если PNG нет — DMG всё равно собирается, просто без background.
 
-- [x] **TASK-L24 [verify]** — TASK-L23  → released as v0.10.25
+- [ ] **TASK-D02 [verify]** — TASK-D01
 
-### Phase D — Legends list view (12 tasks)
+- [ ] **TASK-D03 [impl]** — Volume icon (`.VolumeIcon.icns` внутри DMG) — копия `scripts/AppIcon.icns`. Чтобы в Finder DMG показывался с нашей иконкой а не generic.
+  - Файлы: `scripts/package.sh`.
+  - Acceptance: mount DMG → finder volume icon = HelloWork.
 
-- [x] **TASK-L25 [impl]** — LegendsListView skeleton: header + search debounced 200ms + sort picker + grid/list toggle + filtered results.  → released as v0.10.26
+- [ ] **TASK-D04 [verify]** — TASK-D03
 
-- [x] **TASK-L26 [verify]** — TASK-L25  → released as v0.10.27
+### Phase E — Documentation (4 tasks)
 
-- [x] **TASK-L27 [impl]** — LegendCard (grid mode) + LegendAvatar (factored early из L31).  → released as v0.10.28
+- [ ] **TASK-E01 [impl]** — `README.md` обновление installation секции:
+  - Убрать упоминания HWInstaller / stub / Application Support.
+  - Один абзац: «Download HelloWork.dmg → drag HelloWork to Applications → first launch right-click Open (Gatekeeper) → grant Accessibility/Screen Recording permissions in onboarding».
+  - Update: «In-app: Settings → Updates → Install latest».
+  - Uninstall: «Drag HelloWork.app to Trash. Optionally remove `~/Library/Application Support/HelloWork/` and `~/Library/Preferences/dev.helloworkapp.macos.engine.plist`.»
+  - Файлы: `README.md`.
+  - Acceptance: README не содержит «HWInstaller», «stub», «engine.app». Содержит drag-to-Applications.
 
-- [x] **TASK-L28 [verify]** — TASK-L27  → released as v0.10.29
+- [ ] **TASK-E02 [verify]** — TASK-E01
 
-- [x] **TASK-L29 [impl]** — LegendListRow compact + интегрирован в listResults.  → released as v0.10.30
+- [ ] **TASK-E03 [impl]** — Migration note in `dev_log.json` для **0.12.0 release**: customMessage объясняет что это distribution overhaul, как работает миграция, почему юзер видит toast.
+  - Это часть финального TASK-F01 (final bump). Здесь — заготовка template-текста чтобы при финале не импровизировать.
+  - Файлы: `audit/CONTEXT.md` секция 8 ниже (template сразу запишем).
 
-- [x] **TASK-L30 [verify]** — TASK-L29  → released as v0.10.31
+- [ ] **TASK-E04 [verify]** — TASK-E03
 
-- [x] **TASK-L31 [impl]** — LegendAvatar — реализован раньше в TASK-L27 (зависимость по сборке). Файл `Sources/HelloWork/Preferences/Legends/LegendAvatar.swift`.  → released as v0.10.32
+### Phase F — Final regression + 0.12.0 (4 tasks)
 
-- [x] **TASK-L32 [verify]** — TASK-L31  → released as v0.10.33
+- [ ] **TASK-F01 [impl]** — `bump.sh minor` → 0.11.X → 0.12.0. Final dev_log entry с использованием template из E03. Большой changelog список Phase A-E. Включить smoke list (Section 8 ниже).
+  - Файлы: VERSION, BUILD, dev_log.json.
+  - Acceptance: версия 0.12.0, релиз создан, два DMG залиты.
 
-- [x] **TASK-L33 [impl]** — Filters bar: horizontal scroll с era/field/intensity pills + Clear-all.  → released as v0.10.34
+- [ ] **TASK-F02 [verify]** — TASK-F01
 
-- [x] **TASK-L34 [verify]** — TASK-L33  → released as v0.10.35
+- [ ] **TASK-F03 [impl]** — Manual smoke pass (по smoke list секции 8). Записать результат каждого пункта в commit message + dev_log как «smoke: 1/6 ok, 2/6 ok, ...». Если что-то не ОК — следующий цикл.
+  - Файлы: dev_log.json (entry для 0.12.1 если smoke-fix нужен).
+  - Acceptance: все 6 пунктов smoke прошли. Если нет — follow-up.
 
-- [x] **TASK-L35 [impl]** — Grid/List view-mode persistence через @AppStorage.  → released as v0.10.36
-
-- [x] **TASK-L36 [verify]** — TASK-L35  → released as v0.10.37
-
-### Phase E — Legend detail view (12 tasks)
-
-- [x] **TASK-L37 [impl]** — `LegendDetailView` skeleton: hero (большой avatar, name, fullName, years, nationality flag, intensity dots, primary field). Back button (← к List). Favorite-star.  → released as v0.10.38
-
-- [x] **TASK-L38 [verify]** — TASK-L37  → finding: nationality рисовался plain text вместо флага. Добавил nationalityFlag() helper (ISO-2 → regional indicator). Released as v0.10.39
-
-- [x] **TASK-L39 [impl]** — Bio paragraph + sources block (clickable links opening NSWorkspace.shared.open). Sources показываются как inline rows с типом (book/article/interview).  → released as v0.10.40
-
-- [x] **TASK-L40 [verify]** — TASK-L39  → finding: detail view содержал свой ScrollView внутри уже-скроллящего PrefsView.detail (nested scroll → inconsistent bounce). Убрал inner ScrollView. Released as v0.10.41
-
-- [x] **TASK-L41 [impl]** — `LegendRingChart` — 24-часовое кольцо. Каждый block рисуется arc'ом с цветом по `LegendBlockType` (sleep тёмный, deep_work primary, comms accent, ...). Hour markers (0/6/12/18). Лейблы в центре кольца — сейчас показывает `legendsTitle` или (опц.) текущий блок относительно сейчас.  → released as v0.10.42
-
-- [x] **TASK-L42 [verify]** — TASK-L41  → 2 finding'а: (1) hour-marker rotation order (.offset → rotate → counter-rotate) был неверен — modifier-стек inner-to-outer схлопывал все позиции в top. Исправлен на pre-rotate(-angle) → offset → rotate(+angle). (2) currentTimeText не обновлялся — обернул centerLabel в TimelineView(.periodic(60s)). Released as v0.10.43
-
-- [x] **TASK-L43 [impl]** — Block type legend: горизонтальный ряд под рингом — каждый блок-тип: цветовой dot + название (translated) + total часов в дне.  → released as v0.10.44
-
-- [x] **TASK-L44 [verify]** — TASK-L43  → finding: formatTotal(30) рисовал "0h 30m" — для 35 блоков <60m в датасете это уродский формат. Добавлен sub-hour branch → "30m". Released as v0.10.45
-
-- [x] **TASK-L45 [impl]** — Messenger windows section: показывает `blockSchedule.description` + список `allowedSlots` с time-range, appliesTo (work/personal pill), rationale.  → released as v0.10.46
-
-- [x] **TASK-L46 [verify]** — TASK-L45  → finding: stephenson-neal в JSON имеет allowedSlots в reverse chrono (21:00 перед 20:00). Добавил sortedSlots сортировку в UI для resilience. Released as v0.10.47
-
-- [x] **TASK-L47 [impl]** — Quotes carousel: 3-5 цитат с auto-rotate (5с), стрелки prev/next, индикаторы. Если quotes пусты — секция скрыта.  → released as v0.10.48
-
-- [x] **TASK-L48 [verify]** — TASK-L47  → finding: timer не сбрасывался на manual nav — клик на стрелку при t=4s триггерил auto-advance через 1s (пользователь не успевал прочитать). Добавил pauseUntil — manual nav даёт 5с тишины. Released as v0.10.49
-
-### Phase F — Favorites & search polish (6 tasks)
-
-- [x] **TASK-L49 [impl]** — Favorite-star button: круглая, заполняется при isFavorite==true, scale-pop animation на toggle. Работает на cards, list rows и detail view — sync.  → released as v0.10.50
-
-- [x] **TASK-L50 [verify]** — TASK-L49  → finding: при background=nil hit-area был 20×20 (size 12 + 8) — меньше Apple HIG минимума 24×24. Поднял до max(size+12, 24). Released as v0.10.51
-
-- [x] **TASK-L51 [impl]** — «Favorites» filter pill — toggle: показывает только избранные. State persists в `@AppStorage("helloWorkLegendsShowFavoritesOnly")`.  → released as v0.10.52
-
-- [x] **TASK-L52 [verify]** — TASK-L51  → finding: favorites pill был последним в горизонтальном scroll'е — на узком окне или при наличии многих era/field тегов он скроллился за край и становился невидим. Вынес pill из ScrollView, поместил слева перед scroll'ом — всегда виден. Released as v0.10.53
-
-- [x] **TASK-L53 [impl]** — Sort: `order` (default), `alphabetical(name локали)`, `favoritesFirst`. Picker в header. Persists.  → released as v0.10.54
-
-- [x] **TASK-L54 [verify]** — TASK-L53  → OK, регрессий нет. Sort persists, fallback на .order при unknown rawValue, sortChoiceTitle лoкализован во всех 3 языках, sortPicker checkmark корректен. Released as v0.10.55
-
-### Phase G — Apply schedule flow (10 tasks)
-
-- [x] **TASK-L55 [impl]** — «Apply schedule» кнопка в LegendDetailView (возле fave star). Disabled, если managedApps пустой (с tooltip «Add apps first»). Click → presents `LegendApplySheet`.  → released as v0.10.56
-
-- [x] **TASK-L56 [verify]** — TASK-L55  → finding: hasApps проверял activeManagedApps (не archived). Это давало misleading tooltip "Add apps first" в случае когда юзер добавил apps но все archived. Спека L55 говорит про managedApps.isEmpty — упростил, кейс all-archived оставлен L57's sheet'у. Released as v0.10.57
-
-- [x] **TASK-L57 [impl]** — `LegendApplySheet`: список managedApps (active, не archived). Каждый row — app icon, name, picker { Skip / Work messenger / Personal messenger }. Внизу: предпросмотр (сколько slots будет создано на основе выбора + allowedSlots), Confirm/Cancel.  → released as v0.10.58
-
-- [x] **TASK-L58 [verify]** — TASK-L57  → finding: previewText в случае «всё ещё skip» рисовал странное «Skip — 0 slots» (concat'ил локализованный label с числом). Переписал previewBar как @ViewBuilder с em-dash placeholder когда nApps==0. Released as v0.10.59
-
-- [x] **TASK-L59 [impl]** — `LegendApplyEngine.apply(legend:assignments:state:)` — для каждого app с category != skip: build slots из corresponding allowedSlots → state.managedApps[i].slots = новые. Сохраняет backup. Сетит appliedLegendId.  → released as v0.10.60 (engine был готов с TASK-L15, sheet onApply теперь зовёт engine)
-
-- [x] **TASK-L60 [verify]** — TASK-L59  → OK. Sheet onApply корректно зовёт engine, backup snapshots срабатывают, _setLegendsApply пишет atomic-ish (2 disk writes — known acceptable). Chained-apply gap уже задокументирован как TASK-L77 follow-up. Released as v0.10.61
-
-- [x] **TASK-L61 [impl]** — Applied banner в верху LegendsListView и LegendDetailView (если этот legend сейчас applied): «Сейчас применено: <legend.name>» + Revert button. Subtle accent color.  → released as v0.10.62
-
-- [x] **TASK-L62 [verify]** — TASK-L61  → OK. Banner показывается через optional binding `appliedLegend` — пропадает корректно при revert. legendIdFilter работает в detail view. Translation closure ru/en/zh ok. Revert callback по умолчанию no-op (L63 свяжет). Released as v0.10.63
-
-- [x] **TASK-L63 [impl]** — `LegendApplyEngine.revert(state:)` — восстанавливает slots из backup, чистит state. Кнопка Revert вызывает (с alert-confirmation: «Восстановить старые расписания?»).  → released as v0.10.64 (engine был с TASK-L17, добавлен alert wrap + 2 translation keys: legendsRevertConfirmTitle / Message)
-
-- [x] **TASK-L64 [verify]** — TASK-L63  → finding: revert при corrupt state (appliedLegendId set, backup nil) early-return'ил без clear'а appliedLegendId — banner оставался навсегда. Fix: appliedLegendId всегда чистится, даже если slots не восстанавливать. Released as v0.10.65. **Phase G CLOSED (10/10).**
-
-### Phase H — Polish & i18n (6 tasks)
-
-- [x] **TASK-L65 [impl]** — zh-фолбэк: для bio/quotes/labels — если zh-locale активна → возвращаем en (с visual subtle hint «en» в углу карточки/секции). Translation+legendLocalized helper вокруг `LocalizedString.value(for: AppLanguage)`.  → released as v0.10.66
-
-- [x] **TASK-L66 [verify]** — TASK-L65  → finding: LegendLocalized.resolve(.system) дублировал locale-detection логику из L10n.resolveSystem — risk of drift при добавлении локалей. Извлёк L10n.resolveSystemLanguage() → AppLanguage helper, оба сайта используют его. Released as v0.10.67
-
-- [x] **TASK-L67 [impl]** — Card animations: stagger fade-in при appear (delay = idx * 0.02s, max 0.5s), spring hover scale 1.02, favorite-pop. List row — без stagger но с transitionInsertion.  → released as v0.10.68
-
-- [x] **TASK-L68 [verify]** — TASK-L67  → finding: stagger срабатывал на каждый onAppear, в т.ч. lazy-load при скролле — карточки с idx>25 ждали 500ms когда пользователь скроллит к ним. Изменил: stagger только для idx<25 (первичный viewport), остальные — no delay. Released as v0.10.69
-
-- [x] **TASK-L69 [impl]** — Edge cases UI: empty results (пустой search/filter → «Nothing found, try different filters»), no managedApps (apply кнопка disabled с tooltip), corrupt JSON (banner «N legends couldn't be loaded» в LegendsListView header).  → released as v0.10.70 (empty results: icon + clear button; corrupt banner: danger pill в header; no-apps уже сделано в L55/L56)
-
-- [x] **TASK-L70 [verify]** — TASK-L69  → finding: filtersBar Clear не чистил search query (только фильтры), а emptyResultsView Clear чистил оба. Inconsistent. Unified — оба зовут clearAllFilters() helper. Released as v0.10.71. **Phase H CLOSED (6/6).**
-
-### Phase I — Final regression (6 tasks)
-
-- [x] **TASK-L71 [impl]** — Final bump → **0.11.0** (minor) — сигнал «major feature release: Legends». dev_log.json — большой entry с подытогом всех Phase A-H + smoke list.  → released as v0.11.0
-  - Smoke list:
-    1. Свежий launch (без favorites/applied) — sidebar Legends, list открывается, 60 карточек, search/filter работают, grid/list toggle помнится
-    2. Click карточка → detail с ring, bio, sources, quotes
-    3. Star ⭐ on/off — мгновенно отражается везде
-    4. Filter «Favorites only» → ровно избранные
-    5. Apply легенду к одному из managed apps → slots реально мутируются (видно в Schedule view)
-    6. Banner «Currently applied» появляется
-    7. Revert → старые slots возвращены
-    8. Restart app → state восстанавливается
-    9. Performance: грид с 60 cards рендерится без лагов; search debounce работает
-    10. Все три locale (en/ru/zh) — переключение работает, zh показывает en для legend content
-
-- [x] **TASK-L72 [verify]** — TASK-L71  → smoke pass-by-code-inspection: 60/60 JSON в bundle, 132 legends* keys в Translations.swift (44×3 langs), build чистый, все code paths существуют (apply/revert/banner/quotes carousel/filter pipeline/animations). Регрессий нет. Released as v0.11.1
-
-- [x] **TASK-L73 [impl]** — Перевод audit/CONTEXT финальных метрик в ✅ (см. секцию 6 ниже) — каждая отмечена.  → released as v0.11.2 (метрики секции 6 уже были ✅ как проектные цели; verified что каждая соответствует реальной импликации: 60 JSON, grid/list, debounce/filter/sort, detail sections, fav-flow, apply/revert, i18n+EN-badge, corrupt-tolerance, persistence, animations, edge-cases, sources clickable, 7 devlog calls в legends modules)
-
-- [x] **TASK-L74 [verify]** — TASK-L73  → OK. Каждая ✅ метрика секции 6 повторно проверена против файлов имплементации. Released as v0.11.3
-
-- [x] **TASK-L75 [impl]** — Cleanup follow-ups если возникли в секции 5.  → released as v0.11.4 (закрыл TASK-L77 — добавил chained-apply guard в LegendApplyEngine.apply: auto-revert previous if appliedLegendId set & differs)
-
-- [x] **TASK-L76 [verify]** — TASK-L75  → finding: guard срабатывал только при prev != legend.id. Re-apply того же legend с новыми assignments корраптил backup точно так же. Изменил guard: auto-revert при ЛЮБОМ appliedLegendId. Released as v0.11.5. **AUDIT CYCLE COMPLETE — 76/76 + L77/L78 follow-ups closed.**
+- [ ] **TASK-F04 [verify]** — TASK-F03
 
 ---
 
 ## 6. Метрики «9.5 / 10»
 
-После закрытия всех тасков:
+После закрытия всех тасков должны быть верифицированы:
 
-- ✅ 60 легенд встроены в bundle, грузятся ≤ 50ms
-- ✅ Grid + List toggle работают, помнятся
-- ✅ Search debounced 200ms; filter pills (era/field/intensity); sort 3 вариантов
-- ✅ Detail: hero, bio, ring chart 24h, sources, quotes carousel, messenger windows
-- ✅ Favorites — toggle, persist, dedicated filter, "favorites first" sort
-- ✅ Apply: sheet выбора apps + категории, mutate slots, backup, applied banner, revert
-- ✅ i18n: en/ru/zh для UI; bio/quotes — ru/en + zh fallback на en
-- ✅ Resilience: corrupt JSON одного файла не валит модуль
-- ✅ Persistence: favorites + applied state schema-versioned
-- ✅ Animations: stagger fade-in cards, hover scale, favorite-pop
-- ✅ Edge cases: empty search, no apps, no favorites
-- ✅ Сидеры/сорсы: clickable links opening browser
-- ✅ devlog содержит legends-categories для каждого нетривиального события
+- ✅ Один `HelloWork.app` в `/Applications`. Discoverable через Spotlight, Launchpad, Dock.
+- ✅ DMG drag-to-Applications работает с первого раза. Volume имеет `Applications` symlink.
+- ✅ Существующие юзеры (stub-engine layout) при старте новой версии видят toast и автоматически очищаются от:
+  - `~/Library/Application Support/HelloWork/HelloWork.app` (удалён)
+  - `/Applications/HWInstaller.app` (в Trash)
+- ✅ TCC permissions (Accessibility, Screen Recording) переживают миграцию — bundle ID и cert hash не менялись.
+- ✅ UserDefaults (favorites, managedApps, applied legend, settings) переживают миграцию — bundle ID `dev.helloworkapp.macos.engine` сохранён.
+- ✅ Update flow через UpdateInstaller работает из нового layout (`/Applications/HelloWork.app` → in-place replace via helper-script).
+- ✅ Post-update toast «Updated to vX.Y.Z» появляется один раз после auto-update.
+- ✅ Source-tree чистый: нет `Sources/HelloWorkStub/`, нет `build_stub.sh`, нет `package_stub.sh`, нет `Info.plist.stub.template`, нет `AppIconInstaller*`. Package.swift имеет один target.
+- ✅ README.md обновлён без упоминаний stub/engine/Application Support как install location.
+- ✅ Migration идемпотентна — повторный запуск приложения без re-install не делает ничего (флаг в UserDefaults).
+- ✅ Build pipeline один раз `./scripts/build.sh && ./scripts/package.sh` создаёт оба DMG (versioned + static).
+- ✅ devlog содержит «migration» категорию для каждого нетривиального шага миграции.
 
 ---
 
-## 7. Follow-up tasks
+## 7. Smoke list (для TASK-F03 manual run)
 
-> Verify-таски ДОПИСЫВАЮТ сюда новые задачи если обнаружат регрессию или non-trivial gap.
+Запускается на свежей mac-машине / VM или после полного wipe (см. процедуру в секции 9). 6 сценариев:
 
-- [x] **TASK-L77 [impl]** — `LegendApplyEngine.apply` guard на уже-applied state  → resolved by TASK-L75 (auto-revert variant). Chained Franklin→Musk теперь сохраняет оригинальный backup.
-  - Found by: TASK-L16 [verify]
-  - Файл: `Sources/HelloWork/Domain/Legends/LegendApplyEngine.swift`
-  - Проблема: chained apply (Franklin → Musk без revert) перезатирает backup на «уже применённое» состояние. Revert после такого chain восстанавливает только последний intermediate, а не оригинал.
-  - Acceptance: apply() при `state.appliedLegendId != nil` либо (а) сначала revert'ит автоматически, либо (б) бросает error/no-op'ит. UI в TASK-L57/L59 должен будет учитывать.
+1. **Fresh install (новый юзер, без stub-installer history)**
+   - Скачать `HelloWork.dmg` (latest release)
+   - Mount, drag HelloWork → Applications
+   - Right-click → Open (Gatekeeper)
+   - Запустить, пройти permissions onboarding (Accessibility + Screen Recording)
+   - Verify: `/Applications/HelloWork.app` есть, `~/Library/Application Support/HelloWork/HelloWork.app` НЕТ, `/Applications/HWInstaller.app` НЕТ
+   - Verify: migration toast НЕ показывается (новый юзер, мигрировать нечего)
 
-- [x] **TASK-L78 [verify]** — TASK-L77  → resolved by TASK-L76 (verify auto-revert variant correct).
+2. **Migration (старый юзер со stub-engine layout)**
+   - Pre-state: установлен v0.11.5 через stub (есть `/Applications/HWInstaller.app` и `~/Library/Application Support/HelloWork/HelloWork.app`)
+   - Установить v0.12.0 поверх: drag `/Applications/HelloWork.app` (новый из DMG) поверх существующего `/Applications/HWInstaller.app`? Нет — это разные имена. Drag `HelloWork.app` в `/Applications/` рядом, запустить
+   - Verify: `~/Library/Application Support/HelloWork/HelloWork.app` удалился
+   - Verify: `/Applications/HWInstaller.app` в Trash
+   - Verify: migration toast показывается ОДИН раз
+   - Verify: favoriteLegendIds, managedApps, applied legend, settings — все на месте (UserDefaults сохранён)
+   - Verify: Accessibility и Screen Recording permissions всё ещё granted (TCC не сбросился)
+
+3. **In-app update (auto-update path)**
+   - Pre: установлен v0.12.0
+   - Backend: создать релиз v0.12.1
+   - В app: Settings → Updates → Install latest
+   - Verify: app перезапускается через UpdateInstaller
+   - Verify: `/Applications/HelloWork.app` имеет новую версию (Info.plist CFBundleShortVersionString)
+   - Verify: post-update toast «Updated to v0.12.1»
+   - Verify: TCC grants persist
+
+4. **Manual fresh download replaces existing install**
+   - Pre: v0.12.0 установлен
+   - Download v0.12.1 dmg, drag → Applications, replace existing
+   - Запустить
+   - Verify: версия 0.12.1, всё работает, post-update toast НЕ показывается (мы не auto-updated, а replaced — это допустимая разница; or показывается, но это OK тоже)
+   - Verify: data preserved
+
+5. **Idempotent migration**
+   - Pre: v0.12.0 установлен, миграция уже сработала
+   - Quit + relaunch
+   - Verify: migration toast НЕ показывается (флаг сработал)
+   - Verify: devlog содержит «migration: already done, skip»
+
+6. **Clean uninstall**
+   - Drag `/Applications/HelloWork.app` to Trash
+   - Запустить app — не запускается (его нет)
+   - Optional cleanup: `~/Library/Application Support/HelloWork/`, plist, Caches, HTTPStorages
+   - Verify: после переустановки v0.12.0 — fresh-install path (точка 1).
+
+---
+
+## 8. Template для финального dev_log entry (TASK-F01)
+
+```json
+{
+    "version": "0.12.0",
+    "date": "<current-date>",
+    "customMessage": "🚀 Distribution overhaul. Один HelloWork.app в /Applications вместо stub+engine pattern. Существующие юзеры мигрируются автоматически: старый engine из ~/Library/Application Support убирается, HWInstaller в Trash, toast уведомляет. UserDefaults и TCC grants сохраняются (bundle ID не меняется).",
+    "main": "Phase A migration safety (idempotent flag, auto-cleanup), B build pipeline cleanup (-stub source, -2 scripts), C UpdateInstaller validated for /Applications path, D DMG polish (background + volume icon), E README rewritten. 0.11.X→0.12.0 minor bump signals distribution overhaul.",
+    "points": [
+        "Single .app — discoverable through Spotlight/Launchpad/Dock",
+        "Drag-to-Applications DMG layout",
+        "Auto-migration from stub-engine layout (idempotent)",
+        "TCC + UserDefaults preserved across migration",
+        "In-app updates work in-place at /Applications",
+        "Smoke list 6/6 passed"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.12.0/HelloWork-0.12.0.dmg"
+}
+```
+
+---
+
+## 9. Procedure: full local wipe для smoke-теста точки 1
+
+(Из переписки 27 апреля — для воспроизводимости.)
+
+```bash
+brew uninstall --cask hellowork \
+  && rm -rf "$HOME/Library/Application Support/HelloWork" \
+  && rm -f  "$HOME/Library/Preferences/dev.helloworkapp.macos.engine.plist" \
+  && rm -rf "$HOME/Library/Caches/dev.helloworkapp.macos.engine" \
+  && rm -rf "$HOME/Library/HTTPStorages/dev.helloworkapp.macos.engine" \
+  && rm -f  "$HOME/Library/Caches/Homebrew/Cask/HelloWork.dmg--latest.dmg" \
+  && rm -f  "$HOME/Library/Caches/Homebrew/downloads/"*HelloWork.dmg \
+  && defaults delete dev.helloworkapp.macos.engine 2>/dev/null; \
+  killall cfprefsd 2>/dev/null
+```
+
+TCC reset (если нужно эмулировать совсем чистого юзера — иногда нужно для тестирования onboarding):
+```bash
+tccutil reset Accessibility dev.helloworkapp.macos.engine
+tccutil reset ScreenCapture dev.helloworkapp.macos.engine
+```
+
+---
+
+## 10. Follow-up tasks
+
+> Verify-таски ДОПИСЫВАЮТ сюда новые задачи если обнаружат регрессию или non-trivial gap в pre-existing коде.
+
+(Пусто на старте цикла.)
