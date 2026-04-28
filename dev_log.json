@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.19",
+    "date": "2026-04-28",
+    "customMessage": "TASK-B06 [verify]: OK. build.sh+package.sh path consistent: dist/HelloWork.app, dist/HelloWork-X.Y.Z.dmg. Build clean. DMG mount шоу HelloWork.app.",
+    "main": "Verification of TASK-B05.",
+    "points": [
+      "Phase B (6/8)",
+      "Cycle: 14/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.19/HelloWork-0.11.19.dmg"
+  },
+  {
     "version": "0.11.18",
     "date": "2026-04-28",
     "customMessage": "TASK-B05: build.sh refactor. DIST='dist' (без подпапки engine/), output dist/HelloWork.app. Engine-терминология вычищена в комментариях. package.sh path-consumer обновлён согласно (изначально TASK-B07 территория но требовалось в этом же таске чтобы pipeline работал).",

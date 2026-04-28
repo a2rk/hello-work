@@ -271,7 +271,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
   - Файлы: `scripts/build.sh`.
   - Acceptance: `./scripts/build.sh` создаёт `dist/HelloWork.app`, существующая `dist/engine/HelloWork.app` (если осталась) либо удаляется в скрипте, либо игнорируется.
 
-- [ ] **TASK-B06 [verify]** — TASK-B05
+- [x] **TASK-B06 [verify]** — TASK-B05  → OK. ./scripts/build.sh создаёт dist/HelloWork.app в верхнем уровне dist/ (без engine/). package.sh path-consumer обновлён в same task (force-needed для pipeline). Build clean, DMG mount показывает HelloWork.app. Released as v0.11.19
 
 - [ ] **TASK-B07 [impl]** — Refactor `scripts/package.sh`:
   - Output: TWO DMG'ов:
