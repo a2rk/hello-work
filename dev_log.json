@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.32",
+    "date": "2026-04-28",
+    "customMessage": "TASK-E03: 0.12.0 dev_log template зарегистрирован в audit/CONTEXT.md секции 8. Содержит pre-written customMessage (distribution overhaul + migration explainer), main summary всех Phase A-H, 6 points (single-app, drag-to-app DMG layout, auto-migration, TCC+UserDefaults preserved, in-place updates, smoke 6/6), dmgUrl pattern.",
+    "main": "Готов к TASK-F01 финальному bump'у — agent просто подставит current date и version. Снижает риск импровизации в финальном release.",
+    "points": [
+      "Phase E (3/4)",
+      "Cycle: 27/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.32/HelloWork-0.11.32.dmg"
+  },
+  {
     "version": "0.11.31",
     "date": "2026-04-28",
     "customMessage": "TASK-E02 [verify]: OK. README install instructions не содержат HWInstaller / stub / Application Support как install location. Migration history отделена в bottom раздел.",
