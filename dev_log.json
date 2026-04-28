@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.10.35",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L34 verified: Filters bar OK.",
+    "main": "Verification of TASK-L33.",
+    "points": [
+      "Toggle, Clear-all, integration into filteredItems"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.35/HelloWork-0.10.35.dmg"
+  },
+  {
     "version": "0.10.34",
     "date": "2026-04-28",
     "customMessage": "TASK-L33: Filters bar — horizontal scroll с pills для era / field / intensity (1-5). Click toggle, active = accent stroke + bg. «Clear filters» кнопка справа когда есть active filters.",

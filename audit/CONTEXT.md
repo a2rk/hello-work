@@ -251,7 +251,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L33 [impl]** — Filters bar: horizontal scroll с era/field/intensity pills + Clear-all.  → released as v0.10.34
 
-- [ ] **TASK-L34 [verify]** — TASK-L33
+- [x] **TASK-L34 [verify]** — TASK-L33  → released as v0.10.35
 
 - [ ] **TASK-L35 [impl]** — Grid/List view-mode persistence: `@AppStorage("helloWorkLegendsViewMode")`. Toggle через segmented control в header. State запоминается across launches.
 
