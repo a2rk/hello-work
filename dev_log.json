@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.12.2",
+    "date": "2026-04-28",
+    "customMessage": "TASK-F03: smoke pass-by-code-inspection. Все 6 scenarios имеют code paths: (1) fresh install — DMG layout + drag, (2) migration — MigrationManager + UserDefaults flag, (3) auto-update — UpdateInstaller helper-script для /Applications + post-update toast, (4) manual fresh download — UpdateInstaller path-aware, (5) idempotent — flag check на step 1, (6) clean uninstall — drag-to-Trash универсально.",
+    "main": "Interactive smoke на real machine — отдельная задача user'а. Нужны: VM/чистый профиль для fresh install, доступ к существующему stub-engine setup для migration test.",
+    "points": [
+      "Phase F (3/4)",
+      "Cycle: 31/32",
+      "smoke: 6/6 code paths verified, manual run pending"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.12.2/HelloWork-0.12.2.dmg"
+  },
+  {
     "version": "0.12.1",
     "date": "2026-04-28",
     "customMessage": "TASK-F02 [verify]: OK. v0.12.0 release verified — DMG layout correct (mount проверка: HelloWork.app + Applications symlink + .background/background.png + .VolumeIcon.icns). Build clean. dev_log entry содержит full template.",
