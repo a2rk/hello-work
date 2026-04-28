@@ -219,7 +219,7 @@ HelloWork/Sources/HelloWork/
 
 ### Phase C — Sidebar entry & routing (6 tasks)
 
-- [ ] **TASK-L19 [impl]** — `PrefSection.legends` (rawValue `legends`, icon `books.vertical.fill`, title через `t.sectionLegends`). Добавить в визуальный ряд (между `stats` и `menubar` или где правильно по иерархии).
+- [x] **TASK-L19 [impl]** — `PrefSection.legends` + sectionLegends translation key (en/ru/zh) + placeholder routing в PrefsView.  → released as v0.10.20
 
 - [ ] **TASK-L20 [verify]** — TASK-L19
 
