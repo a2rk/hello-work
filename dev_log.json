@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.10.22",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L21: LegendsListView + LegendDetailView skeletons с in-view push-nav через selectedLegend @State. PrefsView routing на полноценный LegendsListView.",
+    "main": "Минимальные skeleton'ы. List показывает все 60 legends плоским списком, click → detail с back-кнопкой. TASK-L25..L48 наполнят содержимое до production-уровня.",
+    "points": [
+      "Sources/HelloWork/Preferences/Legends/LegendsListView.swift — list + detail",
+      "PrefsView .section(.legends) → LegendsListView(state:)",
+      "Push-nav: @State selectedLegend, без новых SidebarSelection кейсов"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.22/HelloWork-0.10.22.dmg"
+  },
+  {
     "version": "0.10.21",
     "date": "2026-04-28",
     "customMessage": "TASK-L20 verified: sidebar entry корректен.",

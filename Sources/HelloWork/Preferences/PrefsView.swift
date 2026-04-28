@@ -255,15 +255,7 @@ struct PrefsView: View {
                 state.prefsSelection = state.managedApps.first.map { .app($0.bundleID) } ?? .onboarding
             }
         case .section(.legends):
-            // TASK-L21 заменит на полноценный LegendsListView.
-            VStack(alignment: .leading, spacing: 8) {
-                Text(state.t.sectionLegends)
-                    .font(.system(size: 22, weight: .semibold))
-                    .foregroundColor(.white)
-                Text("Coming soon")
-                    .font(.system(size: 12))
-                    .foregroundColor(Theme.textSecondary)
-            }
+            LegendsListView(state: state)
         case .section(.stats):
             StatsView(state: state)
         case .section(.menubar):
