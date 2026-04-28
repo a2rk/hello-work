@@ -352,7 +352,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L73 [impl]** — Перевод audit/CONTEXT финальных метрик в ✅ (см. секцию 6 ниже) — каждая отмечена.  → released as v0.11.2 (метрики секции 6 уже были ✅ как проектные цели; verified что каждая соответствует реальной импликации: 60 JSON, grid/list, debounce/filter/sort, detail sections, fav-flow, apply/revert, i18n+EN-badge, corrupt-tolerance, persistence, animations, edge-cases, sources clickable, 7 devlog calls в legends modules)
 
-- [ ] **TASK-L74 [verify]** — TASK-L73
+- [x] **TASK-L74 [verify]** — TASK-L73  → OK. Каждая ✅ метрика секции 6 повторно проверена против файлов имплементации. Released as v0.11.3
 
 - [ ] **TASK-L75 [impl]** — Cleanup follow-ups если возникли в секции 5.
 

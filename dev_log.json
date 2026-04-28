@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.3",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L74 [verify]: OK. Метрики секции 6 повторно сверены — каждая ✅ соответствует реальной имплементации.",
+    "main": "Verification of TASK-L73. Регрессий нет.",
+    "points": [
+      "Phase I (4/6)",
+      "74/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.3/HelloWork-0.11.3.dmg"
+  },
+  {
     "version": "0.11.2",
     "date": "2026-04-27",
     "customMessage": "TASK-L73: финальные метрики секции 6 verified. Каждая метрика соответствует реальной имплементации — 60 JSON, grid/list toggle, search debounce 200ms, 3 sort modes, detail sections, fav flow, apply/revert, i18n (EN/RU/ZH + EN-badge fallback для zh), corrupt-tolerance, persistence schema-versioned, animations (stagger+hover+pop), edge cases, clickable sources, devlog purchase в legends modules.",
