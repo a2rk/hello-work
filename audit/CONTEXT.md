@@ -209,9 +209,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L14 [verify]** — TASK-L13  → released as v0.10.15
 
-- [ ] **TASK-L15 [impl]** — `LegendApplyEngine` — отдельный @MainActor enum с `apply(_:to:state:) throws` и `revert(state:) throws`. Использует AppState internals через ref.
-  - apply: сохраняет snapshot `state.managedApps[selected].slots` в `slotsBackupForApply` keyed by bundleID, заменяет slots → `slotsFromAllowedSlots(legend, category)`, ставит `appliedLegendId`.
-  - revert: восстанавливает из backup, чистит `appliedLegendId` и backup.
+- [x] **TASK-L15 [impl]** — `LegendApplyEngine` — apply/revert с backup snapshot.  → released as v0.10.16
 
 - [ ] **TASK-L16 [verify]** — TASK-L15
 

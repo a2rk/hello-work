@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.10.16",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L15: LegendApplyEngine — apply/revert mapping. apply сохраняет slots-backup, заменяет на legend.allowedSlots. revert бит-в-бит восстанавливает.",
+    "main": "@MainActor enum с двумя статиками. LegendApplyCategory: skip/work/personal — определяет какие из allowedSlots применятся к app. parseHHmm helper для 'HH:mm' → minutes.",
+    "points": [
+      "apply(_:assignments:state:) — для apps с category != skip",
+      "revert(state:) — bit-by-bit restore из backup",
+      "slotsFor(legend:category:) helper",
+      "devlog 'legends' трассирует apply/revert events"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.16/HelloWork-0.10.16.dmg"
+  },
+  {
     "version": "0.10.15",
     "date": "2026-04-28",
     "customMessage": "TASK-L14 verified: favorite helpers OK.",
