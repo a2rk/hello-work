@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.10.7",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L06 verified: 60 JSON в bundle, library должна загрузить все. Forward-compat для unknown block types.",
+    "main": "Verification of TASK-L05. Bundle layout правильный, LegendsLibrary subdirectory параметр совпадает с тем как .copy положил файлы.",
+    "points": [
+      "60 файлов в bundle"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.7/HelloWork-0.10.7.dmg"
+  },
+  {
     "version": "0.10.6",
     "date": "2026-04-28",
     "customMessage": "TASK-L05: 60 JSON-файлов легенд перенесены в Resources/Legends/. Package.swift переключён на explicit list ресурсов с .copy для Legends (сохраняет subdir tree).",

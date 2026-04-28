@@ -189,7 +189,7 @@ HelloWork/Sources/HelloWork/
   - Файлы: `Resources/Legends/01-...json` ... `60-...json`. Старая папка `legens_module/` в корне — удаляется.
   - Acceptance: `swift build` ≥ 60 файлов вошли в bundle; LegendsLibrary.all.count == 60 на старте.
 
-- [ ] **TASK-L06 [verify]** — TASK-L05
+- [x] **TASK-L06 [verify]** — TASK-L05  → released as v0.10.7
 
 - [ ] **TASK-L07 [impl]** — Search & filter helpers в `LegendsLibrary`:
   - `search(_ query: String) -> [Legend]` — по name(any locale)+fullName+tags+bio (case-insensitive contains).
