@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.42",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L41: LegendRingChart — 24-часовое кольцо. Каждый блок — арка цвета по LegendBlockType (sleep тёмный, deep_work зелёный/accent, comms янтарь, meal_and_read голубой, leisure фиолетовый). Hour markers 0/6/12/18 контр-вращаются. Центр: текущее время + название блока «сейчас».",
+    "main": "LegendBlockType.color вынесен в extension — переиспользуется в L43 (block-type legend) и L45. Helper minutes(HH:mm) валидирует диапазоны. RingChart использует Circle.trim для арок.",
+    "points": [
+      "Phase E (5/12)",
+      "41/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.42/HelloWork-0.10.42.dmg"
+  },
+  {
     "version": "0.10.41",
     "date": "2026-04-27",
     "customMessage": "TASK-L40 verify: detail view имел собственный ScrollView внутри уже-скроллящего PrefsView.detail. Nested scroll давал inconsistent bounce и хуже hit-testing. Убрал inner ScrollView — родитель скроллит всё.",

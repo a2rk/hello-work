@@ -54,3 +54,25 @@ extension LegendBlockType: Codable {
         try c.encode(rawKey)
     }
 }
+
+extension LegendBlockType {
+    /// Цвет арки в LegendRingChart и dot'а в block-type legend (TASK-L41/L43).
+    var color: Color {
+        switch self {
+        case .sleep:
+            return Color(red: 0.20, green: 0.22, blue: 0.32)
+        case .morningRoutine:
+            return Color(red: 1.00, green: 0.78, blue: 0.35)
+        case .deepWork:
+            return Theme.accent
+        case .comms:
+            return Color(red: 0.95, green: 0.55, blue: 0.30)
+        case .mealAndRead:
+            return Color(red: 0.40, green: 0.75, blue: 0.85)
+        case .leisureAndReflection:
+            return Color(red: 0.70, green: 0.55, blue: 0.95)
+        case .unknown:
+            return Color.white.opacity(0.25)
+        }
+    }
+}

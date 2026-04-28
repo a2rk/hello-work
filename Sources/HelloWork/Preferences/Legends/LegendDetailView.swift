@@ -17,8 +17,17 @@ struct LegendDetailView: View {
         VStack(alignment: .leading, spacing: 18) {
             backButton
             hero
+            ringSection
             bioSection
             sourcesSection
+        }
+    }
+
+    private var ringSection: some View {
+        HStack {
+            Spacer()
+            LegendRingChart(legend: legend)
+            Spacer()
         }
     }
 
