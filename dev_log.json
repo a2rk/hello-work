@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.9.78",
+    "date": "2026-04-28",
+    "customMessage": "TASK-057: applicationWillTerminate теперь явно чистит peek monitor, hider, overlay windows и notification observers. Чистый exit без orphan resources.",
+    "main": "До: только stats.flushNow. Теперь: NSEvent.removeMonitor для peek, menubarHider.tearDown (возвращает items на места), overlayWindows orderOut + clear, observers cleared.",
+    "points": [
+      "peekMouseMonitor — removeMonitor",
+      "menubarHider.tearDown — restore other apps' menubar items",
+      "Overlay windows — orderOut + clear",
+      "NotificationCenter observers — removeObserver"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.78/HelloWork-0.9.78.dmg"
+  },
+  {
     "version": "0.9.77",
     "date": "2026-04-28",
     "customMessage": "TASK-056 verified: i18n validate работает в DEBUG. Phase L закрыта.",

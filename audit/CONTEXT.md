@@ -337,7 +337,7 @@ HelloWork/
 
 ### Phase M — Lifecycle cleanup
 
-- [ ] **TASK-057 [impl]** — NSEvent monitor + focus overlay cleanup
+- [x] **TASK-057 [impl]** — NSEvent monitor + focus overlay cleanup  → released as v0.9.78
   - Файлы: `App/AppDelegate.swift:applicationWillTerminate / overlay handling`
   - Решение:
     - В `applicationWillTerminate(_:)` — `NSEvent.removeMonitor(peekMouseMonitor)`, `state.menubarHider.tearDown()` (уже есть?), focus overlay close-out.

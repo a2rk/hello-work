@@ -65,6 +65,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         state.stats.flushNow()
+        if let m = peekMouseMonitor {
+            NSEvent.removeMonitor(m)
+            peekMouseMonitor = nil
+        }
+        // Hider tearDown — тащит чужие menubar items обратно на места.
+        state.menubarHider.tearDown()
+        // Закрываем overlay-окна явно, чтобы не оставить orphan windows.
+        for win in overlayWindows.values { win.orderOut(nil) }
+        overlayWindows.removeAll()
+        // Убираем все наши observers.
+        for token in observers { NotificationCenter.default.removeObserver(token) }
+        observers.removeAll()
     }
 
     /// Снимаем `com.apple.quarantine` с собственного бандла, чтобы Gatekeeper не
