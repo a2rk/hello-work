@@ -269,7 +269,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L41 [impl]** — `LegendRingChart` — 24-часовое кольцо. Каждый block рисуется arc'ом с цветом по `LegendBlockType` (sleep тёмный, deep_work primary, comms accent, ...). Hour markers (0/6/12/18). Лейблы в центре кольца — сейчас показывает `legendsTitle` или (опц.) текущий блок относительно сейчас.  → released as v0.10.42
 
-- [ ] **TASK-L42 [verify]** — TASK-L41
+- [x] **TASK-L42 [verify]** — TASK-L41  → 2 finding'а: (1) hour-marker rotation order (.offset → rotate → counter-rotate) был неверен — modifier-стек inner-to-outer схлопывал все позиции в top. Исправлен на pre-rotate(-angle) → offset → rotate(+angle). (2) currentTimeText не обновлялся — обернул centerLabel в TimelineView(.periodic(60s)). Released as v0.10.43
 
 - [ ] **TASK-L43 [impl]** — Block type legend: горизонтальный ряд под рингом — каждый блок-тип: цветовой dot + название (translated) + total часов в дне.
 

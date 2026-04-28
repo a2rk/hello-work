@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.43",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L42 verify: 2 finding'а в RingChart. (1) hour-markers схлопывались в верхнюю позицию из-за неверного порядка modifier'ов: правильно pre-rotate(-angle) → offset → rotate(+angle). (2) HH:mm в центре не обновлялся — обернул в TimelineView(.periodic(60)).",
+    "main": "Verification of TASK-L41. Оба бага relevant for 24/7 always-open detail view.",
+    "points": [
+      "Phase E (6/12)",
+      "42/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.43/HelloWork-0.10.43.dmg"
+  },
+  {
     "version": "0.10.42",
     "date": "2026-04-27",
     "customMessage": "TASK-L41: LegendRingChart — 24-часовое кольцо. Каждый блок — арка цвета по LegendBlockType (sleep тёмный, deep_work зелёный/accent, comms янтарь, meal_and_read голубой, leisure фиолетовый). Hour markers 0/6/12/18 контр-вращаются. Центр: текущее время + название блока «сейчас».",

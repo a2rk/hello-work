@@ -68,48 +68,52 @@ struct LegendRingChart: View {
     // MARK: - Hour markers
 
     private var hourMarkers: some View {
+        // Modifier-порядок: pre-rotate glyph на -angle → offset на радиус → outer rotate на +angle.
+        // Тогда позиция = угол, а ориентация глифа = 0 (upright).
         ForEach([0, 6, 12, 18], id: \.self) { h in
+            let angle = Double(h) / 24.0 * 360.0
             Text(String(format: "%02d", h))
                 .font(.system(size: 9, weight: .semibold))
                 .foregroundColor(Theme.textTertiary)
+                .rotationEffect(.degrees(-angle))
                 .offset(y: -(size / 2 - lineWidth - 8))
-                .rotationEffect(.degrees(Double(h) / 24.0 * 360.0))
-                // Контр-вращение, чтобы текст оставался читаемым.
-                .rotationEffect(.degrees(-Double(h) / 24.0 * 360.0),
-                                anchor: .center)
+                .rotationEffect(.degrees(angle))
         }
     }
 
     // MARK: - Center
 
     private var centerLabel: some View {
-        VStack(spacing: 4) {
-            Text(currentTimeText)
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
-                .foregroundColor(.white)
-            if let block = currentBlock {
-                Text(blockTypeTitle(block.type))
-                    .font(.system(size: 10, weight: .medium))
-                    .tracking(0.5)
-                    .foregroundColor(block.type.color)
-                    .lineLimit(1)
-            } else {
-                Text("—")
-                    .font(.system(size: 10))
-                    .foregroundColor(Theme.textTertiary)
+        // TimelineView обновляет body раз в минуту — иначе HH:mm и currentBlock залипают
+        // на момент открытия detail view.
+        TimelineView(.periodic(from: .now, by: 60)) { ctx in
+            VStack(spacing: 4) {
+                Text(timeText(ctx.date))
+                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                    .foregroundColor(.white)
+                if let block = currentBlock(at: ctx.date) {
+                    Text(blockTypeTitle(block.type))
+                        .font(.system(size: 10, weight: .medium))
+                        .tracking(0.5)
+                        .foregroundColor(block.type.color)
+                        .lineLimit(1)
+                } else {
+                    Text("—")
+                        .font(.system(size: 10))
+                        .foregroundColor(Theme.textTertiary)
+                }
             }
         }
     }
 
-    private var currentTimeText: String {
+    private func timeText(_ date: Date) -> String {
         let f = DateFormatter()
         f.dateFormat = "HH:mm"
-        return f.string(from: Date())
+        return f.string(from: date)
     }
 
-    private var currentBlock: LegendBlock? {
-        let now = Calendar.current
-        let comps = now.dateComponents([.hour, .minute], from: Date())
+    private func currentBlock(at date: Date) -> LegendBlock? {
+        let comps = Calendar.current.dateComponents([.hour, .minute], from: date)
         let nowMin = (comps.hour ?? 0) * 60 + (comps.minute ?? 0)
         return legend.lifeSchedule.blocks.first { b in
             guard let s = Self.minutes(b.start), let e = Self.minutes(b.end) else { return false }
