@@ -357,4 +357,7 @@ struct Translation {
     let legendsBlockTypeComms: String
     let legendsBlockTypeMeal: String
     let legendsBlockTypeLeisure: String
+    let migrationToastTitle: String
+    let migrationToastBody: String
+    let migrationToastDismiss: String
 }

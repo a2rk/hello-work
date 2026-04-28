@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.10",
+    "date": "2026-04-28",
+    "customMessage": "TASK-A05: AppState.queueMigrationToast: Bool @Published. MigrationManager step 4 теперь сетит state.queueMigrationToast = true. 3 translation keys (migrationToastTitle/Body/Dismiss) EN/RU/ZH добавлены в strict order Translation.swift.",
+    "main": "Property готов; UI toast реализуется в TASK-A07. Переводы: EN 'HelloWork moved to /Applications' / RU 'переехал' / ZH '已移至'.",
+    "points": [
+      "Phase A (5/8)",
+      "Cycle: 5/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.10/HelloWork-0.11.10.dmg"
+  },
+  {
     "version": "0.11.9",
     "date": "2026-04-28",
     "customMessage": "TASK-A04 [verify]: OK. AppDelegate-wiring корректен — order правильный. NSWorkspace.recycle async callback с set'ом флага до его completion — если recycle silently failed (in-use, permission), HWInstaller останется в /Applications, девлог запишет; acceptable.",

@@ -83,9 +83,10 @@ enum MigrationManager {
             devlog("migration", "SMAppService unregistered (was bound to old engine path)")
         }
 
-        // Step 4: фиксируем флаг. Toast queueing — отдельная фаза (TASK-A05/A07).
+        // Step 4: фиксируем флаг + queueим toast.
         defaults.set(true, forKey: migrationFlagKey)
-        devlog("migration", "completed")
+        state.queueMigrationToast = true
+        devlog("migration", "completed, toast queued")
         return .migrated
     }
 

@@ -123,6 +123,11 @@ final class AppState: ObservableObject {
     /// к резервной копии. UI показывает их баннером в Prefs до dismiss.
     @Published var corruptionWarnings: [CorruptionWarning] = []
 
+    /// True один раз после успешной миграции (TASK-A01/A03). UI показывает
+    /// one-time toast «HelloWork moved to /Applications», после dismiss
+    /// сбрасывается в false (в памяти; не возвращается).
+    @Published var queueMigrationToast: Bool = false
+
     struct CorruptionWarning: Identifiable, Equatable {
         let id = UUID()
         /// `.schedules` / `.stats` — определяет message в UI.

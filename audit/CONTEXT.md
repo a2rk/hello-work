@@ -227,7 +227,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
 
 - [x] **TASK-A04 [verify]** — TASK-A03  → OK. Order corretly: consumePreviousUpdateStatus → MigrationManager.runIfNeeded → checkForUpdates. Sync вызов оправдан (миграция fast, не async). Edge: NSWorkspace.recycle завершается callback'ом; флаг ставится до его completion → если recycle silently failed, HWInstaller может остаться в /Applications, девлог запишет ошибку. Acceptable. Released as v0.11.9
 
-- [ ] **TASK-A05 [impl]** — Добавить `AppState.queueMigrationToast: Bool` (`@Published`, persists в UserDefaults НЕ нужно — one-time-flag в migration сам по себе).
+- [x] **TASK-A05 [impl]** — Добавить `AppState.queueMigrationToast: Bool` (`@Published`, persists в UserDefaults НЕ нужно — one-time-flag в migration сам по себе).  → released as v0.11.10 (queueMigrationToast добавлен, MigrationManager сетит true в step 4, 3 translation keys EN/RU/ZH)
   - 3 translation keys: `migrationToastTitle`, `migrationToastBody`, `migrationToastDismiss`. EN/RU/ZH.
     - EN: «HelloWork moved to /Applications» / «Old installer removed. Launch at Login was reset — re-enable it in Settings if needed.» / «Got it»
     - RU: «HelloWork переехал в /Applications» / «Старый инсталлер убран в Корзину. Автозапуск сброшен — включи заново в Настройках если нужно.» / «Понятно»

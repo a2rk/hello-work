@@ -326,7 +326,10 @@ extension Translation {
         legendsBlockTypeDeep: "Deep work",
         legendsBlockTypeComms: "Communication",
         legendsBlockTypeMeal: "Meal & read",
-        legendsBlockTypeLeisure: "Leisure & reflection"
+        legendsBlockTypeLeisure: "Leisure & reflection",
+        migrationToastTitle: "HelloWork moved to /Applications",
+        migrationToastBody: "Old installer was moved to Trash. Launch at Login was reset — re-enable it in Settings if needed.",
+        migrationToastDismiss: "Got it"
     )
 
     static let ru = Translation(
@@ -655,7 +658,10 @@ extension Translation {
         legendsBlockTypeDeep: "Глубокая работа",
         legendsBlockTypeComms: "Коммуникации",
         legendsBlockTypeMeal: "Еда и чтение",
-        legendsBlockTypeLeisure: "Отдых и рефлексия"
+        legendsBlockTypeLeisure: "Отдых и рефлексия",
+        migrationToastTitle: "HelloWork переехал в /Applications",
+        migrationToastBody: "Старый инсталлер убран в Корзину. Автозапуск сброшен — включи заново в Настройках если нужно.",
+        migrationToastDismiss: "Понятно"
     )
 
     static let zh = Translation(
@@ -970,6 +976,9 @@ extension Translation {
         legendsBlockTypeDeep: "深度工作",
         legendsBlockTypeComms: "通讯",
         legendsBlockTypeMeal: "进餐与阅读",
-        legendsBlockTypeLeisure: "休闲与反思"
+        legendsBlockTypeLeisure: "休闲与反思",
+        migrationToastTitle: "HelloWork 已移至 /Applications",
+        migrationToastBody: "旧安装器已移至废纸篓。登录启动已重置 — 如需要请在设置中重新启用。",
+        migrationToastDismiss: "知道了"
     )
 }
