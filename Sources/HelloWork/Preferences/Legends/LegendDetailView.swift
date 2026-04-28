@@ -12,14 +12,13 @@ struct LegendDetailView: View {
     let onBack: () -> Void
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
-                backButton
-                hero
-                bioSection
-                sourcesSection
-                Spacer(minLength: 0)
-            }
+        // Parent PrefsView.detail уже оборачивает в ScrollView. Не вкладываем второй
+        // — иначе nested-scroll даёт неконсистентный bounce и мешает hit-testing.
+        VStack(alignment: .leading, spacing: 18) {
+            backButton
+            hero
+            bioSection
+            sourcesSection
         }
     }
 

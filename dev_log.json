@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.41",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L40 verify: detail view имел собственный ScrollView внутри уже-скроллящего PrefsView.detail. Nested scroll давал inconsistent bounce и хуже hit-testing. Убрал inner ScrollView — родитель скроллит всё.",
+    "main": "Verification of TASK-L39. Finding: nested ScrollView. Один уровень скролла теперь.",
+    "points": [
+      "Phase E (4/12)",
+      "40/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.41/HelloWork-0.10.41.dmg"
+  },
+  {
     "version": "0.10.40",
     "date": "2026-04-27",
     "customMessage": "TASK-L39: Bio + sources секции в detail view. ScrollView обернут вокруг content. Sources — clickable rows с иконкой по типу (book/article/interview/letter/video/podcast), открывают URL через NSWorkspace.",

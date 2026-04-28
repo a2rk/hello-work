@@ -265,7 +265,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L39 [impl]** — Bio paragraph + sources block (clickable links opening NSWorkspace.shared.open). Sources показываются как inline rows с типом (book/article/interview).  → released as v0.10.40
 
-- [ ] **TASK-L40 [verify]** — TASK-L39
+- [x] **TASK-L40 [verify]** — TASK-L39  → finding: detail view содержал свой ScrollView внутри уже-скроллящего PrefsView.detail (nested scroll → inconsistent bounce). Убрал inner ScrollView. Released as v0.10.41
 
 - [ ] **TASK-L41 [impl]** — `LegendRingChart` — 24-часовое кольцо. Каждый block рисуется arc'ом с цветом по `LegendBlockType` (sleep тёмный, deep_work primary, comms accent, ...). Hour markers (0/6/12/18). Лейблы в центре кольца — сейчас показывает `legendsTitle` или (опц.) текущий блок относительно сейчас.
 
