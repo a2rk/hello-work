@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.13",
+    "date": "2026-04-28",
+    "customMessage": "TASK-A08 [verify]: OK. MigrationToastBanner проверен — show conditionally, auto-dismiss DispatchWorkItem 8s cancel'ится onDisappear (rapid nav safe), click button сетит false → SwiftUI убирает banner. Phase A ЗАКРЫТА (8/8 tasks).",
+    "main": "Verification of TASK-A07. Migration safety net полностью имплементирован.",
+    "points": [
+      "Phase A COMPLETE (8/8)",
+      "Cycle: 8/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.13/HelloWork-0.11.13.dmg"
+  },
+  {
     "version": "0.11.12",
     "date": "2026-04-28",
     "customMessage": "TASK-A07: MigrationToastBanner UI. Subtle accent-colored card в верху PrefsView.detail (выше corruption banner): arrow.uturn icon + title + body + 'Got it' button. Auto-dismiss DispatchWorkItem 8s или click. После dismiss → state.queueMigrationToast = false, не возвращается.",

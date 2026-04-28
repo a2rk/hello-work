@@ -241,7 +241,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
   - Файлы: `Sources/HelloWork/Preferences/PrefsView.swift` (или новый MigrationToastView если правильнее модульно).
   - Acceptance: При запуске после миграции — toast виден один раз, dismissible, не возвращается. Не появляется на чистом install.
 
-- [ ] **TASK-A08 [verify]** — TASK-A07
+- [x] **TASK-A08 [verify]** — TASK-A07  → OK. Banner показывается только при queueMigrationToast=true, auto-dismiss DispatchWorkItem 8s корректно cancel'ится onDisappear (rapid nav безопасен), click button корректно сетит false. SwiftUI re-renders banner away. Регрессий нет. **Phase A CLOSED (8/8).** Released as v0.11.13
 
 ### Phase B — Build pipeline cleanup (8 tasks)
 
