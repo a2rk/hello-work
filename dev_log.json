@@ -1,5 +1,23 @@
 [
   {
+    "version": "0.11.0",
+    "date": "2026-04-27",
+    "customMessage": "🏛 LEGENDS module shipped. 60 historical figures (Franklin, Musk, Carnegie, Stephenson, Willink, Jobs, Cook, Nadella, Altman...) с полными 24-часовыми расписаниями, биографиями, цитатами. Apply legend's schedule to managed apps в один клик с per-app категориями (work/personal/skip), revert восстанавливает из backup.",
+    "main": "Phases A-H закрыты (70 tasks): persistence layer (versioned wrappers, corruption recovery), 60 JSON в Bundle.module/Legends, list view (search/filter/sort/grid|list/favorites), detail view (hero/ring chart/bio/sources/quotes carousel/messenger windows), apply flow (sheet с pickers, engine, backup, banner, revert с alert), polish (zh fallback с EN badge, stagger animations, edge cases). 0.10.0→0.11.0 — minor bump для major feature.",
+    "points": [
+      "60 legends loaded eagerly через Bundle.module Resources/Legends",
+      "Schema versioned (VersionedLegendsState) — расширяемо",
+      "Corruption-tolerant: одна битая JSON не убивает модуль",
+      "Persistence: favorites, applied state, backup, view-mode, sort, favorites-filter",
+      "Search debounced (200ms), filter chain (era/field/tag/intensity/favorites)",
+      "Apply engine MainActor — slots backup/revert atomically",
+      "i18n: EN/RU/ZH во всех keys; LegendLocalized helper для контента",
+      "Animations: stagger fade-in (capped к viewport), hover scale, fav-pop",
+      "Smoke list для regression-checks см. TASK-L72"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.0/HelloWork-0.11.0.dmg"
+  },
+  {
     "version": "0.10.71",
     "date": "2026-04-27",
     "customMessage": "TASK-L70 verify: два Clear-button (filtersBar и emptyResultsView) делали разное. filtersBar чистил только filter-state, emptyResultsView чистил всё включая search. Unified — оба зовут clearAllFilters() helper. Phase H ЗАКРЫТА (6/6).",

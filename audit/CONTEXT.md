@@ -335,7 +335,7 @@ HelloWork/Sources/HelloWork/
 
 ### Phase I — Final regression (6 tasks)
 
-- [ ] **TASK-L71 [impl]** — Final bump → **0.11.0** (minor) — сигнал «major feature release: Legends». dev_log.json — большой entry с подытогом всех Phase A-H + smoke list.
+- [x] **TASK-L71 [impl]** — Final bump → **0.11.0** (minor) — сигнал «major feature release: Legends». dev_log.json — большой entry с подытогом всех Phase A-H + smoke list.  → released as v0.11.0
   - Smoke list:
     1. Свежий launch (без favorites/applied) — sidebar Legends, list открывается, 60 карточек, search/filter работают, grid/list toggle помнится
     2. Click карточка → detail с ring, bio, sources, quotes
