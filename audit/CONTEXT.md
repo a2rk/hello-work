@@ -255,7 +255,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L35 [impl]** — Grid/List view-mode persistence через @AppStorage.  → released as v0.10.36
 
-- [ ] **TASK-L36 [verify]** — TASK-L35
+- [x] **TASK-L36 [verify]** — TASK-L35  → released as v0.10.37
 
 ### Phase E — Legend detail view (12 tasks)
 

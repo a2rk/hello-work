@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.37",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L36 verified: viewMode persistence OK. Phase D полностью закрыта — list view готов end-to-end.",
+    "main": "Verification of TASK-L35. Phase D done — header, search debounce, sort, view toggle, filters bar, cards (grid), rows (list), avatar. Готовы к Phase E (detail view).",
+    "points": [
+      "Phase D complete (TASK-L25..L36, 12 tasks)",
+      "36/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.37/HelloWork-0.10.37.dmg"
+  },
+  {
     "version": "0.10.36",
     "date": "2026-04-28",
     "customMessage": "TASK-L35: Grid/List toggle persists через @AppStorage('helloWorkLegendsViewMode'). Юзер выбрал — выбор живёт через все запуски.",
