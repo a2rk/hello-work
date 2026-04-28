@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.20",
+    "date": "2026-04-28",
+    "customMessage": "TASK-B07: package.sh редизайн. Drag-to-Applications layout: HelloWork.app + ln -s /Applications. Volume name 'HelloWork'. ДВА DMG артефакта одной командой: HelloWork-X.Y.Z.dmg (versioned для UpdateInstaller) + HelloWork.dmg (static latest для landing). Static = cp versioned.",
+    "main": "Smoke-test: mount /Volumes/HelloWork/ показывает HelloWork.app + Applications symlink → drag работает с первого раза.",
+    "points": [
+      "Phase B (7/8)",
+      "Cycle: 15/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.20/HelloWork-0.11.20.dmg"
+  },
+  {
     "version": "0.11.19",
     "date": "2026-04-28",
     "customMessage": "TASK-B06 [verify]: OK. build.sh+package.sh path consistent: dist/HelloWork.app, dist/HelloWork-X.Y.Z.dmg. Build clean. DMG mount шоу HelloWork.app.",
