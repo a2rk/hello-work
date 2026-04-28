@@ -82,6 +82,10 @@ struct LegendsListView: View {
 
     private var filtersBar: some View {
         HStack(spacing: 8) {
+            // Favorites pill вынесен из горизонтального scroll'а — самый
+            // персональный фильтр должен быть всегда виден и кликабелен,
+            // независимо от того, насколько далеко проскроллен список eras.
+            favoritesFilterPill
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 6) {
                     ForEach(availableEras, id: \.self) { era in
@@ -110,8 +114,6 @@ struct LegendsListView: View {
                             filterIntensity = (filterIntensity == (i...i)) ? nil : (i...i)
                         }
                     }
-                    Divider().frame(height: 14).background(Theme.surfaceStroke)
-                    favoritesFilterPill
                 }
                 .padding(.vertical, 1)
             }

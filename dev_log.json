@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.53",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L52 verify: favorites pill был последним внутри горизонтального scroll'а — на узком окне или при многих era/field скрывался. Вынес pill наружу, поместил слева — всегда видим, кликабелен независимо от scroll'а.",
+    "main": "Verification of TASK-L51.",
+    "points": [
+      "Phase F (4/6)",
+      "52/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.53/HelloWork-0.10.53.dmg"
+  },
+  {
     "version": "0.10.52",
     "date": "2026-04-27",
     "customMessage": "TASK-L51: Favorites filter pill в LegendsListView. Toggle ★/☆ + надпись 'Favorites/Избранное/收藏'. State persists в @AppStorage('helloWorkLegendsShowFavoritesOnly') — выживает между запусками. Уже подключён к filteredItems pipeline.",
