@@ -12,12 +12,16 @@ final class MenubarHiderController: ObservableObject {
     @Published private(set) var enabled: Bool = false
 
     private(set) var mainItem: NSStatusItem?
+    /// Spacer-item: невидимый NSStatusItem который мы раздуваем при collapse,
+    /// тем самым выталкивая чужие menubar items за screen overflow / под app menu.
+    /// Это working approach на Sequoia (CGEvent drag и CGSSetWindowAlpha
+    /// чужих items блокированы system'ом).
+    private var spacerItem: NSStatusItem?
     private var currentIconStyle: StatusIconStyle = .solid
 
-    /// Сохранённые items с их полными данными (нужны для restore).
+    /// Сохранённые items для тестов / inspection. На spacer-approach не нужно
+    /// для restore (просто spacer.length = 0).
     private var savedItems: [MenuBarItem] = []
-    /// Map: windowID нашего item → windowID соседа справа (anchor для restore).
-    /// При restore делаем `mover.restore(item, rightOf: neighbor)`.
     private var savedRightNeighbors: [CGWindowID: MenuBarItem] = [:]
 
     /// Последний auto-сигнал, переданный в `applyAuto` (focus-mode / schedule).
@@ -179,11 +183,6 @@ final class MenubarHiderController: ObservableObject {
             return
         }
 
-        // Input Monitoring permission — без него CGEvent.tapCreate вернёт nil
-        // и scrombleEvent в Mover'е не сработает. На первом вызове system
-        // покажет prompt, юзер выдаст grant — на втором вызове всё пойдёт.
-        _ = MenuBarItemMover.ensureInputMonitoring()
-
         let all = MenuBarItem.currentItems()
         let items = all.filter { $0.isHideable }
         devlog("hider", "currentItems total=\(all.count) hideable=\(items.count)")
@@ -196,32 +195,34 @@ final class MenubarHiderController: ObservableObject {
             return
         }
 
-        // Sequoia 15+ блокирует CGEvent-based drag менюбар items (events
-        // доходят но WS не интерпретирует UP как move-relative-to). Pivot
-        // на CGSSetWindowAlpha — items не двигаются, просто становятся
-        // невидимыми. Visual artifact: места items остаются заняты в
-        // layout (gaps), но визуально пусто.
+        // Sequoia 15+ блокирует все известные подходы к манипуляции чужих
+        // menubar items (CGEvent drag → отпускается, CGSSetWindowAlpha →
+        // не имеет permissions для foreign windows).
+        //
+        // Working approach: раздуваем СВОЙ собственный spacer NSStatusItem.
+        // macOS's menubar layout: items расположены справа налево, при
+        // overflow самые левые скрываются под app menu. Когда наш spacer
+        // (невидимый) становится огромным, всё что левее него уходит в
+        // overflow. Apple system items (правее) остаются.
         savedItems = items
         savedRightNeighbors.removeAll()
 
-        var hiddenAny = false
-        for item in items {
-            let ok = MenuBarItemMover.hideByAlpha(item)
-            devlog("hider.alpha",
-                   "hide wid=\(item.windowID) title='\(item.title ?? "nil")' ok=\(ok)")
-            if ok { hiddenAny = true }
-        }
-
-        guard hiddenAny else {
-            devlog("hider", "collapseInternal — hiddenAny=false, rolling back")
-            savedItems.removeAll()
+        guard let spacer = spacerItem else {
+            devlog("hider", "collapseInternal — spacerItem nil, abort")
             return
         }
+
+        // Берём ширину screen без правого Apple-кластера. Это max overflow
+        // который нужно занять, чтобы все third-party hideable items ушли.
+        let screenWidth = NSScreen.main?.frame.width ?? 1920
+        let spacerLength = screenWidth  // с запасом
+        spacer.length = spacerLength
+        devlog("hider.spacer", "expand spacer length=\(spacerLength) — items should overflow")
 
         isCollapsed = true
         updateMainIcon(style: currentIconStyle)
         onCollapsedPersist?(true)
-        devlog("hider", "collapseInternal done — isCollapsed=true")
+        devlog("hider", "collapseInternal done — isCollapsed=true (via spacer)")
     }
 
     private func expandInternal() {
@@ -235,10 +236,10 @@ final class MenubarHiderController: ObservableObject {
     }
 
     private func restoreAllItems() {
-        // Alpha approach: просто возвращаем alpha=1 на каждом сохранённом item.
-        for item in savedItems {
-            let ok = MenuBarItemMover.restoreAlpha(item)
-            devlog("hider.alpha", "restore wid=\(item.windowID) ok=\(ok)")
+        // Spacer approach: возвращаем length=0, items автоматически возвращаются.
+        if let spacer = spacerItem {
+            spacer.length = 0
+            devlog("hider.spacer", "collapse spacer length=0 — items restored")
         }
         savedItems.removeAll()
         savedRightNeighbors.removeAll()
@@ -255,12 +256,26 @@ final class MenubarHiderController: ObservableObject {
         item.button?.sendAction(on: [.leftMouseUp])
         item.autosaveName = "helloWork_main"
         mainItem = item
+
+        // Spacer — невидимый NSStatusItem, length=0 пока collapsed=false.
+        // При collapse раздуваем length чтобы вытолкнуть чужие items за edge.
+        // Title (autosaveName) уникален → его нельзя случайно потерять.
+        let spacer = NSStatusBar.system.statusItem(withLength: 0)
+        spacer.button?.title = ""
+        spacer.button?.image = nil
+        spacer.autosaveName = "helloWork_spacer"
+        // isVisible=true важно: иначе length игнорится system'ом.
+        spacer.isVisible = true
+        spacerItem = spacer
+
         onMainItemReady?(item)
     }
 
     private func tearDownItems() {
         if let m = mainItem { NSStatusBar.system.removeStatusItem(m) }
+        if let s = spacerItem { NSStatusBar.system.removeStatusItem(s) }
         mainItem = nil
+        spacerItem = nil
     }
 
     // MARK: - Click

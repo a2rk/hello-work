@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.12.8",
+    "date": "2026-04-28",
+    "customMessage": "PIVOT #2 — spacer NSStatusItem trick. Alpha approach (v0.12.7) работал только на наш own item, на чужие — нет (CGSSetWindowAlpha privileged для foreign windows). Sequoia блокирует ВСЕ способы манипуляции чужих menubar items. Working approach (как у Ice): создаём свой невидимый NSStatusItem и при collapse раздуваем его length=screenWidth — третьи items overflow за app menu автоматически.",
+    "main": "MenubarHiderController.spacerItem (length=0 при expanded). collapseInternal → spacer.length = screenWidth. expandInternal → spacer.length = 0. Никаких CGEvent / CGS приватных API для чужих items.",
+    "points": [
+      "spacerItem: NSStatusItem(length: 0) создаётся в createMain рядом с mainItem",
+      "collapseInternal раздувает spacer на screen.width",
+      "Items overflow за app menu автоматически (built-in macOS behavior)",
+      "Не нужен Input Monitoring / drag",
+      "Гораздо стабильнее чем CGEvent approach"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.12.8/HelloWork-0.12.8.dmg"
+  },
+  {
     "version": "0.12.7",
     "date": "2026-04-28",
     "customMessage": "PIVOT: drag-approach отказывается работать на Sequoia 15+ даже через scrombleEvent (events доходят, юзер видит мерцание = drag инициируется на ms, но WS отпускает потому что target coordinate за screen). Перевожу hide на CGSSetWindowAlpha — приватный CGS API делает window invisible. Items не двигаются, занимают место в layout, но визуально пусто.",
