@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.13.1",
+    "date": "2026-04-28",
+    "customMessage": "Meditation polish: smoother motion + breathing ring. Точка теперь движется через catmull-rom spline (4 waypoints одновременно) — плавные изгибы без угловых поворотов. Скорость снижена: segmentDuration 8-12s (было 2-5s). Добавлен breathing ring 0.5pt бордер: вдох 0→180pt за 4s, hold 3s, выдох → 0 за 2s. Цикл 9s повторяется. Pulse точки независим от ring.",
+    "main": "Catmull-rom через waypoints[0..3]: tangents в waypoints[1] и [2] определены соседями [0] и [3] — pass-through smooth, без stop'ов. Continuous motion, нет dwell pauses. Breathing ring opacity 0→0.55→0 синхронно с диаметром.",
+    "points": [
+      "Catmull-rom spline вместо линейной lerp",
+      "segmentDuration 8-12s (раньше 2-5s) — медленнее",
+      "Breathing ring: вдох 4s + hold 3s + выдох 2s = 9s loop",
+      "Ring stroke 0.5pt, диаметр 0..180pt, opacity 0..0.55",
+      "Pulse точки 0.92↔1.08 (2s) независим — точка живая всегда"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.13.1/HelloWork-0.13.1.dmg"
+  },
+  {
     "version": "0.13.0",
     "date": "2026-04-28",
     "customMessage": "🧘 Meditation module shipped. 1-минутные фокус-сессии: 98% затемнение всех экранов + зелёная пульсирующая точка плавно дрейфует по primary screen. Юзер следит глазами 60 секунд — снимает mental fatigue после блока кода. Хоткей ⌃⌥M, ESC abort.",
