@@ -62,11 +62,38 @@ struct LegendsListView: View {
     private var list: some View {
         VStack(alignment: .leading, spacing: 14) {
             LegendAppliedBanner(state: state)
+            corruptBanner
             header
             controlsBar
             filtersBar
             results
             Spacer(minLength: 0)
+        }
+    }
+
+    @ViewBuilder
+    private var corruptBanner: some View {
+        let corruptCount = LegendsLibrary.shared.corruptIds.count
+        if corruptCount > 0 {
+            HStack(spacing: 8) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(Theme.danger)
+                Text(t.legendsCorruptHidden(corruptCount))
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundColor(.white.opacity(0.85))
+                Spacer()
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Theme.danger.opacity(0.10))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(Theme.danger.opacity(0.35), lineWidth: 1)
+            )
         }
     }
 
@@ -309,10 +336,7 @@ struct LegendsListView: View {
     @ViewBuilder
     private var results: some View {
         if filteredItems.isEmpty {
-            Text(t.legendsEmptyResults)
-                .font(.system(size: 12))
-                .foregroundColor(Theme.textTertiary)
-                .padding(.top, 20)
+            emptyResultsView
         } else {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
@@ -330,6 +354,46 @@ struct LegendsListView: View {
                 }
             }
         }
+    }
+
+    private var emptyResultsView: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 22, weight: .light))
+                .foregroundColor(Theme.textTertiary)
+            Text(t.legendsEmptyResults)
+                .font(.system(size: 12))
+                .foregroundColor(Theme.textTertiary)
+                .multilineTextAlignment(.center)
+            if hasAnyFilter || !debouncedQuery.isEmpty {
+                Button {
+                    clearAllFilters()
+                } label: {
+                    Text(t.legendsFilterClear)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 5)
+                        .background(Capsule().fill(Theme.accent.opacity(0.18)))
+                        .overlay(Capsule().stroke(Theme.accent.opacity(0.4), lineWidth: 1))
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 4)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 40)
+    }
+
+    private func clearAllFilters() {
+        searchInput = ""
+        debouncedQuery = ""
+        searchWorkItem?.cancel()
+        filterEra = nil
+        filterField = nil
+        filterTag = nil
+        filterIntensity = nil
+        filterFavoritesOnly = false
     }
 
     private var gridResults: some View {

@@ -329,7 +329,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L68 [verify]** — TASK-L67  → finding: stagger срабатывал на каждый onAppear, в т.ч. lazy-load при скролле — карточки с idx>25 ждали 500ms когда пользователь скроллит к ним. Изменил: stagger только для idx<25 (первичный viewport), остальные — no delay. Released as v0.10.69
 
-- [ ] **TASK-L69 [impl]** — Edge cases UI: empty results (пустой search/filter → «Nothing found, try different filters»), no managedApps (apply кнопка disabled с tooltip), corrupt JSON (banner «N legends couldn't be loaded» в LegendsListView header).
+- [x] **TASK-L69 [impl]** — Edge cases UI: empty results (пустой search/filter → «Nothing found, try different filters»), no managedApps (apply кнопка disabled с tooltip), corrupt JSON (banner «N legends couldn't be loaded» в LegendsListView header).  → released as v0.10.70 (empty results: icon + clear button; corrupt banner: danger pill в header; no-apps уже сделано в L55/L56)
 
 - [ ] **TASK-L70 [verify]** — TASK-L69
 

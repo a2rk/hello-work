@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.70",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L69: edge cases UI. Empty results теперь со state-vibe: magnifyingglass иконка + 'Nothing found, try different filters' + Clear-button (если есть active filter/search). Corrupt-banner danger-pill в header LegendsListView показывается когда LegendsLibrary.shared.corruptIds непустой.",
+    "main": "No-apps tooltip на Apply-кнопке уже был сделан в L55/L56. clearAllFilters helper — переиспользует те же поля что filtersBar Clear-button.",
+    "points": [
+      "Phase H (5/6)",
+      "69/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.70/HelloWork-0.10.70.dmg"
+  },
+  {
     "version": "0.10.69",
     "date": "2026-04-27",
     "customMessage": "TASK-L68 verify: stagger fade-in пропускал scrolling test. LazyVGrid тригерит onAppear при lazy-load когда юзер скроллит — карточки с idx>25 ждали 500ms (потолок min(idx*0.02, 0.5)) уже во время активного скролла. Lag-feel. Cap'нул: stagger только idx<25 (первичный viewport), остальные — instant fade-in.",
