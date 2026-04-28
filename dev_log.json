@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.45",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L44 verify: formatTotal(30) рисовал '0h 30m'. В датасете 35 блоков короче часа (Cook 03:45-04:00, Musk 12:00-12:30 и т.п.) — добавил sub-hour branch чтобы показывать '30m' без префикса '0h'.",
+    "main": "Verification of TASK-L43.",
+    "points": [
+      "Phase E (8/12)",
+      "44/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.45/HelloWork-0.10.45.dmg"
+  },
+  {
     "version": "0.10.44",
     "date": "2026-04-27",
     "customMessage": "TASK-L43: Block-type legend под рингом — горизонтальный ряд (dot + название + total часов в сутках). Стабильный порядок по LegendBlockType.known + unknown в конце. Horizontal scroll на узких экранах.",

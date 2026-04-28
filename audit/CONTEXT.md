@@ -273,7 +273,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L43 [impl]** — Block type legend: горизонтальный ряд под рингом — каждый блок-тип: цветовой dot + название (translated) + total часов в дне.  → released as v0.10.44
 
-- [ ] **TASK-L44 [verify]** — TASK-L43
+- [x] **TASK-L44 [verify]** — TASK-L43  → finding: formatTotal(30) рисовал "0h 30m" — для 35 блоков <60m в датасете это уродский формат. Добавлен sub-hour branch → "30m". Released as v0.10.45
 
 - [ ] **TASK-L45 [impl]** — Messenger windows section: показывает `blockSchedule.description` + список `allowedSlots` с time-range, appliesTo (work/personal pill), rationale.
 
