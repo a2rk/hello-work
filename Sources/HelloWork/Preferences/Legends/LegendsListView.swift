@@ -337,18 +337,22 @@ struct LegendsListView: View {
         if filteredItems.isEmpty {
             emptyResultsView
         } else {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(t.legendsResultsCount(filteredItems.count))
-                        .font(.system(size: 10, weight: .semibold))
-                        .tracking(1.2)
-                        .foregroundColor(Theme.textTertiary)
-                        .padding(.bottom, 4)
+            // GeometryReader снаружи ScrollView — даёт нам actual width для
+            // расчёта masonry layout (smallW и bigW = 2 * smallW + spacing).
+            GeometryReader { geo in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(t.legendsResultsCount(filteredItems.count))
+                            .font(.system(size: 10, weight: .semibold))
+                            .tracking(1.2)
+                            .foregroundColor(Theme.textTertiary)
+                            .padding(.bottom, 4)
 
-                    if viewMode == .grid {
-                        gridResults
-                    } else {
-                        listResults
+                        if viewMode == .grid {
+                            gridResults(width: geo.size.width)
+                        } else {
+                            listResults
+                        }
                     }
                 }
             }
@@ -395,18 +399,155 @@ struct LegendsListView: View {
         filterFavoritesOnly = false
     }
 
-    private var gridResults: some View {
-        LazyVGrid(
-            columns: [GridItem(.adaptive(minimum: 200, maximum: 240), spacing: 12, alignment: .top)],
-            alignment: .leading,
-            spacing: 12
-        ) {
-            ForEach(Array(filteredItems.enumerated()), id: \.element.id) { idx, legend in
-                LegendCard(state: state, legend: legend, index: idx) {
-                    selectedLegend = legend
+    /// Masonry layout: 3-column grid с периодической featured карточкой 2×2,
+    /// alternating сторона (left → right → left → ...). Каждый super-cycle:
+    /// 1 featured (5 items: 1 large + 4 small) + 2 regular rows (6 items) = 11 items.
+    private func gridResults(width totalWidth: CGFloat) -> some View {
+        let spacing: CGFloat = 12
+        // 3 columns. Минимальная ширина 180pt чтобы не схлопывалось на узком окне.
+        let smallW = max(180, (totalWidth - 2 * spacing) / 3)
+        let smallH: CGFloat = 170
+        let bigW = 2 * smallW + spacing
+        let bigH = 2 * smallH + spacing
+
+        let blocks = computeBlocks(items: filteredItems)
+
+        return LazyVStack(alignment: .leading, spacing: spacing) {
+            ForEach(Array(blocks.enumerated()), id: \.offset) { _, block in
+                blockView(
+                    block,
+                    smallW: smallW, smallH: smallH,
+                    bigW: bigW, bigH: bigH,
+                    spacing: spacing
+                )
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func blockView(
+        _ block: LayoutBlock,
+        smallW: CGFloat, smallH: CGFloat,
+        bigW: CGFloat, bigH: CGFloat,
+        spacing: CGFloat
+    ) -> some View {
+        switch block {
+        case .featured(let big, let smalls, let bigOnLeft, let baseIndex):
+            featuredRow(
+                big: big, smalls: smalls,
+                bigOnLeft: bigOnLeft, baseIndex: baseIndex,
+                smallW: smallW, smallH: smallH,
+                bigW: bigW, bigH: bigH,
+                spacing: spacing
+            )
+        case .regular(let trio, let baseIndex):
+            regularRow(
+                trio: trio, baseIndex: baseIndex,
+                smallW: smallW, smallH: smallH,
+                spacing: spacing
+            )
+        }
+    }
+
+    private func featuredRow(
+        big: Legend, smalls: [Legend],
+        bigOnLeft: Bool, baseIndex: Int,
+        smallW: CGFloat, smallH: CGFloat,
+        bigW: CGFloat, bigH: CGFloat,
+        spacing: CGFloat
+    ) -> some View {
+        HStack(alignment: .top, spacing: spacing) {
+            if bigOnLeft {
+                LegendCard(state: state, legend: big, index: baseIndex, size: .large) {
+                    selectedLegend = big
+                }
+                .frame(width: bigW, height: bigH)
+                smallStack(smalls: smalls, baseIndex: baseIndex + 1, smallW: smallW, smallH: smallH, spacing: spacing)
+            } else {
+                smallStack(smalls: smalls, baseIndex: baseIndex, smallW: smallW, smallH: smallH, spacing: spacing)
+                LegendCard(state: state, legend: big, index: baseIndex + 4, size: .large) {
+                    selectedLegend = big
+                }
+                .frame(width: bigW, height: bigH)
+            }
+        }
+    }
+
+    private func smallStack(
+        smalls: [Legend], baseIndex: Int,
+        smallW: CGFloat, smallH: CGFloat, spacing: CGFloat
+    ) -> some View {
+        VStack(spacing: spacing) {
+            HStack(spacing: spacing) {
+                ForEach(Array(smalls.prefix(2).enumerated()), id: \.element.id) { offset, legend in
+                    LegendCard(state: state, legend: legend, index: baseIndex + offset) {
+                        selectedLegend = legend
+                    }
+                    .frame(width: smallW, height: smallH)
+                }
+            }
+            HStack(spacing: spacing) {
+                ForEach(Array(smalls.dropFirst(2).prefix(2).enumerated()), id: \.element.id) { offset, legend in
+                    LegendCard(state: state, legend: legend, index: baseIndex + 2 + offset) {
+                        selectedLegend = legend
+                    }
+                    .frame(width: smallW, height: smallH)
                 }
             }
         }
+    }
+
+    private func regularRow(
+        trio: [Legend], baseIndex: Int,
+        smallW: CGFloat, smallH: CGFloat, spacing: CGFloat
+    ) -> some View {
+        HStack(spacing: spacing) {
+            ForEach(Array(trio.enumerated()), id: \.element.id) { offset, legend in
+                LegendCard(state: state, legend: legend, index: baseIndex + offset) {
+                    selectedLegend = legend
+                }
+                .frame(width: smallW, height: smallH)
+            }
+            // Если trio неполный (последняя строка) — пустые placeholder'ы для align.
+            if trio.count < 3 {
+                ForEach(0..<(3 - trio.count), id: \.self) { _ in
+                    Color.clear.frame(width: smallW, height: smallH)
+                }
+            }
+        }
+    }
+
+    /// Layout block — featured (1 large + 4 small) или regular (1-3 small).
+    /// `baseIndex` — для stagger animation (idx в общей последовательности).
+    private enum LayoutBlock {
+        case featured(big: Legend, smalls: [Legend], bigOnLeft: Bool, baseIndex: Int)
+        case regular(trio: [Legend], baseIndex: Int)
+    }
+
+    /// Раз в 3 блока — featured (5 items, alternating сторона).
+    /// Остальные — regular row (3 items). Если items не хватает на featured —
+    /// graceful downgrade на regular.
+    private func computeBlocks(items: [Legend]) -> [LayoutBlock] {
+        var blocks: [LayoutBlock] = []
+        var idx = 0
+        var blockCounter = 0
+        while idx < items.count {
+            let isFeaturedSlot = (blockCounter % 3 == 0)
+            if isFeaturedSlot, idx + 5 <= items.count {
+                let big = items[idx]
+                let smalls = Array(items[(idx + 1)..<(idx + 5)])
+                let bigOnLeft = ((blockCounter / 3) % 2 == 0)
+                blocks.append(.featured(big: big, smalls: smalls, bigOnLeft: bigOnLeft, baseIndex: idx))
+                idx += 5
+            } else {
+                let end = min(idx + 3, items.count)
+                let trio = Array(items[idx..<end])
+                blocks.append(.regular(trio: trio, baseIndex: idx))
+                idx = end
+            }
+            blockCounter += 1
+        }
+        return blocks
     }
 
     private var listResults: some View {

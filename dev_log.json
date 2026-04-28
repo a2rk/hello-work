@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.13.5",
+    "date": "2026-04-28",
+    "customMessage": "Legends grid редизайн — masonry/editorial layout. Каждые 11 карточек: 1 featured 2×2 (large card с bio-параграфом и avatar 80pt) + 4 small карточки сбоку + 6 small в 2 регулярных рядах. Featured side alternating (left → right → left...). Большой card spans 2 columns × 2 rows.",
+    "main": "LegendCard теперь принимает size: .small / .large. Large = большой avatar, bigger name, multi-line bio preview. Layout считается через GeometryReader (smallW = (totalW - 2*spacing) / 3, bigW = 2*smallW + spacing). LazyVStack с manual HStack/VStack rows.",
+    "points": [
+      "LegendCard.Size enum (small / large)",
+      "Masonry pattern: every 3rd block = featured (5 items)",
+      "Alternating side (bigOnLeft / bigOnRight)",
+      "GeometryReader для responsive widths",
+      "Stagger fade-in baseIndex учитывается"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.13.5/HelloWork-0.13.5.dmg"
+  },
+  {
     "version": "0.13.4",
     "date": "2026-04-28",
     "customMessage": "FIX Mac mini crash. Логи показали что crash на доступе к Bundle.module — SwiftPM-сгенерированный Bundle.module делает fatalError() при failure поиска resource bundle. На Mac mini юзера resolution не работал. Заменил на custom resolveResourceBundle() который пробует 4 candidates (BundleFinder.resourceURL / Bundle.main.resourceURL / Bundle.main.bundleURL / BundleFinder.bundleURL.parent) и при failure возвращает nil вместо crash.",
