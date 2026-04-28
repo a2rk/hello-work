@@ -191,11 +191,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L06 [verify]** — TASK-L05  → released as v0.10.7
 
-- [ ] **TASK-L07 [impl]** — Search & filter helpers в `LegendsLibrary`:
-  - `search(_ query: String) -> [Legend]` — по name(any locale)+fullName+tags+bio (case-insensitive contains).
-  - `filter(era: String? = nil, field: String? = nil, tag: String? = nil, intensity: ClosedRange<Int>? = nil) -> [Legend]`
-  - `sort(_ by: SortOrder) -> [Legend]` — order / alphabetical / favoritesFirst(set)
-  - Acceptance: пустой query → all; известный era="modern" → > 0 results; тэг которого нет нигде → empty.
+- [x] **TASK-L07 [impl]** — Search & filter helpers в `LegendsLibrary`  → released as v0.10.8
 
 - [ ] **TASK-L08 [verify]** — TASK-L07
 

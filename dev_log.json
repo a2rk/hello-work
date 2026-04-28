@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.10.8",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L07: search/filter/sort helpers в LegendsLibrary. Search по name(ru/en)+fullName+tags+bio. Filter по era/field/tag/intensity. Sort: order / alphabetical / favoritesFirst.",
+    "main": "Search — case-insensitive substring. Filter — композитный (nil-аргументы пропускаются). Sort — три варианта, favoritesFirst принимает Set<String> id'ов из AppState.",
+    "points": [
+      "search(_ query: String) -> [Legend]",
+      "filter(era:field:tag:intensity:) -> [Legend]",
+      "sort(_ items:by:) — order / alphabetical(ru/en) / favoritesFirst(Set)"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.8/HelloWork-0.10.8.dmg"
+  },
+  {
     "version": "0.10.7",
     "date": "2026-04-28",
     "customMessage": "TASK-L06 verified: 60 JSON в bundle, library должна загрузить все. Forward-compat для unknown block types.",
