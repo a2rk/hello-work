@@ -176,7 +176,7 @@ HelloWork/Sources/HelloWork/
   - `LegendBlockType` — enum со всеми observed types + `unknown(String)` для forward-compat.
   - Acceptance: декодит example JSON (id=01) без ошибок; пишется обратно через encode идентично; `LegendBlockType.allCases` имеет известные 6 типов.
 
-- [ ] **TASK-L02 [verify]** — TASK-L01
+- [x] **TASK-L02 [verify]** — TASK-L01  → released as v0.10.3
 
 - [ ] **TASK-L03 [impl]** — `LegendsLibrary` — singleton, eager bundle-load на init, сохраняет в `[Legend]` отсортированный по `order`, плюс `Set<String> corruptIds` для битых файлов. Логирует через `devlog("legends", ...)`. Public API: `all: [Legend]`, `byID(_:) -> Legend?`, `corrupt: Set<String>`.
   - Файл: `Sources/HelloWork/Domain/Legends/LegendsLibrary.swift`

@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.3",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L02 verified: domain models схема соответствует JSON всех 6 проверенных sample-файлов. Build чистый.",
+    "main": "Verification of TASK-L01. Trace полей Legend struct ↔ JSON keys: все совпадают. Optional fields (morningQuestion/eveningQuestion) корректно nullable. BlockType forward-compat через unknown(raw).",
+    "points": [
+      "Все поля JSON покрыты в Legend struct",
+      "Codable conformance корректен"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.3/HelloWork-0.10.3.dmg"
+  },
+  {
     "version": "0.10.2",
     "date": "2026-04-28",
     "customMessage": "TASK-L01: Domain models для модуля «Истории легенд» — Legend + LegendBlock + LegendBlockType (closed enum + unknown forward-compat) + Source/AllowedSlot/Quote. Все Codable+Hashable.",
