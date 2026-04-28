@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.23",
+    "date": "2026-04-28",
+    "customMessage": "TASK-C02 [verify]: OK. UpdateInstaller cleanup проверен — fallback path обновлён, engine-references удалены, core replace logic не тронута. canSelfInstall для /Applications/HelloWork.app корректен.",
+    "main": "Verification of TASK-C01.",
+    "points": [
+      "Phase C (2/4)",
+      "Cycle: 18/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.23/HelloWork-0.11.23.dmg"
+  },
+  {
     "version": "0.11.22",
     "date": "2026-04-28",
     "customMessage": "TASK-C01: UpdateInstaller cleanup — HWInstaller-fallback переименован в HelloWork-fallback (shell helper script + error msg). Engine-терминология удалена из UpdateInstaller/UpdatesView. Core replace logic не тронут.",
