@@ -44,6 +44,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refresh()
 
         state.installer.consumePreviousUpdateStatus()
+        // Одноразовая миграция со stub+engine layout (≤ v0.11.5) на single-app
+        // в /Applications. Идемпотентна через UserDefaults flag. Должна идти
+        // ДО checkForUpdates и до permissions onboarding — чтобы юзер не получил
+        // update-prompt пока старый engine ещё лежит в Application Support.
+        MigrationManager.runIfNeeded(state: state)
         L10n.validateAll()  // DEBUG-only: пишет в devlog об empty/placeholder strings
         showPrefsIfFirstLaunch()
         setupPermissionsRefresh()

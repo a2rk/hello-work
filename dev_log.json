@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.8",
+    "date": "2026-04-28",
+    "customMessage": "TASK-A03: MigrationManager.runIfNeeded подключён в AppDelegate.applicationDidFinishLaunching ПОСЛЕ consumePreviousUpdateStatus и ДО checkForUpdates/permissions. Sync-вызов (миграция быстрая, не async). Существующие юзеры со stub-engine layout получат migration на первом запуске v0.12.",
+    "main": "Order: stripQuarantine → state init → ... → consumePreviousUpdateStatus → MigrationManager → L10n.validateAll → showPrefsIfFirstLaunch → checkForUpdates.",
+    "points": [
+      "Phase A (3/8)",
+      "Cycle: 3/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.8/HelloWork-0.11.8.dmg"
+  },
+  {
     "version": "0.11.7",
     "date": "2026-04-28",
     "customMessage": "TASK-A02 [verify]: OK. MigrationManager логика проверена — идемпотентность через UserDefaults flag, partial-failure tolerance каждого шага, корректный path-guard для dev-сборок и AppTranslocation. SMAppService orphaned-регистрация старого engine path — macOS auto-cleanup, acceptable.",

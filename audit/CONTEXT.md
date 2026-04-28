@@ -221,7 +221,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
 
 - [x] **TASK-A02 [verify]** — TASK-A01  → OK. Subtle: SMAppService.mainApp ключуется к текущему bundle path, поэтому orphaned регистрация старого engine очищается macOS auto-cleanup'ом — наш unregister идёт для нового пути (no-op если не registered, не падает). Acceptable. Released as v0.11.7
 
-- [ ] **TASK-A03 [impl]** — Подключить `MigrationManager.runIfNeeded(state:)` в `AppDelegate.applicationDidFinishLaunching` ПОСЛЕ `state` initialized но ДО `state.checkForUpdates()` и до permissions onboarding. Внутри Task { await ... }.
+- [x] **TASK-A03 [impl]** — Подключить `MigrationManager.runIfNeeded(state:)` в `AppDelegate.applicationDidFinishLaunching` ПОСЛЕ `state` initialized но ДО `state.checkForUpdates()` и до permissions onboarding. Внутри Task { await ... }.  → released as v0.11.8 (sync-вызов: API не async, и runs быстро — Task wrap не нужен)
   - Файлы: `Sources/HelloWork/App/AppDelegate.swift`.
   - Acceptance: Migration runs once per fresh install of v0.12. На второй запуск — return-on-flag, devlog показывает «already migrated».
 
