@@ -262,7 +262,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
   - `scripts/AppIconInstaller.icns`
   - Acceptance: `git rm -r` отрабатывает, `swift build` чистый, ничего не ссылается на удалённые файлы.
 
-- [ ] **TASK-B04 [verify]** — TASK-B03
+- [x] **TASK-B04 [verify]** — TASK-B03  → OK. Grep по всем Sources/, scripts/, Package.swift даёт 0 stub-references. Build clean. Released as v0.11.17
 
 - [ ] **TASK-B05 [impl]** — Refactor `scripts/build.sh`:
   - Убрать комменты про «engine» / «stub скачивает». Это просто `HelloWork.app`.

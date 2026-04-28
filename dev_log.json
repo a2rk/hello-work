@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.17",
+    "date": "2026-04-28",
+    "customMessage": "TASK-B04 [verify]: OK. Stub-инфраструктура удалена полностью — grep по Sources/, scripts/, Package.swift даёт 0 hits для всех stub-related identifiers. Build clean.",
+    "main": "Verification of TASK-B03.",
+    "points": [
+      "Phase B (4/8)",
+      "Cycle: 12/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.17/HelloWork-0.11.17.dmg"
+  },
+  {
     "version": "0.11.16",
     "date": "2026-04-28",
     "customMessage": "TASK-B03: stub-инфраструктура удалена. git rm -r Sources/HelloWorkStub/, build_stub.sh, package_stub.sh, Info.plist.stub.template, AppIconInstaller.iconset/, AppIconInstaller.icns. Очищены ссылки в build.sh и generate_icon.swift (single-icon variant).",
