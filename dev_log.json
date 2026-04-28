@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.63",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L62 [verify]: OK. Banner правильно появляется/исчезает через if-let appliedLegend. legendIdFilter в detail view работает. Translation closure ru/en/zh ok. Revert callback пока no-op — TASK-L63 свяжет с alert + engine.revert.",
+    "main": "Verification of TASK-L61. Регрессий нет.",
+    "points": [
+      "Phase G (8/10)",
+      "62/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.63/HelloWork-0.10.63.dmg"
+  },
+  {
     "version": "0.10.62",
     "date": "2026-04-27",
     "customMessage": "TASK-L61: Applied banner. Subtle-accent capsule с иконкой wand + 'Сейчас применено: <name>' + Revert button. В LegendsListView показывается для любого applied; в LegendDetailView — только если открыт именно applied legend.",

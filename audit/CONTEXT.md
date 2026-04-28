@@ -313,7 +313,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L61 [impl]** — Applied banner в верху LegendsListView и LegendDetailView (если этот legend сейчас applied): «Сейчас применено: <legend.name>» + Revert button. Subtle accent color.  → released as v0.10.62
 
-- [ ] **TASK-L62 [verify]** — TASK-L61
+- [x] **TASK-L62 [verify]** — TASK-L61  → OK. Banner показывается через optional binding `appliedLegend` — пропадает корректно при revert. legendIdFilter работает в detail view. Translation closure ru/en/zh ok. Revert callback по умолчанию no-op (L63 свяжет). Released as v0.10.63
 
 - [ ] **TASK-L63 [impl]** — `LegendApplyEngine.revert(state:)` — восстанавливает slots из backup, чистит state. Кнопка Revert вызывает (с alert-confirmation: «Восстановить старые расписания?»).
 
