@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.13.2",
+    "date": "2026-04-28",
+    "customMessage": "Defensive fix в LegendQuotesCarousel: legend.quotes[0] (force-index access) → quotes[safe:] ?? quotes.first. Если legend.quotes пуст и UI всё-таки попадает в quoteCard — больше не крашит. Поиск crash'а на Mac mini продолжается через crash log.",
+    "main": "В рамках поиска crash'а при открытии Legends на Mac mini нашёл одну potential force-index точку. Реальная причина пока неизвестна — нужен ips/crash report от юзера.",
+    "points": [
+      "quoteCard теперь @ViewBuilder с if-let",
+      "Без crash log дальнейшее hardening blind"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.13.2/HelloWork-0.13.2.dmg"
+  },
+  {
     "version": "0.13.1",
     "date": "2026-04-28",
     "customMessage": "Meditation polish: smoother motion + breathing ring. Точка теперь движется через catmull-rom spline (4 waypoints одновременно) — плавные изгибы без угловых поворотов. Скорость снижена: segmentDuration 8-12s (было 2-5s). Добавлен breathing ring 0.5pt бордер: вдох 0→180pt за 4s, hold 3s, выдох → 0 за 2s. Цикл 9s повторяется. Pulse точки независим от ring.",

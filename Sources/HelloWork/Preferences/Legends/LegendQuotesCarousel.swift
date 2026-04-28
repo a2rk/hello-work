@@ -43,8 +43,14 @@ struct LegendQuotesCarousel: View {
             .foregroundColor(Theme.textTertiary)
     }
 
+    @ViewBuilder
     private var quoteCard: some View {
-        let quote = legend.quotes[safe: currentIndex] ?? legend.quotes[0]
+        if let quote = legend.quotes[safe: currentIndex] ?? legend.quotes.first {
+            quoteCardBody(quote: quote)
+        }
+    }
+
+    private func quoteCardBody(quote: LegendQuote) -> some View {
         return HStack(alignment: .top, spacing: 12) {
             Text("“")
                 .font(.system(size: 36, weight: .bold, design: .serif))
