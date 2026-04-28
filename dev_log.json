@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.5",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L04 verified: LegendsLibrary handles empty/missing/corrupt cases. Build чистый.",
+    "main": "Verification of TASK-L03. Edge cases (no subdir / empty / mixed valid+corrupt) обрабатываются корректно. Sort stable.",
+    "points": [
+      "Bundle no Legends/ → empty",
+      "Resilient corrupt isolation"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.5/HelloWork-0.10.5.dmg"
+  },
+  {
     "version": "0.10.4",
     "date": "2026-04-28",
     "customMessage": "TASK-L03: LegendsLibrary singleton — eager bundle-load JSON-файлов из Resources/Legends/, сортировка по order, изоляция битых через corruptIds. Public API: all, byID(_:), corruptIds.",
