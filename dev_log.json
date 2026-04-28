@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.31",
+    "date": "2026-04-28",
+    "customMessage": "TASK-E02 [verify]: OK. README install instructions не содержат HWInstaller / stub / Application Support как install location. Migration history отделена в bottom раздел.",
+    "main": "Verification of TASK-E01.",
+    "points": [
+      "Phase E (2/4)",
+      "Cycle: 26/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.31/HelloWork-0.11.31.dmg"
+  },
+  {
     "version": "0.11.30",
     "date": "2026-04-28",
     "customMessage": "TASK-E01: README rewritten. Install: download HelloWork.dmg → drag → Applications → first-launch right-click Open. Update: Settings → Updates → Install latest. Uninstall: Trash + manual cleanup snippet. Build: single-app pipeline. Сохранён migration history раздел — explainer для апгрейда с pre-0.12.",
