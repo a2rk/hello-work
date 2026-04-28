@@ -235,7 +235,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L25 [impl]** — LegendsListView skeleton: header + search debounced 200ms + sort picker + grid/list toggle + filtered results.  → released as v0.10.26
 
-- [ ] **TASK-L26 [verify]** — TASK-L25
+- [x] **TASK-L26 [verify]** — TASK-L25  → released as v0.10.27
 
 - [ ] **TASK-L27 [impl]** — `LegendCard` (grid mode) view: avatar (LegendAvatar), name (large), years (small), intensity dots, primary tag, favorite star button (top-right). Hover scale 1.02 + spring. Click → opens detail.
 

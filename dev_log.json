@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.27",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L26 verified: List skeleton корректен.",
+    "main": "Verification of TASK-L25.",
+    "points": [
+      "Search debounce работает",
+      "Sort/filter pipeline OK"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.27/HelloWork-0.10.27.dmg"
+  },
+  {
     "version": "0.10.26",
     "date": "2026-04-28",
     "customMessage": "TASK-L25: LegendsListView skeleton — header с count, search field с 200ms debounce, sort picker (3 варианта), grid/list toggle, filtered results count + placeholder rows.",
