@@ -149,13 +149,9 @@ struct LegendsListView: View {
                 }
                 .padding(.vertical, 1)
             }
-            if hasAnyFilter {
+            if hasAnyFilter || !debouncedQuery.isEmpty {
                 Button {
-                    filterEra = nil
-                    filterField = nil
-                    filterTag = nil
-                    filterIntensity = nil
-                    filterFavoritesOnly = false
+                    clearAllFilters()
                 } label: {
                     Text(t.legendsFilterClear)
                         .font(.system(size: 10, weight: .medium))

@@ -331,7 +331,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L69 [impl]** — Edge cases UI: empty results (пустой search/filter → «Nothing found, try different filters»), no managedApps (apply кнопка disabled с tooltip), corrupt JSON (banner «N legends couldn't be loaded» в LegendsListView header).  → released as v0.10.70 (empty results: icon + clear button; corrupt banner: danger pill в header; no-apps уже сделано в L55/L56)
 
-- [ ] **TASK-L70 [verify]** — TASK-L69
+- [x] **TASK-L70 [verify]** — TASK-L69  → finding: filtersBar Clear не чистил search query (только фильтры), а emptyResultsView Clear чистил оба. Inconsistent. Unified — оба зовут clearAllFilters() helper. Released as v0.10.71. **Phase H CLOSED (6/6).**
 
 ### Phase I — Final regression (6 tasks)
 

@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.71",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L70 verify: два Clear-button (filtersBar и emptyResultsView) делали разное. filtersBar чистил только filter-state, emptyResultsView чистил всё включая search. Unified — оба зовут clearAllFilters() helper. Phase H ЗАКРЫТА (6/6).",
+    "main": "Verification of TASK-L69. Single source of truth для filter clear logic.",
+    "points": [
+      "Phase H COMPLETE (6/6)",
+      "70/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.71/HelloWork-0.10.71.dmg"
+  },
+  {
     "version": "0.10.70",
     "date": "2026-04-27",
     "customMessage": "TASK-L69: edge cases UI. Empty results теперь со state-vibe: magnifyingglass иконка + 'Nothing found, try different filters' + Clear-button (если есть active filter/search). Corrupt-banner danger-pill в header LegendsListView показывается когда LegendsLibrary.shared.corruptIds непустой.",
