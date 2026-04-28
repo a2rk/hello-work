@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.26",
+    "date": "2026-04-28",
+    "customMessage": "TASK-D01: DMG background image. Сгенерирован 600×400 dmg-background.png через generate_dmg_background.swift (тёмный gradient + 'Drag HelloWork to Applications' + accent-стрелка + подписи 'HelloWork.app'/'Applications'). package.sh теперь делает rw-DMG → mount → osascript layout (icon size 96, positions {160,180} и {440,180}, background picture) → convert в UDZO read-only.",
+    "main": "Если PNG отсутствует — package.sh пропускает background+osascript блок, всё ещё собирает functional DMG (graceful fallback).",
+    "points": [
+      "Phase D (1/4)",
+      "Cycle: 21/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.26/HelloWork-0.11.26.dmg"
+  },
+  {
     "version": "0.11.25",
     "date": "2026-04-28",
     "customMessage": "TASK-C04 [verify]: OK. Post-update toast detection корректен — first-launch (previousVersion=nil) не триггерит toast, same-version no-op, upgrade/downgrade показывают current. Translation closure работает. Phase C ЗАКРЫТА (4/4).",

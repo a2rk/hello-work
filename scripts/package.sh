@@ -30,13 +30,58 @@ mkdir -p "$STAGING"
 cp -R "$DIST/$APP_FILE" "$STAGING/"
 ln -s /Applications "$STAGING/Applications"
 
-# Версионный DMG (для UpdateInstaller)
-rm -f "$VERSIONED_DMG"
+# Background image. Если PNG нет — DMG собирается без него (graceful).
+BG_PNG="scripts/dmg-background.png"
+if [ -f "$BG_PNG" ]; then
+    mkdir -p "$STAGING/.background"
+    cp "$BG_PNG" "$STAGING/.background/background.png"
+fi
+
+# Создаём rw-DMG, монтируем, через AppleScript ставим background и
+# координаты иконок, потом конвертим в финальный read-only UDZO.
+TMP_DMG="$DIST/.tmp.dmg"
+rm -f "$TMP_DMG" "$VERSIONED_DMG"
 hdiutil create \
     -volname "HelloWork" \
     -srcfolder "$STAGING" \
-    -ov -format UDZO \
-    "$VERSIONED_DMG" >/dev/null
+    -fs HFS+ \
+    -fsargs "-c c=64,a=16,e=16" \
+    -format UDRW \
+    -ov \
+    "$TMP_DMG" >/dev/null
+
+MOUNT_DIR=$(mktemp -d /tmp/hellowork-dmg-mount.XXXXXX)
+hdiutil attach -nobrowse -mountpoint "$MOUNT_DIR" "$TMP_DMG" >/dev/null
+
+if [ -f "$BG_PNG" ]; then
+    osascript <<EOF >/dev/null 2>&1 || true
+tell application "Finder"
+    tell disk "HelloWork"
+        open
+        set current view of container window to icon view
+        set toolbar visible of container window to false
+        set statusbar visible of container window to false
+        set the bounds of container window to {200, 200, 800, 600}
+        set viewOptions to the icon view options of container window
+        set arrangement of viewOptions to not arranged
+        set icon size of viewOptions to 96
+        set background picture of viewOptions to file ".background:background.png"
+        set position of item "HelloWork.app" of container window to {160, 180}
+        set position of item "Applications" of container window to {440, 180}
+        update without registering applications
+        close
+    end tell
+end tell
+EOF
+    sync
+fi
+
+hdiutil detach "$MOUNT_DIR" -quiet 2>/dev/null || true
+rm -rf "$MOUNT_DIR"
+
+# Финальный read-only сжатый DMG
+hdiutil convert "$TMP_DMG" -format UDZO -o "$VERSIONED_DMG" >/dev/null
+rm -f "$TMP_DMG"
 
 # Static latest DMG — копия versioned. Стабильный URL для landing page и
 # README. Перезаписывается каждый релиз.
