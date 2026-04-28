@@ -235,7 +235,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
   - Файлы: `Sources/HelloWork/App/AppState.swift`, `Sources/HelloWork/Domain/Translation.swift`, `Sources/HelloWork/Domain/Translations.swift`.
   - Acceptance: 3 ключа добавлены в strict order в Translation struct и во все 3 локали Translations.swift. Build clean.
 
-- [ ] **TASK-A06 [verify]** — TASK-A05
+- [x] **TASK-A06 [verify]** — TASK-A05  → OK. queueMigrationToast @Published триггерит SwiftUI re-render. MigrationManager сетит при .migrated path. 3 translation keys в strict order match Translation struct, все 3 локали (EN/RU/ZH) populated. Регрессий нет. Released as v0.11.11
 
 - [ ] **TASK-A07 [impl]** — Toast UI: subtle banner-card в верхней части PrefsView (или там где сейчас отображается corruption banner — паттерн уже есть). Auto-dismiss через 8 сек ИЛИ click «Got it». Только если `state.queueMigrationToast == true`. После dismiss — set false (в памяти; не возвращается).
   - Файлы: `Sources/HelloWork/Preferences/PrefsView.swift` (или новый MigrationToastView если правильнее модульно).

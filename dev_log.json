@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.11",
+    "date": "2026-04-28",
+    "customMessage": "TASK-A06 [verify]: OK. queueMigrationToast корректен — @Published триггерит SwiftUI re-render, MigrationManager сетит true при .migrated. 3 translation keys в strict order match Translation struct, все локали populated.",
+    "main": "Verification of TASK-A05.",
+    "points": [
+      "Phase A (6/8)",
+      "Cycle: 6/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.11/HelloWork-0.11.11.dmg"
+  },
+  {
     "version": "0.11.10",
     "date": "2026-04-28",
     "customMessage": "TASK-A05: AppState.queueMigrationToast: Bool @Published. MigrationManager step 4 теперь сетит state.queueMigrationToast = true. 3 translation keys (migrationToastTitle/Body/Dismiss) EN/RU/ZH добавлены в strict order Translation.swift.",
