@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.10.24",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L23: 41 translation key для legends UI (en/ru/zh). Все будущие views Phase D-G готовы тянуть строки через t.legends*.",
+    "main": "Title/subtitle/search/filters/sort/view-toggle/apply-flow/block-types/messenger-windows/quotes/sources/messages — всё переведено в трёх локалях. Closures для plural/format (legendsSubtitle, legendsAllCount, legendsResultsCount, legendsAppliedBanner, legendsCorruptHidden).",
+    "points": [
+      "41 новый Translation field (включая 5 closures)",
+      "EN/RU/ZH строки в строгом порядке полей init",
+      "Block-type названия для ring chart legend"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.24/HelloWork-0.10.24.dmg"
+  },
+  {
     "version": "0.10.23",
     "date": "2026-04-28",
     "customMessage": "TASK-L22 verified: navigation push-pop работает.",

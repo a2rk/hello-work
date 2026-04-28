@@ -311,4 +311,47 @@ struct Translation {
     let permsBannerTitle: String
     let permsBannerDesc: String
     let permsBannerButton: String
+
+    // MARK: - Legends module
+    let legendsTitle: String
+    let legendsSubtitle: (_ count: Int) -> String
+    let legendsSearchPlaceholder: String
+    let legendsFilterEra: String
+    let legendsFilterField: String
+    let legendsFilterTag: String
+    let legendsFilterIntensity: String
+    let legendsFilterFavorites: String
+    let legendsFilterClear: String
+    let legendsSortOrder: String
+    let legendsSortName: String
+    let legendsSortFavorites: String
+    let legendsViewGrid: String
+    let legendsViewList: String
+    let legendsAllCount: (_ n: Int) -> String
+    let legendsResultsCount: (_ n: Int) -> String
+    let legendsEmptyResults: String
+    let legendsApply: String
+    let legendsRevert: String
+    let legendsAppliedBanner: (_ name: String) -> String
+    let legendsCardYears: String
+    let legendsDetailBio: String
+    let legendsDetailQuotes: String
+    let legendsDetailSources: String
+    let legendsDetailMessengerWindows: String
+    let legendsDetailMorningQuestion: String
+    let legendsDetailEveningQuestion: String
+    let legendsApplyTitle: String
+    let legendsApplySubtitle: String
+    let legendsApplyAppCategoryWork: String
+    let legendsApplyAppCategoryPersonal: String
+    let legendsApplyAppCategorySkip: String
+    let legendsApplyConfirm: String
+    let legendsApplyCancel: String
+    let legendsCorruptHidden: (_ n: Int) -> String
+    let legendsBlockTypeSleep: String
+    let legendsBlockTypeMorning: String
+    let legendsBlockTypeDeep: String
+    let legendsBlockTypeComms: String
+    let legendsBlockTypeMeal: String
+    let legendsBlockTypeLeisure: String
 }
