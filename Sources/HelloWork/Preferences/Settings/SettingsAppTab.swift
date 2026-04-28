@@ -64,10 +64,10 @@ struct SettingsAppTab: View {
     }
 
     private func runSingleHideTest() {
-        // Проверяем + запрашиваем Input Monitoring permission перед попыткой.
-        // Без него CGEvent.tapCreate возвращает nil и scrombleEvent невозможен.
-        _ = MenuBarItemMover.ensureInputMonitoring()
-
+        // Sequoia 15+ блокирует CGEvent-based drag menubar items (даже
+        // через Ice'овский scrombleEvent). Pivot на CGSSetWindowAlpha
+        // — приватный CGS API делает window полностью прозрачным.
+        // Этот тест применит alpha=0, через 2 секунды вернёт alpha=1.
         let all = MenuBarItem.currentItems()
         let hideable = all.filter { $0.isHideable }
         devlog("hider.test", "currentItems total=\(all.count) hideable=\(hideable.count)")
@@ -75,14 +75,13 @@ struct SettingsAppTab: View {
             devlog("hider.test", "no hideable item — abort")
             return
         }
-        guard let parkAnchor = MenuBarItemMover.findParkAnchor(in: all) else {
-            devlog("hider.test", "no park anchor — abort")
-            return
+        devlog("hider.test", "target wid=\(target.windowID) bid=\(target.bundleID ?? "nil") title='\(target.title ?? "nil")' midX=\(String(format: "%.0f", target.frame.midX))")
+        let ok = MenuBarItemMover.hideByAlpha(target)
+        devlog("hider.test", "alpha=0 result=\(ok) — через 2с вернём alpha=1")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            let restored = MenuBarItemMover.restoreAlpha(target)
+            devlog("hider.test", "alpha=1 result=\(restored)")
         }
-        devlog("hider.test", "target wid=\(target.windowID) bid=\(target.bundleID ?? "nil") midX=\(String(format: "%.0f", target.frame.midX))")
-        devlog("hider.test", "park anchor wid=\(parkAnchor.windowID) bid=\(parkAnchor.bundleID ?? "nil") midX=\(String(format: "%.0f", parkAnchor.frame.midX))")
-        let ok = MenuBarItemMover.hide(target, parkAnchor: parkAnchor)
-        devlog("hider.test", "result success=\(ok)")
     }
 
     private var launchAtLoginBinding: Binding<Bool> {

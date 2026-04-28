@@ -179,14 +179,44 @@ enum MenuBarItemMover {
         return success
     }
 
-    /// Скрыть: двигаем за Apple-managed зону (left того что слева).
+    /// Скрыть item via alpha=0 (приватный CGSSetWindowAlpha).
+    /// Это совсем другой подход чем drag — не двигает item, просто делает
+    /// невидимым. Plus / minus:
+    ///   + Не зависит от Sequoia event filtering
+    ///   + Не нужен AX/IM permission для tap'ов (только CGS connection)
+    ///   - Item остаётся в menubar layout (занимает место), просто невидим
+    ///   - Если приложение само пере-выставит alpha=1, мы не узнаем
+    @discardableResult
+    static func hideByAlpha(_ item: MenuBarItem) -> Bool {
+        guard item.isHideable else {
+            devlog("mover", "hideByAlpha skip wid=\(item.windowID) — not hideable")
+            return false
+        }
+        let beforeAlpha = Bridging.getWindowAlpha(item.windowID)
+        let ok = Bridging.setWindowAlpha(item.windowID, alpha: 0.0)
+        let afterAlpha = Bridging.getWindowAlpha(item.windowID)
+        devlog("mover",
+               "hideByAlpha wid=\(item.windowID) bid=\(item.bundleID ?? "nil") title='\(item.title ?? "nil")' before=\(beforeAlpha.map(String.init) ?? "nil") after=\(afterAlpha.map(String.init) ?? "nil") ok=\(ok)")
+        return ok
+    }
+
+    @discardableResult
+    static func restoreAlpha(_ item: MenuBarItem) -> Bool {
+        let ok = Bridging.setWindowAlpha(item.windowID, alpha: 1.0)
+        let afterAlpha = Bridging.getWindowAlpha(item.windowID)
+        devlog("mover",
+               "restoreAlpha wid=\(item.windowID) after=\(afterAlpha.map(String.init) ?? "nil") ok=\(ok)")
+        return ok
+    }
+
+    /// Скрыть через drag (legacy/Ice approach — не работает на Sequoia 15+).
     /// Передаём anchor — кто будет соседом-якорем для Up event'а.
     @discardableResult
     static func hide(_ item: MenuBarItem, parkAnchor: MenuBarItem) -> Bool {
         return move(item: item, to: .leftOf(parkAnchor))
     }
 
-    /// Восстановить рядом с известным соседом.
+    /// Восстановить рядом с известным соседом (для drag-approach).
     @discardableResult
     static func restore(_ item: MenuBarItem, rightOf neighbor: MenuBarItem) -> Bool {
         return move(item: item, to: .rightOf(neighbor))

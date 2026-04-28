@@ -30,6 +30,25 @@ extension Bridging {
     }
 }
 
+// MARK: - Window Alpha
+
+extension Bridging {
+    /// Устанавливает alpha окна. Используется для hide-by-alpha menubar items
+    /// (без CGEvent drag). 0.0 = полностью невидимо.
+    @discardableResult
+    static func setWindowAlpha(_ wid: CGWindowID, alpha: CGFloat) -> Bool {
+        let result = CGSSetWindowAlpha(CGSMainConnectionID(), wid, alpha)
+        return result == .success
+    }
+
+    /// Текущий alpha окна.
+    static func getWindowAlpha(_ wid: CGWindowID) -> CGFloat? {
+        var alpha: CGFloat = 0
+        let r = CGSGetWindowAlpha(CGSMainConnectionID(), wid, &alpha)
+        return r == .success ? alpha : nil
+    }
+}
+
 // MARK: - Window List
 
 extension Bridging {

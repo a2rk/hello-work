@@ -196,52 +196,25 @@ final class MenubarHiderController: ObservableObject {
             return
         }
 
-        // Park anchor — самый левый Apple-managed item. Hideable items
-        // двигаем «leftOf parkAnchor» — они уезжают левее, за край.
-        guard let parkAnchor = MenuBarItemMover.findParkAnchor(in: all) else {
-            devlog("hider", "collapseInternal — no park anchor (no immovable items?), abort")
-            return
-        }
-        devlog("hider", "park anchor wid=\(parkAnchor.windowID) bid=\(parkAnchor.bundleID ?? "nil") midX=\(String(format: "%.0f", parkAnchor.frame.midX))")
-
-        // Сохраняем для restore: map'им каждый hideable item на его правого
-        // соседа (Apple-managed или другой), чтобы знать куда вернуть.
-        // Сортируем all по midX, для каждого hideable находим следующего справа.
-        let sortedAll = all.sorted(by: { $0.frame.midX < $1.frame.midX })
-        savedRightNeighbors.removeAll()
-        for item in items {
-            if let idx = sortedAll.firstIndex(where: { $0.windowID == item.windowID }),
-               idx + 1 < sortedAll.count {
-                savedRightNeighbors[item.windowID] = sortedAll[idx + 1]
-            }
-        }
+        // Sequoia 15+ блокирует CGEvent-based drag менюбар items (events
+        // доходят но WS не интерпретирует UP как move-relative-to). Pivot
+        // на CGSSetWindowAlpha — items не двигаются, просто становятся
+        // невидимыми. Visual artifact: места items остаются заняты в
+        // layout (gaps), но визуально пусто.
         savedItems = items
+        savedRightNeighbors.removeAll()
 
-        var movedAny = false
-        // Двигаем справа налево — правые первыми укатываются в park-зону.
-        for item in items.sorted(by: { $0.frame.midX > $1.frame.midX }) {
-            let liveFrame = Bridging.getWindowFrame(for: item.windowID) ?? item.frame
-            let current = MenuBarItem(
-                windowID: item.windowID,
-                pid: item.pid,
-                frame: liveFrame,
-                title: item.title,
-                ownerName: item.ownerName
-            )
-            let beforeX = current.frame.midX
-            let ok = MenuBarItemMover.hide(current, parkAnchor: parkAnchor)
-            let afterFrame = Bridging.getWindowFrame(for: item.windowID)
-            let afterX = afterFrame?.midX ?? .nan
-            devlog("hider.move",
-                   "hide wid=\(item.windowID) before=\(String(format: "%.0f", beforeX)) after=\(String(format: "%.0f", afterX)) success=\(ok)")
-            if ok { movedAny = true }
-            Thread.sleep(forTimeInterval: 0.05)
+        var hiddenAny = false
+        for item in items {
+            let ok = MenuBarItemMover.hideByAlpha(item)
+            devlog("hider.alpha",
+                   "hide wid=\(item.windowID) title='\(item.title ?? "nil")' ok=\(ok)")
+            if ok { hiddenAny = true }
         }
 
-        guard movedAny else {
-            devlog("hider", "collapseInternal — movedAny=false, rolling back")
+        guard hiddenAny else {
+            devlog("hider", "collapseInternal — hiddenAny=false, rolling back")
             savedItems.removeAll()
-            savedRightNeighbors.removeAll()
             return
         }
 
@@ -262,26 +235,10 @@ final class MenubarHiderController: ObservableObject {
     }
 
     private func restoreAllItems() {
-        guard AXIsProcessTrusted() else {
-            savedItems.removeAll()
-            savedRightNeighbors.removeAll()
-            return
-        }
-        // Восстанавливаем слева направо: каждый item ставим «слева от своего
-        // right-соседа», в том порядке как они были.
-        for item in savedItems.sorted(by: { $0.frame.midX < $1.frame.midX }) {
-            let liveFrame = Bridging.getWindowFrame(for: item.windowID) ?? item.frame
-            let current = MenuBarItem(
-                windowID: item.windowID,
-                pid: item.pid,
-                frame: liveFrame,
-                title: item.title,
-                ownerName: item.ownerName
-            )
-            if let neighbor = savedRightNeighbors[item.windowID] {
-                MenuBarItemMover.move(item: current, to: .leftOf(neighbor))
-                Thread.sleep(forTimeInterval: 0.05)
-            }
+        // Alpha approach: просто возвращаем alpha=1 на каждом сохранённом item.
+        for item in savedItems {
+            let ok = MenuBarItemMover.restoreAlpha(item)
+            devlog("hider.alpha", "restore wid=\(item.windowID) ok=\(ok)")
         }
         savedItems.removeAll()
         savedRightNeighbors.removeAll()

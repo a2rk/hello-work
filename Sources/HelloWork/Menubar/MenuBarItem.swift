@@ -51,9 +51,12 @@ struct MenuBarItem: Equatable {
         return true
     }
 
-    /// Не двигаем сам Hello work — нашу H-иконку.
+    /// Не трогаем сам Hello work — нашу H-иконку. NSStatusItem'ы owned by
+    /// `com.apple.controlcenter` через приватный API ControlCenter'а, поэтому
+    /// bundleID-сравнение не работает. Фильтруем по title (мы ставим
+    /// autosaveName "helloWork_main" в MenubarHiderController.createMain).
     var isOurOwn: Bool {
-        bundleID == Bundle.main.bundleIdentifier
+        title == "helloWork_main"
     }
 
     /// Item подходит для скрытия.

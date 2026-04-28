@@ -1,5 +1,19 @@
 [
   {
+    "version": "0.12.7",
+    "date": "2026-04-28",
+    "customMessage": "PIVOT: drag-approach отказывается работать на Sequoia 15+ даже через scrombleEvent (events доходят, юзер видит мерцание = drag инициируется на ms, но WS отпускает потому что target coordinate за screen). Перевожу hide на CGSSetWindowAlpha — приватный CGS API делает window invisible. Items не двигаются, занимают место в layout, но визуально пусто.",
+    "main": "Drag-API остался для legacy, но collapseInternal теперь использует hideByAlpha. Restore — restoreAlpha. Также fix isOurOwn: NSStatusItem'ы owned by controlcenter pid, фильтр через title=='helloWork_main'.",
+    "points": [
+      "CGSSetWindowAlpha + CGSGetWindowAlpha bridges (приватные CGS)",
+      "MenuBarItemMover.hideByAlpha / restoreAlpha",
+      "MenubarHiderController.collapseInternal pivoted на alpha",
+      "isOurOwn: title-based вместо bundleID (ControlCenter pid owns NSStatusItems)",
+      "Debug кнопка теперь делает alpha=0 на 2с потом restore"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.12.7/HelloWork-0.12.7.dmg"
+  },
+  {
     "version": "0.12.6",
     "date": "2026-04-28",
     "customMessage": "Ice-style isMovable filter. Раньше мы помечали все 9 controlcenter items как immovable по bundleID — это слишком жёстко. Ice фильтрует по (bundleID, title) парам: только Clock + Siri + BentoBox immovable, остальные (Sound, Wi-Fi, Battery, FaceTime, Bluetooth, Focus, ...) ДВИЖИМЫ. Также добавил guard на ownerName='Window Server' — это system drag-handles (типа того wid=33 com.apple.finder который мы пытались двигать), их нельзя двигать никаким способом.",

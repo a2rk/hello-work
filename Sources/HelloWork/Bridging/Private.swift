@@ -72,3 +72,21 @@ func CGSConnectionGetPID(
     _ cid: CGSConnectionID,
     _ outPID: inout pid_t
 ) -> CGError
+
+// MARK: - Window Alpha (для hide-by-alpha подхода)
+
+/// Устанавливает alpha (прозрачность) окна. 0.0 = полностью невидимо,
+/// 1.0 = непрозрачно. Работает на любые windows включая чужие menubar items.
+@_silgen_name("CGSSetWindowAlpha")
+func CGSSetWindowAlpha(
+    _ cid: CGSConnectionID,
+    _ wid: CGWindowID,
+    _ alpha: CGFloat
+) -> CGError
+
+@_silgen_name("CGSGetWindowAlpha")
+func CGSGetWindowAlpha(
+    _ cid: CGSConnectionID,
+    _ wid: CGWindowID,
+    _ outAlpha: inout CGFloat
+) -> CGError
