@@ -24,7 +24,11 @@ struct LegendsListView: View {
     /// Persists across launches — TASK-L51.
     @AppStorage("helloWorkLegendsShowFavoritesOnly") private var filterFavoritesOnly: Bool = false
 
-    @State private var sortChoice: SortChoice = .order
+    /// Persists across launches — TASK-L53.
+    @AppStorage("helloWorkLegendsSortChoice") private var sortChoiceRaw: String = SortChoice.order.rawValue
+    private var sortChoice: SortChoice {
+        SortChoice(rawValue: sortChoiceRaw) ?? .order
+    }
     /// Persists across launches — UserDefaults key.
     @AppStorage("helloWorkLegendsViewMode") private var viewModeRaw: String = LegendsViewMode.grid.rawValue
     private var viewMode: LegendsViewMode {
@@ -238,7 +242,7 @@ struct LegendsListView: View {
         Menu {
             ForEach(SortChoice.allCases) { choice in
                 Button {
-                    sortChoice = choice
+                    sortChoiceRaw = choice.rawValue
                 } label: {
                     HStack {
                         Text(sortChoiceTitle(choice))

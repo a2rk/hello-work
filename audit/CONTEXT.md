@@ -293,7 +293,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L52 [verify]** — TASK-L51  → finding: favorites pill был последним в горизонтальном scroll'е — на узком окне или при наличии многих era/field тегов он скроллился за край и становился невидим. Вынес pill из ScrollView, поместил слева перед scroll'ом — всегда виден. Released as v0.10.53
 
-- [ ] **TASK-L53 [impl]** — Sort: `order` (default), `alphabetical(name локали)`, `favoritesFirst`. Picker в header. Persists.
+- [x] **TASK-L53 [impl]** — Sort: `order` (default), `alphabetical(name локали)`, `favoritesFirst`. Picker в header. Persists.  → released as v0.10.54
 
 - [ ] **TASK-L54 [verify]** — TASK-L53
 

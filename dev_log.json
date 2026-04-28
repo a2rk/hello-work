@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.54",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L53: sortChoice теперь persists через @AppStorage('helloWorkLegendsSortChoice'). Зеркальный паттерн viewModeRaw — храним rawValue, computed getter возвращает enum с фолбэком на .order.",
+    "main": "Picker меню записывает в sortChoiceRaw, не в @State. Выбор сортировки выживает между запусками.",
+    "points": [
+      "Phase F (5/6)",
+      "53/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.54/HelloWork-0.10.54.dmg"
+  },
+  {
     "version": "0.10.53",
     "date": "2026-04-27",
     "customMessage": "TASK-L52 verify: favorites pill был последним внутри горизонтального scroll'а — на узком окне или при многих era/field скрывался. Вынес pill наружу, поместил слева — всегда видим, кликабелен независимо от scroll'а.",
