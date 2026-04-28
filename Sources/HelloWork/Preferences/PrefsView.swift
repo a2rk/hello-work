@@ -155,6 +155,22 @@ struct PrefsView: View {
             .padding(.vertical, Layout.detailPaddingV)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        // Каждый sidebar-выбор = свой ScrollView identity → SwiftUI создаёт fresh
+        // scroll state, контент всегда показывается с верха. Без этого ScrollView
+        // переиспользует offset между разными views, что давало неуместные «прыжки».
+        .id(scrollIdentity)
+    }
+
+    /// Стабильный ключ для .id() ScrollView — отличается между selection'ами.
+    private var scrollIdentity: String {
+        switch state.prefsSelection {
+        case .app(let bid):       return "app:\(bid)"
+        case .section(let s):     return "section:\(s.rawValue)"
+        case .onboarding:         return "onboarding"
+        case .combined:           return "combined"
+        case .permissions:        return "permissions"
+        case .none:               return "none"
+        }
     }
 
     @ViewBuilder

@@ -320,7 +320,7 @@ HelloWork/
 
 - [x] **TASK-052 [verify]** — TASK-051  → released as v0.9.73
 
-- [ ] **TASK-053 [impl]** — Sidebar scroll position memo
+- [x] **TASK-053 [impl]** — Sidebar scroll position memo  → released as v0.9.74
   - Файл: `Preferences/Schedule/ScheduleView.swift` или PrefsView detail
   - Решение: `@State private var scrollPositions: [String: CGFloat] = [:]` в PrefsView, сохранять/восстанавливать через ScrollViewReader.
 

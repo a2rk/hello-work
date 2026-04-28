@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.74",
+    "date": "2026-04-28",
+    "customMessage": "TASK-053: ScrollView в Prefs.detail получает unique .id() per sidebar selection. Контент каждого view всегда показывается с верха — без неуместных «прыжков» offset'а между разными views.",
+    "main": "Раньше один ScrollView переиспользовал offset для всех selection'ов — при переключении app→combined→app мог сохраняться середина чужого скрола, давая нелогичные позиции. Теперь .id(scrollIdentity) форсит fresh ScrollView per selection.",
+    "points": [
+      "scrollIdentity computed prop: app:bid, section:rawValue, etc.",
+      "Соответствует macOS conventions (Mail, Settings — fresh top per nav)",
+      "Простое и предсказуемое поведение"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.74/HelloWork-0.9.74.dmg"
+  },
+  {
     "version": "0.9.73",
     "date": "2026-04-28",
     "customMessage": "TASK-052 verified: + pulse корректен.",
