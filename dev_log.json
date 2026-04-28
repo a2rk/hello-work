@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.68",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L67: card animations. LegendCard fade-in + slide-up через @State appeared с stagger-delay = min(idx*0.02s, 0.5s). LegendListRow получил .transition(opacity+move) на filtered items animation. Hover scale 1.02 spring и favorite-pop остаются.",
+    "main": "Stagger потолок 0.5s — для 60 элементов ввод растянут на ~600ms, но не дольше. LazyVGrid передаёт index через enumerated.",
+    "points": [
+      "Phase H (3/6)",
+      "67/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.68/HelloWork-0.10.68.dmg"
+  },
+  {
     "version": "0.10.67",
     "date": "2026-04-27",
     "customMessage": "TASK-L66 verify: LegendLocalized.resolve(.system) дублировал locale-detection логику из L10n.resolveSystem — risk drift'а при добавлении локалей. Извлёк L10n.resolveSystemLanguage() → AppLanguage. Оба сайта используют один helper.",

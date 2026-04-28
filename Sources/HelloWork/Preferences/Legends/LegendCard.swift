@@ -5,9 +5,12 @@ struct LegendCard: View {
     @Environment(\.t) var t
     @ObservedObject var state: AppState
     let legend: Legend
+    /// Index в ленте — используется для stagger-задержки fade-in при appear.
+    var index: Int = 0
     let onTap: () -> Void
 
     @State private var hovered: Bool = false
+    @State private var appeared: Bool = false
 
     var body: some View {
         Button(action: onTap) {
@@ -32,6 +35,16 @@ struct LegendCard: View {
         }
         .buttonStyle(.plain)
         .onHover { hovered = $0 }
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 6)
+        .onAppear {
+            // Stagger: каждая следующая карточка на 20ms позже, потолок 500ms,
+            // чтобы grid из 60 не растягивал ввод на секунды.
+            let delay = min(Double(index) * 0.02, 0.5)
+            withAnimation(.easeOut(duration: 0.30).delay(delay)) {
+                appeared = true
+            }
+        }
     }
 
     private var topRow: some View {

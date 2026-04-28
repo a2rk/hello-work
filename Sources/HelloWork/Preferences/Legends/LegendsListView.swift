@@ -338,8 +338,8 @@ struct LegendsListView: View {
             alignment: .leading,
             spacing: 12
         ) {
-            ForEach(filteredItems) { legend in
-                LegendCard(state: state, legend: legend) {
+            ForEach(Array(filteredItems.enumerated()), id: \.element.id) { idx, legend in
+                LegendCard(state: state, legend: legend, index: idx) {
                     selectedLegend = legend
                 }
             }
@@ -352,8 +352,10 @@ struct LegendsListView: View {
                 LegendListRow(state: state, legend: legend) {
                     selectedLegend = legend
                 }
+                .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
+        .animation(.easeOut(duration: 0.20), value: filteredItems.map(\.id))
     }
 
     // MARK: - Computed filter result
