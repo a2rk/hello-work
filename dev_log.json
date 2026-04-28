@@ -1,5 +1,20 @@
 [
   {
+    "version": "0.12.0",
+    "date": "2026-04-28",
+    "customMessage": "🚀 Distribution overhaul. Один HelloWork.app в /Applications вместо stub+engine pattern. Существующие юзеры мигрируются автоматически: старый engine из ~/Library/Application Support убирается, HWInstaller в Trash, toast уведомляет. UserDefaults и TCC grants сохраняются (bundle ID не меняется). Update flow работает in-place в /Applications через UpdateInstaller.",
+    "main": "Phase A migration safety (idempotent flag, auto-cleanup, toast UI), B build pipeline cleanup (-stub source, -2 scripts, two DMG artifacts), C UpdateInstaller validated for /Applications path + post-update toast, D DMG polish (drag-to-Applications layout, background image, volume icon), E README rewritten + migration history раздел. 0.11.X→0.12.0 minor bump signals distribution overhaul.",
+    "points": [
+      "Single .app — discoverable through Spotlight/Launchpad/Dock",
+      "Drag-to-Applications DMG layout с background image и volume icon",
+      "Auto-migration from stub+engine layout (idempotent, partial-failure tolerant)",
+      "TCC + UserDefaults preserved across migration (bundle ID stable)",
+      "In-app updates in-place at /Applications with post-update toast",
+      "Smoke list 6 scenarios — TASK-F03 manual run"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.12.0/HelloWork-0.12.0.dmg"
+  },
+  {
     "version": "0.11.33",
     "date": "2026-04-28",
     "customMessage": "TASK-E04 [verify]: OK. Template содержит все требуемые элементы для финального release. Готов к TASK-F01. Phase E ЗАКРЫТА (4/4).",
