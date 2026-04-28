@@ -289,7 +289,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
 
 UpdateInstaller уже работает. Но мы убрали stub — надо убедиться что ничего не сломалось и devlog message не упоминают engine.
 
-- [ ] **TASK-C01 [impl]** — Pass через `UpdateInstaller.swift` + `UpdatesView.swift`:
+- [x] **TASK-C01 [impl]** — Pass через `UpdateInstaller.swift` + `UpdatesView.swift`:  → released as v0.11.22 (HWInstaller-fallback → HelloWork-fallback в shell helper script + error message; grep "engine" по UpdateInstaller/UpdatesView → 0 hits)
   - Убрать упоминания «engine» в comments / log strings (если есть).
   - Проверить `canSelfInstall` логику для нового пути `/Applications/HelloWork.app` (visually).
   - Helper-скрипт внутри `spawnHelperAndExit` — fallback path был `/Applications/HWInstaller-fallback.app`. Поменять на `/Applications/HelloWork-fallback.app`.

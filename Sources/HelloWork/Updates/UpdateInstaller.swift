@@ -64,7 +64,7 @@ final class UpdateInstaller: ObservableObject {
             let msg: String
             switch trimmed {
             case "rm-failed":     msg = "Не удалось снести старый .app для замены"
-            case "cp-failed":     msg = "Не удалось скопировать новый .app — старый удалён, fallback в /Applications/HWInstaller-fallback.app"
+            case "cp-failed":     msg = "Не удалось скопировать новый .app — старый удалён, fallback в /Applications/HelloWork-fallback.app"
             case "parent-stuck":  msg = "Предыдущий процесс не закрылся за 30с — обновление отменено"
             default:              msg = "Update failed: \(trimmed)"
             }
@@ -172,7 +172,7 @@ final class UpdateInstaller: ObservableObject {
             log "cp -R '$SOURCE' '$TARGET' failed (rc=$?)"
             echo "cp-failed" > "$STATUSFILE"
             # Старый .app уже удалён — пытаемся хотя бы DMG-app оставить как fallback.
-            cp -R "$SOURCE" "/Applications/HWInstaller-fallback.app" 2>/dev/null
+            cp -R "$SOURCE" "/Applications/HelloWork-fallback.app" 2>/dev/null
             exit 1
         fi
 

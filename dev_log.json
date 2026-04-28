@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.22",
+    "date": "2026-04-28",
+    "customMessage": "TASK-C01: UpdateInstaller cleanup — HWInstaller-fallback переименован в HelloWork-fallback (shell helper script + error msg). Engine-терминология удалена из UpdateInstaller/UpdatesView. Core replace logic не тронут.",
+    "main": "Если cp фейлится в helper script, fallback теперь /Applications/HelloWork-fallback.app — соответствует новому naming.",
+    "points": [
+      "Phase C (1/4)",
+      "Cycle: 17/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.22/HelloWork-0.11.22.dmg"
+  },
+  {
     "version": "0.11.21",
     "date": "2026-04-28",
     "customMessage": "TASK-B08 [verify]: OK. Two-artifact pipeline стабилен — versioned + static DMG создаются одной командой. Mount-test через hdiutil attach подтвердил drag-to-Applications layout. Phase B ЗАКРЫТА (8/8 tasks). Build pipeline теперь single-app полностью.",
