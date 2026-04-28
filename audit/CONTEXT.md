@@ -324,7 +324,7 @@ HelloWork/
   - Файл: `Preferences/Schedule/ScheduleView.swift` или PrefsView detail
   - Решение: `@State private var scrollPositions: [String: CGFloat] = [:]` в PrefsView, сохранять/восстанавливать через ScrollViewReader.
 
-- [ ] **TASK-054 [verify]** — TASK-053
+- [x] **TASK-054 [verify]** — TASK-053  → released as v0.9.75
 
 ### Phase L — Localization integrity
 
