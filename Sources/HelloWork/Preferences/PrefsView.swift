@@ -6,6 +6,10 @@ struct PrefsView: View {
     @ObservedObject var state: AppState
     // selection теперь живёт в state.prefsSelection — AppDelegate тоже умеет её менять
 
+    /// Pulse-animation для «+» кнопки когда юзер тыкает её повторно
+    /// (уже на .onboarding) — даёт визуальный feedback что клик зарегистрирован.
+    @State private var createButtonPulse: Bool = false
+
     var body: some View {
         HStack(spacing: 0) {
             sidebar
@@ -103,7 +107,12 @@ struct PrefsView: View {
 
     private var createButton: some View {
         Button {
-            state.prefsSelection = .onboarding
+            if state.prefsSelection == .onboarding {
+                // Уже на onboarding — pulse для подтверждения что клик зашёл.
+                createButtonPulse.toggle()
+            } else {
+                state.prefsSelection = .onboarding
+            }
         } label: {
             HStack(spacing: 9) {
                 Image(systemName: "plus")
@@ -127,6 +136,8 @@ struct PrefsView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .scaleEffect(createButtonPulse ? 1.04 : 1.0)
+        .animation(.spring(response: 0.25, dampingFraction: 0.45), value: createButtonPulse)
         .padding(.bottom, 6)
     }
 

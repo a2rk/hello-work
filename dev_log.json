@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.9.72",
+    "date": "2026-04-28",
+    "customMessage": "TASK-051: «+» кнопка в сайдбаре пульсирует когда юзер тыкает её повторно (уже на .onboarding) — даёт visual feedback что клик зарегистрирован.",
+    "main": "Раньше повторный click на + ничего визуально не менял (selection уже та же). Теперь createButtonPulse @State toggle на каждый «избыточный» клик → spring-анимация scaleEffect (1.0 ↔ 1.04).",
+    "points": [
+      "@State createButtonPulse в PrefsView",
+      "Action: if уже onboarding — toggle pulse, иначе set selection",
+      "scaleEffect + spring animation"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.9.72/HelloWork-0.9.72.dmg"
+  },
+  {
     "version": "0.9.71",
     "date": "2026-04-28",
     "customMessage": "TASK-050 verified: welcome banner persistence работает. Уже-опытный юзер не видит banner, новый unlock — видит до Dismiss.",

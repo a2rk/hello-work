@@ -314,7 +314,7 @@ HelloWork/
 
 - [x] **TASK-050 [verify]** — TASK-049  → released as v0.9.71
 
-- [ ] **TASK-051 [impl]** — Sidebar `+` button feedback при повторном нажатии
+- [x] **TASK-051 [impl]** — Sidebar `+` button feedback при повторном нажатии  → released as v0.9.72
   - Файл: `Preferences/PrefsView.swift:96-123`
   - Решение: при click если selection уже `.onboarding` — пульсация рамки (subtle scale animation).
 
