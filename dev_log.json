@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.10.31",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L30 verified: LegendListRow OK.",
+    "main": "Verification of TASK-L29.",
+    "points": [
+      "List + Grid обе моды работают"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.31/HelloWork-0.10.31.dmg"
+  },
+  {
     "version": "0.10.30",
     "date": "2026-04-28",
     "customMessage": "TASK-L29: LegendListRow — compact list-mode row. Avatar small + name + (years · primary tag) inline + intensity dots + favorite star. Hover background.",

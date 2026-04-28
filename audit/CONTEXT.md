@@ -243,7 +243,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L29 [impl]** — LegendListRow compact + интегрирован в listResults.  → released as v0.10.30
 
-- [ ] **TASK-L30 [verify]** — TASK-L29
+- [x] **TASK-L30 [verify]** — TASK-L29  → released as v0.10.31
 
 - [ ] **TASK-L31 [impl]** — `LegendAvatar` view: круглый аватар с монограммой (1-2 буквы из name) + цвет фона derived from id-hash → stable per legend. Падает на initial из имени; для `franklin-benjamin` → "БФ" в ru / "BF" в en. Размер настраивается.
 
