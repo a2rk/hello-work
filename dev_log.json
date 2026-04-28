@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.27",
+    "date": "2026-04-28",
+    "customMessage": "TASK-D02 [verify]: OK. DMG layout с background.png верифицирован: /Volumes/HelloWork/.background/ содержит PNG, drag-zone Applications symlink на месте. Graceful fallback: при отсутствии scripts/dmg-background.png package.sh пропускает bg+osascript блок без падений.",
+    "main": "Verification of TASK-D01.",
+    "points": [
+      "Phase D (2/4)",
+      "Cycle: 22/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.27/HelloWork-0.11.27.dmg"
+  },
+  {
     "version": "0.11.26",
     "date": "2026-04-28",
     "customMessage": "TASK-D01: DMG background image. Сгенерирован 600×400 dmg-background.png через generate_dmg_background.swift (тёмный gradient + 'Drag HelloWork to Applications' + accent-стрелка + подписи 'HelloWork.app'/'Applications'). package.sh теперь делает rw-DMG → mount → osascript layout (icon size 96, positions {160,180} и {440,180}, background picture) → convert в UDZO read-only.",
