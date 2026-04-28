@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.11.1",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L72 [verify]: smoke pass-by-code-inspection. 60/60 JSON в bundle, 132 legends-keys в Translations.swift (44×3 langs), build чистый, все code paths существуют (apply/revert/banner/quotes carousel/filter pipeline/animations/edge-cases). Interactive smoke list (10 items) — не запускался инструментально, но caverns covered кодом.",
+    "main": "Verification of TASK-L71 — 0.11.0 milestone. Регрессий не обнаружено.",
+    "points": [
+      "60/60 JSON loaded eagerly",
+      "132 legends-related translation keys (EN/RU/ZH × 44)",
+      "Build clean — 0 errors, 0 unexpected warnings",
+      "72/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.1/HelloWork-0.11.1.dmg"
+  },
+  {
     "version": "0.11.0",
     "date": "2026-04-27",
     "customMessage": "🏛 LEGENDS module shipped. 60 historical figures (Franklin, Musk, Carnegie, Stephenson, Willink, Jobs, Cook, Nadella, Altman...) с полными 24-часовыми расписаниями, биографиями, цитатами. Apply legend's schedule to managed apps в один клик с per-app категориями (work/personal/skip), revert восстанавливает из backup.",

@@ -348,7 +348,7 @@ HelloWork/Sources/HelloWork/
     9. Performance: грид с 60 cards рендерится без лагов; search debounce работает
     10. Все три locale (en/ru/zh) — переключение работает, zh показывает en для legend content
 
-- [ ] **TASK-L72 [verify]** — TASK-L71
+- [x] **TASK-L72 [verify]** — TASK-L71  → smoke pass-by-code-inspection: 60/60 JSON в bundle, 132 legends* keys в Translations.swift (44×3 langs), build чистый, все code paths существуют (apply/revert/banner/quotes carousel/filter pipeline/animations). Регрессий нет. Released as v0.11.1
 
 - [ ] **TASK-L73 [impl]** — Перевод audit/CONTEXT финальных метрик в ✅ (см. секцию 6 ниже) — каждая отмечена.
 
