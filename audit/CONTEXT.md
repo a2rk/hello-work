@@ -287,7 +287,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L49 [impl]** — Favorite-star button: круглая, заполняется при isFavorite==true, scale-pop animation на toggle. Работает на cards, list rows и detail view — sync.  → released as v0.10.50
 
-- [ ] **TASK-L50 [verify]** — TASK-L49
+- [x] **TASK-L50 [verify]** — TASK-L49  → finding: при background=nil hit-area был 20×20 (size 12 + 8) — меньше Apple HIG минимума 24×24. Поднял до max(size+12, 24). Released as v0.10.51
 
 - [ ] **TASK-L51 [impl]** — «Favorites» filter pill — toggle: показывает только избранные. State persists в `@AppStorage("helloWorkLegendsShowFavoritesOnly")`.
 

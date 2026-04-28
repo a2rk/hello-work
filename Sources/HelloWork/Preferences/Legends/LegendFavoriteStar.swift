@@ -35,7 +35,8 @@ struct LegendFavoriteStar: View {
                 .frame(width: bg, height: bg)
                 .background(Circle().fill(Color.white.opacity(0.04)))
         } else {
-            icon.frame(width: size + 8, height: size + 8)
+            // Min 24×24 hit-area даже для маленьких star icon'ок (Apple HIG минимум).
+            icon.frame(width: max(size + 12, 24), height: max(size + 12, 24))
         }
     }
 

@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.51",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L50 verify: hit-area звёздочки в LegendListRow regressed с 24×24 → 20×20 (background=nil branch использовал size+8 = 20 для size=12). Поднял до max(size+12, 24) — Apple HIG минимум.",
+    "main": "Verification of TASK-L49.",
+    "points": [
+      "Phase F (2/6)",
+      "50/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.51/HelloWork-0.10.51.dmg"
+  },
+  {
     "version": "0.10.50",
     "date": "2026-04-27",
     "customMessage": "TASK-L49: shared LegendFavoriteStar component с scale-pop spring animation на toggle. Заменил inline favorite-кнопки в LegendCard / LegendListRow / LegendDetailView. Sync через AppState.isFavoriteLegend (одно место правды).",
