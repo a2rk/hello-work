@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.10.18",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L17: legends-state corruption detection. Битый blob → backup в legends-state.corrupt-<ts>.json + UI banner в Prefs.",
+    "main": "Reuse паттерна из managedApps. Generic helper backupBlob(_:prefix:). CorruptionWarning.Kind расширен .legends. Translation корректно en/ru/zh.",
+    "points": [
+      "AppState.backupCorruptLegendsState + general backupBlob helper",
+      "CorruptionWarning.Kind: + .legends",
+      "Translation.corruptionLegendsTitle (3 locales)",
+      "PrefsView corruption banner отрисовывает legends case"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.18/HelloWork-0.10.18.dmg"
+  },
+  {
     "version": "0.10.17",
     "date": "2026-04-28",
     "customMessage": "TASK-L16 verified: apply/revert main path работает. Найден gap — chained apply перезатирает backup. Follow-up TASK-L77 создан.",

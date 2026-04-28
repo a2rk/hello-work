@@ -213,7 +213,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L16 [verify]** — TASK-L15  → released as v0.10.17
 
-- [ ] **TASK-L17 [impl]** — Persistence corruption: VersionedFavorites + VersionedAppliedState wrappers. Если decode failure — добавить `corruptionWarnings` (как было в Phase C прошлого цикла), backup blob в `~/Library/Application Support/HelloWork/legends-state.corrupt-<ts>.json`.
+- [x] **TASK-L17 [impl]** — Legends-state corruption — backup в legends-state.corrupt-<ts>.json + warning в UI.  → released as v0.10.18
 
 - [ ] **TASK-L18 [verify]** — TASK-L17
 

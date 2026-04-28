@@ -239,6 +239,7 @@ struct Translation {
     let diagnosticsUnlocked: String
     let corruptionSchedulesTitle: String
     let corruptionStatsTitle: String
+    let corruptionLegendsTitle: String
     let corruptionBackupAt: String
     let corruptionDismiss: String
 

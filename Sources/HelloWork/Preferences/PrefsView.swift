@@ -181,6 +181,7 @@ struct PrefsView: View {
                     switch warning.kind {
                     case .schedules: return state.t.corruptionSchedulesTitle
                     case .stats:     return state.t.corruptionStatsTitle
+                    case .legends:   return state.t.corruptionLegendsTitle
                     }
                 }()
                 HStack(alignment: .top, spacing: 10) {

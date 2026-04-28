@@ -129,7 +129,7 @@ final class AppState: ObservableObject {
         let kind: Kind
         let backupPath: String
 
-        enum Kind: String { case schedules, stats }
+        enum Kind: String { case schedules, stats, legends }
     }
 
     private(set) var graceUntil: Date?
@@ -286,16 +286,21 @@ final class AppState: ObservableObject {
             initialWarnings.append(CorruptionWarning(kind: .stats, backupPath: statsBackup))
         }
 
-        // Legends state — persisted blob с favorites + appliedLegendId + slotsBackup.
-        if let data = UserDefaults.standard.data(forKey: Self.legendsStateKey),
-           let decoded = try? JSONDecoder().decode(VersionedLegendsState.self, from: data),
-           decoded.version <= Self.legendsStateSchemaVersion {
-            self.favoriteLegendIds = Set(decoded.favoriteIds)
-            self.appliedLegendId = decoded.appliedLegendId
-            self.slotsBackupForApply = decoded.slotsBackup
+        // Legends state — persisted blob. При decode failure пишем backup,
+        // чтобы юзер не «потерял» избранное и applied-state молча.
+        if let data = UserDefaults.standard.data(forKey: Self.legendsStateKey) {
+            if let decoded = try? JSONDecoder().decode(VersionedLegendsState.self, from: data),
+               decoded.version <= Self.legendsStateSchemaVersion {
+                self.favoriteLegendIds = Set(decoded.favoriteIds)
+                self.appliedLegendId = decoded.appliedLegendId
+                self.slotsBackupForApply = decoded.slotsBackup
+            } else {
+                // Decode failed (битый blob или future-version). Backup + warning.
+                if let backupPath = Self.backupCorruptLegendsState(data) {
+                    initialWarnings.append(CorruptionWarning(kind: .legends, backupPath: backupPath))
+                }
+            }
         }
-        // Если decode провалился — оставляем дефолты ([] / nil / nil).
-        // Битый blob сохранится в .corrupt-<ts>.json в TASK-L17.
 
         self.corruptionWarnings = initialWarnings
 
@@ -308,6 +313,15 @@ final class AppState: ObservableObject {
     /// Сохраняет битый JSON managedApps в `~/Library/Application Support/HelloWork/managedApps.corrupt-<ts>.json`
     /// и возвращает путь, чтобы UI мог его показать. nil если не удалось записать.
     private static func backupCorruptManagedApps(_ data: Data) -> String? {
+        backupBlob(data, prefix: "managedApps")
+    }
+
+    /// Аналогично managedApps — для legends-state (favorites + applied + backup).
+    private static func backupCorruptLegendsState(_ data: Data) -> String? {
+        backupBlob(data, prefix: "legends-state")
+    }
+
+    private static func backupBlob(_ data: Data, prefix: String) -> String? {
         guard let base = try? FileManager.default.url(
             for: .applicationSupportDirectory,
             in: .userDomainMask,
@@ -316,7 +330,7 @@ final class AppState: ObservableObject {
         ) else { return nil }
         let dir = base.appendingPathComponent("HelloWork", isDirectory: true)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        let url = dir.appendingPathComponent("managedApps.corrupt-\(Int(Date().timeIntervalSince1970)).json")
+        let url = dir.appendingPathComponent("\(prefix).corrupt-\(Int(Date().timeIntervalSince1970)).json")
         do {
             try data.write(to: url)
             return url.path
