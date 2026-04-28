@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.10.28",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L27: LegendCard в grid-mode. + LegendAvatar (вынесен раньше из L31, нужен сразу). Карточка: avatar + name + years + intensity dots + primary tag + favorite star. Hover scale spring 1.02.",
+    "main": "Grid рендерится через LazyVGrid с adaptive columns 200-240pt. Click → detail. Avatar — монограмма с локализацией (ru/en) + цвет фона из id-hash (12 спокойных оттенков). List-mode пока plain rows — TASK-L29 заменит.",
+    "points": [
+      "LegendAvatar.swift — монограмма + stable color",
+      "LegendCard.swift — full grid-card",
+      "LegendsListView интегрирован: gridResults vs listResults branch"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.28/HelloWork-0.10.28.dmg"
+  },
+  {
     "version": "0.10.27",
     "date": "2026-04-28",
     "customMessage": "TASK-L26 verified: List skeleton корректен.",

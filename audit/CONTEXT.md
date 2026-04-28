@@ -237,7 +237,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L26 [verify]** — TASK-L25  → released as v0.10.27
 
-- [ ] **TASK-L27 [impl]** — `LegendCard` (grid mode) view: avatar (LegendAvatar), name (large), years (small), intensity dots, primary tag, favorite star button (top-right). Hover scale 1.02 + spring. Click → opens detail.
+- [x] **TASK-L27 [impl]** — LegendCard (grid mode) + LegendAvatar (factored early из L31).  → released as v0.10.28
 
 - [ ] **TASK-L28 [verify]** — TASK-L27
 

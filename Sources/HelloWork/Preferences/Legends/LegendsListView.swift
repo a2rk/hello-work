@@ -182,27 +182,51 @@ struct LegendsListView: View {
 
     // MARK: - Results
 
+    @ViewBuilder
     private var results: some View {
-        Group {
-            if filteredItems.isEmpty {
-                Text(t.legendsEmptyResults)
-                    .font(.system(size: 12))
-                    .foregroundColor(Theme.textTertiary)
-                    .padding(.top, 20)
-            } else {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(t.legendsResultsCount(filteredItems.count))
-                            .font(.system(size: 10, weight: .semibold))
-                            .tracking(1.2)
-                            .foregroundColor(Theme.textTertiary)
-                            .padding(.bottom, 4)
-                        ForEach(filteredItems) { legend in
-                            // TASK-L27 заменит на LegendCard, TASK-L29 — на LegendListRow.
-                            placeholderRow(legend)
-                        }
+        if filteredItems.isEmpty {
+            Text(t.legendsEmptyResults)
+                .font(.system(size: 12))
+                .foregroundColor(Theme.textTertiary)
+                .padding(.top, 20)
+        } else {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(t.legendsResultsCount(filteredItems.count))
+                        .font(.system(size: 10, weight: .semibold))
+                        .tracking(1.2)
+                        .foregroundColor(Theme.textTertiary)
+                        .padding(.bottom, 4)
+
+                    if viewMode == .grid {
+                        gridResults
+                    } else {
+                        listResults
                     }
                 }
+            }
+        }
+    }
+
+    private var gridResults: some View {
+        LazyVGrid(
+            columns: [GridItem(.adaptive(minimum: 200, maximum: 240), spacing: 12, alignment: .top)],
+            alignment: .leading,
+            spacing: 12
+        ) {
+            ForEach(filteredItems) { legend in
+                LegendCard(state: state, legend: legend) {
+                    selectedLegend = legend
+                }
+            }
+        }
+    }
+
+    private var listResults: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            ForEach(filteredItems) { legend in
+                // TASK-L29 заменит на LegendListRow.
+                placeholderRow(legend)
             }
         }
     }
@@ -212,7 +236,7 @@ struct LegendsListView: View {
             selectedLegend = legend
         } label: {
             HStack {
-                Text("\(legend.order). \(legend.name.en)")
+                Text("\(legend.order). \(localizedName(legend))")
                     .font(.system(size: 13))
                     .foregroundColor(.white)
                 Spacer()
@@ -232,6 +256,13 @@ struct LegendsListView: View {
             )
         }
         .buttonStyle(.plain)
+    }
+
+    private func localizedName(_ legend: Legend) -> String {
+        switch state.language {
+        case .ru:                  return legend.name.ru
+        case .en, .zh, .system:    return legend.name.en
+        }
     }
 
     // MARK: - Computed filter result
