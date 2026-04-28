@@ -261,7 +261,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L37 [impl]** — `LegendDetailView` skeleton: hero (большой avatar, name, fullName, years, nationality flag, intensity dots, primary field). Back button (← к List). Favorite-star.  → released as v0.10.38
 
-- [ ] **TASK-L38 [verify]** — TASK-L37
+- [x] **TASK-L38 [verify]** — TASK-L37  → finding: nationality рисовался plain text вместо флага. Добавил nationalityFlag() helper (ISO-2 → regional indicator). Released as v0.10.39
 
 - [ ] **TASK-L39 [impl]** — Bio paragraph + sources block (clickable links opening NSWorkspace.shared.open). Sources показываются как inline rows с типом (book/article/interview).
 

@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.39",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L38 verify: hero рисовал nationality как 'US' текстом — а спека требовала флаг. Добавил конвертер ISO-2 → regional indicator emoji ('US' → 🇺🇸, 'US/ZA' → 🇺🇸 🇿🇦).",
+    "main": "Verification of TASK-L37. Finding: nationality flag fix. Helper nationalityFlag() корректно обрабатывает single и compound (slash-separated) коды.",
+    "points": [
+      "Phase E (2/12)",
+      "38/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.39/HelloWork-0.10.39.dmg"
+  },
+  {
     "version": "0.10.38",
     "date": "2026-04-27",
     "customMessage": "TASK-L37: LegendDetailView hero — большой avatar 96pt, name+fullName, meta (years · nationality · field), intensity dots, fav-star, back-button. Phase E стартанула.",

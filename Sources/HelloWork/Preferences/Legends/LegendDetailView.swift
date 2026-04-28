@@ -55,11 +55,30 @@ struct LegendDetailView: View {
         HStack(spacing: 10) {
             metaItem(legend.yearsOfLife)
             metaDivider
-            metaItem(legend.nationality)
+            metaItem(nationalityFlag(legend.nationality))
             metaDivider
             metaItem(legend.field.replacingOccurrences(of: "_", with: " "))
         }
         .padding(.top, 2)
+    }
+
+    /// "US" → 🇺🇸, "US/ZA" → 🇺🇸 🇿🇦. Невалидный код → исходная строка.
+    private func nationalityFlag(_ raw: String) -> String {
+        let parts = raw.split(separator: "/").map { $0.trimmingCharacters(in: .whitespaces) }
+        let flags: [String] = parts.compactMap { code in
+            let upper = code.uppercased()
+            guard upper.count == 2,
+                  upper.allSatisfy({ $0.isASCII && $0.isLetter }) else { return nil }
+            let base: UInt32 = 127397
+            var flag = ""
+            for scalar in upper.unicodeScalars {
+                if let s = UnicodeScalar(base + scalar.value) {
+                    flag.unicodeScalars.append(s)
+                }
+            }
+            return flag
+        }
+        return flags.isEmpty ? raw : flags.joined(separator: " ")
     }
 
     private func metaItem(_ s: String) -> some View {
