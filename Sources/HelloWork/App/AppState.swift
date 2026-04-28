@@ -133,6 +133,29 @@ final class AppState: ObservableObject {
     /// previousLaunchVersion в UserDefaults.
     @Published var queueUpdateToastVersion: String? = nil
 
+    // MARK: - Meditation module state
+
+    /// Aggregated meditation stats. Persist'ится через VersionedMeditationStats.
+    @Published var meditationStats: MeditationStats {
+        didSet { saveMeditationStats() }
+    }
+    /// Хоткей запуска meditation-сессии. По умолчанию ⌃⌥M.
+    @Published var meditationHotkey: MeditationHotkey {
+        didSet {
+            UserDefaults.standard.set(meditationHotkey.serialized, forKey: Self.meditationHotkeyKey)
+        }
+    }
+    /// Показывать тонкую прогресс-линию внизу overlay'а. По умолчанию true.
+    @Published var meditationShowProgress: Bool {
+        didSet { UserDefaults.standard.set(meditationShowProgress, forKey: Self.meditationShowProgressKey) }
+    }
+    /// Играть звук на natural completion (не на ESC abort). По умолчанию true.
+    @Published var meditationCompletionSound: Bool {
+        didSet { UserDefaults.standard.set(meditationCompletionSound, forKey: Self.meditationCompletionSoundKey) }
+    }
+    /// Контроллер сессии. Lazy-инициализируется чтобы не тащить @MainActor в init AppState.
+    let meditation: MeditationController = MeditationController()
+
     struct CorruptionWarning: Identifiable, Equatable {
         let id = UUID()
         /// `.schedules` / `.stats` — определяет message в UI.
@@ -169,6 +192,10 @@ final class AppState: ObservableObject {
     private static let statusIconStyleKey = "helloWorkStatusIconStyle"
     private static let menubarPeekKey = "helloWorkMenubarPeekSeconds"
     private static let developerModeKey = "helloWorkDeveloperMode"
+    private static let meditationStatsKey = "helloWorkMeditationStats"
+    private static let meditationHotkeyKey = "helloWorkMeditationHotkey"
+    private static let meditationShowProgressKey = "helloWorkMeditationShowProgress"
+    private static let meditationCompletionSoundKey = "helloWorkMeditationCompletionSound"
 
     /// Текущая версия persisted JSON для managedApps. При изменении схемы —
     /// инкрементировать и добавить миграцию в loadManagedApps().
@@ -262,6 +289,17 @@ final class AppState: ObservableObject {
 
         self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
 
+        // Meditation persisted state.
+        self.meditationStats = Self.loadMeditationStats()
+        if let raw = UserDefaults.standard.string(forKey: Self.meditationHotkeyKey),
+           let hk = MeditationHotkey.deserialize(raw) {
+            self.meditationHotkey = hk
+        } else {
+            self.meditationHotkey = .default
+        }
+        self.meditationShowProgress = (UserDefaults.standard.object(forKey: Self.meditationShowProgressKey) as? Bool) ?? true
+        self.meditationCompletionSound = (UserDefaults.standard.object(forKey: Self.meditationCompletionSoundKey) as? Bool) ?? true
+
         // Post-update toast detection: сравниваем текущую CFBundleShortVersionString
         // с persisted значением. Различие = auto-update только что произошёл.
         let currentVersion = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "?"
@@ -328,6 +366,11 @@ final class AppState: ObservableObject {
         focus.dimOpacity = focusDimOpacity
         focus.useAccessibility = focusUseAccessibility
         focus.stats = stats
+
+        // Meditation: weak ref на self чтобы controller мог записать
+        // завершённую сессию через recordMeditation. Set'ится после init,
+        // т.к. let свойство (immutable storage), но weak ref внутри controller'а.
+        meditation.stateRef = self
     }
 
     /// Сохраняет битый JSON managedApps в `~/Library/Application Support/HelloWork/managedApps.corrupt-<ts>.json`
@@ -402,6 +445,34 @@ final class AppState: ObservableObject {
     func _setLegendsApply(legendId: String?, backup: [String: [Slot]]?) {
         appliedLegendId = legendId
         slotsBackupForApply = backup
+    }
+
+    // MARK: - Meditation persistence
+
+    private static func loadMeditationStats() -> MeditationStats {
+        guard let data = UserDefaults.standard.data(forKey: meditationStatsKey) else {
+            return .empty
+        }
+        if let v = try? JSONDecoder().decode(VersionedMeditationStats.self, from: data) {
+            return v.stats
+        }
+        // Fallback: corrupt — лог и empty (без потери UX, юзер просто начнёт с 0).
+        devlog("meditation", "loadMeditationStats: corrupt persistence, returning .empty")
+        return .empty
+    }
+
+    private func saveMeditationStats() {
+        let wrapped = VersionedMeditationStats(stats: meditationStats)
+        guard let data = try? JSONEncoder().encode(wrapped) else { return }
+        UserDefaults.standard.set(data, forKey: Self.meditationStatsKey)
+    }
+
+    /// Записать завершённую meditation-сессию в stats. Вызывается из
+    /// MeditationController.stop(naturally:) после fade-out.
+    func recordMeditation(_ session: MeditationSession) {
+        meditationStats.record(session)
+        devlog("meditation",
+               "recorded session natural=\(session.completedNaturally) duration=\(String(format: "%.1f", session.completedDuration))s totalCount=\(meditationStats.sessionsCount) totalSec=\(String(format: "%.0f", meditationStats.totalSeconds))")
     }
 
     // MARK: - Legends helpers

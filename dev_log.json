@@ -1,5 +1,21 @@
 [
   {
+    "version": "0.13.0",
+    "date": "2026-04-28",
+    "customMessage": "🧘 Meditation module shipped. 1-минутные фокус-сессии: 98% затемнение всех экранов + зелёная пульсирующая точка плавно дрейфует по primary screen. Юзер следит глазами 60 секунд — снимает mental fatigue после блока кода. Хоткей ⌃⌥M, ESC abort.",
+    "main": "Phases A-F (44 tasks): domain models (MeditationSession + Stats + Hotkey + DotAnimator), overlay multi-screen (MeditationWindow level=statusBar+1 + Canvas + Controller), dot animation (lerp+easeInOutCubic+glow+pulse 2s breathing), timer 60Hz + progress line + completion sound (Glass), Settings card со stats, sidebar entry. i18n EN/RU/ZH 10 keys. Stats schema-versioned, persist'ятся.",
+    "points": [
+      "Meditation module — 1-минутные фокус-сессии",
+      "98% затемнение всех экранов + точка на primary",
+      "Smooth dot animation (lerp + easeInOutCubic, dwell 2-5s)",
+      "Зелёный glow + pulse breathing 0.92↔1.08 за 2s",
+      "Hotkey ⌃⌥M, ESC abort, completion chime",
+      "Stats persisted (count + totalSeconds + lastDate, schema-versioned)",
+      "i18n EN/RU/ZH"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.13.0/HelloWork-0.13.0.dmg"
+  },
+  {
     "version": "0.12.8",
     "date": "2026-04-28",
     "customMessage": "PIVOT #2 — spacer NSStatusItem trick. Alpha approach (v0.12.7) работал только на наш own item, на чужие — нет (CGSSetWindowAlpha privileged для foreign windows). Sequoia блокирует ВСЕ способы манипуляции чужих menubar items. Working approach (как у Ice): создаём свой невидимый NSStatusItem и при collapse раздуваем его length=screenWidth — третьи items overflow за app menu автоматически.",

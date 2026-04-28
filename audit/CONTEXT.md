@@ -168,7 +168,7 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
 
 > Чистая модель, никакого UI. Если что-то ломается на этом этапе — далеко не прошли.
 
-- [ ] **TASK-M01 [impl]** — `Sources/HelloWork/Domain/Meditation/MeditationSession.swift`. Codable struct:
+- [x] **TASK-M01 [impl]** — `Sources/HelloWork/Domain/Meditation/MeditationSession.swift`. Codable struct:
   ```swift
   struct MeditationSession: Codable, Identifiable {
       let id: UUID
@@ -181,9 +181,9 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Sources/HelloWork/Domain/Meditation/MeditationSession.swift`
   - Acceptance: декодит/энкодит туда-обратно идентично; `id` всегда новый UUID при init; `completedNaturally = (completedDuration >= plannedDuration - 0.5)` логика прозрачна.
 
-- [ ] **TASK-M02 [verify]** — TASK-M01
+- [x] **TASK-M02 [verify]** — TASK-M01
 
-- [ ] **TASK-M03 [impl]** — `Sources/HelloWork/Domain/Meditation/MeditationStats.swift` — aggregated stats, schema-versioned (`VersionedMeditationStats` wrapper):
+- [x] **TASK-M03 [impl]** — `Sources/HelloWork/Domain/Meditation/MeditationStats.swift` — aggregated stats, schema-versioned (`VersionedMeditationStats` wrapper):
   ```swift
   struct MeditationStats: Codable {
       var sessionsCount: Int
@@ -199,15 +199,15 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Sources/HelloWork/Domain/Meditation/MeditationStats.swift`
   - Acceptance: `record(_:)` идемпотентна для unique session.id (записываем один раз); aborted сессии (completedNaturally=false) НЕ инкрементят count, но добавляются в totalSeconds (разработчик медитировал хоть сколько-то).
 
-- [ ] **TASK-M04 [verify]** — TASK-M03
+- [x] **TASK-M04 [verify]** — TASK-M03
 
-- [ ] **TASK-M05 [impl]** — `Sources/HelloWork/Domain/Meditation/MeditationHotkey.swift` — зеркало `MenubarHotkey`. Преsets: `ctrlOptM` (default), `f17`, `hyperM`. + `custom(keyCode, modifiers)`. + serialize/deserialize/displayString.
+- [x] **TASK-M05 [impl]** — `Sources/HelloWork/Domain/Meditation/MeditationHotkey.swift` — зеркало `MenubarHotkey`. Преsets: `ctrlOptM` (default), `f17`, `hyperM`. + `custom(keyCode, modifiers)`. + serialize/deserialize/displayString.
   - Файлы: `Sources/HelloWork/Domain/Meditation/MeditationHotkey.swift`
   - Acceptance: build clean; serialize → deserialize round-trip; displayString корректный для preset и custom.
 
-- [ ] **TASK-M06 [verify]** — TASK-M05
+- [x] **TASK-M06 [verify]** — TASK-M05
 
-- [ ] **TASK-M07 [impl]** — `Sources/HelloWork/Domain/Meditation/MeditationDotAnimator.swift` — pure animation logic, без UI:
+- [x] **TASK-M07 [impl]** — `Sources/HelloWork/Domain/Meditation/MeditationDotAnimator.swift` — pure animation logic, без UI:
   ```swift
   struct MeditationDotAnimator {
       let bounds: CGRect           // primary screen frame
@@ -227,9 +227,9 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Реализация: lerp от `currentTarget` к `nextTarget` с easing `easeInOut` (обычная cubic). По завершении transition — generateNextTarget + новый transitionStart.
   - Acceptance: на 60Hz tick'е выдаёт smooth path; на конкретном seed — deterministic; цели всегда внутри `bounds.insetBy(edgeMargin)`; min distance соблюдается.
 
-- [ ] **TASK-M08 [verify]** — TASK-M07
+- [x] **TASK-M08 [verify]** — TASK-M07
 
-- [ ] **TASK-M09 [impl]** — `AppState`-интеграция:
+- [x] **TASK-M09 [impl]** — `AppState`-интеграция:
   - Добавить `meditation: MeditationController` (init в lazy / в init AppState).
   - `meditationStats: MeditationStats` + persistence через `Self.meditationStatsKey`.
   - `meditationHotkey: MeditationHotkey` + UserDefaults persistence (key `helloWorkMeditationHotkey`).
@@ -237,13 +237,13 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Sources/HelloWork/App/AppState.swift`
   - Acceptance: build clean; perist works (set, restart, read); MeditationController — placeholder `final class` пока (наполнение в B01).
 
-- [ ] **TASK-M10 [verify]** — TASK-M09
+- [x] **TASK-M10 [verify]** — TASK-M09
 
 ### Phase B — Overlay window (8 tasks)
 
 > Затемнение экрана. Тестим без точки сначала — даём команду «show overlay 60s», проверяем fade-in/out, ESC.
 
-- [ ] **TASK-M11 [impl]** — `Sources/HelloWork/Meditation/MeditationWindow.swift` — кастомный NSWindow:
+- [x] **TASK-M11 [impl]** — `Sources/HelloWork/Meditation/MeditationWindow.swift` — кастомный NSWindow:
   - `init(screen: NSScreen)` — fullscreen на конкретный screen.
   - `level = .statusBar + 1` — выше menubar.
   - `backgroundColor = .clear`, `isOpaque = false` — позволяет custom view'у управлять прозрачностью.
@@ -254,9 +254,9 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Sources/HelloWork/Meditation/MeditationWindow.swift`
   - Acceptance: window появляется на правильном screen, имеет правильный level, не ломает другие апп-окна.
 
-- [ ] **TASK-M12 [verify]** — TASK-M11
+- [x] **TASK-M12 [verify]** — TASK-M11
 
-- [ ] **TASK-M13 [impl]** — `Sources/HelloWork/Meditation/MeditationCanvasView.swift` — SwiftUI view:
+- [x] **TASK-M13 [impl]** — `Sources/HelloWork/Meditation/MeditationCanvasView.swift` — SwiftUI view:
   - Корневой ZStack со `.background(Color.black.opacity(0.98))` — затемнение.
   - `.onKeyPress(.escape) { onAbort() }` — ESC обрабатывает.
   - Точку пока **не рисуем** (для C01) — только canvas.
@@ -264,9 +264,9 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Sources/HelloWork/Meditation/MeditationCanvasView.swift`
   - Acceptance: при показе — экран затемняется на 98%; ESC вызывает callback.
 
-- [ ] **TASK-M14 [verify]** — TASK-M13
+- [x] **TASK-M14 [verify]** — TASK-M13
 
-- [ ] **TASK-M15 [impl]** — `Sources/HelloWork/Meditation/MeditationController.swift` — главный controller:
+- [x] **TASK-M15 [impl]** — `Sources/HelloWork/Meditation/MeditationController.swift` — главный controller:
   ```swift
   @MainActor
   final class MeditationController: ObservableObject {
@@ -287,20 +287,20 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Sources/HelloWork/Meditation/MeditationController.swift`, `Sources/HelloWork/App/AppState.swift` (взаимная связка)
   - Acceptance: ручной тест в AppDelegate — `state.meditation.start()` затемняет ВСЕ screens; через 60 сек — fade-out; ESC → callback → `stop(naturally: false)`; повторный start во время активной — игнорируется; persist в UserDefaults виден.
 
-- [ ] **TASK-M16 [verify]** — TASK-M15
+- [x] **TASK-M16 [verify]** — TASK-M15
 
-- [ ] **TASK-M17 [impl]** — Multi-screen handling: на каждый screen в `NSScreen.screens` создаётся window. На primary — будет точка (Phase C); на вторичных — только dark canvas.
+- [x] **TASK-M17 [impl]** — Multi-screen handling: на каждый screen в `NSScreen.screens` создаётся window. На primary — будет точка (Phase C); на вторичных — только dark canvas.
   - Подключить уведомление `NSApplication.didChangeScreenParametersNotification` — если во время сессии screen connect/disconnect, плавно close + recreate. (Edge case, можно отложить в Phase G follow-up.)
   - Файлы: `Sources/HelloWork/Meditation/MeditationController.swift`
   - Acceptance: на 2 screen'ах — оба затемнены при start.
 
-- [ ] **TASK-M18 [verify]** — TASK-M17
+- [x] **TASK-M18 [verify]** — TASK-M17
 
 ### Phase C — Dot animation (8 tasks)
 
 > Зелёная точка. Generation + lerp + glow + pulse.
 
-- [ ] **TASK-M19 [impl]** — `Sources/HelloWork/Meditation/MeditationDotView.swift` — SwiftUI view:
+- [x] **TASK-M19 [impl]** — `Sources/HelloWork/Meditation/MeditationDotView.swift` — SwiftUI view:
   - `Circle().fill(Theme.accent)` диаметра 16pt.
   - `.shadow(color: Theme.accent.opacity(0.55), radius: 12, x: 0, y: 0)` — soft glow.
   - Pulse: `@State scale: CGFloat` от 0.92 до 1.08, `.animation(.easeInOut(duration: 2).repeatForever)`.
@@ -308,61 +308,61 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Sources/HelloWork/Meditation/MeditationDotView.swift`
   - Acceptance: standalone preview — точка пульсирует в фиксированной позиции с glow.
 
-- [ ] **TASK-M20 [verify]** — TASK-M19
+- [x] **TASK-M20 [verify]** — TASK-M19
 
-- [ ] **TASK-M21 [impl]** — Интеграция animator + dot view в canvas:
+- [x] **TASK-M21 [impl]** — Интеграция animator + dot view в canvas:
   - `MeditationCanvasView` принимает `dotPosition: CGPoint` (Binding или @ObservedObject) и рендерит `MeditationDotView` поверх dark layer (только на primary screen).
   - Параметр `showDot: Bool` — на secondary screen'ах = false.
   - `MeditationController` создаёт `MeditationDotAnimator(bounds: NSScreen.main!.frame)` и через timer обновляет `dotPosition`.
   - Файлы: `Sources/HelloWork/Meditation/MeditationCanvasView.swift`, `MeditationController.swift`
   - Acceptance: точка движется по экрану в течение сессии.
 
-- [ ] **TASK-M22 [verify]** — TASK-M21
+- [x] **TASK-M22 [verify]** — TASK-M21
 
-- [ ] **TASK-M23 [impl]** — Easing-улучшение: проверить что движение визуально «медитативное», не «дёрганое». Вероятно switch с `easeInOut` на `easeInOutQuart` или spring (через DampedHarmonic). Возможно tweak `dwellRange` (2-5 sec → 3-7 sec) если кажется быстрым.
+- [x] **TASK-M23 [impl]** — Easing-улучшение: проверить что движение визуально «медитативное», не «дёрганое». Вероятно switch с `easeInOut` на `easeInOutQuart` или spring (через DampedHarmonic). Возможно tweak `dwellRange` (2-5 sec → 3-7 sec) если кажется быстрым.
   - Файлы: `Sources/HelloWork/Domain/Meditation/MeditationDotAnimator.swift`
   - Acceptance: визуальная проверка — движение плавное, без рывков, точка не «прилипает» к edges.
 
-- [ ] **TASK-M24 [verify]** — TASK-M23
+- [x] **TASK-M24 [verify]** — TASK-M23
 
-- [ ] **TASK-M25 [impl]** — Fade-in entrance dot'а: при появлении — opacity от 0 до 1 за 0.6с, scale от 0.5 до 1.0 spring. Чтобы юзер визуально подготовился.
+- [x] **TASK-M25 [impl]** — Fade-in entrance dot'а: при появлении — opacity от 0 до 1 за 0.6с, scale от 0.5 до 1.0 spring. Чтобы юзер визуально подготовился.
   - Файлы: `Sources/HelloWork/Meditation/MeditationDotView.swift`
   - Acceptance: при start — точка плавно появляется; при stop — плавно растворяется (opacity → 0 за 0.4с).
 
-- [ ] **TASK-M26 [verify]** — TASK-M25
+- [x] **TASK-M26 [verify]** — TASK-M25
 
 ### Phase D — Timer + UX polish (6 tasks)
 
-- [ ] **TASK-M27 [impl]** — Минималистичный progress indicator: тонкая прогресс-линия по нижнему edge экрана (height 2pt, цвет `Theme.accent.opacity(0.4)`). Заполняется слева направо за 60 секунд. Off by default — настраивается опцией `showProgressLine: Bool` в Settings. По умолчанию `true` (помогает не считать в уме).
+- [x] **TASK-M27 [impl]** — Минималистичный progress indicator: тонкая прогресс-линия по нижнему edge экрана (height 2pt, цвет `Theme.accent.opacity(0.4)`). Заполняется слева направо за 60 секунд. Off by default — настраивается опцией `showProgressLine: Bool` в Settings. По умолчанию `true` (помогает не считать в уме).
   - Файлы: `Sources/HelloWork/Meditation/MeditationCanvasView.swift`, `AppState` + `helloWorkMeditationShowProgress` UserDefaults key.
   - Acceptance: прогресс заполняется корректно; toggle off — линия не видна.
 
-- [ ] **TASK-M28 [verify]** — TASK-M27
+- [x] **TASK-M28 [verify]** — TASK-M27
 
-- [ ] **TASK-M29 [impl]** — Completion feedback: за 0.3с до конца — лёгкий «вспышка» dot'а (scale 1.4 → 1.0 + opacity 1 → 0). После fade-out — короткое system sound (NSSound `Glass` или `Tink`). Опционально (toggle).
+- [x] **TASK-M29 [impl]** — Completion feedback: за 0.3с до конца — лёгкий «вспышка» dot'а (scale 1.4 → 1.0 + opacity 1 → 0). После fade-out — короткое system sound (NSSound `Glass` или `Tink`). Опционально (toggle).
   - Файлы: `Sources/HelloWork/Meditation/MeditationController.swift`, `AppState` + `helloWorkMeditationCompletionSound` key.
   - Acceptance: при natural completion — звук + flash; при ESC abort — НИЧЕГО (silent close).
 
-- [ ] **TASK-M30 [verify]** — TASK-M29
+- [x] **TASK-M30 [verify]** — TASK-M29
 
-- [ ] **TASK-M31 [impl]** — Hotkey wiring: `AppDelegate.registerMeditationHotkey()` — регистрирует `state.meditationHotkey` через тот же `HotkeyManager` что использует focus и menubar. Вызывает `state.meditation.start()`.
+- [x] **TASK-M31 [impl]** — Hotkey wiring: `AppDelegate.registerMeditationHotkey()` — регистрирует `state.meditationHotkey` через тот же `HotkeyManager` что использует focus и menubar. Вызывает `state.meditation.start()`.
   - Файлы: `Sources/HelloWork/App/AppDelegate.swift`
   - Acceptance: установить хоткей `⌃⌥M` → нажатие → start; нажатие во время активной сессии → no-op (уже active).
 
-- [ ] **TASK-M32 [verify]** — TASK-M31
+- [x] **TASK-M32 [verify]** — TASK-M31
 
 ### Phase E — UI entry points (6 tasks)
 
-- [ ] **TASK-M33 [impl]** — `PrefSection.meditation` + перевод в Translation:
+- [x] **TASK-M33 [impl]** — `PrefSection.meditation` + перевод в Translation:
   - `Translation.swift`: `let sectionMeditation: String`
   - EN: «Meditation» / RU: «Медитация» / ZH: «冥想»
   - В `PrefSection.swift` добавить `case .meditation` + symbol image (`leaf` или `circle.dotted` или `eye`).
   - Файлы: `Sources/HelloWork/Domain/Translation.swift`, `Translations.swift`, `Preferences/PrefSection.swift`.
   - Acceptance: новый sidebar item появляется в Preferences.
 
-- [ ] **TASK-M34 [verify]** — TASK-M33
+- [x] **TASK-M34 [verify]** — TASK-M33
 
-- [ ] **TASK-M35 [impl]** — `Sources/HelloWork/Preferences/Meditation/MeditationSettingsCard.swift`:
+- [x] **TASK-M35 [impl]** — `Sources/HelloWork/Preferences/Meditation/MeditationSettingsCard.swift`:
   - Заголовок «Meditation» + subtitle (стандартный pattern других settings).
   - Hero stat: «You've meditated **N times** for **M minutes** total».
   - Кнопка «Start session» (большая accent-pill) → state.meditation.start().
@@ -372,18 +372,18 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Sources/HelloWork/Preferences/Meditation/MeditationSettingsCard.swift`
   - Acceptance: card выглядит как остальные Settings, кнопка стартует сессию, stats обновляются после успешной сессии.
 
-- [ ] **TASK-M36 [verify]** — TASK-M35
+- [x] **TASK-M36 [verify]** — TASK-M35
 
-- [ ] **TASK-M37 [impl]** — Routing в `PrefsView.content`:
+- [x] **TASK-M37 [impl]** — Routing в `PrefsView.content`:
   - `case .section(.meditation): MeditationSettingsCard(state: state)`.
   - Файлы: `Sources/HelloWork/Preferences/PrefsView.swift`
   - Acceptance: клик по sidebar item → показывается card.
 
-- [ ] **TASK-M38 [verify]** — TASK-M37
+- [x] **TASK-M38 [verify]** — TASK-M37
 
 ### Phase F — i18n + final polish (4 tasks)
 
-- [ ] **TASK-M39 [impl]** — Добавить все translation keys для модуля. Минимум:
+- [x] **TASK-M39 [impl]** — Добавить все translation keys для модуля. Минимум:
   - `meditationStartButton` (EN: "Start session" / RU: "Начать сессию" / ZH: "开始")
   - `meditationStatsTitle(_ count: Int, _ minutes: Int) -> String` (EN: "You've meditated \(count) times for \(minutes) minutes total" / RU/ZH)
   - `meditationHotkeyLabel`, `meditationShowProgressTitle`, `meditationShowProgressDesc`, `meditationCompletionSoundTitle`, `meditationCompletionSoundDesc`
@@ -392,9 +392,9 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Translation.swift`, `Translations.swift` (3 локали в strict order).
   - Acceptance: build clean; нет hard-coded strings в UI; все 3 локали populated.
 
-- [ ] **TASK-M40 [verify]** — TASK-M39
+- [x] **TASK-M40 [verify]** — TASK-M39
 
-- [ ] **TASK-M41 [impl]** — Edge cases:
+- [x] **TASK-M41 [impl]** — Edge cases:
   - Если screens.isEmpty (нереально, но) → start no-op + devlog warning.
   - Если приложение уходит в background во время сессии → continue normally (medit overlay outermost level).
   - Если юзер триггерит focus mode во время медитации → focus игнорируется (одна practice за раз).
@@ -402,11 +402,11 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - Файлы: `Sources/HelloWork/Meditation/MeditationController.swift`, `Sources/HelloWork/App/AppDelegate.swift`
   - Acceptance: вышеперечисленные сценарии обработаны корректно, devlog показывает решения.
 
-- [ ] **TASK-M42 [verify]** — TASK-M41
+- [x] **TASK-M42 [verify]** — TASK-M41
 
 ### Phase G — Final regression + 0.13.0 release (4 tasks)
 
-- [ ] **TASK-M43 [impl]** — Manual smoke list:
+- [x] **TASK-M43 [impl]** — Manual smoke list:
   1. Свежий launch → sidebar показывает Meditation.
   2. Settings card → click «Start session» → экран затемняется на всех screens.
   3. Зелёная точка появляется на primary, движется плавно.
@@ -419,9 +419,9 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   10. Все 3 локали (en/ru/zh) — переключение, тексты переведены.
   - Acceptance: все 10 пунктов smoke прошли. Если что-то не ОК — follow-up (`## 7`).
 
-- [ ] **TASK-M44 [verify]** — TASK-M43
+- [x] **TASK-M44 [verify]** — TASK-M43
 
-- [ ] **TASK-M45 [impl]** — **ЕДИНСТВЕННЫЙ РЕЛИЗ ЦИКЛА**. Запускается **только** после того как TASK-M43 smoke прошёл зелёным. Полный pipeline:
+- [x] **TASK-M45 [impl]** — **ЕДИНСТВЕННЫЙ РЕЛИЗ ЦИКЛА**. Запускается **только** после того как TASK-M43 smoke прошёл зелёным. Полный pipeline:
   - `./scripts/bump.sh minor` → 0.12.8 → **0.13.0** (major feature)
   - `./scripts/build.sh && ./scripts/package.sh` → два DMG (versioned + static)
   - Большой `dev_log.json` entry с подытогом всех Phase A-F:
@@ -446,7 +446,7 @@ fadeOutDuration: TimeInterval = 0.4    // и исчезновение
   - `gh release create v0.13.0 dist/HelloWork-0.13.0.dmg dist/HelloWork.dmg --title "v0.13.0 🧘 Meditation module" --notes "..."`
   - Acceptance: GitHub Release v0.13.0 создан с двумя DMG; юзер может скачать и установить; smoke-list TASK-M43 прошёл.
 
-- [ ] **TASK-M46 [verify]** — TASK-M45 → проверка что релиз действительно опубликован, DMG mount'ится, версия в Info.plist соответствует. **AUDIT CYCLE COMPLETE.**
+- [x] **TASK-M46 [verify]** — TASK-M45 → проверка что релиз действительно опубликован, DMG mount'ится, версия в Info.plist соответствует. **AUDIT CYCLE COMPLETE.**
 
 ---
 

@@ -26,6 +26,7 @@ extension Translation {
         sectionAbout: "About",
         sectionPermissions: "Permissions",
         sectionLegends: "Legends",
+        sectionMeditation: "Meditation",
         pickerMessage: "Choose an app to schedule",
         pickerPrompt: "Add",
         onboardingTitle: "Add an app",
@@ -330,7 +331,19 @@ extension Translation {
         migrationToastTitle: "HelloWork moved to /Applications",
         migrationToastBody: "Old installer was moved to Trash. Launch at Login was reset — re-enable it in Settings if needed.",
         migrationToastDismiss: "Got it",
-        updateCompletedToast: { version in "Updated to v\(version)" }
+        updateCompletedToast: { version in "Updated to v\(version)" },
+        meditationTitle: "Meditation",
+        meditationSubtitle: "A 1-minute focus practice. Watch the green dot drift across the screen — let your thoughts settle.",
+        meditationStartButton: "Start session",
+        meditationStatsLine: { count, minutes in
+            "\(count) session\(count == 1 ? "" : "s") · \(minutes) min total"
+        },
+        meditationDurationLabel: "1 minute",
+        meditationHotkeyLabel: "Hotkey",
+        meditationShowProgressTitle: "Show progress line",
+        meditationShowProgressDesc: "Thin accent line at the bottom of the screen fills over 60 seconds.",
+        meditationCompletionSoundTitle: "Completion sound",
+        meditationCompletionSoundDesc: "Soft chime when the session ends naturally. Nothing on ESC abort."
     )
 
     static let ru = Translation(
@@ -349,6 +362,7 @@ extension Translation {
         sectionAbout: "О программе",
         sectionPermissions: "Доступы",
         sectionLegends: "Легенды",
+        sectionMeditation: "Медитация",
         pickerMessage: "Выбери приложение для расписания",
         pickerPrompt: "Добавить",
         onboardingTitle: "Добавить приложение",
@@ -663,7 +677,29 @@ extension Translation {
         migrationToastTitle: "HelloWork переехал в /Applications",
         migrationToastBody: "Старый инсталлер убран в Корзину. Автозапуск сброшен — включи заново в Настройках если нужно.",
         migrationToastDismiss: "Понятно",
-        updateCompletedToast: { version in "Обновлено до v\(version)" }
+        updateCompletedToast: { version in "Обновлено до v\(version)" },
+        meditationTitle: "Медитация",
+        meditationSubtitle: "Минута фокуса. Просто следи глазами за зелёной точкой — пусть мысли успокоятся.",
+        meditationStartButton: "Начать сессию",
+        meditationStatsLine: { count, minutes in
+            let suffix: String
+            switch count % 100 {
+            case 11...14: suffix = "сессий"
+            default:
+                switch count % 10 {
+                case 1:    suffix = "сессия"
+                case 2...4: suffix = "сессии"
+                default:    suffix = "сессий"
+                }
+            }
+            return "\(count) \(suffix) · \(minutes) мин всего"
+        },
+        meditationDurationLabel: "1 минута",
+        meditationHotkeyLabel: "Хоткей",
+        meditationShowProgressTitle: "Показывать прогресс",
+        meditationShowProgressDesc: "Тонкая зелёная полоса внизу экрана заполняется за 60 секунд.",
+        meditationCompletionSoundTitle: "Звук завершения",
+        meditationCompletionSoundDesc: "Мягкий сигнал когда сессия дошла до конца. На ESC — тишина."
     )
 
     static let zh = Translation(
@@ -682,6 +718,7 @@ extension Translation {
         sectionAbout: "关于",
         sectionPermissions: "权限",
         sectionLegends: "传奇",
+        sectionMeditation: "冥想",
         pickerMessage: "选择需要安排时间表的应用",
         pickerPrompt: "添加",
         onboardingTitle: "添加应用",
@@ -982,6 +1019,16 @@ extension Translation {
         migrationToastTitle: "HelloWork 已移至 /Applications",
         migrationToastBody: "旧安装器已移至废纸篓。登录启动已重置 — 如需要请在设置中重新启用。",
         migrationToastDismiss: "知道了",
-        updateCompletedToast: { version in "已更新至 v\(version)" }
+        updateCompletedToast: { version in "已更新至 v\(version)" },
+        meditationTitle: "冥想",
+        meditationSubtitle: "1 分钟专注练习。用眼睛跟随绿点 — 让思绪安静下来。",
+        meditationStartButton: "开始",
+        meditationStatsLine: { count, minutes in "\(count) 次 · 共 \(minutes) 分钟" },
+        meditationDurationLabel: "1 分钟",
+        meditationHotkeyLabel: "快捷键",
+        meditationShowProgressTitle: "显示进度条",
+        meditationShowProgressDesc: "屏幕底部细线在 60 秒内逐渐填满。",
+        meditationCompletionSoundTitle: "完成提示音",
+        meditationCompletionSoundDesc: "自然结束时轻柔提示音。ESC 取消时静默。"
     )
 }

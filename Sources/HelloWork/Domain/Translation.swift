@@ -18,6 +18,7 @@ struct Translation {
     let sectionAbout: String
     let sectionPermissions: String
     let sectionLegends: String
+    let sectionMeditation: String
 
     // MARK: - File picker
     let pickerMessage: String
@@ -361,4 +362,15 @@ struct Translation {
     let migrationToastBody: String
     let migrationToastDismiss: String
     let updateCompletedToast: (_ version: String) -> String
+    // MARK: - Meditation
+    let meditationTitle: String
+    let meditationSubtitle: String
+    let meditationStartButton: String
+    let meditationStatsLine: (_ count: Int, _ minutes: Int) -> String
+    let meditationDurationLabel: String       // "1 minute"
+    let meditationHotkeyLabel: String         // "Hotkey"
+    let meditationShowProgressTitle: String
+    let meditationShowProgressDesc: String
+    let meditationCompletionSoundTitle: String
+    let meditationCompletionSoundDesc: String
 }

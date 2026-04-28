@@ -264,6 +264,8 @@ struct PrefsView: View {
             }
         case .section(.legends):
             LegendsListView(state: state)
+        case .section(.meditation):
+            MeditationSettingsCard(state: state)
         case .section(.stats):
             StatsView(state: state)
         case .section(.menubar):

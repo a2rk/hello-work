@@ -18,8 +18,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var overlayWindows: [String: NSWindow] = [:]
     private let hotkeyManager = HotkeyManager(id: 1)         // focus mode
     private let menubarHotkeyManager = HotkeyManager(id: 2)  // menubar hider
+    private let meditationHotkeyManager = HotkeyManager(id: 3)  // meditation
     private var hotkeyCancellables: Set<AnyCancellable> = []
     private var menubarCancellables: Set<AnyCancellable> = []
+    private var meditationCancellables: Set<AnyCancellable> = []
 
     private let firstLaunchKey = "helloWorkHasLaunchedBefore"
 
@@ -39,6 +41,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupFocusObservers()
         registerFocusHotkey()
         setupMenubarHider()
+        setupMeditation()
         setupTrayObservers()
         startTimer()
         refresh()
@@ -566,6 +569,29 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.state.menubarHider.toggle()
         }
         devlog("hotkey", "registerMenubarHotkey \(hk.displayString()) success=\(ok)")
+    }
+
+    // MARK: - Meditation
+
+    private func setupMeditation() {
+        // При смене хоткея — re-register.
+        state.$meditationHotkey
+            .dropFirst()
+            .sink { [weak self] _ in
+                Task { @MainActor [weak self] in self?.registerMeditationHotkey() }
+            }
+            .store(in: &meditationCancellables)
+        registerMeditationHotkey()
+    }
+
+    private func registerMeditationHotkey() {
+        meditationHotkeyManager.unregister()
+        let hk = state.meditationHotkey
+        let ok = meditationHotkeyManager.register(hk.asFocusHotkey) { [weak self] in
+            devlog("hotkey", "meditation hotkey FIRED — calling start()")
+            self?.state.meditation.start()
+        }
+        devlog("hotkey", "registerMeditationHotkey \(hk.displayString()) success=\(ok)")
     }
 
     /// Авто-скрытие при изменении расписания. Вызывается из refresh().
