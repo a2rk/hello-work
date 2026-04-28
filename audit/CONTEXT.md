@@ -356,7 +356,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L75 [impl]** — Cleanup follow-ups если возникли в секции 5.  → released as v0.11.4 (закрыл TASK-L77 — добавил chained-apply guard в LegendApplyEngine.apply: auto-revert previous if appliedLegendId set & differs)
 
-- [ ] **TASK-L76 [verify]** — TASK-L75
+- [x] **TASK-L76 [verify]** — TASK-L75  → finding: guard срабатывал только при prev != legend.id. Re-apply того же legend с новыми assignments корраптил backup точно так же. Изменил guard: auto-revert при ЛЮБОМ appliedLegendId. Released as v0.11.5. **AUDIT CYCLE COMPLETE — 76/76 + L77/L78 follow-ups closed.**
 
 ---
 

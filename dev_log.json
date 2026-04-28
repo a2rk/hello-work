@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.11.5",
+    "date": "2026-04-27",
+    "customMessage": "🎯 AUDIT CYCLE COMPLETE — 76/76 tasks + L77/L78 follow-ups closed. TASK-L76 verify: guard L75 срабатывал только при prev != legend.id — re-apply того же legend с новыми assignments всё равно корраптил backup. Изменил: auto-revert при ЛЮБОМ appliedLegendId. Re-apply теперь корректно сохраняет original backup.",
+    "main": "Final верификация TASK-L75. Все Phase A-I закрыты. Legends module готов end-to-end.",
+    "points": [
+      "Phase I COMPLETE (6/6)",
+      "AUDIT CYCLE COMPLETE 76/76",
+      "Follow-ups L77/L78 closed",
+      "v0.11.5 final release"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.5/HelloWork-0.11.5.dmg"
+  },
+  {
     "version": "0.11.4",
     "date": "2026-04-27",
     "customMessage": "TASK-L75 cleanup: закрыл TASK-L77 (chained-apply guard). LegendApplyEngine.apply теперь при наличии state.appliedLegendId != nil & != legend.id auto-revert'ит предыдущую легенду перед применением новой. Backup новой apply содержит ОРИГИНАЛЬНЫЕ slots, не post-A snapshot. Chained apply Franklin→Musk теперь корректно восстанавливает изначальные расписания через Revert.",
