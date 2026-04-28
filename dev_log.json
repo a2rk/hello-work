@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.47",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L46 verify: stephenson-neal в JSON имеет allowedSlots обратном хроно-порядке (21:00 перед 20:00). Добавил sortedSlots сортировку в UI — resilience против любых reverse/random orderings в данных.",
+    "main": "Verification of TASK-L45.",
+    "points": [
+      "Phase E (10/12)",
+      "46/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.47/HelloWork-0.10.47.dmg"
+  },
+  {
     "version": "0.10.46",
     "date": "2026-04-27",
     "customMessage": "TASK-L45: Messenger windows секция в detail view. Header c total-pill, description-параграф, список slots: моноширинный time-range + work/personal pill + длительность + rationale. Скрывается если allowedSlots пуст.",

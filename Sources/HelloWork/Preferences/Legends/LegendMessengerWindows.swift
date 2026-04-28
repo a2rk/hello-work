@@ -45,9 +45,19 @@ struct LegendMessengerWindows: View {
 
     private var slotsList: some View {
         VStack(alignment: .leading, spacing: 6) {
-            ForEach(legend.blockSchedule.allowedSlots) { slot in
+            ForEach(sortedSlots) { slot in
                 slotRow(slot)
             }
+        }
+    }
+
+    /// JSON-данные не гарантируют хронологический порядок (см. stephenson-neal).
+    /// Сортируем по start, чтобы порядок UI был предсказуемым.
+    private var sortedSlots: [LegendAllowedSlot] {
+        legend.blockSchedule.allowedSlots.sorted { a, b in
+            let am = LegendRingChart.minutes(a.start) ?? Int.max
+            let bm = LegendRingChart.minutes(b.start) ?? Int.max
+            return am < bm
         }
     }
 
