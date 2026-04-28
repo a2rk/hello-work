@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.28",
+    "date": "2026-04-28",
+    "customMessage": "TASK-D03: volume icon. cp scripts/AppIcon.icns → /Volumes/HelloWork/.VolumeIcon.icns + SetFile -a C для custom-icon-aware флага. DMG в Finder теперь показывается с HelloWork иконкой а не generic.",
+    "main": "Graceful: если scripts/AppIcon.icns missing — пропускается. SetFile может фейлиться на новых macOS — ловится через || true.",
+    "points": [
+      "Phase D (3/4)",
+      "Cycle: 23/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.28/HelloWork-0.11.28.dmg"
+  },
+  {
     "version": "0.11.27",
     "date": "2026-04-28",
     "customMessage": "TASK-D02 [verify]: OK. DMG layout с background.png верифицирован: /Volumes/HelloWork/.background/ содержит PNG, drag-zone Applications symlink на месте. Graceful fallback: при отсутствии scripts/dmg-background.png package.sh пропускает bg+osascript блок без падений.",

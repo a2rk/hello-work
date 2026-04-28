@@ -53,6 +53,14 @@ hdiutil create \
 MOUNT_DIR=$(mktemp -d /tmp/hellowork-dmg-mount.XXXXXX)
 hdiutil attach -nobrowse -mountpoint "$MOUNT_DIR" "$TMP_DMG" >/dev/null
 
+# Volume icon — копия app icon. SetFile -a C делает volume custom-icon-aware.
+VOL_ICON="scripts/AppIcon.icns"
+if [ -f "$VOL_ICON" ]; then
+    cp "$VOL_ICON" "$MOUNT_DIR/.VolumeIcon.icns"
+    SetFile -c icnC "$MOUNT_DIR/.VolumeIcon.icns" 2>/dev/null || true
+    SetFile -a C "$MOUNT_DIR" 2>/dev/null || true
+fi
+
 if [ -f "$BG_PNG" ]; then
     osascript <<EOF >/dev/null 2>&1 || true
 tell application "Finder"
