@@ -237,7 +237,7 @@ gh release create vX.Y.Z dist/HelloWork-X.Y.Z.dmg dist/HelloWork.dmg \
 
 - [x] **TASK-A06 [verify]** — TASK-A05  → OK. queueMigrationToast @Published триггерит SwiftUI re-render. MigrationManager сетит при .migrated path. 3 translation keys в strict order match Translation struct, все 3 локали (EN/RU/ZH) populated. Регрессий нет. Released as v0.11.11
 
-- [ ] **TASK-A07 [impl]** — Toast UI: subtle banner-card в верхней части PrefsView (или там где сейчас отображается corruption banner — паттерн уже есть). Auto-dismiss через 8 сек ИЛИ click «Got it». Только если `state.queueMigrationToast == true`. После dismiss — set false (в памяти; не возвращается).
+- [x] **TASK-A07 [impl]** — Toast UI: subtle banner-card в верхней части PrefsView (или там где сейчас отображается corruption banner — паттерн уже есть). Auto-dismiss через 8 сек ИЛИ click «Got it». Только если `state.queueMigrationToast == true`. После dismiss — set false (в памяти; не возвращается).  → released as v0.11.12 (новый MigrationToastBanner.swift component, accent-colored card с arrow.uturn icon + auto-dismiss через DispatchWorkItem 8s)
   - Файлы: `Sources/HelloWork/Preferences/PrefsView.swift` (или новый MigrationToastView если правильнее модульно).
   - Acceptance: При запуске после миграции — toast виден один раз, dismissible, не возвращается. Не появляется на чистом install.
 

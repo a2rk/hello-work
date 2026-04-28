@@ -145,6 +145,10 @@ struct PrefsView: View {
     private var detail: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
+                if state.queueMigrationToast {
+                    MigrationToastBanner(state: state)
+                        .padding(.bottom, 14)
+                }
                 if !state.corruptionWarnings.isEmpty {
                     corruptionBanners
                         .padding(.bottom, 14)
