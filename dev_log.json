@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.10.21",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L20 verified: sidebar entry корректен.",
+    "main": "Verification of TASK-L19. PrefSection enum, icon, translation, routing OK.",
+    "points": [
+      "Switch exhaustive с placeholder для L21 замены"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.21/HelloWork-0.10.21.dmg"
+  },
+  {
     "version": "0.10.20",
     "date": "2026-04-28",
     "customMessage": "TASK-L19: PrefSection.legends добавлен. Иконка books.vertical.fill, title через t.sectionLegends (en/ru/zh). PrefsView routing — placeholder, заменится на LegendsListView в TASK-L21.",

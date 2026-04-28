@@ -221,7 +221,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L19 [impl]** — `PrefSection.legends` + sectionLegends translation key (en/ru/zh) + placeholder routing в PrefsView.  → released as v0.10.20
 
-- [ ] **TASK-L20 [verify]** — TASK-L19
+- [x] **TASK-L20 [verify]** — TASK-L19  → released as v0.10.21
 
 - [ ] **TASK-L21 [impl]** — `SidebarSelection.legend(String?)` — nil = list view, non-nil = detail view by id. Альтернатива: остаться на `.section(.legends)` + отдельный @State в LegendsListView для выбранной легенды (push-style nav). Предпочтительнее второе — меньше путаницы с PrefSection семантикой.
   - **Решение для импла**: оставить `SidebarSelection.section(.legends)` неизменно. List/Detail navigation — внутри LegendsListView через `@State selectedLegend: Legend?` + NavigationLink или sheet/zoomable-stack.
