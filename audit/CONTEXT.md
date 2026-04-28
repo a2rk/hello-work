@@ -207,7 +207,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L13 [impl]** — `AppState.toggleFavoriteLegend(_ id: String)` — добавляет/убирает из set, идемпотентно. `isFavoriteLegend(_:) -> Bool`.  → released as v0.10.14
 
-- [ ] **TASK-L14 [verify]** — TASK-L13
+- [x] **TASK-L14 [verify]** — TASK-L13  → released as v0.10.15
 
 - [ ] **TASK-L15 [impl]** — `LegendApplyEngine` — отдельный @MainActor enum с `apply(_:to:state:) throws` и `revert(state:) throws`. Использует AppState internals через ref.
   - apply: сохраняет snapshot `state.managedApps[selected].slots` в `slotsBackupForApply` keyed by bundleID, заменяет slots → `slotsFromAllowedSlots(legend, category)`, ставит `appliedLegendId`.

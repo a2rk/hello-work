@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.10.15",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L14 verified: favorite helpers OK.",
+    "main": "Verification of TASK-L13.",
+    "points": [
+      "Idempotent toggle"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.15/HelloWork-0.10.15.dmg"
+  },
+  {
     "version": "0.10.14",
     "date": "2026-04-28",
     "customMessage": "TASK-L13: AppState.toggleFavoriteLegend(_:) + isFavoriteLegend(_:). Idempotent toggle.",
