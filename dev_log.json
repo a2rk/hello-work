@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.36",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L35: Grid/List toggle persists через @AppStorage('helloWorkLegendsViewMode'). Юзер выбрал — выбор живёт через все запуски.",
+    "main": "@AppStorage хранит rawValue ('grid'/'list'). computed viewMode конвертит обратно в enum с дефолтом .grid при unknown.",
+    "points": [
+      "@AppStorage helloWorkLegendsViewMode",
+      "Computed viewMode getter с фолбэком на .grid"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.36/HelloWork-0.10.36.dmg"
+  },
+  {
     "version": "0.10.35",
     "date": "2026-04-28",
     "customMessage": "TASK-L34 verified: Filters bar OK.",

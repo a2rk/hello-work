@@ -24,7 +24,11 @@ struct LegendsListView: View {
     @State private var filterFavoritesOnly: Bool = false
 
     @State private var sortChoice: SortChoice = .order
-    @State private var viewMode: LegendsViewMode = .grid
+    /// Persists across launches — UserDefaults key.
+    @AppStorage("helloWorkLegendsViewMode") private var viewModeRaw: String = LegendsViewMode.grid.rawValue
+    private var viewMode: LegendsViewMode {
+        LegendsViewMode(rawValue: viewModeRaw) ?? .grid
+    }
 
     /// Локальный enum для UI sort picker. Нельзя хранить LegendsLibrary.SortOrder
     /// напрямую как @State — у `.favoritesFirst(Set)` ассоциированное значение
@@ -252,7 +256,7 @@ struct LegendsListView: View {
 
     private func modeButton(_ mode: LegendsViewMode, system: String, title: String) -> some View {
         Button {
-            viewMode = mode
+            viewModeRaw = mode.rawValue
         } label: {
             Image(systemName: system)
                 .font(.system(size: 11, weight: .medium))

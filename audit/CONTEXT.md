@@ -253,7 +253,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L34 [verify]** — TASK-L33  → released as v0.10.35
 
-- [ ] **TASK-L35 [impl]** — Grid/List view-mode persistence: `@AppStorage("helloWorkLegendsViewMode")`. Toggle через segmented control в header. State запоминается across launches.
+- [x] **TASK-L35 [impl]** — Grid/List view-mode persistence через @AppStorage.  → released as v0.10.36
 
 - [ ] **TASK-L36 [verify]** — TASK-L35
 
