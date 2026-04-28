@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.57",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L56 verify: Apply button disabled-логика проверяла activeManagedApps (не archived) — misleading tooltip 'Add apps first' если все добавленные apps archived. Спека требовала managedApps.isEmpty — упростил.",
+    "main": "Verification of TASK-L55. Кейс all-archived оставлен L57's sheet'у — там корректно покажем 'нет активных apps'.",
+    "points": [
+      "Phase G (2/10)",
+      "56/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.57/HelloWork-0.10.57.dmg"
+  },
+  {
     "version": "0.10.56",
     "date": "2026-04-27",
     "customMessage": "TASK-L55: Apply schedule кнопка в LegendDetailView (рядом с fave star). Зелёная capsule с wand-иконкой. Disabled+grey + tooltip 'Add apps first' если managedApps пуст. Click открывает LegendApplySheet (skeleton — TASK-L57 наполнит).",

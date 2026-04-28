@@ -79,7 +79,9 @@ struct LegendDetailView: View {
     }
 
     private var applyButton: some View {
-        let hasApps = !activeManagedApps.isEmpty
+        // Спека L55: disable если managedApps.isEmpty. Случай «все archived»
+        // оставляем sheet'у (L57) — там корректно покажем «нет активных apps».
+        let hasApps = !state.managedApps.isEmpty
         return Button {
             showApplySheet = true
         } label: {
@@ -104,11 +106,6 @@ struct LegendDetailView: View {
         .help(hasApps ? t.legendsApply : t.legendsApplyNoAppsHint)
     }
 
-    /// Активные managed-apps (не archived) — нужны как минимум для одного
-    /// assignment. Если пусто — apply-кнопка disabled.
-    private var activeManagedApps: [ManagedApp] {
-        state.managedApps.filter { !$0.isArchived }
-    }
 
     private var metaRow: some View {
         HStack(spacing: 10) {
