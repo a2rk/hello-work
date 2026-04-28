@@ -259,7 +259,7 @@ HelloWork/Sources/HelloWork/
 
 ### Phase E — Legend detail view (12 tasks)
 
-- [ ] **TASK-L37 [impl]** — `LegendDetailView` skeleton: hero (большой avatar, name, fullName, years, nationality flag, intensity dots, primary field). Back button (← к List). Favorite-star.
+- [x] **TASK-L37 [impl]** — `LegendDetailView` skeleton: hero (большой avatar, name, fullName, years, nationality flag, intensity dots, primary field). Back button (← к List). Favorite-star.  → released as v0.10.38
 
 - [ ] **TASK-L38 [verify]** — TASK-L37
 

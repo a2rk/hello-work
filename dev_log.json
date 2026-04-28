@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.10.38",
+    "date": "2026-04-27",
+    "customMessage": "TASK-L37: LegendDetailView hero — большой avatar 96pt, name+fullName, meta (years · nationality · field), intensity dots, fav-star, back-button. Phase E стартанула.",
+    "main": "Detail view вынесен в отдельный файл LegendDetailView.swift. Hero-блок готов как фундамент под bio/sources/charts/quotes/messenger секции (L39+).",
+    "points": [
+      "Phase E started (1/12)",
+      "37/76 done"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.38/HelloWork-0.10.38.dmg"
+  },
+  {
     "version": "0.10.37",
     "date": "2026-04-28",
     "customMessage": "TASK-L36 verified: viewMode persistence OK. Phase D полностью закрыта — list view готов end-to-end.",

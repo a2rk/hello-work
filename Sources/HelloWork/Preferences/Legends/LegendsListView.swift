@@ -358,38 +358,4 @@ struct LegendsListView: View {
     }
 }
 
-/// Skeleton detail view — наполнится в TASK-L37..L48.
-struct LegendDetailView: View {
-    @Environment(\.t) var t
-    @ObservedObject var state: AppState
-    let legend: Legend
-    let onBack: () -> Void
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Button {
-                onBack()
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 11, weight: .semibold))
-                    Text(t.sectionLegends)
-                        .font(.system(size: 12))
-                }
-                .foregroundColor(Theme.textSecondary)
-            }
-            .buttonStyle(.plain)
-
-            VStack(alignment: .leading, spacing: 6) {
-                Text(legend.name.en)
-                    .font(.system(size: 22, weight: .semibold))
-                    .foregroundColor(.white)
-                Text("\(legend.fullName.en) · \(legend.yearsOfLife)")
-                    .font(.system(size: 12))
-                    .foregroundColor(Theme.textSecondary)
-            }
-
-            Spacer(minLength: 0)
-        }
-    }
-}
+// LegendDetailView вынесен в Sources/HelloWork/Preferences/Legends/LegendDetailView.swift
