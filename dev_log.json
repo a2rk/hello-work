@@ -1,5 +1,15 @@
 [
   {
+    "version": "0.10.10",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L09: legens_module/ в parent dir удалена. Источник правды теперь — Sources/HelloWork/Resources/Legends/.",
+    "main": "Cleanup. legens_module/ была вне HelloWork-git-репо (в parent FocusNap), git mv неприменим. Удалена rm -rf'ом, в репо не отражается.",
+    "points": [
+      "Single source of truth: Resources/Legends/"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.10/HelloWork-0.10.10.dmg"
+  },
+  {
     "version": "0.10.9",
     "date": "2026-04-28",
     "customMessage": "TASK-L08 verified: helpers корректны, edge cases (empty/non-existent/no-matches) обрабатываются.",

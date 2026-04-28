@@ -195,8 +195,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L08 [verify]** — TASK-L07  → released as v0.10.9
 
-- [ ] **TASK-L09 [impl]** — Cleanup: удалить `legens_module/` в корне репо (после успешного перемещения). Убедиться что `git mv` сохранил историю.
-  - Acceptance: `legens_module/` нет; `git log -- HelloWork/Sources/HelloWork/Resources/Legends/01-franklin-benjamin.json` показывает оригинал.
+- [x] **TASK-L09 [impl]** — Cleanup: удалить `legens_module/` (был в parent FocusNap, вне HelloWork-git-репо — `git mv` неприменим). Папка удалена с диска.  → released as v0.10.10
 
 - [ ] **TASK-L10 [verify]** — TASK-L09
 
