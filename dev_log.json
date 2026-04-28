@@ -1,5 +1,16 @@
 [
   {
+    "version": "0.11.25",
+    "date": "2026-04-28",
+    "customMessage": "TASK-C04 [verify]: OK. Post-update toast detection корректен — first-launch (previousVersion=nil) не триггерит toast, same-version no-op, upgrade/downgrade показывают current. Translation closure работает. Phase C ЗАКРЫТА (4/4).",
+    "main": "Verification of TASK-C03.",
+    "points": [
+      "Phase C COMPLETE (4/4)",
+      "Cycle: 20/32"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.11.25/HelloWork-0.11.25.dmg"
+  },
+  {
     "version": "0.11.24",
     "date": "2026-04-28",
     "customMessage": "TASK-C03: post-update toast. AppState.init читает CFBundleShortVersionString и сравнивает с persisted helloWorkPreviousLaunchVersion. Если differs — queueUpdateToastVersion=current. UpdateCompletedToastBanner показывает 'Updated to vX.Y.Z' с auto-dismiss 5s. Translation closure EN/RU/ZH.",
