@@ -1,0 +1,57 @@
+{
+  "id": "asimov-isaac",
+  "order": 37,
+  "name": { "ru": "Айзек Азимов", "en": "Isaac Asimov" },
+  "fullName": { "ru": "Айзек Азимов", "en": "Isaac Asimov" },
+  "yearsOfLife": "1920–1992",
+  "era": "20th_century",
+  "field": "writer",
+  "tags": ["science_fiction", "prolific", "discipline", "polymath", "biochemistry"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Самый плодовитый писатель XX века. Написал и отредактировал более 500 книг по всему: научная фантастика, история, Библия, Шекспир, химия, физика, лимерики. Параллельно — профессор биохимии в Бостонском университете. Родился в местечке под Смоленском, эмигрировал с семьёй в Нью-Йорк в 3 года, вырос в семейной кондитерской лавке. С 7 лет читал научную фантастику между обслуживанием покупателей. Писал по 7–9 часов в день, 7 дней в неделю, 365 дней в году — без отпусков, без выходных, до самой смерти. Печатал на двух машинках одновременно — одна для романа, вторая для научной статьи. Умер за столом, набирая 500-ю книгу.",
+    "en": "The most prolific writer of the 20th century. Wrote or edited over 500 books across every field: science fiction, history, the Bible, Shakespeare, chemistry, physics, limericks. In parallel — professor of biochemistry at Boston University. Born near Smolensk, emigrated with his family to New York at 3, grew up in a family candy store. From age 7 he read science fiction between serving customers. Wrote 7–9 hours a day, 7 days a week, 365 days a year — no vacations, no weekends, until the day he died. Typed on two typewriters at once — one for a novel, one for a science article. Died at his desk, typing his 500th book."
+  },
+
+  "sources": [
+    { "type": "book", "title": "I. Asimov: A Memoir", "author": "Isaac Asimov", "url": "https://www.penguinrandomhouse.com/books/i-asimov-a-memoir" },
+    { "type": "book", "title": "Yours, Isaac Asimov: A Lifetime of Letters", "author": "Isaac Asimov", "url": "https://www.penguinrandomhouse.com/books/yours-isaac-asimov" },
+    { "type": "article", "title": "Isaac Asimov on his writing routine", "author": "The Atlantic", "url": "https://www.theatlantic.com/asimov-routine" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:00", "end": "07:00", "type": "morning_routine", "label": { "ru": "Подъём, завтрак", "en": "Wake, breakfast" } },
+      { "start": "07:00", "end": "13:00", "type": "deep_work", "label": { "ru": "Письмо: 6 часов на пишущей машинке", "en": "Writing: 6 hours at the typewriter" } },
+      { "start": "13:00", "end": "14:00", "type": "comms", "label": { "ru": "Обед, разбор писем издателей", "en": "Lunch, sorting publisher mail" } },
+      { "start": "14:00", "end": "19:00", "type": "deep_work", "label": { "ru": "Письмо: ещё 5 часов (вторая машинка)", "en": "Writing: another 5 hours (second typewriter)" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с Джанет (второй женой)", "en": "Dinner with Janet (his second wife)" } },
+      { "start": "20:00", "end": "22:00", "type": "meal_and_read", "label": { "ru": "Чтение, ответы поклонникам", "en": "Reading, replying to fans" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Азимов был фанатиком письма уровня Кобе Брайанта. Каждый день — 11 часов за машинкой, без выходных. Деловая переписка — обеденный час: издатели, агенты, газетные редакторы. Личное общение — два часа после ужина: он лично отвечал каждому поклоннику от руки. Утро — священная сессия письма, в которую невозможно достучаться.",
+      "en": "Asimov was a writing fanatic at Kobe Bryant's level. Every day — 11 hours at the typewriter, no days off. Business correspondence — the lunch hour: publishers, agents, newspaper editors. Personal communication — two hours after dinner: he personally replied to every fan by hand. Mornings were a sacred writing session — impossible to break through."
+    },
+    "allowedSlots": [
+      { "start": "13:00", "end": "14:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — переписка с издателями, агентами, редакторами", "en": "Lunch hour — correspondence with publishers, agents, editors" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные сообщения семье и поклонникам", "en": "An hour after dinner — personal messages to family and fans" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Я не могу думать о писательстве как об удовольствии или работе. Это — то, что я.", "en": "Writing, to me, is simply thinking through my fingers." },
+    { "ru": "Самая печальная фраза в науке — не «эврика», а «хм, странно».", "en": "The most exciting phrase to hear in science, the one that heralds new discoveries, is not 'Eureka!' but 'That's funny...'" },
+    { "ru": "Я пишу по той же причине, по которой я дышу — иначе я бы умер.", "en": "I write for the same reason I breathe — because if I didn't, I would die." },
+    { "ru": "Преданность одному делу побеждает гениальность.", "en": "It is change, continuing change, inevitable change, that is the dominant factor in society today." },
+    { "ru": "Если врач сказал бы, что мне жить шесть месяцев — я бы печатал быстрее.", "en": "If my doctor told me I had only six minutes to live, I wouldn't brood. I'd type a little faster." }
+  ]
+}

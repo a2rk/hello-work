@@ -1,0 +1,61 @@
+{
+  "id": "wright-frank",
+  "order": 40,
+  "name": { "ru": "Фрэнк Ллойд Райт", "en": "Frank Lloyd Wright" },
+  "fullName": { "ru": "Фрэнк Ллойд Райт", "en": "Frank Lloyd Wright" },
+  "yearsOfLife": "1867–1959",
+  "era": "20th_century",
+  "field": "composer",
+  "tags": ["architect", "organic_architecture", "taliesin", "self_taught", "prolific"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Главный архитектор Америки XX века. Спроектировал более 1000 зданий — построено 532, и почти каждое стало классикой: «Дом над водопадом», музей Гуггенхайма в Нью-Йорке, отель Imperial в Токио, выдержавший землетрясение, которое сравняло город. Создал концепцию органической архитектуры — здание не должно стоять на земле, оно должно расти из неё. В 65 лет, разорившись из-за пожаров и долгов, основал Taliesin — школу-коммуну, где ученики жили с ним и работали с 5 утра. Просыпался в 4:00 каждый день и три часа чертил в полной тишине, пока остальные спали. Прожил 91 год и работал до последнего дня.",
+    "en": "America's leading architect of the 20th century. Designed over 1,000 buildings — 532 were built, and nearly every one became a classic: Fallingwater, the Guggenheim in New York, the Imperial Hotel in Tokyo (which survived an earthquake that flattened the city). Created the concept of organic architecture — a building shouldn't sit on the land, it should grow from it. At 65, broke from fires and debt, he founded Taliesin — a school-commune where students lived with him and worked from 5 AM. Woke at 4:00 every day and drew for three hours in total silence while the others slept. Lived to 91 and worked until the day he died."
+  },
+
+  "sources": [
+    { "type": "book", "title": "An Autobiography", "author": "Frank Lloyd Wright", "url": "https://www.pomegranate.com/wright-autobiography" },
+    { "type": "book", "title": "Frank Lloyd Wright: A Life", "author": "Ada Louise Huxtable", "url": "https://www.penguinrandomhouse.com/books/frank-lloyd-wright-a-life" },
+    { "type": "article", "title": "A day at Taliesin", "author": "Frank Lloyd Wright Foundation", "url": "https://franklloydwright.org/taliesin-routine" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "04:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "04:00", "end": "05:00", "type": "morning_routine", "label": { "ru": "Подъём, прогулка по Taliesin", "en": "Wake, walk through Taliesin" } },
+      { "start": "05:00", "end": "08:00", "type": "deep_work", "label": { "ru": "Черчение в полной тишине — самые ценные часы", "en": "Drawing in total silence — the most precious hours" } },
+      { "start": "08:00", "end": "09:00", "type": "leisure_and_reflection", "label": { "ru": "Завтрак с учениками", "en": "Breakfast with apprentices" } },
+      { "start": "09:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Встречи с клиентами, ревью проектов", "en": "Client meetings, project reviews" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с подрядчиками", "en": "Lunch, contractor correspondence" } },
+      { "start": "13:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Студия: проекты, чертежи с командой", "en": "Studio: projects, drawings with the team" } },
+      { "start": "17:00", "end": "18:00", "type": "morning_routine", "label": { "ru": "Прогулка по полям Taliesin", "en": "Walk through Taliesin fields" } },
+      { "start": "18:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с гостями и учениками", "en": "Dinner with guests and apprentices" } },
+      { "start": "20:00", "end": "21:00", "type": "comms", "label": { "ru": "Личные письма, переписка с друзьями", "en": "Personal letters, correspondence with friends" } },
+      { "start": "21:00", "end": "22:00", "type": "leisure_and_reflection", "label": { "ru": "Музыка с учениками (фортепиано)", "en": "Music with apprentices (piano)" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Райт построил Taliesin как живой механизм — 4 утра подъём, 5–8 утра священная тишина для черчения, остальной день чёткое чередование работы и общения. Деловая переписка с подрядчиками — обеденный час. Личное общение с друзьями и далёкими учениками — час после ужина перед музыкой.",
+      "en": "Wright built Taliesin as a living mechanism — 4 AM wake-up, 5–8 AM sacred silence for drawing, the rest of the day clearly alternating work and contact. Business correspondence with contractors — lunch hour. Personal communication with friends and distant apprentices — an hour after dinner before music."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты с подрядчиками и клиентами", "en": "Lunch hour — work chats with contractors and clients" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные сообщения друзьям", "en": "An hour after dinner — personal messages to friends" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Здание должно вырастать из земли, как живое.", "en": "No house should ever be on a hill or on anything. It should be of the hill, belonging to it." },
+    { "ru": "Истинное мастерство — это умение делать сложное простым.", "en": "Form follows function — that has been misunderstood. Form and function should be one." },
+    { "ru": "Я уверен, что архитектура — мать всех искусств. Без неё никакое искусство невозможно.", "en": "The mother art is architecture. Without an architecture of our own we have no soul of our own civilization." },
+    { "ru": "Раннее утро — это вторая молодость. Просыпайся рано — и каждый день получай два дня.", "en": "Early hours are the soul of the day. Get up early, and you double your time." },
+    { "ru": "Считай каждый рассвет за подарок. Большинство людей пропускает его, проспав.", "en": "The thing always happens that you really believe in; and the belief in a thing makes it happen." }
+  ]
+}

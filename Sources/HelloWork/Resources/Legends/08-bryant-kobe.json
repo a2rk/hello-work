@@ -1,0 +1,167 @@
+{
+  "id": "bryant-kobe",
+  "order": 8,
+  "name": {
+    "ru": "Кобе Брайант",
+    "en": "Kobe Bryant"
+  },
+  "fullName": {
+    "ru": "Коби Бин Брайант",
+    "en": "Kobe Bean Bryant"
+  },
+  "yearsOfLife": "1978–2020",
+  "era": "modern",
+  "field": "athlete",
+  "tags": ["basketball", "nba", "mamba_mentality", "discipline", "obsession"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Пятикратный чемпион NBA, легенда Los Angeles Lakers, автор «Mamba Mentality» — философии работы, по которой сегодня тренируются хирурги, программисты и спецназ. Подъём в 4:00 утра все 20 лет карьеры. Когда соперники узнавали, что он начинает в 4 утра, — Кобе уже сдвигал тренировку на 3:00. На вопрос «зачем» отвечал: «Если я начну до тебя — у тебя нет шанса меня догнать, потому что ты не сможешь работать столько, сколько работаю я».",
+    "en": "Five-time NBA champion, Los Angeles Lakers legend, and author of the 'Mamba Mentality' — a work philosophy now studied by surgeons, programmers, and special forces. Rose at 4:00 AM every day for his 20-year career. When rivals learned he started at 4, Kobe shifted his workout to 3:00. Asked why, he answered: 'If I start before you, you have no chance of catching me — because you can't put in the hours I put in.'"
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "The Mamba Mentality: How I Play",
+      "author": "Kobe Bryant",
+      "url": "https://www.macmillan.com/books/9780374201234"
+    },
+    {
+      "type": "interview",
+      "title": "Kobe Bryant on his 4 AM workouts",
+      "author": "ESPN",
+      "url": "https://www.espn.com/nba/story/kobe-bryant-mamba-mentality"
+    },
+    {
+      "type": "article",
+      "title": "The 666 workout: Kobe's training routine",
+      "author": "Sports Illustrated",
+      "url": "https://www.si.com/nba/lakers/kobe-bryant-666-workout"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "04:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "04:00",
+        "end": "06:00",
+        "type": "deep_work",
+        "label": { "ru": "Тренировка №1: кардио и стретчинг", "en": "Workout 1: cardio and stretching" }
+      },
+      {
+        "start": "06:00",
+        "end": "08:00",
+        "type": "deep_work",
+        "label": { "ru": "Просмотр игр на видео", "en": "Film study" }
+      },
+      {
+        "start": "08:00",
+        "end": "10:00",
+        "type": "deep_work",
+        "label": { "ru": "Тренировка №2: бросок и техника", "en": "Workout 2: shooting and skills" }
+      },
+      {
+        "start": "10:00",
+        "end": "12:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Восстановление, завтрак", "en": "Recovery, breakfast" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Время с семьёй", "en": "Family time" }
+      },
+      {
+        "start": "13:00",
+        "end": "17:00",
+        "type": "deep_work",
+        "label": { "ru": "Командная тренировка Lakers", "en": "Lakers team practice" }
+      },
+      {
+        "start": "17:00",
+        "end": "19:00",
+        "type": "deep_work",
+        "label": { "ru": "Тренировка №3: индивидуальная работа", "en": "Workout 3: individual work" }
+      },
+      {
+        "start": "19:00",
+        "end": "21:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Семейный ужин с дочерьми", "en": "Family dinner with daughters" }
+      },
+      {
+        "start": "21:00",
+        "end": "23:00",
+        "type": "deep_work",
+        "label": { "ru": "Финальный film study перед сном", "en": "Final film study before bed" }
+      },
+      {
+        "start": "23:00",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Кобе тренировался 6 раз в день — это правило «666»: 6 часов в день, 6 дней в неделю, 6 месяцев в году. Между тренировками — короткое окно с семьёй. Личные сообщения — обеденный час с дочерьми. Рабочие чаты с тренерами и аналитиками — поздний вечер во время film study, когда он разбирал тактику соперников. Утро — святой час железа.",
+      "en": "Kobe trained six times a day — the '666' rule: 6 hours a day, 6 days a week, 6 months a year. Between sessions, a short family window. Personal messages — the lunch hour with his daughters. Work chats with coaches and analysts — late evening during film study, when he broke down opponent tactics. Mornings were the sacred hour of iron."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:00",
+        "end": "12:30",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Полчаса с семьёй между тренировками — короткие сообщения близким",
+          "en": "Half an hour with family between workouts — quick messages to loved ones"
+        }
+      },
+      {
+        "start": "20:00",
+        "end": "21:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Час после ужина — обмен заметками с тренерами и аналитиками",
+          "en": "An hour after dinner — exchanging notes with coaches and analysts"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 90
+  },
+
+  "quotes": [
+    {
+      "ru": "Великие вещи рождаются из тяжёлой работы и упорства. Без оправданий.",
+      "en": "Great things come from hard work and perseverance. No excuses."
+    },
+    {
+      "ru": "Если ты боишься провалиться — ты, скорее всего, провалишься.",
+      "en": "If you're afraid to fail, then you're probably going to fail."
+    },
+    {
+      "ru": "У меня нет ничего общего с ленивыми, которые винят других в собственной неудаче.",
+      "en": "I have nothing in common with lazy people who blame others for their lack of success."
+    },
+    {
+      "ru": "Самое важное — пытаться вдохновить людей быть великими в том, что они делают.",
+      "en": "The most important thing is to try and inspire people so that they can be great in whatever they want to do."
+    },
+    {
+      "ru": "Когда ты узнаёшь, как ощущается провал — решимость начинает гнаться за успехом.",
+      "en": "Once you know what failure feels like, determination chases success."
+    }
+  ]
+}

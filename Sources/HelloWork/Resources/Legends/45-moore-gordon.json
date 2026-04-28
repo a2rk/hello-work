@@ -1,0 +1,60 @@
+{
+  "id": "moore-gordon",
+  "order": 45,
+  "name": { "ru": "Гордон Мур", "en": "Gordon Moore" },
+  "fullName": { "ru": "Гордон Эрл Мур", "en": "Gordon Earle Moore" },
+  "yearsOfLife": "1929–2023",
+  "era": "20th_century",
+  "field": "tech_entrepreneur",
+  "tags": ["intel", "semiconductors", "moores_law", "physicist", "founder"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Сооснователь Intel, химик и физик. В 1965 году в статье из 4 страниц предсказал, что число транзисторов на чипе будет удваиваться каждые два года — это стало законом Мура и драйвером технологий 60 лет подряд. Сын помощника шерифа из Сан-Франциско, окончил Caltech, работал у Шокли — изобретателя транзистора, потом ушёл в группу «предателей восьми», которая основала Fairchild Semiconductor. В 1968 с Робертом Нойсом основал Intel. Тихий, скромный, никогда не носил костюм, любил рыбалку. Большую часть жизни жил на Гавайях с одной и той же женой 70 лет. Раздал почти всё своё состояние ($5 млрд) на науку через Фонд Мура.",
+    "en": "Co-founder of Intel, chemist and physicist. In 1965, in a 4-page article, he predicted that the number of transistors on a chip would double every two years — this became Moore's Law, the driver of technology for 60 years. Son of a deputy sheriff from San Francisco, he graduated from Caltech, worked under Shockley — the transistor's inventor — then left with the 'traitorous eight' to found Fairchild Semiconductor. In 1968 with Robert Noyce he founded Intel. Quiet, modest, never wore a suit, loved fishing. Spent most of his life in Hawaii with the same wife for 70 years. Gave away almost all his wealth ($5 billion) to science through the Moore Foundation."
+  },
+
+  "sources": [
+    { "type": "article", "title": "Cramming more components onto integrated circuits", "author": "Gordon Moore", "url": "https://www.intel.com/content/www/us/en/history/museum-gordon-moore-law.html" },
+    { "type": "book", "title": "Moore's Law: The Life of Gordon Moore", "author": "Arnold Thackray, David Brock, Rachel Jones", "url": "https://www.basicbooks.com/moores-law" },
+    { "type": "interview", "title": "An interview with Gordon Moore", "author": "Computer History Museum", "url": "https://www.computerhistory.org/collections/oralhistory/gordon-moore" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "07:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "07:00", "end": "08:00", "type": "morning_routine", "label": { "ru": "Подъём, кофе, газеты", "en": "Wake, coffee, newspapers" } },
+      { "start": "08:00", "end": "08:30", "type": "meal_and_read", "label": { "ru": "Завтрак с женой Бетти", "en": "Breakfast with wife Betty" } },
+      { "start": "08:30", "end": "12:00", "type": "deep_work", "label": { "ru": "Intel: научно-технические дискуссии, R&D", "en": "Intel: scientific-technical discussions, R&D" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед с инженерами + переписка", "en": "Lunch with engineers + correspondence" } },
+      { "start": "13:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Лаборатория, ревью технических планов", "en": "Lab, technical plan reviews" } },
+      { "start": "17:00", "end": "18:00", "type": "leisure_and_reflection", "label": { "ru": "Дорога домой", "en": "Drive home" } },
+      { "start": "18:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин дома, разговор с Бетти", "en": "Dinner at home, conversation with Betty" } },
+      { "start": "20:00", "end": "21:00", "type": "comms", "label": { "ru": "Личные письма, звонки сыновьям", "en": "Personal letters, calls to sons" } },
+      { "start": "21:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение научных журналов", "en": "Reading scientific journals" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Мур построил Intel вместе с яростным Гроувом — но был его противоположностью: спокойный, скромный, в стиле «учёный, который случайно стал миллиардером». Деловая переписка — обед с инженерами, как в Bell Labs его молодости. Личные сообщения — час после ужина с женой, перед научными журналами.",
+      "en": "Moore built Intel with the fiery Grove — but was his opposite: calm, modest, in the style of 'a scientist who accidentally became a billionaire.' Business correspondence — lunch with engineers, like at the Bell Labs of his youth. Personal messages — an hour after dinner with his wife, before scientific journals."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обед с инженерами — рабочие чаты в одном окне", "en": "Lunch with engineers — work chats in one window" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные сообщения и звонки сыновьям", "en": "An hour after dinner — personal messages and calls to sons" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Если что-то экспоненциально растёт — это рано или поздно становится самым большим в мире.", "en": "If something is growing exponentially, sooner or later it becomes the biggest thing in the world." },
+    { "ru": "Я не предсказывал будущее. Я просто заметил тренд и нарисовал его на графике.", "en": "Moore's Law is really about economics. It just turned out to be physics." },
+    { "ru": "Самое сложное в Intel — это не делать чипы, а перестать делать те, которые когда-то приносили деньги.", "en": "The hardest thing at Intel was not making chips, but stopping making the ones that used to make money." },
+    { "ru": "Мне всегда было скучно, когда вещи работали слишком хорошо.", "en": "I was always interested in things that were just barely possible." },
+    { "ru": "Никогда не недооценивай скромного химика с любопытным умом.", "en": "Never underestimate a humble chemist with a curious mind." }
+  ]
+}

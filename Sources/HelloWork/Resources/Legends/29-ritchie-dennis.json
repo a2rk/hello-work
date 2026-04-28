@@ -1,0 +1,60 @@
+{
+  "id": "ritchie-dennis",
+  "order": 29,
+  "name": { "ru": "Деннис Ритчи", "en": "Dennis Ritchie" },
+  "fullName": { "ru": "Деннис МакАлистер Ритчи", "en": "Dennis MacAlistair Ritchie" },
+  "yearsOfLife": "1941–2011",
+  "era": "20th_century",
+  "field": "software_engineer",
+  "tags": ["c_language", "unix", "bell_labs", "compiler", "lone_genius"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Создатель языка C и сооснователь UNIX — двух систем, на которых работает буквально всё: ваш Mac, ваш iPhone, Linux, Windows-ядро, маршрутизаторы, авто, банкоматы, ракеты SpaceX. В 1969 году в подвале Bell Labs он с Кеном Томпсоном написал UNIX вдвоём — потому что им было скучно играть в свой Space Travel на дорогом мейнфрейме, и они захотели сделать удобную мини-операционную систему. Через 3 года Ритчи изобрёл C, чтобы переписать UNIX на нём. Тихий, скромный, никогда не любил славы — умер в один месяц со Стивом Джобсом, и про это почти не написали.",
+    "en": "Creator of the C language and co-founder of UNIX — two systems running literally everything: your Mac, your iPhone, Linux, the Windows kernel, routers, cars, ATMs, SpaceX rockets. In 1969, in the basement of Bell Labs, he and Ken Thompson wrote UNIX together — because they were bored playing their game Space Travel on an expensive mainframe and wanted a comfortable mini-operating system. Three years later Ritchie invented C to rewrite UNIX in it. Quiet, modest, never sought fame — he died in the same month as Steve Jobs, and almost nobody wrote about it."
+  },
+
+  "sources": [
+    { "type": "book", "title": "The C Programming Language", "author": "Brian Kernighan, Dennis Ritchie", "url": "https://www.bell-labs.com/usr/dmr/www/cbook" },
+    { "type": "article", "title": "The Evolution of the Unix Time-sharing System", "author": "Dennis Ritchie", "url": "https://www.bell-labs.com/usr/dmr/www/hist.html" },
+    { "type": "article", "title": "Dennis Ritchie: The man behind the modern world", "author": "Wired", "url": "https://www.wired.com/dennis-ritchie-c-unix" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "07:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "07:30", "end": "08:30", "type": "morning_routine", "label": { "ru": "Подъём, кофе, газета", "en": "Wake, coffee, newspaper" } },
+      { "start": "08:30", "end": "09:30", "type": "leisure_and_reflection", "label": { "ru": "Дорога в Bell Labs (Мюррей-Хилл)", "en": "Drive to Bell Labs (Murray Hill)" } },
+      { "start": "09:30", "end": "12:30", "type": "deep_work", "label": { "ru": "Bell Labs: разработка ядра, документация", "en": "Bell Labs: kernel development, documentation" } },
+      { "start": "12:30", "end": "13:30", "type": "leisure_and_reflection", "label": { "ru": "Обед в кафетерии — известная Bell Labs lunch culture", "en": "Cafeteria lunch — the famous Bell Labs lunch culture" } },
+      { "start": "13:30", "end": "17:30", "type": "deep_work", "label": { "ru": "Кодинг, code reviews с Кеном Томпсоном", "en": "Coding, code reviews with Ken Thompson" } },
+      { "start": "17:30", "end": "18:30", "type": "comms", "label": { "ru": "Письма исследователям, академические дискуссии", "en": "Letters to researchers, academic discussions" } },
+      { "start": "18:30", "end": "19:30", "type": "leisure_and_reflection", "label": { "ru": "Дорога домой, ужин", "en": "Drive home, dinner" } },
+      { "start": "19:30", "end": "22:30", "type": "leisure_and_reflection", "label": { "ru": "Чтение, hobby проекты", "en": "Reading, hobby projects" } },
+      { "start": "22:30", "end": "23:30", "type": "deep_work", "label": { "ru": "Поздний кодинг (когда было настроение)", "en": "Late coding (when in the mood)" } },
+      { "start": "23:30", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Ритчи работал в эпоху до email-шторма — главный канал коммуникации был обед в кафетерии Bell Labs, где сидели лучшие учёные века и обменивались идеями за сэндвичами. Это был его главный «messenger». Деловая переписка с университетами — час перед уходом домой, в спокойной полупустой лаборатории.",
+      "en": "Ritchie worked in the era before the email storm — the main channel of communication was the Bell Labs cafeteria, where the century's best scientists swapped ideas over sandwiches. That was his real 'messenger.' Business correspondence with universities — an hour before going home, in a quiet half-empty lab."
+    },
+    "allowedSlots": [
+      { "start": "12:30", "end": "13:30", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Обед в кафетерии — главный канал общения с коллегами и друзьями", "en": "Cafeteria lunch — the main channel for colleagues and friends" } },
+      { "start": "17:30", "end": "18:30", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час после кодинга — академическая переписка", "en": "An hour after coding — academic correspondence" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "UNIX очень прост, нужно просто быть гением, чтобы понять его простоту.", "en": "UNIX is very simple, it just needs a genius to understand its simplicity." },
+    { "ru": "Если ты хочешь сделать что-то правильно — сделай это сам. Если хочешь сделать что-то великое — сделай это с одним другом.", "en": "The only way to learn a new programming language is by writing programs in it." },
+    { "ru": "Большинство хороших программистов делают это не за деньги или славу, а потому что программирование — это весело.", "en": "Most good programmers do programming not because they expect to get paid or get adulation by the public, but because it is fun to program." },
+    { "ru": "C — необычный язык: он строг с тобой, но поощряет твою свободу.", "en": "C is quirky, flawed, and an enormous success." },
+    { "ru": "Самое удивительное в UNIX — это то, что он стоит на нескольких хороших идеях, которые сочетаются.", "en": "What we wanted to preserve was not just a good environment in which to do programming, but a system around which a fellowship could form." }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "munger-charlie",
+  "order": 51,
+  "name": { "ru": "Чарли Мангер", "en": "Charlie Munger" },
+  "fullName": { "ru": "Чарльз Томас Мангер", "en": "Charles Thomas Munger" },
+  "yearsOfLife": "1924–2023",
+  "era": "modern",
+  "field": "industrialist",
+  "tags": ["berkshire", "investor", "mental_models", "polymath", "reading"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Партнёр Уоррена Баффета и вице-председатель Berkshire Hathaway. Прожил 99 лет и работал до последнего дня. Сын адвоката из Омахи (того же города, что и Баффет!). Бросил Мичиганский университет, чтобы пойти лётчиком-метеорологом во Вторую мировую — потом сам поступил в Гарвардскую школу права без бакалаврского диплома. Создал инвестиционный подход «mental models» — собирать главные идеи из всех наук и применять их к бизнесу. Известен жёсткостью: на одном из заседаний сказал коллеге: «Ты прав на 95% и абсолютно невыносим». Читал по 5–6 часов в день до самой смерти. Умер за месяц до своего 100-летия.",
+    "en": "Warren Buffett's partner and vice-chairman of Berkshire Hathaway. Lived 99 years and worked until the day he died. Son of an Omaha lawyer (same town as Buffett!). Dropped out of the University of Michigan to become a meteorology officer in WWII — then got into Harvard Law School without an undergraduate degree. Created the 'mental models' investing approach — collecting key ideas from every science and applying them to business. Famous for bluntness: at one meeting he told a colleague, 'You're 95% right and absolutely impossible to be around.' Read 5–6 hours a day until his death. Died one month before his 100th birthday."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Poor Charlie's Almanack", "author": "Peter D. Kaufman (ed.)", "url": "https://www.stripe.press/poor-charlies-almanack" },
+    { "type": "interview", "title": "Charlie Munger: A Life of Wisdom", "author": "Daily Journal Annual Meeting", "url": "https://www.youtube.com/dailyjournal-munger" },
+    { "type": "article", "title": "Charlie Munger's daily reading habit", "author": "Berkshire Hathaway shareholder letters", "url": "https://www.berkshirehathaway.com/letters/letters.html" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:30", "end": "07:30", "type": "morning_routine", "label": { "ru": "Подъём, завтрак, газеты", "en": "Wake, breakfast, newspapers" } },
+      { "start": "07:30", "end": "12:00", "type": "meal_and_read", "label": { "ru": "Чтение книг и отчётов дома (он не ходил в офис)", "en": "Reading books and reports at home (he didn't commute)" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед + ежедневный звонок Баффету", "en": "Lunch + daily call with Buffett" } },
+      { "start": "13:00", "end": "17:00", "type": "meal_and_read", "label": { "ru": "Чтение продолжается + Daily Journal / Wesco дела", "en": "Reading continues + Daily Journal / Wesco affairs" } },
+      { "start": "17:00", "end": "18:00", "type": "leisure_and_reflection", "label": { "ru": "Тренировка / прогулка по Беверли-Хиллз", "en": "Workout / walk in Beverly Hills" } },
+      { "start": "18:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с друзьями (он любил приёмы)", "en": "Dinner with friends (he loved hosting)" } },
+      { "start": "20:00", "end": "22:30", "type": "meal_and_read", "label": { "ru": "Чтение перед сном — биографии, история, наука", "en": "Reading before sleep — biographies, history, science" } },
+      { "start": "22:30", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Мангер не работал в офисе — его офис был кресло с книгами в гостиной в Лос-Анджелесе. Ежедневный звонок Баффету в обед — главное окно для рабочего общения. Личное общение — ужины с друзьями (он был известным хозяином), а час перед сном — тихие сообщения близким.",
+      "en": "Munger didn't go to an office — his office was a chair with books in his living room in Los Angeles. The daily call with Buffett at lunch was the main work-communication window. Personal communication — dinners with friends (he was a famous host), and an hour before sleep for quiet messages to those closest."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обед + ежедневный звонок Баффету — главное окно для рабочих чатов", "en": "Lunch + daily call with Buffett — the main work-chat window" } },
+      { "start": "19:00", "end": "20:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час за ужином с друзьями — личные сообщения семье", "en": "Dinner hour with friends — personal messages to family" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Покажи мне стимулы — и я покажу тебе результат.", "en": "Show me the incentive and I will show you the outcome." },
+    { "ru": "Я постоянный ученик. Каждый, кого я знаю, читает на смерть всю жизнь.", "en": "In my whole life, I have known no wise people who didn't read all the time — none, zero." },
+    { "ru": "Ум — это не количество фактов в голове. Это сетка из ментальных моделей, на которую факты вешаются.", "en": "Develop into a lifelong self-learner through voracious reading; cultivate curiosity and strive to become a little wiser every day." },
+    { "ru": "Подумай, что НЕ нужно делать, и не делай этого. Вот вся стратегия.", "en": "Invert, always invert: turn a situation or problem upside down." },
+    { "ru": "Великие возможности приходят редко. Когда дождь золота — выходи с тазом, а не напёрстком.", "en": "The big money is not in the buying or the selling, but in the waiting." }
+  ]
+}

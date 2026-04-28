@@ -1,0 +1,60 @@
+{
+  "id": "schultz-howard",
+  "order": 52,
+  "name": { "ru": "Говард Шульц", "en": "Howard Schultz" },
+  "fullName": { "ru": "Говард Шульц", "en": "Howard Schultz" },
+  "yearsOfLife": "1953–",
+  "era": "modern",
+  "field": "industrialist",
+  "tags": ["starbucks", "coffee", "self_made", "founder", "early_riser"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Превратил Starbucks из трёх магазинов в Сиэтле в глобальную сеть из 38 000 кофеен в 80 странах. Вырос в публичных домах Бруклина в семье шофёра без медицинской страховки — когда отец сломал ногу и потерял работу, семья оказалась в нищете. Это сформировало его навсегда: первое, что он сделал, став СЕО — дал каждому сотруднику Starbucks (даже на полставки) медицинскую страховку и акции компании. В 1983 году поехал в Милан, увидел итальянские эспрессо-бары и понял, что американцы тоже захотят «третье место» между домом и работой. Просыпается в 4:30, бегает 5 миль каждое утро, верит, что бизнес — это сердце, а не таблицы.",
+    "en": "Turned Starbucks from three stores in Seattle into a global chain of 38,000 cafés in 80 countries. Grew up in Brooklyn public housing in the family of a truck driver with no health insurance — when his father broke his leg and lost work, the family fell into poverty. That shaped him forever: as soon as he became CEO, he gave every Starbucks employee (even part-timers) health insurance and company stock. In 1983 he traveled to Milan, saw Italian espresso bars, and realized Americans would also want a 'third place' between home and work. Wakes at 4:30, runs 5 miles every morning, believes business is heart, not spreadsheets."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Pour Your Heart Into It", "author": "Howard Schultz", "url": "https://www.hyperionbooks.com/pour-your-heart-into-it" },
+    { "type": "book", "title": "Onward: How Starbucks Fought for Its Life", "author": "Howard Schultz", "url": "https://www.hachettebookgroup.com/titles/howard-schultz/onward" },
+    { "type": "interview", "title": "Howard Schultz on the Tim Ferriss Show", "author": "Tim Ferriss", "url": "https://tim.blog/howard-schultz" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "04:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "04:30", "end": "05:30", "type": "morning_routine", "label": { "ru": "Подъём, кофе (конечно), новости", "en": "Wake, coffee (of course), news" } },
+      { "start": "05:30", "end": "06:30", "type": "morning_routine", "label": { "ru": "Бег 8 км в любую погоду", "en": "5-mile run, any weather" } },
+      { "start": "06:30", "end": "07:30", "type": "meal_and_read", "label": { "ru": "Завтрак с женой Шери", "en": "Breakfast with wife Sheri" } },
+      { "start": "07:30", "end": "12:00", "type": "deep_work", "label": { "ru": "Starbucks HQ или поездка в кофейню", "en": "Starbucks HQ or visit to a store" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с регионами", "en": "Lunch, regional correspondence" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Встречи команды, ревью операций", "en": "Team meetings, operations reviews" } },
+      { "start": "18:00", "end": "19:00", "type": "morning_routine", "label": { "ru": "Прогулка / спорт", "en": "Walk / exercise" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с семьёй", "en": "Dinner with family" } },
+      { "start": "21:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение, личные сообщения", "en": "Reading, personal messages" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Шульц убеждён, что лидер должен быть на ногах раньше команды. Деловая переписка — обеденный час, окно для регионов и операций. Личное общение — два часа перед сном с семьёй и друзьями. Утренние ритуалы (бег, кофе, чтение) — без устройств, чтобы войти в день со «своей головой».",
+      "en": "Schultz is convinced a leader must be on his feet before the team. Business correspondence — the lunch hour, a window for regions and operations. Personal communication — two hours before sleep with family and friends. Morning rituals (run, coffee, reading) — device-free, so he enters the day with 'his own head.'"
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — переписка с регионами Starbucks", "en": "Lunch hour — correspondence with Starbucks regions" } },
+      { "start": "21:00", "end": "22:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час перед чтением — личные сообщения семье", "en": "An hour before reading — personal messages to family" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Не работай ради денег. Работай ради ценности, которую создаёшь.", "en": "When you work hard, when you do the right thing for the right reasons, success follows." },
+    { "ru": "Хорошая компания — это не про продукт. Это про культуру и людей вокруг продукта.", "en": "A great company is not about the product, it's about the people and the culture around the product." },
+    { "ru": "Лидеры должны идти вперёд, даже когда сами не уверены. Иначе никто не пойдёт.", "en": "Risk more than others think is safe. Care more than others think is wise. Dream more than others think is practical." },
+    { "ru": "Я не верю, что бизнес и любовь к людям — разные вещи.", "en": "I don't believe in the divide between business and the love of people." },
+    { "ru": "Когда ты сомневаешься — встань раньше. Утро всё показывает.", "en": "Success is best when it's shared." }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "kant-immanuel",
+  "order": 36,
+  "name": { "ru": "Иммануил Кант", "en": "Immanuel Kant" },
+  "fullName": { "ru": "Иммануил Кант", "en": "Immanuel Kant" },
+  "yearsOfLife": "1724–1804",
+  "era": "enlightenment",
+  "field": "writer",
+  "tags": ["philosopher", "enlightenment", "discipline", "punctuality", "deep_work"],
+  "nationality": "DE",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Немецкий философ, основатель критической философии — человек, переписавший представление о том, что мы можем знать. Жил всю жизнь в Кёнигсберге, не уезжал дальше 16 километров от него за всю свою 80-летнюю жизнь. Известен своей маниакальной пунктуальностью: соседи сверяли часы по его прогулке ровно в 15:30 — единственный раз, когда он вышел на полчаса позже, был в день, когда прочитал «Эмиля» Руссо. Написал «Критику чистого разума» в 57 лет — переписывал её 11 лет. Никогда не женился, никогда не путешествовал, никогда не пропустил лекцию. Чистый дисциплинарный фанатик в чистом виде.",
+    "en": "German philosopher, founder of critical philosophy — the man who rewrote what we can possibly know. Lived his entire life in Königsberg, never traveled more than 10 miles from it in 80 years. Famous for his maniacal punctuality: neighbors set their clocks by his walk at exactly 3:30 PM — the only time he was half an hour late was the day he read Rousseau's Emile. Wrote the Critique of Pure Reason at 57 — rewriting it for 11 years. Never married, never traveled, never missed a lecture. A pure discipline fanatic in pure form."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Kant: A Biography", "author": "Manfred Kuehn", "url": "https://www.cambridge.org/kant-a-biography" },
+    { "type": "article", "title": "The legendary punctuality of Immanuel Kant", "author": "Stanford Encyclopedia of Philosophy", "url": "https://plato.stanford.edu/entries/kant/" },
+    { "type": "book", "title": "Daily Rituals: How Artists Work", "author": "Mason Currey", "url": "https://knopfdoubleday.com/book/daily-rituals/" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "05:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "05:00", "end": "05:15", "type": "morning_routine", "label": { "ru": "Подъём ровно в 5:00 (всю жизнь)", "en": "Wake at exactly 5:00 (his entire life)" } },
+      { "start": "05:15", "end": "07:00", "type": "meal_and_read", "label": { "ru": "Чай, чтение, подготовка к лекциям", "en": "Tea, reading, lecture preparation" } },
+      { "start": "07:00", "end": "09:00", "type": "deep_work", "label": { "ru": "Лекции в Кёнигсбергском университете", "en": "Lectures at Königsberg University" } },
+      { "start": "09:00", "end": "12:45", "type": "deep_work", "label": { "ru": "Письмо: «Критика чистого разума»", "en": "Writing: Critique of Pure Reason" } },
+      { "start": "12:45", "end": "15:30", "type": "leisure_and_reflection", "label": { "ru": "Обед с гостями (его единственная социальная активность)", "en": "Lunch with guests (his only social activity)" } },
+      { "start": "15:30", "end": "16:30", "type": "morning_routine", "label": { "ru": "Прогулка ровно в 15:30 — Königsberger Spaziergang", "en": "Walk at exactly 3:30 — the Königsberg promenade" } },
+      { "start": "16:30", "end": "19:00", "type": "meal_and_read", "label": { "ru": "Чтение газет и книг", "en": "Reading papers and books" } },
+      { "start": "19:00", "end": "22:00", "type": "deep_work", "label": { "ru": "Подготовка к завтрашним лекциям", "en": "Preparing tomorrow's lectures" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Кант — рекордсмен дисциплины: всю жизнь в одном городе, всю жизнь по одному расписанию. Его обед длился почти 3 часа — это было его единственное окно социальности, всегда с гостями, всегда с интересными разговорами. Деловая переписка — час после ужина, до подготовки к лекциям. Всё остальное — работа в строжайшей тишине.",
+      "en": "Kant is the discipline record-holder: a lifetime in one city, a lifetime on one schedule. His lunch lasted nearly 3 hours — his only window of sociability, always with guests, always with stimulating conversation. Business correspondence — an hour after dinner, before lecture prep. Everything else: work in strictest silence."
+    },
+    "allowedSlots": [
+      { "start": "13:00", "end": "15:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Знаменитый длинный обед с гостями — единственное окно общения за день", "en": "His famous long lunch with guests — the day's only window of conversation" } },
+      { "start": "19:00", "end": "20:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час перед подготовкой к лекциям — переписка с философами и издателями", "en": "An hour before lecture prep — correspondence with philosophers and publishers" } }
+    ],
+    "totalAllowedMinutes": 180
+  },
+
+  "quotes": [
+    { "ru": "Поступай так, чтобы максима твоей воли могла стать всеобщим законом.", "en": "Act only according to that maxim whereby you can, at the same time, will that it should become a universal law." },
+    { "ru": "Из кривой древесины, из которой сделан человек, нельзя выстругать ничего совершенно прямого.", "en": "Out of the crooked timber of humanity, no straight thing was ever made." },
+    { "ru": "Имей мужество пользоваться собственным умом.", "en": "Have the courage to use your own understanding!" },
+    { "ru": "Наука — это организованное знание. Мудрость — это организованная жизнь.", "en": "Science is organized knowledge. Wisdom is organized life." },
+    { "ru": "Делать — значит мочь. Если бы мы должны были — мы бы могли.", "en": "We are not rich by what we possess but by what we can do without." }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "curie-marie",
+  "order": 53,
+  "name": { "ru": "Мария Кюри", "en": "Marie Curie" },
+  "fullName": { "ru": "Мария Саломея Склодовская-Кюри", "en": "Maria Salomea Skłodowska-Curie" },
+  "yearsOfLife": "1867–1934",
+  "era": "20th_century",
+  "field": "inventor_scientist",
+  "tags": ["physics", "chemistry", "nobel", "radioactivity", "pioneer"],
+  "nationality": "PL/FR",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Первая женщина, получившая Нобелевскую премию, и единственный человек в истории, получивший её в двух разных науках — физике (1903) и химии (1911). Дочь школьного учителя из Варшавы, в 17 лет работала гувернанткой, чтобы заработать на учёбу младшей сестре, а потом и себе. Поступила в Сорбонну единственной женщиной на факультете, спала на чердаке, питалась хлебом и шоколадом — иногда падала в обморок от голода прямо на лекциях. Открыла полоний и радий, лично переработала тонны урановой руды в сарае без вентиляции — и сама умерла от лучевой болезни. Её записные книжки до сих пор настолько радиоактивны, что их хранят в свинцовых ящиках.",
+    "en": "First woman to win a Nobel Prize, and the only person in history to win it in two different sciences — Physics (1903) and Chemistry (1911). Daughter of a Warsaw schoolteacher, at 17 she worked as a governess to fund her younger sister's education, then her own. Entered the Sorbonne as the only woman in her department, slept in an attic, lived on bread and chocolate — sometimes fainting from hunger during lectures. Discovered polonium and radium, personally processed tons of uranium ore in an unventilated shed — and died of radiation sickness. Her notebooks are still so radioactive they're kept in lead-lined boxes."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Madame Curie: A Biography", "author": "Ève Curie", "url": "https://www.penguinrandomhouse.com/books/madame-curie" },
+    { "type": "book", "title": "Pierre Curie", "author": "Marie Curie", "url": "https://www.gutenberg.org/ebooks/29440" },
+    { "type": "article", "title": "Marie Curie biography", "author": "Nobel Prize Foundation", "url": "https://www.nobelprize.org/prizes/physics/1903/marie-curie/biographical/" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "07:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "07:00", "end": "08:00", "type": "morning_routine", "label": { "ru": "Подъём, чай, дочери Ирен и Ева", "en": "Wake, tea, daughters Irène and Ève" } },
+      { "start": "08:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Лаборатория в Париже: эксперименты с радием", "en": "Paris lab: radium experiments" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед в столовой, переписка с физиками", "en": "Cafeteria lunch, correspondence with physicists" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Лаборатория продолжает: измерения, статьи", "en": "Lab continues: measurements, papers" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Дорога домой, прогулка по Парижу", "en": "Walk home through Paris" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с дочерьми", "en": "Dinner with daughters" } },
+      { "start": "20:00", "end": "21:00", "type": "comms", "label": { "ru": "Личные письма семье в Польше", "en": "Personal letters to family in Poland" } },
+      { "start": "21:00", "end": "23:00", "type": "deep_work", "label": { "ru": "Поздняя работа над статьями", "en": "Late work on papers" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Кюри была одна из первых матерей-учёных в эпоху, когда это было невозможно — она работала по 9 часов в лаборатории и сама вела двух дочерей. Деловая переписка с физиками — обеденный час. Личные сообщения — час с письмами польской семье после ужина с дочерьми, перед поздней работой над статьями.",
+      "en": "Curie was one of the first scientist-mothers in an era when that was impossible — she worked 9 hours in the lab and raised two daughters herself. Scientific correspondence with physicists — the lunch hour. Personal messages — an hour writing letters to her Polish family after dinner with the daughters, before late work on papers."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — научная переписка с коллегами", "en": "Lunch hour — scientific correspondence with colleagues" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные письма семье в Польше", "en": "An hour after dinner — personal letters to family in Poland" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Не следует бояться ничего в жизни. Нужно только понимать.", "en": "Nothing in life is to be feared, it is only to be understood." },
+    { "ru": "Я отношусь к тем, кто думает, что наука прекрасна.", "en": "I am among those who think that science has great beauty." },
+    { "ru": "Будь меньше любопытен к людям и больше к идеям.", "en": "Be less curious about people and more curious about ideas." },
+    { "ru": "Только у того, кто работает, получится. Удача обходит ленивых.", "en": "Have no fear of perfection — you'll never reach it." },
+    { "ru": "Жизнь не стоит того, чтобы беспокоиться о ней. Нужно работать.", "en": "Life is not easy for any of us. But what of that? We must persevere." }
+  ]
+}

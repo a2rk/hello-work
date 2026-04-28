@@ -1,0 +1,59 @@
+{
+  "id": "zuckerberg-mark",
+  "order": 22,
+  "name": { "ru": "Марк Цукерберг", "en": "Mark Zuckerberg" },
+  "fullName": { "ru": "Марк Эллиот Цукерберг", "en": "Mark Elliot Zuckerberg" },
+  "yearsOfLife": "1984–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["meta", "facebook", "founder", "uniform", "long_term_thinking"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Основатель Meta. В 19 лет в гарвардской общаге написал facemash, через 6 месяцев — Facebook, в 23 — стал самым молодым миллиардером в истории. Носит одну и ту же серую футболку каждый день, чтобы не тратить силы на бессмысленные решения. Ставит себе годовые «личные челленджи»: научиться китайскому, пробежать 365 миль за год, построить ИИ-дворецкого. Сейчас тренирует MMA, делает джиу-джитсу, бьёт себя током и серьёзно готовится к UFC — потому что считает, что физическое тело и ясность ума связаны напрямую.",
+    "en": "Founder of Meta. At 19, in a Harvard dorm, he wrote Facemash, then Facebook six months later, then became the youngest billionaire in history at 23. Wears the same grey t-shirt every day to save willpower on meaningless decisions. Sets himself yearly 'personal challenges' — learn Chinese, run 365 miles in a year, build an AI butler. He now trains MMA, does jiu-jitsu, gets electrocuted for fun, and trains seriously for UFC — because he believes physical body and clarity of mind are directly connected."
+  },
+
+  "sources": [
+    { "type": "book", "title": "The Facebook Effect", "author": "David Kirkpatrick", "url": "https://www.simonandschuster.com/books/The-Facebook-Effect/David-Kirkpatrick" },
+    { "type": "interview", "title": "Mark Zuckerberg on Lex Fridman Podcast", "author": "Lex Fridman", "url": "https://lexfridman.com/mark-zuckerberg-3" },
+    { "type": "article", "title": "Mark Zuckerberg's daily routine", "author": "Business Insider", "url": "https://www.businessinsider.com/mark-zuckerberg-daily-routine" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "08:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "08:00", "end": "08:15", "type": "morning_routine", "label": { "ru": "Подъём, серая футболка", "en": "Wake, grey t-shirt" } },
+      { "start": "08:15", "end": "09:30", "type": "morning_routine", "label": { "ru": "Тренировка: jiu-jitsu или бег", "en": "Workout: jiu-jitsu or running" } },
+      { "start": "09:30", "end": "10:00", "type": "meal_and_read", "label": { "ru": "Завтрак, обзор данных Meta", "en": "Breakfast, reviewing Meta data" } },
+      { "start": "10:00", "end": "13:00", "type": "deep_work", "label": { "ru": "Встречи 1:1, продукт", "en": "1:1s, product" } },
+      { "start": "13:00", "end": "14:00", "type": "comms", "label": { "ru": "Обед, рабочая переписка", "en": "Lunch, work correspondence" } },
+      { "start": "14:00", "end": "19:00", "type": "deep_work", "label": { "ru": "Стратегия, AI, Reality Labs", "en": "Strategy, AI, Reality Labs" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Семейный ужин, дочери", "en": "Family dinner, daughters" } },
+      { "start": "21:00", "end": "23:00", "type": "deep_work", "label": { "ru": "Поздняя работа, годовой челлендж", "en": "Late work, annual challenge" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Цукерберг экономит решения везде, где можно: одна футболка, одинаковый завтрак, два слота для коммуникации. Утренняя тренировка — без телефона. Рабочие чаты — обед. Личные — короткое окно после семейного ужина. Поздний вечер — для годового челленджа: учёба, кодинг, тренировка.",
+      "en": "Zuckerberg conserves decisions wherever he can: one t-shirt, same breakfast, two communication slots. Morning workout — phone-free. Work chats — lunch. Personal messages — a short window after family dinner. Late evening goes to the annual challenge: studying, coding, training."
+    },
+    "allowedSlots": [
+      { "start": "13:00", "end": "14:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты с командой Meta", "en": "Lunch hour — work chats with the Meta team" } },
+      { "start": "20:30", "end": "21:30", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после семейного ужина — личные сообщения", "en": "An hour after family dinner — personal messages" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Самый большой риск — не брать риск. В мире, который меняется быстро, единственная стратегия, гарантирующая провал — не рисковать.", "en": "The biggest risk is not taking any risk. In a world changing quickly, the only strategy guaranteed to fail is not taking risks." },
+    { "ru": "Лучше делать вещи и просить прощения, чем спрашивать разрешения.", "en": "Move fast and break things." },
+    { "ru": "Если ты строишь что-то, что любишь — ты будешь работать над этим лучше всех.", "en": "People can be really smart or have skills that are directly applicable, but if they don't really believe in it, they're not going to work hard." },
+    { "ru": "В быстро меняющемся мире самая безопасная вещь, которую ты можешь сделать — это рисковать.", "en": "In a world that's changing really quickly, the only strategy that is guaranteed to fail is not taking risks." },
+    { "ru": "Идеи не приходят полностью сформированными. Они становятся ясными, когда ты над ними работаешь.", "en": "Ideas don't come out fully formed. They only become clear as you work on them." }
+  ]
+}

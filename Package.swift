@@ -7,7 +7,10 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "HelloWork",
-            resources: [.process("Resources")]
+            resources: [
+                .process("Resources/Media.xcassets"),
+                .copy("Resources/Legends")
+            ]
         ),
         .executableTarget(
             name: "HelloWorkStub"

@@ -1,0 +1,58 @@
+{
+  "id": "hemingway-ernest",
+  "order": 56,
+  "name": { "ru": "Эрнест Хемингуэй", "en": "Ernest Hemingway" },
+  "fullName": { "ru": "Эрнест Миллер Хемингуэй", "en": "Ernest Miller Hemingway" },
+  "yearsOfLife": "1899–1961",
+  "era": "20th_century",
+  "field": "writer",
+  "tags": ["novelist", "nobel", "iceberg_theory", "war_correspondent", "discipline"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Один из главных писателей XX века, нобелевский лауреат. Сын врача из Иллинойса, в 18 лет уехал санитаром на итальянский фронт Первой мировой, был тяжело ранен. После войны переехал в Париж, попал в круг Гертруды Стайн и Эзры Паунда, и там сформировал свою «теорию айсберга»: пиши только то, что на поверхности, остальное читатель почувствует сам. Написал «Прощай, оружие!», «По ком звонит колокол», «Старик и море». Просыпался в 5:30, писал стоя у книжной полки до полудня, цель — 500 слов в день. Считал, что писать пьяным — миф: «Я пишу трезвый. Алкоголь — это для редактирования». Прожил жизнь как герой собственных книг: войны, охоты, четыре жены, четыре сотрясения мозга и две авиакатастрофы.",
+    "en": "One of the 20th century's giants, Nobel laureate. Son of an Illinois doctor, at 18 he went as an ambulance driver to the Italian front of WWI, was badly wounded. After the war he moved to Paris, fell into the circle of Gertrude Stein and Ezra Pound, and there formed his 'iceberg theory': write only what's on the surface, the reader will feel the rest. Wrote A Farewell to Arms, For Whom the Bell Tolls, The Old Man and the Sea. Woke at 5:30, wrote standing at a bookshelf until noon, target — 500 words a day. He believed writing drunk was a myth: 'I write sober. Alcohol is for the editing.' Lived life like the hero of his own books: wars, hunts, four wives, four concussions, and two plane crashes."
+  },
+
+  "sources": [
+    { "type": "book", "title": "A Moveable Feast", "author": "Ernest Hemingway", "url": "https://www.simonandschuster.com/books/A-Moveable-Feast" },
+    { "type": "interview", "title": "Ernest Hemingway, The Art of Fiction No. 21", "author": "The Paris Review", "url": "https://www.theparisreview.org/interviews/4825/the-art-of-fiction-no-21-ernest-hemingway" },
+    { "type": "book", "title": "On Writing", "author": "Ernest Hemingway", "url": "https://www.simonandschuster.com/books/Ernest-Hemingway-on-Writing" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "05:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "05:30", "end": "06:30", "type": "morning_routine", "label": { "ru": "Подъём с рассветом, кофе, заточка карандашей", "en": "Wake at sunrise, coffee, sharpening pencils" } },
+      { "start": "06:30", "end": "12:00", "type": "deep_work", "label": { "ru": "Письмо стоя у книжного шкафа — 500 слов", "en": "Writing standing at a bookcase — 500 words" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с редакторами", "en": "Lunch, correspondence with editors" } },
+      { "start": "13:00", "end": "17:00", "type": "leisure_and_reflection", "label": { "ru": "Рыбалка / охота / редактирование (с виски)", "en": "Fishing / hunting / editing (with whiskey)" } },
+      { "start": "17:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Коктейли с друзьями (Фицджеральд, Дос Пассос)", "en": "Cocktails with friends (Fitzgerald, Dos Passos)" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин в обществе + личное общение", "en": "Dinner in company + personal contact" } },
+      { "start": "21:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение книг", "en": "Reading books" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Хемингуэй был фанатиком утреннего правила: 5:30 подъём, 500 слов до обеда, и только потом — жизнь. Деловая переписка с редакторами и литагентами — обеденный час. Личное общение — два часа за коктейлями и ужином с друзьями-писателями (его легендарный круг). Ночное чтение — без чатов.",
+      "en": "Hemingway was a fanatic of the morning rule: 5:30 wake, 500 words before lunch, and only then — life. Business correspondence with editors and agents — the lunch hour. Personal communication — two hours over cocktails and dinner with writer friends (his legendary circle). Night reading — no chats."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — переписка с редакторами и агентом", "en": "Lunch hour — correspondence with editors and agent" } },
+      { "start": "19:00", "end": "20:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час за ужином — личное общение с друзьями и семьёй", "en": "Dinner hour — personal contact with friends and family" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Пиши пьяным, редактируй трезвым? Чушь. Пиши трезвым. Иначе вычеркнешь утром половину.", "en": "Write hard and clear about what hurts." },
+    { "ru": "Не существует писательства. Есть только переписывание.", "en": "The first draft of anything is shit." },
+    { "ru": "Самое важное — закончить. Не идеально. Закончить.", "en": "It is good to have an end to journey toward; but it is the journey that matters, in the end." },
+    { "ru": "Каждый день, прожитый достойно, — это маленький шедевр.", "en": "Every day above earth is a good day." },
+    { "ru": "Слабые — это те, кто слишком много объясняют.", "en": "Never confuse movement with action." }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "id": "goggins-david",
+  "order": 19,
+  "name": {
+    "ru": "Дэвид Гоггинс",
+    "en": "David Goggins"
+  },
+  "fullName": {
+    "ru": "Дэвид Гоггинс",
+    "en": "David Goggins"
+  },
+  "yearsOfLife": "1975–",
+  "era": "modern",
+  "field": "athlete",
+  "tags": ["navy_seal", "ultramarathon", "discipline", "mental_toughness", "self_made"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Бывший «морской котик», единственный человек в истории, прошедший тренировки SEAL, армейских рейнджеров и тактической авиации ВВС. В детстве жил с отцом-абьюзером, был лишним весом, бросил школу, мыл крыс на ночной смене за $9. В 24 года увидел документальный фильм про SEAL, понял, что у него есть три месяца, чтобы сбросить 50 кг — и сбросил. С тех пор пробежал 60+ ультрамарафонов, поставил мировой рекорд по подтягиваниям (4030 за сутки) и проповедует одно правило: «Никто не идёт тебе на помощь. Stay hard».",
+    "en": "Former Navy SEAL, the only person in history to complete SEAL training, Army Ranger school, and Air Force Tactical Air Controller training. As a kid he lived with an abusive father, was overweight, dropped out of school, and cleaned cockroaches off rats on the night shift for $9. At 24 he saw a documentary about SEALs, realized he had three months to drop 50 kg — and dropped it. He's run 60+ ultramarathons, set the pull-up world record (4,030 in 24 hours), and preaches one rule: 'Nobody is coming to save you. Stay hard.'"
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Can't Hurt Me: Master Your Mind and Defy the Odds",
+      "author": "David Goggins",
+      "url": "https://davidgoggins.com/cant-hurt-me/"
+    },
+    {
+      "type": "interview",
+      "title": "David Goggins on Joe Rogan Experience",
+      "author": "Joe Rogan",
+      "url": "https://open.spotify.com/show/4rOoJ6Egrf8K2IrywzwOMk"
+    },
+    {
+      "type": "article",
+      "title": "Inside David Goggins' brutal daily routine",
+      "author": "Men's Health",
+      "url": "https://www.menshealth.com/david-goggins-routine"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "03:00",
+        "type": "sleep",
+        "label": { "ru": "Сон (3–4 часа)", "en": "Sleep (3–4 hours)" }
+      },
+      {
+        "start": "03:00",
+        "end": "04:00",
+        "type": "deep_work",
+        "label": { "ru": "Тренировка №1: бег 8 км до рассвета", "en": "Workout 1: 5-mile run before sunrise" }
+      },
+      {
+        "start": "04:00",
+        "end": "06:00",
+        "type": "deep_work",
+        "label": { "ru": "Силовая в зале", "en": "Strength training" }
+      },
+      {
+        "start": "06:00",
+        "end": "07:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Завтрак, душ", "en": "Breakfast, shower" }
+      },
+      {
+        "start": "07:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Работа: книги, спикинг, тренировки клиентов", "en": "Work: books, speaking, coaching clients" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Обед, проверка сообщений", "en": "Lunch, checking messages" }
+      },
+      {
+        "start": "13:00",
+        "end": "15:00",
+        "type": "deep_work",
+        "label": { "ru": "Тренировка №2: велосипед / бег по холмам", "en": "Workout 2: bike / hill running" }
+      },
+      {
+        "start": "15:00",
+        "end": "19:00",
+        "type": "deep_work",
+        "label": { "ru": "Работа: ответы аудитории, видео, контент", "en": "Work: audience replies, video, content" }
+      },
+      {
+        "start": "19:00",
+        "end": "20:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Ужин с женой", "en": "Dinner with wife" }
+      },
+      {
+        "start": "20:00",
+        "end": "21:00",
+        "type": "deep_work",
+        "label": { "ru": "Тренировка №3: растяжка, мобильность", "en": "Workout 3: stretching, mobility" }
+      },
+      {
+        "start": "21:00",
+        "end": "22:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Чтение, дневник «Accountability Mirror»", "en": "Reading, 'Accountability Mirror' journal" }
+      },
+      {
+        "start": "22:00",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Гоггинс не верит в «work-life balance» — он верит в «work, work harder, then work some more». Утром он бегает, пока остальные спят. Личное общение — обеденное окно с женой, потом снова в зал. Рабочая переписка — после второй тренировки, когда тело устало и можно сесть за телефон. Между этими окнами никаких чатов: «Каждое уведомление — это мягкое место в твоей голове».",
+      "en": "Goggins doesn't believe in 'work-life balance' — he believes in 'work, work harder, then work some more.' He runs in the morning while others sleep. Personal communication — a lunch window with his wife, then back to the gym. Work correspondence — after the second workout, when the body is tired enough to sit with a phone. Between these windows, no chats: 'Every notification is a soft spot in your mind.'"
+    },
+    "allowedSlots": [
+      {
+        "start": "12:00",
+        "end": "12:30",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Полчаса с женой за обедом — единственное окно для близких",
+          "en": "Half an hour with his wife at lunch — the only window for loved ones"
+        }
+      },
+      {
+        "start": "19:00",
+        "end": "20:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Час перед последней тренировкой — рабочие чаты, аудитория",
+          "en": "An hour before the last workout — work chats, audience"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 90
+  },
+
+  "quotes": [
+    {
+      "ru": "Никто не идёт тебя спасать. Никто.",
+      "en": "Nobody is coming to save you."
+    },
+    {
+      "ru": "Stay hard.",
+      "en": "Stay hard."
+    },
+    {
+      "ru": "Когда ты думаешь, что закончил, — ты использовал только 40% своих возможностей.",
+      "en": "When you think you're done, you're only at 40% of what your body's capable of."
+    },
+    {
+      "ru": "Ты должен научиться любить то, что ненавидишь.",
+      "en": "You have to build calluses on your brain just like how you build calluses on your hands."
+    },
+    {
+      "ru": "Самый важный разговор — это тот, который ты ведёшь с собой каждое утро в зеркале.",
+      "en": "The most important conversation you'll ever have is the one you have with yourself in the mirror every morning."
+    }
+  ]
+}

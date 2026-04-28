@@ -1,0 +1,58 @@
+{
+  "id": "newton-isaac",
+  "order": 54,
+  "name": { "ru": "Исаак Ньютон", "en": "Isaac Newton" },
+  "fullName": { "ru": "Сэр Исаак Ньютон", "en": "Sir Isaac Newton" },
+  "yearsOfLife": "1643–1727",
+  "era": "enlightenment",
+  "field": "inventor_scientist",
+  "tags": ["physics", "mathematics", "calculus", "alchemy", "obsessive"],
+  "nationality": "GB",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Английский физик и математик, открывший законы движения, гравитации и оптики, изобретший математический анализ. В 1665 году, когда из-за чумы закрыли Кембридж, 22-летний Ньютон уехал в фермерский дом матери в Линкольншире и за 18 месяцев — известных как «annus mirabilis», чудесный год — заложил основы современной науки. Никогда не женился, спал по 4 часа, ел стоя, забывал есть совсем, когда работал. Был также страстным алхимиком и теологом — половина его записей посвящены попыткам превратить свинец в золото. Дрался в академических войнах с Гуком и Лейбницем, был директором Королевского монетного двора и лично преследовал фальшивомонетчиков.",
+    "en": "English physicist and mathematician who discovered the laws of motion, gravity, and optics, and invented calculus. In 1665, when the plague closed Cambridge, the 22-year-old Newton retreated to his mother's farmhouse in Lincolnshire and over 18 months — known as the 'annus mirabilis,' the miracle year — laid the foundations of modern science. Never married, slept 4 hours, ate standing up, sometimes forgot to eat altogether when working. He was also a passionate alchemist and theologian — half his notes are attempts to turn lead into gold. Fought academic wars with Hooke and Leibniz, ran the Royal Mint, and personally hunted counterfeiters."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Isaac Newton", "author": "James Gleick", "url": "https://www.penguinrandomhouse.com/books/isaac-newton-gleick" },
+    { "type": "book", "title": "Never at Rest: A Biography of Isaac Newton", "author": "Richard S. Westfall", "url": "https://www.cambridge.org/never-at-rest" },
+    { "type": "article", "title": "Newton's annus mirabilis", "author": "Royal Society", "url": "https://royalsociety.org/journals-and-publications/newton/" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "04:00", "type": "sleep", "label": { "ru": "Сон (4 часа)", "en": "Sleep (4 hours)" } },
+      { "start": "04:00", "end": "05:00", "type": "morning_routine", "label": { "ru": "Подъём, простое утро", "en": "Wake, plain morning" } },
+      { "start": "05:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Кабинет: математика, оптика, расчёты гравитации", "en": "Study: mathematics, optics, gravitational calculations" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед стоя у стола, переписка с Royal Society", "en": "Standing lunch at the desk, correspondence with the Royal Society" } },
+      { "start": "13:00", "end": "19:00", "type": "deep_work", "label": { "ru": "Лаборатория алхимии: эксперименты с металлами", "en": "Alchemy lab: experiments with metals" } },
+      { "start": "19:00", "end": "19:30", "type": "leisure_and_reflection", "label": { "ru": "Скудный ужин (часто забывал)", "en": "Sparse dinner (often forgotten)" } },
+      { "start": "19:30", "end": "21:00", "type": "comms", "label": { "ru": "Письма семье и теологические заметки", "en": "Letters to family and theological notes" } },
+      { "start": "21:00", "end": "23:00", "type": "deep_work", "label": { "ru": "Чтение Библии, теология", "en": "Bible reading, theology" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Ньютон работал 18 часов в сутки, и это не легенда — это документировано его слугами. Деловая переписка с Royal Society — обеденный час, единственное окно «бумажной работы». Личное общение — час после ужина для писем племяннице Кэтрин и редким друзьям. Утренний кабинет и дневная лаборатория — без отвлечений ни на что.",
+      "en": "Newton worked 18 hours a day — not a legend, documented by his servants. Business correspondence with the Royal Society — the lunch hour, the only 'paperwork' window. Personal communication — an hour after dinner for letters to his niece Catherine and his few friends. The morning study and afternoon lab — no distractions whatsoever."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — переписка с Royal Society и научными корреспондентами", "en": "Lunch hour — correspondence with the Royal Society and scientific peers" } },
+      { "start": "19:30", "end": "20:30", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные письма племяннице и друзьям", "en": "An hour after dinner — personal letters to his niece and friends" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Если я видел дальше других, то потому, что стоял на плечах гигантов.", "en": "If I have seen further it is by standing on the shoulders of giants." },
+    { "ru": "Я могу рассчитать движение небесных тел, но не безумие людей.", "en": "I can calculate the motion of heavenly bodies, but not the madness of people." },
+    { "ru": "Истина обычно дочь времени, а не власти.", "en": "Truth is ever to be found in simplicity, and not in the multiplicity and confusion of things." },
+    { "ru": "Гениальность — это терпение.", "en": "Genius is patience." },
+    { "ru": "Я не знаю, как меня видит мир. Но самому себе я кажусь мальчиком, играющим на берегу.", "en": "I do not know what I may appear to the world, but to myself I seem to have been only like a boy playing on the seashore." }
+  ]
+}

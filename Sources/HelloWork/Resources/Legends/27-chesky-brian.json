@@ -1,0 +1,59 @@
+{
+  "id": "chesky-brian",
+  "order": 27,
+  "name": { "ru": "Брайан Чески", "en": "Brian Chesky" },
+  "fullName": { "ru": "Брайан Чески", "en": "Brian Chesky" },
+  "yearsOfLife": "1981–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["airbnb", "founder", "design", "ceo", "self_made"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Сооснователь и СЕО Airbnb. В 2007 году в Сан-Франциско не мог заплатить за аренду — сдал свою квартиру с надувным матрасом гостям дизайн-конференции и так нашёл идею на $100 миллиардов. Первые два года продавали хлопья «Obama O's» и «Cap'n McCain's», чтобы выжить. Чески — главный «design-driven CEO» в техе: он считает, что идея и интерфейс важнее метрик, и каждое утро рисует мудборды. После пандемии полностью переработал компанию по принципу «founder mode» — никаких прослоек между ним и продуктом, все 100 PM работают напрямую под ним.",
+    "en": "Co-founder and CEO of Airbnb. In 2007 in San Francisco he couldn't make rent — so he rented out his apartment with an air mattress to design-conference attendees, and found a $100 billion idea. The first two years they sold cereal — 'Obama O's' and 'Cap'n McCain's' — to survive. Chesky is tech's leading 'design-driven CEO': he believes the idea and the interface matter more than metrics, and sketches mood boards every morning. After the pandemic he completely rebuilt the company on the 'founder mode' principle — no layers between him and the product, all 100 PMs report directly to him."
+  },
+
+  "sources": [
+    { "type": "interview", "title": "Brian Chesky on the Lex Fridman Podcast", "author": "Lex Fridman", "url": "https://lexfridman.com/brian-chesky" },
+    { "type": "article", "title": "Founder Mode", "author": "Paul Graham", "url": "http://paulgraham.com/foundermode.html" },
+    { "type": "interview", "title": "Brian Chesky on the Tim Ferriss Show", "author": "Tim Ferriss", "url": "https://tim.blog/brian-chesky" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:00", "end": "07:00", "type": "morning_routine", "label": { "ru": "Тренировка с персональным тренером", "en": "Workout with personal trainer" } },
+      { "start": "07:00", "end": "08:00", "type": "meal_and_read", "label": { "ru": "Завтрак, дневник, мудборды", "en": "Breakfast, journaling, mood boards" } },
+      { "start": "08:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Продуктовые ревью с PM", "en": "Product reviews with PMs" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед с командой, переписка", "en": "Lunch with team, correspondence" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Дизайн-сессии, стратегия", "en": "Design sessions, strategy" } },
+      { "start": "18:00", "end": "19:00", "type": "morning_routine", "label": { "ru": "Спортзал / прогулка", "en": "Gym / walk" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с друзьями (Альтман, Грэм)", "en": "Dinner with friends (Altman, Graham)" } },
+      { "start": "21:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение биографий лидеров", "en": "Reading leadership biographies" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Чески — пример «founder mode»: он не хочет дистанции между собой и продуктом. Утренний блок до обеда — продуктовые ревью с продакт-менеджерами, никаких отвлекающих чатов. Рабочая переписка — обеденный час с командой. Личное общение — час между спортзалом и ужином с друзьями.",
+      "en": "Chesky is the embodiment of 'founder mode': he wants no distance between himself and the product. The morning block until lunch is for product reviews with PMs — zero distracting chats. Work correspondence — lunch hour with the team. Personal communication — an hour between the gym and dinner with friends."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обед с командой — рабочие чаты в одном окне", "en": "Lunch with team — work chats in one window" } },
+      { "start": "19:00", "end": "20:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Ужин с друзьями — час личного общения и сообщений", "en": "Dinner with friends — an hour of personal contact and messages" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Лучшие компании создаются вокруг сильной точки зрения, а не вокруг рынка.", "en": "The best companies are built around a strong point of view, not a market." },
+    { "ru": "Я не пытаюсь быть менеджером. Я пытаюсь быть основателем.", "en": "I don't try to be a manager. I try to be a founder." },
+    { "ru": "Если ты строишь продукт, который любишь сам — найдётся миллион таких, как ты.", "en": "Build something a hundred people love, not something a million people kind of like." },
+    { "ru": "Самые опасные слова в стартапе: «здравый смысл».", "en": "The most dangerous words in a startup are 'common sense.'" },
+    { "ru": "Великая компания — это та, которая берёт идею, которая всем кажется глупой, и делает её очевидной.", "en": "A great company is one that takes an idea that seems crazy and makes it obvious." }
+  ]
+}

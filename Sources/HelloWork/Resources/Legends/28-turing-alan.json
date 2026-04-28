@@ -1,0 +1,58 @@
+{
+  "id": "turing-alan",
+  "order": 28,
+  "name": { "ru": "Алан Тьюринг", "en": "Alan Turing" },
+  "fullName": { "ru": "Алан Мэтисон Тьюринг", "en": "Alan Mathison Turing" },
+  "yearsOfLife": "1912–1954",
+  "era": "20th_century",
+  "field": "software_engineer",
+  "tags": ["computer_science", "cryptography", "ai_pioneer", "marathon_runner", "mathematician"],
+  "nationality": "GB",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Английский математик, отец компьютерных наук и искусственного интеллекта. В 24 года описал «машину Тьюринга» — теоретическую модель, на которой стоит вся современная информатика. Во Вторую мировую построил электромеханический компьютер для расшифровки немецкой «Энигмы» в Блетчли-парке — это спасло, по подсчётам историков, до 14 миллионов жизней и сократило войну на 2 года. Бегал по 50 километров в день — был кандидатом в олимпийскую сборную. Пристёгивал кружку к радиатору цепью с замком, чтобы её не украли. Умер в 41 год, оставив тест Тьюринга и фундамент для всего, что мы сегодня называем «AI».",
+    "en": "English mathematician, father of computer science and artificial intelligence. At 24 he described the 'Turing machine' — the theoretical model the entire modern computing world rests on. During WWII he built an electromechanical computer to break the German Enigma at Bletchley Park — historians estimate this saved up to 14 million lives and shortened the war by 2 years. Ran 50 kilometers a day — he was an Olympic contender. Chained his mug to the radiator with a padlock so it wouldn't be stolen. Died at 41, leaving behind the Turing Test and the foundation of everything we today call 'AI.'"
+  },
+
+  "sources": [
+    { "type": "book", "title": "Alan Turing: The Enigma", "author": "Andrew Hodges", "url": "https://press.princeton.edu/books/paperback/9780691155647/alan-turing-the-enigma" },
+    { "type": "article", "title": "Computing Machinery and Intelligence", "author": "Alan Turing", "url": "https://academic.oup.com/mind/article/LIX/236/433/986238" },
+    { "type": "article", "title": "Life inside Bletchley Park", "author": "BBC History", "url": "https://www.bbc.co.uk/history/topics/bletchley-park" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "07:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "07:00", "end": "07:30", "type": "morning_routine", "label": { "ru": "Подъём, чай (с цепью на кружке)", "en": "Wake, tea (mug chained to radiator)" } },
+      { "start": "07:30", "end": "09:00", "type": "morning_routine", "label": { "ru": "Бег 25 км в Блетчли-парк", "en": "15-mile run to Bletchley Park" } },
+      { "start": "09:00", "end": "12:30", "type": "deep_work", "label": { "ru": "Hut 8: расшифровка Энигмы", "en": "Hut 8: breaking Enigma" } },
+      { "start": "12:30", "end": "13:30", "type": "leisure_and_reflection", "label": { "ru": "Обед в столовой Блетчли-парка с командой", "en": "Lunch in the Bletchley canteen with the team" } },
+      { "start": "13:30", "end": "18:00", "type": "deep_work", "label": { "ru": "Bombe machine: разработка и тесты", "en": "Bombe machine: development and tests" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин и шахматы с коллегами", "en": "Dinner and chess with colleagues" } },
+      { "start": "19:00", "end": "22:00", "type": "deep_work", "label": { "ru": "Теоретические заметки, идеи AI", "en": "Theoretical notes, AI ideas" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Тьюринг работал в режиме военной тайны и строгого расписания. Личное общение почти не существовало в его жизни — обед с коллегами в Блетчли был главным окном. Деловая переписка — после ужина, когда мозг ещё свеж для теории, и нужно ответить математикам в Кембридже. Утро (после бега) и весь день — расшифровка Энигмы.",
+      "en": "Turing worked under wartime secrecy and a rigid schedule. Personal communication was almost nonexistent in his life — lunch with colleagues at Bletchley was the main window. Professional correspondence — after dinner, when the mind was still fresh for theory and replies were needed for mathematicians in Cambridge. The morning (after his run) and the whole day — breaking Enigma."
+    },
+    "allowedSlots": [
+      { "start": "12:30", "end": "13:30", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Обед с коллегами в Блетчли — единственное окно для близкого общения", "en": "Lunch with Bletchley colleagues — the only window for close communication" } },
+      { "start": "18:30", "end": "19:30", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час после ужина — переписка с математиками Кембриджа", "en": "An hour after dinner — correspondence with Cambridge mathematicians" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Иногда люди, от которых никто ничего не ждёт, делают то, что никто не может представить.", "en": "Sometimes it is the people no one can imagine anything of who do the things no one can imagine." },
+    { "ru": "Мы видим только короткое расстояние впереди, но видим там много, что нужно сделать.", "en": "We can only see a short distance ahead, but we can see plenty there that needs to be done." },
+    { "ru": "Машина, которая может мыслить — мысль, которую мы должны допустить.", "en": "A computer would deserve to be called intelligent if it could deceive a human into believing that it was human." },
+    { "ru": "Никогда нельзя точно сказать, какой кусок работы в итоге окажется решающим.", "en": "Those who can imagine anything, can create the impossible." },
+    { "ru": "Ум — это не способность знать ответы, а способность задавать правильные вопросы.", "en": "Mathematical reasoning may be regarded rather schematically as the exercise of a combination of intuition and ingenuity." }
+  ]
+}

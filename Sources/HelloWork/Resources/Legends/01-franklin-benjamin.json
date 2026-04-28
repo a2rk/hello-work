@@ -1,0 +1,160 @@
+{
+  "id": "franklin-benjamin",
+  "order": 1,
+  "name": {
+    "ru": "Бенджамин Франклин",
+    "en": "Benjamin Franklin"
+  },
+  "fullName": {
+    "ru": "Бенджамин Франклин",
+    "en": "Benjamin Franklin"
+  },
+  "yearsOfLife": "1706–1790",
+  "era": "18th_century",
+  "field": "polymath",
+  "tags": ["founding_father", "inventor", "writer", "diplomat", "self_made"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Один из отцов-основателей США, изобретатель, дипломат, издатель и учёный. Самоучка из семьи мыловара, в 12 лет ушёл в типографию подмастерьем, к 42 годам сколотил состояние и отошёл от дел, чтобы заниматься наукой и политикой. Всю жизнь вёл дневник самосовершенствования по 13 добродетелям и придерживался жёсткого расписания, которое сам и описал в автобиографии — этот распорядок до сих пор цитируют как образец дисциплины.",
+    "en": "Founding Father of the United States, inventor, diplomat, publisher, and scientist. A self-taught polymath born to a candle-maker, he became a printer's apprentice at 12 and retired wealthy at 42 to pursue science and politics. He kept a lifelong journal tracking 13 virtues and followed a rigid daily schedule he described in his autobiography — still cited today as a benchmark of self-discipline."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "The Autobiography of Benjamin Franklin",
+      "author": "Benjamin Franklin",
+      "url": "https://www.gutenberg.org/files/20203/20203-h/20203-h.htm"
+    },
+    {
+      "type": "article",
+      "title": "What happened when I followed Ben Franklin's schedule for a month",
+      "author": "Fast Company",
+      "url": "https://www.fastcompany.com/90287601/what-happened-when-i-followed-ben-franklins-schedule-for-a-month"
+    },
+    {
+      "type": "article",
+      "title": "The Simplicity of Benjamin Franklin's Daily Schedule",
+      "author": "Shawn Blanc",
+      "url": "https://thefocuscourse.com/franklin-schedule/"
+    }
+  ],
+
+  "lifeSchedule": {
+    "morningQuestion": {
+      "ru": "Что хорошего я сделаю сегодня?",
+      "en": "What good shall I do this day?"
+    },
+    "eveningQuestion": {
+      "ru": "Что хорошего я сделал сегодня?",
+      "en": "What good have I done today?"
+    },
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "05:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "05:00",
+        "end": "08:00",
+        "type": "morning_routine",
+        "label": {
+          "ru": "Подъём, умывание, план дня, изучение, завтрак",
+          "en": "Rise, wash, plan the day, study, breakfast"
+        }
+      },
+      {
+        "start": "08:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Работа", "en": "Work" }
+      },
+      {
+        "start": "12:00",
+        "end": "14:00",
+        "type": "meal_and_read",
+        "label": {
+          "ru": "Чтение, разбор счетов, обед",
+          "en": "Read, review accounts, dine"
+        }
+      },
+      {
+        "start": "14:00",
+        "end": "18:00",
+        "type": "deep_work",
+        "label": { "ru": "Работа", "en": "Work" }
+      },
+      {
+        "start": "18:00",
+        "end": "22:00",
+        "type": "leisure_and_reflection",
+        "label": {
+          "ru": "Уборка, ужин, музыка или беседа, разбор дня",
+          "en": "Tidy up, supper, music or conversation, examine the day"
+        }
+      },
+      {
+        "start": "22:00",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Франклин жёстко делил день: утро и рабочие сессии — священны, переписка имеет своё время. Slack и рабочие чаты вписываем в обеденный блок (он там «разбирал счета и переписку»). Telegram и личные мессенджеры — в вечерний блок «беседы». Утро (до 12:00) и обе рабочие сессии — полная тишина.",
+      "en": "Franklin compartmentalized rigidly: mornings and work sessions are sacred, correspondence has its own time. Slack and work chats fit into the midday block (when he 'reviewed accounts and correspondence'). Telegram and personal messengers fit into the evening 'conversation' block. Mornings (until noon) and both work sessions stay silent."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:30",
+        "end": "13:30",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Обед и разбор переписки — единственное окно для рабочих чатов в первой половине дня",
+          "en": "Lunch and correspondence review — the only window for work chats before evening"
+        }
+      },
+      {
+        "start": "18:30",
+        "end": "20:30",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "После ужина — время «беседы», личных сообщений и звонков близким",
+          "en": "After supper — time for 'conversation', personal messages and calls"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 180
+  },
+
+  "quotes": [
+    {
+      "ru": "Потерянное время никогда не вернётся.",
+      "en": "Lost time is never found again."
+    },
+    {
+      "ru": "Рано ложиться и рано вставать — здоровье, богатство и мудрость.",
+      "en": "Early to bed and early to rise, makes a man healthy, wealthy, and wise."
+    },
+    {
+      "ru": "Время — деньги.",
+      "en": "Time is money."
+    },
+    {
+      "ru": "Если ты не планируешь — ты планируешь провал.",
+      "en": "By failing to prepare, you are preparing to fail."
+    },
+    {
+      "ru": "Никогда не откладывай на завтра то, что можешь сделать сегодня.",
+      "en": "Never leave that till tomorrow which you can do today."
+    }
+  ]
+}

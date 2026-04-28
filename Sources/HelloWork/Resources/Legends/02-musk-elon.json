@@ -1,0 +1,155 @@
+{
+  "id": "musk-elon",
+  "order": 2,
+  "name": {
+    "ru": "Илон Маск",
+    "en": "Elon Musk"
+  },
+  "fullName": {
+    "ru": "Илон Рив Маск",
+    "en": "Elon Reeve Musk"
+  },
+  "yearsOfLife": "1971–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["space", "ev", "ai", "social_media", "self_made", "founder"],
+  "nationality": "US/ZA",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Основатель и СЕО Tesla, SpaceX, xAI, владелец X (Twitter). Начинал с продажи софта в 12 лет, продал PayPal за $1.5 млрд и тут же залил всё в две «обречённые» затеи — ракеты и электромобили. Работает 80–100 часов в неделю, спит на полу фабрики во время дедлайнов, режет день на пятиминутные слоты. Называет это «work like hell» и считает, что обычные люди могут стать выдающимися — если хватит дури не сдаться, когда все говорят, что ничего не выйдет.",
+    "en": "Founder and CEO of Tesla, SpaceX, xAI, and owner of X (Twitter). Sold his first software at 12, then sold PayPal for $1.5B and bet it all on two 'doomed' ventures — rockets and electric cars. Works 80–100 hour weeks, sleeps on factory floors during deadlines, slices his day into five-minute blocks. Calls it 'work like hell' and believes ordinary people can become extraordinary — if they refuse to quit when everyone says it won't work."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Elon Musk",
+      "author": "Walter Isaacson",
+      "url": "https://www.simonandschuster.com/books/Elon-Musk/Walter-Isaacson/9781982181284"
+    },
+    {
+      "type": "interview",
+      "title": "Elon Musk on Joe Rogan Experience",
+      "author": "Joe Rogan",
+      "url": "https://open.spotify.com/episode/2H2j3ZF5EcCO0wXLSnoIxs"
+    },
+    {
+      "type": "article",
+      "title": "Elon Musk's Daily Routine and Schedule",
+      "author": "Business Insider",
+      "url": "https://www.businessinsider.com/elon-musk-daily-schedule-routine"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "01:00",
+        "type": "deep_work",
+        "label": { "ru": "Поздняя инженерка / решения", "en": "Late engineering / decisions" }
+      },
+      {
+        "start": "01:00",
+        "end": "07:00",
+        "type": "sleep",
+        "label": { "ru": "Сон (6 часов)", "en": "Sleep (6 hours)" }
+      },
+      {
+        "start": "07:00",
+        "end": "07:30",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, душ, кофе, проверка критики", "en": "Wake, shower, coffee, critical review" }
+      },
+      {
+        "start": "07:30",
+        "end": "08:00",
+        "type": "comms",
+        "label": { "ru": "Срочная переписка с командами", "en": "Urgent comms with teams" }
+      },
+      {
+        "start": "08:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Инженерка SpaceX / Tesla", "en": "SpaceX / Tesla engineering" }
+      },
+      {
+        "start": "12:00",
+        "end": "12:30",
+        "type": "meal_and_read",
+        "label": { "ru": "Обед на ходу", "en": "Working lunch" }
+      },
+      {
+        "start": "12:30",
+        "end": "19:00",
+        "type": "deep_work",
+        "label": { "ru": "Встречи, ревью, решения", "en": "Meetings, reviews, decisions" }
+      },
+      {
+        "start": "19:00",
+        "end": "21:30",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Дети, ужин", "en": "Kids, dinner" }
+      },
+      {
+        "start": "21:30",
+        "end": "24:00",
+        "type": "deep_work",
+        "label": { "ru": "Ночной push: код, документы, X", "en": "Night push: code, docs, X" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "У Маска нет «нерабочего» времени в классическом смысле — он 24/7 в чатах с командами SpaceX, Tesla и xAI. Но коммуникации он жмёт в узкие слоты: 30 минут утром на критику и 30 минут перед сном на семью и личные ответы. Всё остальное — режим «глубокой работы» без уведомлений.",
+      "en": "Musk doesn't really have 'off-hours' — he's in team chats around the clock for SpaceX, Tesla, and xAI. But he compresses comms into tiny windows: 30 minutes in the morning for critical issues and 30 minutes before bed for family and personal replies. Everything else is deep work, no notifications."
+    },
+    "allowedSlots": [
+      {
+        "start": "07:30",
+        "end": "08:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Утренний проход по критическим вопросам — ответил и закрыл, дальше работа",
+          "en": "Morning sweep through critical issues — answer and close, then deep work"
+        }
+      },
+      {
+        "start": "21:30",
+        "end": "22:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Короткое окно на семью и друзей перед ночным заходом в код",
+          "en": "Brief window for family and friends before the night coding session"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 60
+  },
+
+  "quotes": [
+    {
+      "ru": "Работай как проклятый. То есть от 80 до 100 часов в неделю — каждую неделю.",
+      "en": "Work like hell. I mean, you just have to put in 80 to 100 hour weeks every week."
+    },
+    {
+      "ru": "Если у тебя ничего не ломается — значит, ты недостаточно инновируешь.",
+      "en": "If things are not failing, you are not innovating enough."
+    },
+    {
+      "ru": "Когда что-то достаточно важно — ты делаешь это, даже если шансы не на твоей стороне.",
+      "en": "When something is important enough, you do it even if the odds are not in your favor."
+    },
+    {
+      "ru": "Я думаю, обычные люди могут выбрать быть выдающимися.",
+      "en": "I think it's possible for ordinary people to choose to be extraordinary."
+    },
+    {
+      "ru": "Никто не изменит мир, работая 40 часов в неделю.",
+      "en": "Nobody ever changed the world on 40 hours a week."
+    }
+  ]
+}

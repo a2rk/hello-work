@@ -1,0 +1,58 @@
+{
+  "id": "hopper-grace",
+  "order": 47,
+  "name": { "ru": "Грейс Хоппер", "en": "Grace Hopper" },
+  "fullName": { "ru": "Грейс Брюстер Мюррей Хоппер", "en": "Grace Brewster Murray Hopper" },
+  "yearsOfLife": "1906–1992",
+  "era": "20th_century",
+  "field": "software_engineer",
+  "tags": ["cobol", "navy", "compiler", "pioneer", "discipline"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Контр-адмирал ВМС США и одна из первых программисток в истории. В 37 лет вступила в Военно-морской резерв во время Второй мировой и попала в команду создателя первого компьютера Mark I в Гарварде — там она и пролила колу на реле, нашла мёртвого мотылька в проводах и придумала слово «debugging» (отладка). В 1952 году создала первый компилятор — программу, которая переводит человеческий язык в машинный код, потом была главной создательницей COBOL — языка, на котором до сих пор работают банки и государства. Служила в ВМС до 79 лет, на пенсию её отправили принудительно. Раздавала на лекциях кусочки наносекундного провода — чтобы студенты понимали, как мало времени, и работали быстрее.",
+    "en": "Rear Admiral of the US Navy and one of the first programmers in history. At 37 she joined the Naval Reserve during WWII and ended up on the team building the first computer, Mark I, at Harvard — that's where she spilled cola on a relay, found a dead moth in the wires, and coined the word 'debugging.' In 1952 she created the first compiler — a program that translates human language into machine code — then led the team that created COBOL, a language banks and governments still run on. She served in the Navy until age 79, when they retired her against her will. She handed out pieces of nanosecond wire at lectures — so students would feel how little time they have and work faster."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Grace Hopper and the Invention of the Information Age", "author": "Kurt W. Beyer", "url": "https://mitpress.mit.edu/grace-hopper" },
+    { "type": "interview", "title": "Grace Hopper on Letterman", "author": "David Letterman Show, 1986", "url": "https://www.youtube.com/watch?v=1-vcErOPofQ" },
+    { "type": "article", "title": "Grace Hopper: The pioneer of computer programming", "author": "Computer History Museum", "url": "https://computerhistory.org/profile/grace-hopper/" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "05:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "05:30", "end": "06:30", "type": "morning_routine", "label": { "ru": "Подъём по-военному, форма, кофе", "en": "Military wake-up, uniform, coffee" } },
+      { "start": "06:30", "end": "07:30", "type": "meal_and_read", "label": { "ru": "Завтрак, газеты, обзор задач", "en": "Breakfast, newspapers, task review" } },
+      { "start": "07:30", "end": "12:00", "type": "deep_work", "label": { "ru": "Программирование, code reviews", "en": "Programming, code reviews" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с командой", "en": "Lunch, team correspondence" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Разработка COBOL, лекции, спецификации", "en": "COBOL development, lectures, specifications" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин в офицерской столовой", "en": "Dinner in officers' mess" } },
+      { "start": "19:00", "end": "22:00", "type": "leisure_and_reflection", "label": { "ru": "Чтение, личные письма, бридж", "en": "Reading, personal letters, bridge" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Хоппер жила по военному уставу — и считала, что дисциплина и есть свобода для творчества. Деловая переписка — обеденный час, чёткое окно. Личное общение — три часа после ужина перед сном, когда работа сделана. Утро и весь рабочий день — без отвлечений, по уставу.",
+      "en": "Hopper lived by military regulation — and believed that discipline is the very freedom you need for creativity. Business correspondence — the lunch hour, a strict window. Personal communication — three hours after dinner before sleep, when work is done. Morning and the whole workday — no distractions, by the book."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты по уставу", "en": "Lunch hour — work chats by the book" } },
+      { "start": "19:30", "end": "20:30", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные письма и звонки", "en": "An hour after dinner — personal letters and calls" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Самое опасное в любой организации — фраза «мы всегда так делали».", "en": "The most damaging phrase in the language is 'We've always done it this way.'" },
+    { "ru": "Хороший корабль создан не для того, чтобы стоять в порту. Так и человек.", "en": "A ship in port is safe, but that's not what ships are built for." },
+    { "ru": "Лучше попросить прощения, чем разрешения.", "en": "It's easier to ask forgiveness than it is to get permission." },
+    { "ru": "Хорошее лидерство — это люди, идущие за тобой не потому, что должны, а потому что хотят.", "en": "You manage things; you lead people." },
+    { "ru": "Я могу научить любого, у кого есть интерес. Но никто не может научить интересу.", "en": "If you do something once, people will call it an accident. If you do it twice, they call it a coincidence. But do it a third time and you've just proven a natural law." }
+  ]
+}

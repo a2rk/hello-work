@@ -1,0 +1,167 @@
+{
+  "id": "king-stephen",
+  "order": 18,
+  "name": {
+    "ru": "Стивен Кинг",
+    "en": "Stephen King"
+  },
+  "fullName": {
+    "ru": "Стивен Эдвин Кинг",
+    "en": "Stephen Edwin King"
+  },
+  "yearsOfLife": "1947–",
+  "era": "modern",
+  "field": "writer",
+  "tags": ["novelist", "horror", "discipline", "prolific", "self_made"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Самый плодовитый и читаемый писатель ужасов в истории — 65 романов, 200 рассказов, более 400 миллионов проданных книг. Сын матери-одиночки, в детстве жил в трейлере, работал прачкой и сторожем на бензоколонке, пока в 26 лет не продал «Кэрри» — рукопись, которую сам выбросил в мусор, а жена выудила обратно. С тех пор пишет ровно 2000 слов в день каждый день — включая Рождество, день рождения и собственное выздоровление после автомобильной аварии. Если ему лень — пишет всё равно.",
+    "en": "The most prolific and widely read horror author in history — 65 novels, 200 short stories, over 400 million books sold. Son of a single mother, he grew up in a trailer, worked at a laundry and a gas station, until at 26 he sold Carrie — a manuscript he'd thrown in the trash and his wife had pulled back out. Since then he writes exactly 2,000 words a day, every day — including Christmas, his birthday, and his recovery from a car accident. When he doesn't feel like it, he writes anyway."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "On Writing: A Memoir of the Craft",
+      "author": "Stephen King",
+      "url": "https://www.simonandschuster.com/books/On-Writing/Stephen-King/9781439193631"
+    },
+    {
+      "type": "interview",
+      "title": "Stephen King, The Art of Fiction No. 189",
+      "author": "The Paris Review",
+      "url": "https://www.theparisreview.org/interviews/the-art-of-fiction-no-189-stephen-king"
+    },
+    {
+      "type": "article",
+      "title": "Stephen King's writing routine: 2000 words a day",
+      "author": "Lit Hub",
+      "url": "https://lithub.com/stephen-king-on-writing"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "07:30",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "07:30",
+        "end": "08:00",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, завтрак (омлет, овсянка)", "en": "Wake, breakfast (eggs, oatmeal)" }
+      },
+      {
+        "start": "08:00",
+        "end": "08:30",
+        "type": "morning_routine",
+        "label": { "ru": "Витамины, музыка, медитация на стол", "en": "Vitamins, music, settling at the desk" }
+      },
+      {
+        "start": "08:30",
+        "end": "13:00",
+        "type": "deep_work",
+        "label": { "ru": "Письмо: 2000 слов нон-стоп", "en": "Writing: 2,000 words straight" }
+      },
+      {
+        "start": "13:00",
+        "end": "14:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Обед", "en": "Lunch" }
+      },
+      {
+        "start": "14:00",
+        "end": "16:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Дрёма / прогулка с собакой", "en": "Nap / walk with the dog" }
+      },
+      {
+        "start": "16:00",
+        "end": "18:00",
+        "type": "comms",
+        "label": { "ru": "Письма, бизнес, чтение черновиков", "en": "Letters, business, draft reading" }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "type": "morning_routine",
+        "label": { "ru": "Прогулка / тренировка", "en": "Walk / workout" }
+      },
+      {
+        "start": "19:00",
+        "end": "21:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Семейный ужин, бейсбол по ТВ", "en": "Family dinner, baseball on TV" }
+      },
+      {
+        "start": "21:00",
+        "end": "23:30",
+        "type": "meal_and_read",
+        "label": { "ru": "Чтение книг (70–80 в год)", "en": "Reading books (70–80 a year)" }
+      },
+      {
+        "start": "23:30",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Кинг — фанатик утреннего ритуала. С 8:30 до 13:00 он не отвечает никому, телефон выключен, дверь закрыта — даже если в дом ворвётся ураган. После обеда мозг уже не для творчества, и тогда открывается окно для писем и редакторов. Личное общение — вечером после прогулки и перед ужином. Чтение книг до полуночи — священно.",
+      "en": "King is a fanatic of the morning ritual. From 8:30 to 13:00 he answers no one — phone off, door closed — even if a hurricane breaks in. After lunch his brain is no longer fit for creation, so a window opens for letters and editors. Personal communication — evening, after the walk and before dinner. Reading books until midnight is sacred."
+    },
+    "allowedSlots": [
+      {
+        "start": "16:00",
+        "end": "17:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Послеобеденный час — переписка с агентом, редактором, издательством",
+          "en": "Afternoon hour — correspondence with agent, editor, publisher"
+        }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Час перед ужином — личные сообщения детям, друзьям",
+          "en": "An hour before dinner — personal messages to kids, friends"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Любители ждут вдохновения. Профессионалы встают и идут на работу.",
+      "en": "Amateurs sit and wait for inspiration, the rest of us just get up and go to work."
+    },
+    {
+      "ru": "Если хочешь быть писателем — делай две вещи каждый день: много читай и много пиши.",
+      "en": "If you want to be a writer, you must do two things above all others: read a lot and write a lot."
+    },
+    {
+      "ru": "Талант дешевле столовой соли. Что отделяет талантливого человека от успешного — упорный, упорный труд.",
+      "en": "Talent is cheaper than table salt. What separates the talented individual from the successful one is a lot of hard work."
+    },
+    {
+      "ru": "Дорога в ад выложена наречиями.",
+      "en": "The road to hell is paved with adverbs."
+    },
+    {
+      "ru": "Можно, конечно, писать без цели — но не ожидай, что кто-то будет это читать.",
+      "en": "You can, you should, and if you're brave enough to start, you will."
+    }
+  ]
+}

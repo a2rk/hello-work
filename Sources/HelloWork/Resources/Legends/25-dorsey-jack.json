@@ -1,0 +1,60 @@
+{
+  "id": "dorsey-jack",
+  "order": 25,
+  "name": { "ru": "Джек Дорси", "en": "Jack Dorsey" },
+  "fullName": { "ru": "Джек Патрик Дорси", "en": "Jack Patrick Dorsey" },
+  "yearsOfLife": "1976–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["twitter", "square", "block", "founder", "biohacker", "minimalist"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Сооснователь Twitter и Block (Square). Запустил Twitter в 2006 году, придумав «статус-апдейт длиной в SMS». Параллельно построил Square — компанию, которая принесла приём карт миллионам мелких бизнесов. Один из главных биохакеров Кремниевой долины: ест один раз в день в 18:30, проводит до 7 дней в году в полном молчании на ретритах випассаны, 2 часа медитации в день, по 5 миль ходит пешком на работу, ледяные ванны, сауна, soylent. Считает, что ясность достигается через лишение, а не через комфорт.",
+    "en": "Co-founder of Twitter and Block (Square). Launched Twitter in 2006 with the idea of a 'status update the length of an SMS.' In parallel built Square — a company that brought card payments to millions of small businesses. One of Silicon Valley's leading biohackers: eats one meal a day at 18:30, spends up to 7 days a year in total silence at Vipassana retreats, 2 hours of meditation daily, walks 5 miles to work, ice baths, sauna, soylent. Believes clarity comes through deprivation, not comfort."
+  },
+
+  "sources": [
+    { "type": "interview", "title": "Jack Dorsey on the Tim Ferriss Show", "author": "Tim Ferriss", "url": "https://tim.blog/jack-dorsey" },
+    { "type": "interview", "title": "Jack Dorsey on Joe Rogan Experience", "author": "Joe Rogan", "url": "https://open.spotify.com/episode/jack-dorsey-jre" },
+    { "type": "article", "title": "Inside Jack Dorsey's biohacking routine", "author": "Wired", "url": "https://www.wired.com/jack-dorsey-routine" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "05:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "05:30", "end": "06:30", "type": "morning_routine", "label": { "ru": "Медитация Vipassana (60 минут)", "en": "Vipassana meditation (60 minutes)" } },
+      { "start": "06:30", "end": "08:00", "type": "morning_routine", "label": { "ru": "Ходьба пешком на работу 8 км", "en": "Walking 5 miles to work" } },
+      { "start": "08:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Twitter / Block: продукт", "en": "Twitter / Block: product" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Walking meetings — без обеда (IF)", "en": "Walking meetings — no lunch (IF)" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Встречи команд, продуктовые ревью", "en": "Team meetings, product reviews" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин — единственная еда дня", "en": "Dinner — the only meal of the day" } },
+      { "start": "19:00", "end": "20:00", "type": "morning_routine", "label": { "ru": "Сауна 30 мин + ледяная ванна 5 мин", "en": "30-min sauna + 5-min ice bath" } },
+      { "start": "20:00", "end": "21:30", "type": "leisure_and_reflection", "label": { "ru": "Личное время, дневник", "en": "Personal time, journaling" } },
+      { "start": "21:30", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение", "en": "Reading" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Дорси организовал жизнь как дзен-монастырь с биохакингом. Утро — медитация и 8 километров пешком, ноль уведомлений. Рабочая переписка идёт во время walking meetings в обед — он буквально ходит и отвечает голосом. Личные сообщения — час после сауны и перед чтением, в спокойном состоянии.",
+      "en": "Dorsey runs his life like a zen monastery with biohacking on top. Morning — meditation and a 5-mile walk, zero notifications. Work correspondence happens during walking meetings at lunch — he literally walks and replies by voice. Personal messages — an hour after sauna and before reading, in a calm state."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Walking meeting — рабочие чаты на ходу", "en": "Walking meeting — work chats on the move" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после сауны и перед чтением — личные сообщения в спокойном состоянии", "en": "An hour after sauna and before reading — personal messages in a calm state" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Если у тебя нет ясности — лишай себя комфорта.", "en": "Discomfort is the doorway to clarity." },
+    { "ru": "Лучшее, что я для себя сделал — научился сидеть в тишине 10 дней подряд.", "en": "The best thing I've done for myself is learn to sit in silence for 10 days." },
+    { "ru": "Каждое уведомление — это маленькое решение, которое крадёт твоё внимание.", "en": "Every notification is a small decision someone else made for you." },
+    { "ru": "Я предпочитаю двигаться легко через жизнь — меньше вещей, меньше слов, меньше шума.", "en": "I want to be a master of staying still." },
+    { "ru": "Сосредоточенность — это умение говорить «нет» сотне хороших идей.", "en": "Focus is about saying no to a hundred good ideas." }
+  ]
+}

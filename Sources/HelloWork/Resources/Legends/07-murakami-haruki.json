@@ -1,0 +1,149 @@
+{
+  "id": "murakami-haruki",
+  "order": 7,
+  "name": {
+    "ru": "Харуки Мураками",
+    "en": "Haruki Murakami"
+  },
+  "fullName": {
+    "ru": "Харуки Мураками",
+    "en": "Haruki Murakami"
+  },
+  "yearsOfLife": "1949–",
+  "era": "modern",
+  "field": "writer",
+  "tags": ["novelist", "translator", "marathon_runner", "discipline", "self_made"],
+  "nationality": "JP",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Японский писатель, автор «Норвежского леса», «Кафки на пляже» и десятка романов, переведённых на 50 языков. До 29 лет держал джаз-бар, потом за одну ночь решил стать писателем — и с тех пор живёт в одном и том же режиме без выходных: подъём в 4 утра, шесть часов письма, десять километров бега, чтение, музыка, сон в 21:00. Считает, что писательство — это физический спорт: побеждает не самый талантливый, а тот, кто додержался до конца марафона.",
+    "en": "Japanese novelist, author of Norwegian Wood, Kafka on the Shore, and a dozen novels translated into 50 languages. Ran a jazz bar until 29, then decided overnight to become a writer — and has lived the same routine without breaks ever since: wake at 4 AM, six hours of writing, ten kilometers of running, reading, music, sleep at 9 PM. He considers writing a physical sport: the winner isn't the most talented but the one who lasts to the end of the marathon."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "What I Talk About When I Talk About Running",
+      "author": "Haruki Murakami",
+      "url": "https://www.penguinrandomhouse.com/books/151177/what-i-talk-about-when-i-talk-about-running-by-haruki-murakami/"
+    },
+    {
+      "type": "interview",
+      "title": "Haruki Murakami, The Art of Fiction No. 182",
+      "author": "The Paris Review",
+      "url": "https://www.theparisreview.org/interviews/2/the-art-of-fiction-no-182-haruki-murakami"
+    },
+    {
+      "type": "article",
+      "title": "The Daily Routines of Famous Writers: Haruki Murakami",
+      "author": "Brain Pickings",
+      "url": "https://www.themarginalian.org/2013/05/16/haruki-murakami-on-running/"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "04:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "04:00",
+        "end": "10:00",
+        "type": "deep_work",
+        "label": { "ru": "Письмо: 6 часов нон-стоп", "en": "Writing: 6 hours straight" }
+      },
+      {
+        "start": "10:00",
+        "end": "12:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Бег 10 км или плавание 1.5 км", "en": "10K run or 1.5K swim" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Лёгкий обед", "en": "Light lunch" }
+      },
+      {
+        "start": "13:00",
+        "end": "18:00",
+        "type": "deep_work",
+        "label": { "ru": "Переводы и правки", "en": "Translation work, edits" }
+      },
+      {
+        "start": "18:00",
+        "end": "20:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Ужин с женой, музыка, виниловые пластинки", "en": "Dinner with wife, music, vinyl records" }
+      },
+      {
+        "start": "20:00",
+        "end": "21:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Чтение книг", "en": "Reading books" }
+      },
+      {
+        "start": "21:00",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Мураками — мастер ритма. Утро — священное письмо, никаких отвлечений в принципе. Рабочие чаты с редакторами и переводчиками — после обеда, в часы правок, когда мозг уже не годится для творчества. Личное общение — вечер с женой и музыкой. После 21:00 телефон уходит в сон вместе с хозяином.",
+      "en": "Murakami is a master of rhythm. Mornings are sacred writing time, zero distractions allowed. Work chats with editors and translators — afternoon, during the editing block when his brain is no longer fit for creation. Personal communication — evening with wife and music. After 9 PM the phone goes to sleep with its owner."
+    },
+    "allowedSlots": [
+      {
+        "start": "13:00",
+        "end": "14:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Час после обеда — переписка с редакторами и переводчиками",
+          "en": "An hour after lunch — correspondence with editors and translators"
+        }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Час перед ужином — личные сообщения, потом телефон откладывается",
+          "en": "An hour before dinner — personal messages, then the phone is set aside"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Боль неизбежна. Страдание — твой выбор.",
+      "en": "Pain is inevitable. Suffering is optional."
+    },
+    {
+      "ru": "То, что ты ищешь, никогда не придёт в той форме, в которой ты ждёшь.",
+      "en": "Whatever it is you're seeking won't come in the form you're expecting."
+    },
+    {
+      "ru": "Если читать только то, что читают все остальные, — будешь думать только то, что думают все остальные.",
+      "en": "If you only read the books that everyone else is reading, you can only think what everyone else is thinking."
+    },
+    {
+      "ru": "Каждый день я бегу, чтобы стать пустым. Это и есть самое главное в моей работе.",
+      "en": "Every day I run to acquire a void. That, more than anything, is what running means to me."
+    },
+    {
+      "ru": "Талант не работает, если не подкреплён фокусом и выносливостью.",
+      "en": "Talent has nothing to do with it. Focus and endurance — those are what matter."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "walton-sam",
+  "order": 50,
+  "name": { "ru": "Сэм Уолтон", "en": "Sam Walton" },
+  "fullName": { "ru": "Сэмюэл Мур Уолтон", "en": "Samuel Moore Walton" },
+  "yearsOfLife": "1918–1992",
+  "era": "20th_century",
+  "field": "industrialist",
+  "tags": ["walmart", "retail", "self_made", "founder", "early_riser"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Основатель Walmart — крупнейшей компании в мире по выручке ($600 миллиардов). Сын фермера из Оклахомы, в 8 лет начал продавать газеты, в 18 уже владел двумя газетными маршрутами и зарабатывал больше своего отца. Открыл первый магазин в маленьком городке в Арканзасе в 1962 году — он считал, что обслуживать сельскую Америку, которую все игнорируют, выгоднее, чем драться за города. К 1985-му стал самым богатым человеком в США. Просыпался в 4:30, лично летал на маленьком самолёте между магазинами, знал имена тысяч сотрудников. Каждое утро в 7:30 проводил Walmart Cheer — кричалку с командой, как тренер с футболистами.",
+    "en": "Founder of Walmart — the world's largest company by revenue ($600 billion). Son of an Oklahoma farmer, started selling newspapers at 8, by 18 owned two paper routes and was earning more than his father. Opened his first store in a small Arkansas town in 1962 — he believed serving rural America that everyone ignored was more profitable than fighting over cities. By 1985 he was the wealthiest man in the US. Woke at 4:30, personally flew a small plane between stores, knew the names of thousands of employees. Every morning at 7:30 he led the Walmart Cheer — a chant with the team, like a coach with football players."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Sam Walton: Made in America", "author": "Sam Walton, John Huey", "url": "https://www.penguinrandomhouse.com/books/sam-walton-made-in-america" },
+    { "type": "article", "title": "Inside Sam Walton's morning routine", "author": "Walmart Heritage", "url": "https://corporate.walmart.com/about/history" },
+    { "type": "article", "title": "How Sam Walton built Walmart", "author": "Forbes", "url": "https://www.forbes.com/sam-walton-walmart" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "04:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "04:30", "end": "05:30", "type": "morning_routine", "label": { "ru": "Подъём, кофе, обзор данных продаж", "en": "Wake, coffee, sales data review" } },
+      { "start": "05:30", "end": "07:00", "type": "deep_work", "label": { "ru": "Заезд в магазин до открытия — наблюдение за полками", "en": "Drive to a store before opening — checking the shelves" } },
+      { "start": "07:00", "end": "07:30", "type": "comms", "label": { "ru": "Walmart Cheer с командой магазина", "en": "Walmart Cheer with the store team" } },
+      { "start": "07:30", "end": "08:30", "type": "meal_and_read", "label": { "ru": "Завтрак с менеджерами магазина", "en": "Breakfast with store managers" } },
+      { "start": "08:30", "end": "12:00", "type": "deep_work", "label": { "ru": "Полёт на личном самолёте в следующий магазин", "en": "Flying his own plane to the next store" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с офисом в Бентонвилле", "en": "Lunch, correspondence with the Bentonville office" } },
+      { "start": "13:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Обходы магазинов, разговоры с продавцами", "en": "Walking stores, talking to clerks" } },
+      { "start": "17:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Возвращение домой, охота на куропаток", "en": "Flying home, quail hunting" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с Хелен + личные звонки", "en": "Dinner with Helen + personal calls" } },
+      { "start": "21:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Уолтон считал, что СЕО магазинной сети должен быть в магазине, а не в офисе. Деловая переписка с центральным офисом — обеденный час, единственное окно «бумажной работы». Личное общение — два часа после ужина с женой Хелен и четырьмя детьми. Утро начинается со ставшей легендарной кричалки в магазине.",
+      "en": "Walton believed the CEO of a retail chain belongs in stores, not offices. Business correspondence with HQ — the lunch hour, the only 'paperwork' window. Personal communication — two hours after dinner with his wife Helen and their four children. The morning starts with the legendary store-floor chant."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — переписка с офисом в Бентонвилле", "en": "Lunch hour — correspondence with the Bentonville office" } },
+      { "start": "19:30", "end": "20:30", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час за ужином — звонки и сообщения семье", "en": "Dinner hour — calls and messages to family" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Только один босс — клиент. Он может уволить кого угодно в компании, просто потратив деньги в другом месте.", "en": "There is only one boss — the customer. He can fire everybody in the company, from the chairman on down, simply by spending his money somewhere else." },
+    { "ru": "Будь любопытен, смотри по сторонам. Лучшие идеи я украл у конкурентов.", "en": "Most everything I've done I've copied from somebody else." },
+    { "ru": "Цени каждый доллар, который зарабатываешь — потому что покупатель отдал тебе свой.", "en": "Outstanding leaders go out of their way to boost the self-esteem of their personnel." },
+    { "ru": "Высокие ожидания — ключ ко всему.", "en": "High expectations are the key to everything." },
+    { "ru": "Если ты любишь свою работу — ты будешь делать её лучше. Если делаешь её лучше — клиенты вернутся.", "en": "If you love your work, you'll be out there every day trying to do it the best you possibly can." }
+  ]
+}

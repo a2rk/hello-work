@@ -1,0 +1,155 @@
+{
+  "id": "huang-jensen",
+  "order": 3,
+  "name": {
+    "ru": "Дженсен Хуанг",
+    "en": "Jensen Huang"
+  },
+  "fullName": {
+    "ru": "Дженсен Хуан Хуанг",
+    "en": "Jen-Hsun \"Jensen\" Huang"
+  },
+  "yearsOfLife": "1963–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["semiconductors", "ai", "founder", "self_made", "engineering"],
+  "nationality": "US/TW",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Сооснователь и СЕО NVIDIA. Эмигрировал из Тайваня в 9 лет, мыл туалеты в Denny's во время учёбы, основал NVIDIA в 1993 году в обычном придорожном Denny's. 30 лет вёл компанию через семь моментов «вот-вот обанкротимся» — и довёл до триллионной капитализации. Работает 7 дней в неделю с момента, как открывает глаза, до того, как засыпает. Носит чёрную кожаную куртку, имеет 60 прямых подчинённых и считает, что величие куётся через страдание, а не через комфорт.",
+    "en": "Co-founder and CEO of NVIDIA. Immigrated from Taiwan at 9, scrubbed toilets at Denny's while studying, and founded NVIDIA at a roadside Denny's in 1993. Steered the company through seven 'we're about to go bankrupt' moments over 30 years — into a trillion-dollar empire. Works 7 days a week from the moment he wakes up until he falls asleep. Wears the same black leather jacket, has 60 direct reports, and believes greatness is forged through suffering, not comfort."
+  },
+
+  "sources": [
+    {
+      "type": "interview",
+      "title": "Jensen Huang at Stanford GSB",
+      "author": "Stanford Graduate School of Business",
+      "url": "https://www.youtube.com/watch?v=lqRkZaR3vsU"
+    },
+    {
+      "type": "interview",
+      "title": "Jensen Huang on Acquired Podcast",
+      "author": "Acquired",
+      "url": "https://www.acquired.fm/episodes/jensen-huang"
+    },
+    {
+      "type": "article",
+      "title": "Inside Jensen Huang's leadership style",
+      "author": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/features/jensen-huang-nvidia"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "06:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "06:00",
+        "end": "07:00",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, тренировка", "en": "Wake, workout" }
+      },
+      {
+        "start": "07:00",
+        "end": "08:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Завтрак, чтение отчётов", "en": "Breakfast, reading reports" }
+      },
+      {
+        "start": "08:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Engineering reviews, продуктовая стратегия", "en": "Engineering reviews, product strategy" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "comms",
+        "label": { "ru": "Обед, разбор писем команды", "en": "Lunch, going through team emails" }
+      },
+      {
+        "start": "13:00",
+        "end": "19:00",
+        "type": "deep_work",
+        "label": { "ru": "Встречи 1:1 и большие ревью", "en": "1:1s and big reviews" }
+      },
+      {
+        "start": "19:00",
+        "end": "21:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Семейный ужин", "en": "Family dinner" }
+      },
+      {
+        "start": "21:00",
+        "end": "22:00",
+        "type": "comms",
+        "label": { "ru": "Личные звонки, переписка", "en": "Personal calls, messages" }
+      },
+      {
+        "start": "22:00",
+        "end": "24:00",
+        "type": "deep_work",
+        "label": { "ru": "Ночное чтение / стратегия", "en": "Late reading / strategy" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Хуанг управляет 60-ю прямыми подчинёнными через короткие письма «top-5 things» — асинхронно, без созвонов. Рабочие чаты у него идут потоком в обед (когда он быстро ест). Личные сообщения — короткое окно после семейного ужина. Утро и вечерние часы стратегии — без отвлечений.",
+      "en": "Huang manages 60 direct reports through short 'top-5 things' emails — async, no calls. Work chats stream in at lunch (he eats fast). Personal messages get a short window after family dinner. Mornings and late strategy hours stay distraction-free."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Обеденный поток top-5 апдейтов от команд — час и закрыли",
+          "en": "Lunchtime stream of top-5 updates from teams — one hour, done"
+        }
+      },
+      {
+        "start": "21:00",
+        "end": "22:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Час после семейного ужина — личные звонки и сообщения",
+          "en": "An hour after family dinner — personal calls and messages"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Я работаю с момента, как просыпаюсь, до момента, как ложусь спать. Семь дней в неделю. Когда не работаю — думаю о работе. Когда работаю — работаю.",
+      "en": "I work from the moment I wake up to the moment I go to bed. I work seven days a week. When I'm not working, I'm thinking about work. And when I'm working, I'm working."
+    },
+    {
+      "ru": "Я бы предпочёл страдать, чем не страдать. Величие рождается из характера, а характер выковывается через страдание.",
+      "en": "I'd rather suffer than not. Greatness comes from character, and character isn't formed out of smart people; it's formed out of people who suffered."
+    },
+    {
+      "ru": "Не танцуй на работу — беги к ней.",
+      "en": "Don't tap dance to a job. Run to it."
+    },
+    {
+      "ru": "Боль и страдания строят характер. Характер строит устойчивость.",
+      "en": "Pain and suffering build character. Character builds resilience."
+    },
+    {
+      "ru": "Если мы не меняемся — мы вымираем.",
+      "en": "If we don't change, we will become extinct."
+    }
+  ]
+}

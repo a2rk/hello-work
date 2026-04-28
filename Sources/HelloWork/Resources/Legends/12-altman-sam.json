@@ -1,0 +1,161 @@
+{
+  "id": "altman-sam",
+  "order": 12,
+  "name": {
+    "ru": "Сэм Альтман",
+    "en": "Sam Altman"
+  },
+  "fullName": {
+    "ru": "Сэмюэл Харрис Альтман",
+    "en": "Samuel Harris Altman"
+  },
+  "yearsOfLife": "1985–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["openai", "ai", "y_combinator", "founder", "investor"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "СЕО OpenAI, человек, выпустивший ChatGPT и за полгода изменивший то, как 200 миллионов людей думают, работают и пишут. Открыл первую компанию в 19, продал её, пришёл в Y Combinator и стал президентом — превратил его в самый влиятельный акселератор мира. В 2015 году взял $1 млрд от Маска и Microsoft, чтобы построить AGI. Спит 7 часов, работает в режиме «всегда онлайн с командой», пишет блог-посты по продуктивности, в которых жёстко советует: «делай меньше — но самое важное».",
+    "en": "CEO of OpenAI, the man who shipped ChatGPT and in six months changed how 200 million people think, work, and write. Started his first company at 19, sold it, joined Y Combinator and became its president — turning it into the most influential accelerator in the world. In 2015 he took $1 billion from Musk and Microsoft to build AGI. Sleeps 7 hours, runs in 'always online with the team' mode, writes productivity blog posts with one core lesson: do less — but only the most important things."
+  },
+
+  "sources": [
+    {
+      "type": "article",
+      "title": "Productivity",
+      "author": "Sam Altman blog",
+      "url": "https://blog.samaltman.com/productivity"
+    },
+    {
+      "type": "interview",
+      "title": "Sam Altman on Lex Fridman Podcast",
+      "author": "Lex Fridman",
+      "url": "https://lexfridman.com/sam-altman/"
+    },
+    {
+      "type": "article",
+      "title": "Inside Sam Altman's daily routine",
+      "author": "The Information",
+      "url": "https://www.theinformation.com/sam-altman-routine"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "01:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Чтение перед сном", "en": "Reading before bed" }
+      },
+      {
+        "start": "01:00",
+        "end": "08:00",
+        "type": "sleep",
+        "label": { "ru": "Сон (7 часов — обязательно)", "en": "Sleep (7 hours — non-negotiable)" }
+      },
+      {
+        "start": "08:00",
+        "end": "08:30",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, без завтрака — кофе + витамины", "en": "Wake, no breakfast — coffee + vitamins" }
+      },
+      {
+        "start": "08:30",
+        "end": "09:30",
+        "type": "deep_work",
+        "label": { "ru": "Лучший час дня — самая важная задача", "en": "Best hour of the day — the most important task" }
+      },
+      {
+        "start": "09:30",
+        "end": "13:00",
+        "type": "deep_work",
+        "label": { "ru": "Глубокая работа: продукт, ресёрч", "en": "Deep work: product, research" }
+      },
+      {
+        "start": "13:00",
+        "end": "14:00",
+        "type": "comms",
+        "label": { "ru": "Обед, рабочие звонки", "en": "Lunch, work calls" }
+      },
+      {
+        "start": "14:00",
+        "end": "19:00",
+        "type": "deep_work",
+        "label": { "ru": "Встречи 1:1, инвесторы, команда", "en": "1:1s, investors, team" }
+      },
+      {
+        "start": "19:00",
+        "end": "20:00",
+        "type": "morning_routine",
+        "label": { "ru": "Тренировка / прогулка", "en": "Workout / walk" }
+      },
+      {
+        "start": "20:00",
+        "end": "22:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Ужин с партнёром", "en": "Dinner with partner" }
+      },
+      {
+        "start": "22:00",
+        "end": "24:00",
+        "type": "deep_work",
+        "label": { "ru": "Поздние мысли, заметки, посты", "en": "Late thinking, notes, posts" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Альтман — публичная фигура и активный пользователь Twitter, но в собственной работе он жёстко защищает первый утренний час: это единственное время, когда мозг работает на 100%, и его нельзя сжигать на чаты. Рабочая переписка — час в обед. Личные сообщения — окно перед ужином с партнёром.",
+      "en": "Altman is a public figure and active on Twitter, but in his own work he fiercely protects the first morning hour: that's when the brain is at 100% and you can't burn it on chats. Work correspondence — one hour at lunch. Personal messages — a window before dinner with his partner."
+    },
+    "allowedSlots": [
+      {
+        "start": "13:00",
+        "end": "14:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Обеденный час с командой — все рабочие чаты в одном окне",
+          "en": "Lunch hour with the team — all work chats in one window"
+        }
+      },
+      {
+        "start": "19:30",
+        "end": "20:30",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Час перед ужином — личные сообщения друзьям и близким",
+          "en": "An hour before dinner — personal messages to friends and family"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Делай меньше. Но обязательно делай самое важное.",
+      "en": "Do less. But make sure you do what's most important."
+    },
+    {
+      "ru": "Лучше пройти невозможный, но действительно ценный путь, чем лёгкий и бессмысленный.",
+      "en": "It's better to attempt something that you really care about and is hard than something easy and meaningless."
+    },
+    {
+      "ru": "Самые продуктивные люди, которых я знаю, нечеловечески сосредоточены на одной задаче за раз.",
+      "en": "The most productive people I know are inhumanly focused on one task at a time."
+    },
+    {
+      "ru": "Уровень амбиций определяет, кого ты привлечёшь и сколько ты сделаешь.",
+      "en": "Your level of ambition determines who you attract and how much you accomplish."
+    },
+    {
+      "ru": "Никогда не работай с теми, кто не считает работу своим главным приоритетом.",
+      "en": "Never work with people who don't consider work the top priority."
+    }
+  ]
+}

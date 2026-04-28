@@ -1,0 +1,161 @@
+{
+  "id": "cook-tim",
+  "order": 10,
+  "name": {
+    "ru": "Тим Кук",
+    "en": "Tim Cook"
+  },
+  "fullName": {
+    "ru": "Тимоти Дональд Кук",
+    "en": "Timothy Donald Cook"
+  },
+  "yearsOfLife": "1960–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["apple", "operations", "ceo", "early_riser", "discipline"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "СЕО Apple с 2011 года, человек, который превратил компанию в первый в мире триллион-долларовый бизнес. Сын работяги с верфи и аптекаря из Алабамы. Просыпается в 3:45 утра — каждый день, без выходных. Первое, что делает — читает 700–800 писем от пользователей и команды. К 5:00 уже в спортзале, к 6:30 в офисе. Не пьёт, не курит, не ходит на тусовки. Говорит, что лучшие лидеры — те, кто работает дольше, тише и упрямее всех вокруг.",
+    "en": "CEO of Apple since 2011, the man who turned the company into the world's first trillion-dollar business. Son of a shipyard worker and a pharmacist from Alabama. Wakes at 3:45 AM — every day, no exceptions. The first thing he does is read 700–800 emails from users and his team. He's at the gym by 5:00, at the office by 6:30. Doesn't drink, doesn't smoke, doesn't party. Says the best leaders are the ones who work longer, quieter, and more stubbornly than everyone around them."
+  },
+
+  "sources": [
+    {
+      "type": "interview",
+      "title": "Tim Cook: The Genius Behind Steve",
+      "author": "Time Magazine",
+      "url": "https://time.com/tim-cook-apple-ceo"
+    },
+    {
+      "type": "book",
+      "title": "Tim Cook: The Genius Who Took Apple to the Next Level",
+      "author": "Leander Kahney",
+      "url": "https://www.penguinrandomhouse.com/books/tim-cook-leander-kahney"
+    },
+    {
+      "type": "article",
+      "title": "Tim Cook starts his day at 3:45 AM",
+      "author": "CNBC Make It",
+      "url": "https://www.cnbc.com/tim-cook-morning-routine-apple-ceo"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "03:45",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "03:45",
+        "end": "04:00",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, кофе", "en": "Wake, coffee" }
+      },
+      {
+        "start": "04:00",
+        "end": "05:00",
+        "type": "comms",
+        "label": { "ru": "Чтение 700–800 писем от пользователей и команды", "en": "Reading 700–800 emails from users and team" }
+      },
+      {
+        "start": "05:00",
+        "end": "06:30",
+        "type": "morning_routine",
+        "label": { "ru": "Спортзал", "en": "Gym" }
+      },
+      {
+        "start": "06:30",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Apple Park: операционные ревью, продукт", "en": "Apple Park: operational reviews, product" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Обед в кафетерии Apple Park", "en": "Lunch at Apple Park cafeteria" }
+      },
+      {
+        "start": "13:00",
+        "end": "18:00",
+        "type": "deep_work",
+        "label": { "ru": "Встречи 1:1, стратегия", "en": "1:1s, strategy" }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Лёгкий ужин, подготовка к завтра", "en": "Light dinner, prep for tomorrow" }
+      },
+      {
+        "start": "19:00",
+        "end": "21:30",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Личное время, чтение", "en": "Personal time, reading" }
+      },
+      {
+        "start": "21:30",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "У Кука работа начинается раньше, чем у большинства людей — будильник. Утренний час 4:00–5:00 он буквально посвящает разбору рабочей переписки, никаких отвлечений. Личные сообщения — короткое окно вечером перед сном. В рабочие часы и спортзал — полная тишина.",
+      "en": "Cook's workday begins before most people's alarms go off. From 4:00 to 5:00 he literally clears his work correspondence, no distractions. Personal messages get a short window in the evening before bed. During the workday and gym — total silence."
+    },
+    "allowedSlots": [
+      {
+        "start": "04:00",
+        "end": "05:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Утренний почтовый разбор — пока остальные спят",
+          "en": "Morning email sweep — while everyone else is asleep"
+        }
+      },
+      {
+        "start": "20:00",
+        "end": "21:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Час перед сном — личные сообщения и ответы близким",
+          "en": "An hour before bed — personal messages and replies to loved ones"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Просыпайся раньше всех. Работай дольше всех. И тогда никто тебя не обгонит.",
+      "en": "Wake up earlier than everyone. Work later than everyone. Nobody will pass you."
+    },
+    {
+      "ru": "Жизнь хрупкая. Мы не получаем гарантий завтрашнего дня. Делайте сегодня то, что важно.",
+      "en": "Life is fragile. We're not guaranteed a tomorrow. Do what matters now."
+    },
+    {
+      "ru": "Тебе не надо иметь все ответы. Тебе надо иметь смелость двигаться, когда ответов нет.",
+      "en": "You don't have to have all the answers. You need the courage to move when you don't."
+    },
+    {
+      "ru": "Если делать только то, что было раньше — никогда не превзойдёшь то, что было.",
+      "en": "If you only do what's been done, you'll never surpass what's been done."
+    },
+    {
+      "ru": "Лучшие в мире не работают над тем, что популярно. Они работают над тем, что верно.",
+      "en": "The best in the world don't work on what's popular. They work on what's right."
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "carnegie-andrew",
+  "order": 31,
+  "name": { "ru": "Эндрю Карнеги", "en": "Andrew Carnegie" },
+  "fullName": { "ru": "Эндрю Карнеги", "en": "Andrew Carnegie" },
+  "yearsOfLife": "1835–1919",
+  "era": "19th_century",
+  "field": "industrialist",
+  "tags": ["steel", "philanthropy", "self_made", "founder", "libraries"],
+  "nationality": "US/UK",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Король стали, основатель Carnegie Steel, второй по богатству человек в истории Америки после Рокфеллера. Сын безработного ткача из Шотландии, эмигрировал в США в 13 лет, начал работать на хлопковой фабрике за $1.20 в неделю. К 30 годам стал миллионером, к 65 — продал свою империю за $480 миллионов и потратил остаток жизни на то, чтобы раздать все деньги: построил 2 509 публичных библиотек по всему миру (включая в Москве и Киеве), основал университеты, пенсионные фонды для учителей, музыкальные залы. Девиз жизни: «Человек, который умирает богатым — умирает обесчещенным».",
+    "en": "Steel king, founder of Carnegie Steel, the second wealthiest man in American history after Rockefeller. Son of an unemployed weaver from Scotland, he emigrated to the US at 13 and started work in a cotton mill for $1.20 a week. By 30 he was a millionaire, at 65 he sold his empire for $480 million and spent the rest of his life giving away the money: 2,509 public libraries worldwide (including in Moscow and Kyiv), universities, teacher pension funds, concert halls. His life motto: 'The man who dies rich dies disgraced.'"
+  },
+
+  "sources": [
+    { "type": "book", "title": "Autobiography of Andrew Carnegie", "author": "Andrew Carnegie", "url": "https://www.gutenberg.org/ebooks/17976" },
+    { "type": "book", "title": "Andrew Carnegie", "author": "David Nasaw", "url": "https://www.penguinrandomhouse.com/books/295517/andrew-carnegie-by-david-nasaw" },
+    { "type": "article", "title": "The Gospel of Wealth", "author": "Andrew Carnegie", "url": "https://www.carnegie.org/about/our-history/gospelofwealth/" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:00", "end": "07:00", "type": "morning_routine", "label": { "ru": "Подъём, лёгкая зарядка", "en": "Wake, light exercise" } },
+      { "start": "07:00", "end": "08:00", "type": "meal_and_read", "label": { "ru": "Завтрак, утренние газеты", "en": "Breakfast, morning papers" } },
+      { "start": "08:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Управление сталелитейными заводами", "en": "Running the steel mills" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с менеджерами", "en": "Lunch, correspondence with managers" } },
+      { "start": "13:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Переговоры с банкирами и партнёрами", "en": "Negotiations with bankers and partners" } },
+      { "start": "17:00", "end": "18:00", "type": "morning_routine", "label": { "ru": "Прогулка пешком в Сентрал-Парк", "en": "Walk in Central Park" } },
+      { "start": "18:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с интеллектуалами (Марк Твен, Спенсер)", "en": "Dinner with intellectuals (Mark Twain, Spencer)" } },
+      { "start": "20:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение в личной библиотеке", "en": "Reading in his personal library" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Карнеги был коммуникатором — он построил империю не через работу руками, а через гениальный найм и переговоры. Деловая переписка с менеджерами заводов — обеденный час, единственное окно для рабочих чатов. Личное общение — ужины с лучшими умами эпохи (Марк Твен, Герберт Спенсер) — час перед самим ужином идёт на письма друзьям и сообщения близким.",
+      "en": "Carnegie was a communicator — he built his empire not through hands-on work but through brilliant hiring and negotiation. Business correspondence with mill managers — lunch hour, the only window for work chats. Personal communication — dinners with the era's greatest minds (Mark Twain, Herbert Spencer) — the hour before dinner goes to letters to friends and messages to loved ones."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты с управляющими заводов", "en": "Lunch hour — work chats with mill managers" } },
+      { "start": "17:00", "end": "18:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час прогулки перед ужином — личные сообщения", "en": "An hour walking before dinner — personal messages" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Человек, который умирает богатым — умирает обесчещенным.", "en": "The man who dies rich, dies disgraced." },
+    { "ru": "Сосредоточь свою энергию, мысли и капитал в одной точке. Положи все яйца в одну корзину — и следи за этой корзиной.", "en": "Concentrate your energies, your thoughts and your capital. Put all your eggs in one basket, and then watch that basket." },
+    { "ru": "Не отвлекайся на быстрые лёгкие деньги. Великие состояния делаются с фокусом.", "en": "Do not look for the next opportunity. The one you have in hand is the opportunity." },
+    { "ru": "Команда обычных людей с великой целью обыграет команду великих людей с обычными целями.", "en": "Teamwork is the ability to work together toward a common vision." },
+    { "ru": "Чем больше ты работаешь — тем больше тебе везёт.", "en": "Anything in life worth having is worth working for." }
+  ]
+}

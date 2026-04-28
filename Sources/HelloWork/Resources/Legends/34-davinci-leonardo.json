@@ -1,0 +1,58 @@
+{
+  "id": "davinci-leonardo",
+  "order": 34,
+  "name": { "ru": "Леонардо да Винчи", "en": "Leonardo da Vinci" },
+  "fullName": { "ru": "Леонардо ди сер Пьеро да Винчи", "en": "Leonardo di ser Piero da Vinci" },
+  "yearsOfLife": "1452–1519",
+  "era": "renaissance",
+  "field": "polymath",
+  "tags": ["renaissance", "painter", "engineer", "inventor", "polymath", "self_taught"],
+  "nationality": "IT",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Эталон человека Возрождения. Художник, инженер, анатом, архитектор, ботаник, музыкант, изобретатель — всё одновременно, и в каждой области впереди эпохи на 400 лет. Незаконнорожденный сын нотариуса из Винчи, не получил формального образования, выучил латынь сам в 40 лет. Написал «Тайную вечерю», «Мону Лизу», нарисовал летательный аппарат, парашют, танк, подшипник, водолазный костюм. Оставил 13 000 страниц записных книжек с зеркальным письмом — потому что был левшой и так удобнее. Спал короткими урывками, работал в одной картине годами, говорил: «Не каждый умеющий держать кисть — художник».",
+    "en": "The benchmark Renaissance man. Painter, engineer, anatomist, architect, botanist, musician, inventor — all at once, and 400 years ahead of his time in every field. Illegitimate son of a notary from Vinci, no formal education, taught himself Latin at 40. Painted the Last Supper, the Mona Lisa, sketched a flying machine, parachute, tank, ball bearing, diving suit. Left behind 13,000 notebook pages in mirror writing — because he was left-handed and that was more comfortable. Slept in short bursts, worked on a single painting for years, said: 'Not everyone who can hold a brush is a painter.'"
+  },
+
+  "sources": [
+    { "type": "book", "title": "Leonardo da Vinci", "author": "Walter Isaacson", "url": "https://www.simonandschuster.com/books/Leonardo-da-Vinci/Walter-Isaacson/9781501139154" },
+    { "type": "book", "title": "Leonardo's Notebooks", "author": "Leonardo da Vinci", "url": "https://www.gutenberg.org/files/5000/5000-h/5000-h.htm" },
+    { "type": "article", "title": "Leonardo's polyphasic sleep schedule: myth or reality?", "author": "Smithsonian", "url": "https://www.smithsonianmag.com/leonardo-sleep" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:00", "end": "07:00", "type": "morning_routine", "label": { "ru": "Подъём, медитация, чтение Овидия", "en": "Wake, meditation, reading Ovid" } },
+      { "start": "07:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Студия: живопись (только утром, лучший свет)", "en": "Studio: painting (mornings only — best light)" } },
+      { "start": "12:00", "end": "13:00", "type": "leisure_and_reflection", "label": { "ru": "Обед — простая вегетарианская еда", "en": "Lunch — simple vegetarian food" } },
+      { "start": "13:00", "end": "15:00", "type": "leisure_and_reflection", "label": { "ru": "Сиеста (он практиковал короткий сон)", "en": "Siesta (he practiced short sleep)" } },
+      { "start": "15:00", "end": "19:00", "type": "deep_work", "label": { "ru": "Анатомические вскрытия / инженерные эксперименты", "en": "Anatomical dissections / engineering experiments" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с учениками", "en": "Dinner with apprentices" } },
+      { "start": "20:00", "end": "23:00", "type": "deep_work", "label": { "ru": "Записные книжки: чертежи, изобретения (зеркальное письмо)", "en": "Notebooks: sketches, inventions (mirror writing)" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Леонардо был окружён патронами (Сфорца, Медичи, Чезаре Борджиа, король Франции) и учениками — но в работе беспощадно одинок. Личное общение — обед, потом ужин с учениками. Деловая переписка с патронами — вечернее окно перед записными книжками: он писал длинные письма с расчётами стоимости работ и графиками. Утренний свет — святой, для живописи.",
+      "en": "Leonardo was surrounded by patrons (Sforza, Medici, Cesare Borgia, the King of France) and apprentices — but ruthlessly alone in his work. Personal communication — lunch, then dinner with apprentices. Business correspondence with patrons — an evening window before the notebooks: he wrote long letters with cost estimates and timelines. Morning light was sacred, for painting."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Обед — час для друзей и учеников", "en": "Lunch — an hour for friends and apprentices" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час после ужина — переписка с патронами по контрактам", "en": "An hour after dinner — correspondence with patrons about contracts" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Учиться никогда не поздно. Истощение ума — единственная старость.", "en": "Learning never exhausts the mind." },
+    { "ru": "Простота — это конечная утончённость.", "en": "Simplicity is the ultimate sophistication." },
+    { "ru": "Я был настолько занят работой, что забыл устать.", "en": "I have been impressed with the urgency of doing. Knowing is not enough; we must apply." },
+    { "ru": "Не привязывайся к ремеслу, которое не любишь — оно убьёт тебя медленно.", "en": "It is easier to resist at the beginning than at the end." },
+    { "ru": "Глаз — окно души.", "en": "The eye sees a thing more clearly in dreams than the imagination awake." }
+  ]
+}

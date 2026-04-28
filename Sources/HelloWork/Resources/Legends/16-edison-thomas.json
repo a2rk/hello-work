@@ -1,0 +1,161 @@
+{
+  "id": "edison-thomas",
+  "order": 16,
+  "name": {
+    "ru": "Томас Эдисон",
+    "en": "Thomas Edison"
+  },
+  "fullName": {
+    "ru": "Томас Алва Эдисон",
+    "en": "Thomas Alva Edison"
+  },
+  "yearsOfLife": "1847–1931",
+  "era": "industrial",
+  "field": "inventor_scientist",
+  "tags": ["inventor", "engineering", "self_made", "industrialist", "patents"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Изобретатель электрической лампочки, фонографа, кинокамеры и ещё 1093 запатентованных устройств — человек, на которого работает половина повседневной жизни XX века. В 7 лет учитель назвал его «слабоумным» и выгнал из школы; мать учила его дома. В 21 открыл первую лабораторию, в 31 построил Менло-Парк — первую в мире индустриальную R&D-фабрику. Спал по 4 часа, ел спагетти прямо на верстаке и говорил, что гений — это 1% вдохновения и 99% пота. Никогда не уходил из лаборатории, пока эксперимент не завершён.",
+    "en": "Inventor of the electric lightbulb, phonograph, motion picture camera, and 1,093 other patents — the man behind half of 20th century daily life. At 7 his teacher called him 'addled' and threw him out of school; his mother taught him at home. At 21 he opened his first lab, at 31 he built Menlo Park — the world's first industrial R&D factory. Slept 4 hours a night, ate spaghetti right on the workbench, and said genius is 1% inspiration and 99% perspiration. Never left the lab until an experiment was finished."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Edison: A Biography",
+      "author": "Matthew Josephson",
+      "url": "https://www.wiley.com/edison-josephson"
+    },
+    {
+      "type": "article",
+      "title": "Edison's daily routine and napping habits",
+      "author": "Smithsonian Magazine",
+      "url": "https://www.smithsonianmag.com/innovation/thomas-edison-power-naps"
+    },
+    {
+      "type": "article",
+      "title": "Inside Menlo Park: how Edison invented invention",
+      "author": "American Heritage",
+      "url": "https://www.americanheritage.com/menlo-park-edison"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "02:00",
+        "type": "deep_work",
+        "label": { "ru": "Поздняя сессия в лаборатории", "en": "Late lab session" }
+      },
+      {
+        "start": "02:00",
+        "end": "06:00",
+        "type": "sleep",
+        "label": { "ru": "Сон (4 часа)", "en": "Sleep (4 hours)" }
+      },
+      {
+        "start": "06:00",
+        "end": "07:00",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, кофе, обзор журналов", "en": "Wake, coffee, journal review" }
+      },
+      {
+        "start": "07:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Менло-Парк: эксперименты, прототипы", "en": "Menlo Park: experiments, prototypes" }
+      },
+      {
+        "start": "12:00",
+        "end": "12:30",
+        "type": "meal_and_read",
+        "label": { "ru": "Обед прямо на верстаке", "en": "Lunch right on the workbench" }
+      },
+      {
+        "start": "12:30",
+        "end": "13:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Power nap (его легендарный 30-минутный сон)", "en": "Power nap (his legendary 30-minute sleep)" }
+      },
+      {
+        "start": "13:00",
+        "end": "18:00",
+        "type": "deep_work",
+        "label": { "ru": "Лаборатория: ведение 50+ параллельных экспериментов", "en": "Lab: running 50+ parallel experiments" }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Ужин с командой («muckers»)", "en": "Dinner with the team ('muckers')" }
+      },
+      {
+        "start": "19:00",
+        "end": "20:00",
+        "type": "comms",
+        "label": { "ru": "Письма инвесторам, патентным юристам", "en": "Letters to investors, patent lawyers" }
+      },
+      {
+        "start": "20:00",
+        "end": "24:00",
+        "type": "deep_work",
+        "label": { "ru": "Ночные эксперименты — самая продуктивная часть дня", "en": "Night experiments — the most productive part of the day" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Эдисон жил в лаборатории, она была и работой, и домом, и клубом. Личное общение для него — короткий обед с командой инженеров, которых он называл «muckers». Деловая переписка — час перед ночной сменой, когда надо ответить инвесторам и патентным юристам. Между этими окнами — две сессии в лаборатории, полная тишина и пот.",
+      "en": "Edison lived in his lab — it was workplace, home, and club. Personal communication for him meant a quick dinner with the engineering team he called the 'muckers.' Business correspondence — an hour before the night shift, replying to investors and patent lawyers. Between these windows — two lab sessions, total silence and sweat."
+    },
+    "allowedSlots": [
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Ужин с «muckers» — единственное окно для личного общения за день",
+          "en": "Dinner with the 'muckers' — the day's only window for personal contact"
+        }
+      },
+      {
+        "start": "19:00",
+        "end": "19:30",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Полчаса деловой переписки перед ночной сменой",
+          "en": "Half an hour of business correspondence before the night shift"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 90
+  },
+
+  "quotes": [
+    {
+      "ru": "Гений — это 1% вдохновения и 99% пота.",
+      "en": "Genius is one percent inspiration and ninety-nine percent perspiration."
+    },
+    {
+      "ru": "Я не провалился. Я просто нашёл 10 000 способов, которые не работают.",
+      "en": "I have not failed. I've just found 10,000 ways that won't work."
+    },
+    {
+      "ru": "Возможности упускают большинство людей, потому что они одеты в комбинезон и выглядят как работа.",
+      "en": "Opportunity is missed by most people because it is dressed in overalls and looks like work."
+    },
+    {
+      "ru": "Многие неудачники — это те, кто не понял, как близко они были к успеху, когда сдались.",
+      "en": "Many of life's failures are people who did not realize how close they were to success when they gave up."
+    },
+    {
+      "ru": "Лучший способ что-то сделать — это перестать говорить и начать делать.",
+      "en": "The value of an idea lies in the using of it."
+    }
+  ]
+}

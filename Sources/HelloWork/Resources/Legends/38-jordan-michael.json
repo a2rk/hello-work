@@ -1,0 +1,59 @@
+{
+  "id": "jordan-michael",
+  "order": 38,
+  "name": { "ru": "Майкл Джордан", "en": "Michael Jordan" },
+  "fullName": { "ru": "Майкл Джеффри Джордан", "en": "Michael Jeffrey Jordan" },
+  "yearsOfLife": "1963–",
+  "era": "modern",
+  "field": "athlete",
+  "tags": ["basketball", "nba", "chicago_bulls", "discipline", "competitor"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Шестикратный чемпион NBA, считается величайшим баскетболистом в истории. В 9-м классе был отчислен из школьной команды — слишком маленький. Это решение сделало его одержимым: тренировался каждое утро в 6:00 в школьном зале, через год вернулся в команду и стал её звездой. В Chicago Bulls создал династию, выиграв 6 чемпионатов за 8 лет. После каждой победы возвращался в зал на следующее утро в 6:00, чтобы тренироваться — потому что «есть кто-то, кто тренируется прямо сейчас, и я не хочу с ним играть, не подготовившись». Его «Last Dance» в 1998 — учебник одержимости в работе.",
+    "en": "Six-time NBA champion, considered the greatest basketball player in history. Cut from his school team in 9th grade — too small. That decision made him obsessed: he trained every morning at 6:00 in the school gym, made the team a year later, and became its star. With the Chicago Bulls he built a dynasty, winning 6 championships in 8 years. After every victory he returned to the gym the next morning at 6:00 to train — because 'someone is training right now and I don't want to play him without being ready.' His 'Last Dance' in 1998 is a textbook of work obsession."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Driven from Within", "author": "Michael Jordan", "url": "https://www.simonandschuster.com/books/Driven-from-Within" },
+    { "type": "interview", "title": "The Last Dance", "author": "ESPN/Netflix Documentary", "url": "https://www.netflix.com/title/80203144" },
+    { "type": "article", "title": "Michael Jordan's morning workouts", "author": "Sports Illustrated", "url": "https://www.si.com/nba/michael-jordan-routine" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:00", "end": "08:00", "type": "deep_work", "label": { "ru": "Утренняя тренировка: бег + бросок", "en": "Morning workout: running + shooting" } },
+      { "start": "08:00", "end": "09:00", "type": "meal_and_read", "label": { "ru": "Завтрак, восстановление", "en": "Breakfast, recovery" } },
+      { "start": "09:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Командная тренировка Bulls (Berto Center)", "en": "Bulls team practice (Berto Center)" } },
+      { "start": "12:00", "end": "13:00", "type": "meal_and_read", "label": { "ru": "Обед, лечение и физиотерапия", "en": "Lunch, treatment and physio" } },
+      { "start": "13:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Film study: разбор соперников", "en": "Film study: breaking down opponents" } },
+      { "start": "17:00", "end": "19:00", "type": "deep_work", "label": { "ru": "Предматчевая подготовка, разогрев", "en": "Pre-game prep, warm-up" } },
+      { "start": "19:00", "end": "22:00", "type": "deep_work", "label": { "ru": "Игра / просмотр других матчей лиги", "en": "Game / watching other league games" } },
+      { "start": "22:00", "end": "23:00", "type": "leisure_and_reflection", "label": { "ru": "Семейный ужин после матча", "en": "Family dinner after the game" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Джордан жил по баскетбольному календарю — день строился вокруг трёх тренировочных сессий. Личное общение — обеденное окно с физиотерапевтами и семьёй. Деловая переписка с тренерами и агентами — короткое окно перед сном после матча, когда тело отработало и можно сесть с телефоном. Утренняя тренировка — без отвлечений: «На тренировке нет уведомлений».",
+      "en": "Jordan lived on the basketball calendar — his day built around three training sessions. Personal communication — the lunch window with physios and family. Business correspondence with coaches and agents — a short window before bed after the game, when the body has worked and he can sit with a phone. Morning workout — no distractions: 'There are no notifications in practice.'"
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "12:30", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Полчаса с семьёй между тренировкой и film study", "en": "Half an hour with family between practice and film study" } },
+      { "start": "22:00", "end": "23:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час после матча — переписка с тренерами и агентами", "en": "An hour after the game — correspondence with coaches and agents" } }
+    ],
+    "totalAllowedMinutes": 90
+  },
+
+  "quotes": [
+    { "ru": "Я промахнулся 9 000 раз в карьере. Я проиграл 300 игр. 26 раз мне доверяли последний бросок, и я промахнулся. Я падал снова и снова. Поэтому я добился успеха.", "en": "I've missed more than 9,000 shots in my career. I've lost almost 300 games. 26 times I've been trusted to take the game-winning shot and missed. I've failed over and over again in my life. And that is why I succeed." },
+    { "ru": "Талант выигрывает игры, но командная работа и интеллект выигрывают чемпионаты.", "en": "Talent wins games, but teamwork and intelligence win championships." },
+    { "ru": "Преграды не останавливают тебя. Проблемы не останавливают тебя. Тебя останавливаешь только ты сам.", "en": "Obstacles don't have to stop you. If you run into a wall, don't turn around and give up. Figure out how to climb it, go through it, or work around it." },
+    { "ru": "Я могу принять провал — каждый где-то проваливается. Но я не могу принять то, что не пытался.", "en": "I can accept failure, everyone fails at something. But I can't accept not trying." },
+    { "ru": "Кто-то прямо сейчас тренируется, пока ты отдыхаешь. И когда вы встретитесь — он тебя обыграет.", "en": "Some people want it to happen, some wish it would happen, others make it happen." }
+  ]
+}

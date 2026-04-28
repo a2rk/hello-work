@@ -1,0 +1,155 @@
+{
+  "id": "tesla-nikola",
+  "order": 6,
+  "name": {
+    "ru": "Никола Тесла",
+    "en": "Nikola Tesla"
+  },
+  "fullName": {
+    "ru": "Никола Тесла",
+    "en": "Nikola Tesla"
+  },
+  "yearsOfLife": "1856–1943",
+  "era": "industrial",
+  "field": "inventor_scientist",
+  "tags": ["electricity", "engineering", "physics", "lone_genius", "polymath"],
+  "nationality": "US/RS",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Сербский инженер, перевернувший представление о том, что такое электричество. Изобрёл переменный ток, асинхронный двигатель, радио и беспроводную передачу энергии — всё, на чём держится современная цивилизация. Спал по 4 часа в сутки, работал в лаборатории по 18 часов, ходил пешком по 8 км в день и видел свои изобретения целиком в голове до того, как начинал чертёж. Умер в одиночестве в нью-йоркском отеле, оставив после себя 300 патентов и репутацию человека, которому будущее было важнее настоящего.",
+    "en": "Serbian engineer who rewrote what electricity could be. Invented alternating current, the induction motor, radio, and wireless power transmission — the foundation of modern civilization. Slept four hours a night, worked in his lab eighteen hours a day, walked five miles daily, and saw his inventions whole in his mind before drawing a single line. Died alone in a New York hotel, leaving behind 300 patents and a reputation of a man for whom the future mattered more than the present."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Tesla: Man Out of Time",
+      "author": "Margaret Cheney",
+      "url": "https://www.simonandschuster.com/books/Tesla/Margaret-Cheney/9780743215367"
+    },
+    {
+      "type": "book",
+      "title": "My Inventions: The Autobiography of Nikola Tesla",
+      "author": "Nikola Tesla",
+      "url": "https://www.gutenberg.org/ebooks/61370"
+    },
+    {
+      "type": "article",
+      "title": "Nikola Tesla's daily routine",
+      "author": "Smithsonian Magazine",
+      "url": "https://www.smithsonianmag.com/history/the-rise-and-fall-of-nikola-tesla-and-his-tower"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "04:00",
+        "type": "sleep",
+        "label": { "ru": "Сон (4 часа — больше не нужно)", "en": "Sleep (4 hours — that's enough)" }
+      },
+      {
+        "start": "04:00",
+        "end": "05:00",
+        "type": "morning_routine",
+        "label": { "ru": "Ментальный разбор задач", "en": "Mental walk-through of problems" }
+      },
+      {
+        "start": "05:00",
+        "end": "08:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Прогулка по Манхэттену 8 км", "en": "5-mile walk through Manhattan" }
+      },
+      {
+        "start": "08:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Лаборатория: эксперименты", "en": "Laboratory: experiments" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Обед в одиночестве", "en": "Lunch alone" }
+      },
+      {
+        "start": "13:00",
+        "end": "19:00",
+        "type": "deep_work",
+        "label": { "ru": "Глубокая работа: построение схем", "en": "Deep work: circuit design" }
+      },
+      {
+        "start": "19:00",
+        "end": "20:30",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Ужин в Waldorf-Astoria", "en": "Dinner at the Waldorf-Astoria" }
+      },
+      {
+        "start": "20:30",
+        "end": "22:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Кормление голубей в парке", "en": "Feeding pigeons in the park" }
+      },
+      {
+        "start": "22:00",
+        "end": "24:00",
+        "type": "deep_work",
+        "label": { "ru": "Поздняя работа в лаборатории", "en": "Late lab session" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Тесла был одиночкой и считал одиночество источником изобретений. Друзей и переписки у него было мало. Личные сообщения — короткое окно за обедом. Деловая переписка с инвесторами и Эдисоном — поздний вечер, когда лабораторные эксперименты завершены. Утро и весь рабочий день — абсолютная тишина с собственными мыслями.",
+      "en": "Tesla was a loner who treated solitude as the source of invention. He had few friends and little correspondence. Personal messages got a short lunch window. Business correspondence with investors and Edison — late evening, after lab experiments wrapped. Morning and the entire workday were absolute silence with his own thoughts."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:30",
+        "end": "13:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Полчаса за обедом — единственный социальный контакт за день",
+          "en": "Half an hour over lunch — the only social contact of the day"
+        }
+      },
+      {
+        "start": "22:00",
+        "end": "22:30",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Полчаса деловой переписки после поздних экспериментов",
+          "en": "Thirty minutes of business correspondence after late experiments"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 60
+  },
+
+  "quotes": [
+    {
+      "ru": "Я не думаю, что есть другой трепет, способный пройти через сердце человека сильнее, чем тот, который чувствует изобретатель, видя, как творение его ума разворачивается в успех.",
+      "en": "I do not think there is any thrill that can go through the human heart like that felt by the inventor as he sees some creation of the brain unfolding to success."
+    },
+    {
+      "ru": "Настоящее принадлежит им; будущее, ради которого я действительно работал, принадлежит мне.",
+      "en": "The present is theirs; the future, for which I really worked, is mine."
+    },
+    {
+      "ru": "Будь один — вот секрет изобретения. Будь один — именно тогда рождаются идеи.",
+      "en": "Be alone, that is the secret of invention; be alone, that is when ideas are born."
+    },
+    {
+      "ru": "Мне всё равно, что они украли мою идею. Мне важно, что у них самих ни одной нет.",
+      "en": "I don't care that they stole my idea. I care that they don't have any of their own."
+    },
+    {
+      "ru": "Если хочешь найти секреты вселенной — мысли в категориях энергии, частоты и вибрации.",
+      "en": "If you want to find the secrets of the universe, think in terms of energy, frequency and vibration."
+    }
+  ]
+}

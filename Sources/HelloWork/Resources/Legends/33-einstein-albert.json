@@ -1,0 +1,59 @@
+{
+  "id": "einstein-albert",
+  "order": 33,
+  "name": { "ru": "Альберт Эйнштейн", "en": "Albert Einstein" },
+  "fullName": { "ru": "Альберт Эйнштейн", "en": "Albert Einstein" },
+  "yearsOfLife": "1879–1955",
+  "era": "20th_century",
+  "field": "inventor_scientist",
+  "tags": ["physics", "relativity", "nobel", "polymath", "deep_work"],
+  "nationality": "DE/US",
+  "avatarUrl": null,
+  "intensity": 3,
+
+  "bio": {
+    "ru": "Создатель теории относительности — человек, переписавший представление о пространстве, времени и гравитации. В школе считался посредственным учеником и не мог найти академическую работу — устроился в патентное бюро в Берне, и именно там за один «чудесный год» (1905) написал четыре статьи, каждая из которых тянет на Нобелевскую премию. Получил её в 1921 году за фотоэлектрический эффект. Спал по 10 часов в сутки, гулял пешком до кампуса в Принстоне, играл на скрипке в перерывах между уравнениями. Считал, что для серьёзной мысли нужно много свободного времени — и работал максимум 4 часа в день.",
+    "en": "Creator of the theory of relativity — the man who rewrote our understanding of space, time, and gravity. Considered a mediocre student in school and unable to find academic work, he took a job at the Bern patent office — and there, in his 'miracle year' of 1905, he wrote four papers, each worthy of a Nobel Prize. He won it in 1921 for the photoelectric effect. Slept 10 hours a day, walked to campus at Princeton, played violin between equations. Believed serious thought requires plenty of free time — and worked at most 4 hours a day."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Einstein: His Life and Universe", "author": "Walter Isaacson", "url": "https://www.simonandschuster.com/books/Einstein/Walter-Isaacson/9780743264747" },
+    { "type": "book", "title": "The World as I See It", "author": "Albert Einstein", "url": "https://www.gutenberg.org/ebooks/52994" },
+    { "type": "article", "title": "Einstein's daily routine in Princeton", "author": "Institute for Advanced Study", "url": "https://www.ias.edu/einstein-routine" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "09:00", "type": "sleep", "label": { "ru": "Сон (10 часов — обязательно для мыслей)", "en": "Sleep (10 hours — essential for thinking)" } },
+      { "start": "09:00", "end": "10:00", "type": "morning_routine", "label": { "ru": "Подъём, завтрак, газета", "en": "Wake, breakfast, newspaper" } },
+      { "start": "10:00", "end": "13:00", "type": "deep_work", "label": { "ru": "Институт перспективных исследований: уравнения", "en": "Institute for Advanced Study: equations" } },
+      { "start": "13:00", "end": "14:00", "type": "meal_and_read", "label": { "ru": "Обед в столовой Принстона", "en": "Lunch in the Princeton cafeteria" } },
+      { "start": "14:00", "end": "15:30", "type": "leisure_and_reflection", "label": { "ru": "Прогулка пешком домой", "en": "Walk home" } },
+      { "start": "15:30", "end": "17:00", "type": "leisure_and_reflection", "label": { "ru": "Послеобеденный сон", "en": "Afternoon nap" } },
+      { "start": "17:00", "end": "19:00", "type": "deep_work", "label": { "ru": "Работа дома над статьями", "en": "Work at home on papers" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с Эльзой", "en": "Dinner with Elsa" } },
+      { "start": "20:00", "end": "22:00", "type": "leisure_and_reflection", "label": { "ru": "Скрипка / переписка / гости", "en": "Violin / letters / guests" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Эйнштейн работал максимум 4–5 часов в день, и это даёт интенсивность 3 — но в эти часы его невозможно было прервать. Личное общение — 1.5-часовая прогулка пешком домой через Принстон, его любимое время для разговоров с друзьями (и идей). Деловая переписка — вечером, когда дома, после ужина: ему писали учёные со всего мира, и он отвечал им сам.",
+      "en": "Einstein worked at most 4–5 hours a day, which earns intensity 3 — but during those hours nobody could interrupt him. Personal communication — a 1.5-hour walk home through Princeton, his favorite time for conversations with friends (and ideas). Business correspondence — evening, after dinner at home: scientists wrote him from all over the world and he replied himself."
+    },
+    "allowedSlots": [
+      { "start": "14:00", "end": "15:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Прогулка домой через Принстон — час разговоров с друзьями", "en": "Walking home through Princeton — an hour of conversations with friends" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час после ужина — академическая переписка с физиками мира", "en": "An hour after dinner — academic correspondence with physicists worldwide" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Не то чтобы я был так умён — просто я уделяю проблемам больше времени.", "en": "It's not that I'm so smart, it's just that I stay with problems longer." },
+    { "ru": "Воображение важнее знания. Знание ограничено — воображение объемлет весь мир.", "en": "Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world." },
+    { "ru": "Логика приведёт тебя из A в B. Воображение — куда угодно.", "en": "Logic will get you from A to B. Imagination will take you everywhere." },
+    { "ru": "Если ты не можешь объяснить просто — значит, недостаточно понимаешь.", "en": "If you can't explain it simply, you don't understand it well enough." },
+    { "ru": "Жизнь — как езда на велосипеде. Чтобы держать равновесие, нужно двигаться.", "en": "Life is like riding a bicycle. To keep your balance, you must keep moving." }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "feynman-richard",
+  "order": 35,
+  "name": { "ru": "Ричард Фейнман", "en": "Richard Feynman" },
+  "fullName": { "ru": "Ричард Филлипс Фейнман", "en": "Richard Phillips Feynman" },
+  "yearsOfLife": "1918–1988",
+  "era": "20th_century",
+  "field": "inventor_scientist",
+  "tags": ["physics", "nobel", "manhattan_project", "teaching", "polymath"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Нобелевский лауреат по физике, один из создателей квантовой электродинамики, участник Манхэттенского проекта. Сын торговца униформой из Бруклина, в 24 года уже работал в Лос-Аламосе над атомной бомбой — параллельно вскрывая сейфы коллег ради шутки. Учился в Caltech, играл на бонго, рисовал акт-фигуры в стрип-клубах, расследовал катастрофу шаттла Челленджер прямо на телекамеру со стаканом ледяной воды. Главный принцип жизни: «Я не знаю, что моё дело — но если я не получаю удовольствия, я не делаю это правильно». Считал любопытство — главным двигателем гениальности.",
+    "en": "Nobel laureate in physics, one of the creators of quantum electrodynamics, member of the Manhattan Project. Son of a uniform salesman from Brooklyn, at 24 he was already at Los Alamos working on the atomic bomb — while picking colleagues' safes for a joke. Taught at Caltech, played bongos, sketched nudes in strip clubs, investigated the Challenger disaster live on camera with a glass of ice water. His life principle: 'I don't know what my work is — but if I'm not having fun, I'm not doing it right.' He considered curiosity the engine of genius."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Surely You're Joking, Mr. Feynman!", "author": "Richard Feynman", "url": "https://wwnorton.com/books/9780393355642" },
+    { "type": "book", "title": "The Feynman Lectures on Physics", "author": "Richard Feynman", "url": "https://www.feynmanlectures.caltech.edu/" },
+    { "type": "interview", "title": "The Pleasure of Finding Things Out", "author": "BBC Horizon", "url": "https://www.bbc.co.uk/programmes/horizon-feynman" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "08:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "08:00", "end": "09:00", "type": "morning_routine", "label": { "ru": "Подъём, завтрак, газета", "en": "Wake, breakfast, newspaper" } },
+      { "start": "09:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Caltech: лекции студентам", "en": "Caltech: lectures to students" } },
+      { "start": "12:00", "end": "13:00", "type": "leisure_and_reflection", "label": { "ru": "Обед с физиками — самое любимое время", "en": "Lunch with physicists — his favorite time" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Ресёрч у доски, разговоры с аспирантами", "en": "Research at the blackboard, conversations with grad students" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с семьёй", "en": "Dinner with family" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Игра на бонго, рисование, время с дочерью", "en": "Playing bongos, sketching, time with daughter" } },
+      { "start": "21:00", "end": "23:00", "type": "deep_work", "label": { "ru": "Поздняя физика: уравнения дома", "en": "Late physics: equations at home" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Фейнман был самым социальным учёным своего поколения — обед в Caltech у него был окном для разговоров (и идей), а не просто едой. Деловая переписка с физиками — поздний вечер, когда дома и есть время сесть с пером. Утренние лекции и дневной ресёрч — без отвлечений. Главное правило: «Если тебе нужно срочно ответить — ты неправильно живёшь».",
+      "en": "Feynman was the most social scientist of his generation — Caltech lunch was a window for conversations (and ideas), not just food. Business correspondence with physicists — late evening, when at home with a pen. Morning lectures and afternoon research — no distractions. His main rule: 'If you need to reply urgently, you're living wrong.'"
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Обед с физиками — главное окно для общения", "en": "Lunch with physicists — the main social window" } },
+      { "start": "21:00", "end": "22:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час дома вечером — переписка с коллегами по физике", "en": "An hour at home in the evening — correspondence with physics colleagues" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Я родился, не зная — и есть только короткое время на то, чтобы это исправить.", "en": "I was born not knowing and have had only a little time to change that here and there." },
+    { "ru": "Первый принцип: не обманывай себя. Себя обмануть проще всего.", "en": "The first principle is that you must not fool yourself — and you are the easiest person to fool." },
+    { "ru": "Не имеет значения, насколько красива твоя теория — если она не согласуется с экспериментом, она неверна.", "en": "It doesn't matter how beautiful your theory is, if it doesn't agree with experiment, it's wrong." },
+    { "ru": "Нет ничего плохого в том, чтобы не знать. Стыдно — притворяться, что знаешь.", "en": "I would rather have questions that can't be answered than answers that can't be questioned." },
+    { "ru": "Если не получаешь удовольствия — ты делаешь это неправильно.", "en": "If you're not having fun, you're not doing it right." }
+  ]
+}

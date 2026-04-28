@@ -1,0 +1,59 @@
+{
+  "id": "vanderbilt-cornelius",
+  "order": 48,
+  "name": { "ru": "Корнелиус Вандербильт", "en": "Cornelius Vanderbilt" },
+  "fullName": { "ru": "Корнелиус Вандербильт", "en": "Cornelius Vanderbilt" },
+  "yearsOfLife": "1794–1877",
+  "era": "19th_century",
+  "field": "industrialist",
+  "tags": ["railroads", "shipping", "self_made", "founder", "tycoon"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "«Командор» — король железных дорог и пароходов Америки XIX века. Сын фермера со Стейтен-Айленда, в 11 лет ушёл из школы работать на лодке отца. В 16 лет занял у матери $100, купил парусную лодку и стал перевозить пассажиров и груз через залив Нью-Йорка — за лето заработал в три раза больше. К 30 годам владел флотом пароходов, к 70 — крупнейшей сетью железных дорог Америки. На момент смерти его состояние составляло $100 миллионов — больше, чем казна США. Спал 4 часа, просыпался в 5, ел простую еду до конца жизни. Мог не учиться правописанию, но считать в уме мог быстрее любого банкира.",
+    "en": "The 'Commodore' — king of America's 19th-century railroads and steamships. Son of a Staten Island farmer, he left school at 11 to work on his father's boat. At 16 he borrowed $100 from his mother, bought a sailboat, and started ferrying passengers and cargo across New York Harbor — earning three times the loan that summer. By 30 he owned a fleet of steamships, by 70 the largest railroad network in America. At his death his fortune was $100 million — more than the US Treasury. Slept 4 hours, woke at 5, ate simple food his whole life. He couldn't spell, but could do mental arithmetic faster than any banker."
+  },
+
+  "sources": [
+    { "type": "book", "title": "The First Tycoon: The Epic Life of Cornelius Vanderbilt", "author": "T.J. Stiles", "url": "https://www.penguinrandomhouse.com/books/the-first-tycoon" },
+    { "type": "book", "title": "Commodore: The Life of Cornelius Vanderbilt", "author": "Edward J. Renehan Jr.", "url": "https://www.basicbooks.com/commodore" },
+    { "type": "article", "title": "How Cornelius Vanderbilt built his empire", "author": "American Heritage", "url": "https://www.americanheritage.com/cornelius-vanderbilt" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "05:00", "type": "sleep", "label": { "ru": "Сон (4–5 часов)", "en": "Sleep (4–5 hours)" } },
+      { "start": "05:00", "end": "06:00", "type": "morning_routine", "label": { "ru": "Подъём, прогулка по Гудзону, газета", "en": "Wake, walk along the Hudson, newspaper" } },
+      { "start": "06:00", "end": "07:00", "type": "meal_and_read", "label": { "ru": "Завтрак (овсянка, как в детстве)", "en": "Breakfast (oatmeal, like in childhood)" } },
+      { "start": "07:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Офис на Уолл-стрит: операции, финансы", "en": "Wall Street office: operations, finances" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед в офисе, переписка с менеджерами портов и линий", "en": "Lunch in the office, correspondence with port and line managers" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Переговоры с банкирами, ревью маршрутов", "en": "Negotiations with bankers, route reviews" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Дорога домой в карете", "en": "Carriage ride home" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с семьёй", "en": "Dinner with family" } },
+      { "start": "20:00", "end": "22:00", "type": "leisure_and_reflection", "label": { "ru": "Виски (whist) с друзьями + личные сообщения", "en": "Whist with friends + personal messages" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Вандербильт работал по модели «5 утра — это уже поздно». Деловая переписка с управляющими — обеденный час, всё в одном окне. Личное общение — после ужина за карточным столом с друзьями (он любил вист). Утро и весь рабочий день — операции, операции, операции.",
+      "en": "Vanderbilt worked by the principle '5 AM is already late.' Business correspondence with managers — lunch hour, all in one window. Personal communication — after dinner at the card table with friends (he loved whist). Morning and the whole workday — operations, operations, operations."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочая переписка с управляющими портами и железными дорогами", "en": "Lunch hour — business correspondence with port and rail managers" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час за картами с друзьями — личное общение", "en": "An hour at cards with friends — personal contact" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Я не верю в законы, кроме одного: закон спроса и предложения.", "en": "Law! What do I care about the law? Hain't I got the power?" },
+    { "ru": "Я не подниму на тебя руку — потому что закон. Но я тебя разорю.", "en": "I won't sue you, for the law is too slow. I'll ruin you." },
+    { "ru": "Деньги — это просто сила быть полезным.", "en": "Money is the only power. Money will conquer the man who conquers everything else." },
+    { "ru": "Никогда не говори, что собираешься сделать. Делай.", "en": "Never tell anybody what you're going to do till you've done it." },
+    { "ru": "Я не позволю своим детям знать, насколько богат — иначе они станут лентяями.", "en": "Any fool can make a fortune; it takes a man of brains to hold onto it." }
+  ]
+}

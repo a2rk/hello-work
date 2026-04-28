@@ -1,0 +1,60 @@
+{
+  "id": "willink-jocko",
+  "order": 60,
+  "name": { "ru": "Джоко Виллинк", "en": "Jocko Willink" },
+  "fullName": { "ru": "Джон Грегори «Джоко» Виллинк", "en": "John Gregory 'Jocko' Willink" },
+  "yearsOfLife": "1971–",
+  "era": "modern",
+  "field": "athlete",
+  "tags": ["navy_seal", "discipline", "extreme_ownership", "early_riser", "leadership"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Бывший командир спецназа SEAL Team 3, ветеран битвы за Эр-Рамади в Ираке (2006) — самой кровавой за всю войну. Командовал Task Unit Bruiser — самым награждённым подразделением в эпоху войны с террором. После службы основал Echelon Front — консалтинговую фирму, где учит компании принципам лидерства SEAL. Написал «Extreme Ownership» — книгу, ставшую обязательной у CEO. Просыпается в 4:30 каждый день уже 30 лет, выкладывает фотографии своих часов в Twitter в стиле «Get After It». Девиз жизни: «Дисциплина — это свобода». Не пьёт, не курит, тренируется бразильским джиу-джитсу до сих пор, в 54 года побеждает на турнирах.",
+    "en": "Former commander of SEAL Team 3, veteran of the Battle of Ramadi in Iraq (2006) — the bloodiest of the entire war. Commanded Task Unit Bruiser — the most decorated unit of the War on Terror era. After service he founded Echelon Front, a consulting firm teaching companies the SEAL principles of leadership. Wrote Extreme Ownership — a book that became required reading for CEOs. Wakes at 4:30 every day, has for 30 years, posts photos of his watch on Twitter in the 'Get After It' style. His life motto: 'Discipline equals freedom.' Doesn't drink, doesn't smoke, still trains Brazilian jiu-jitsu — at 54 he wins tournaments."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Extreme Ownership", "author": "Jocko Willink, Leif Babin", "url": "https://us.macmillan.com/books/9781250067050/extreme-ownership" },
+    { "type": "book", "title": "Discipline Equals Freedom: Field Manual", "author": "Jocko Willink", "url": "https://us.macmillan.com/books/9781250156945/discipline-equals-freedom-field-manual" },
+    { "type": "interview", "title": "Jocko Willink on the Tim Ferriss Show", "author": "Tim Ferriss", "url": "https://tim.blog/jocko-willink" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "04:30", "type": "sleep", "label": { "ru": "Сон (4.5 часа — спит мало по своему уставу)", "en": "Sleep (4.5 hours — minimal by his code)" } },
+      { "start": "04:30", "end": "05:00", "type": "morning_routine", "label": { "ru": "Подъём, фотография часов в Twitter «Get After It»", "en": "Wake, watch photo on Twitter — 'Get After It'" } },
+      { "start": "05:00", "end": "06:30", "type": "deep_work", "label": { "ru": "Тяжёлая тренировка: штанга, бразильское джиу-джитсу", "en": "Hard workout: barbell, Brazilian jiu-jitsu" } },
+      { "start": "06:30", "end": "07:00", "type": "meal_and_read", "label": { "ru": "Завтрак (стейк или яйца)", "en": "Breakfast (steak or eggs)" } },
+      { "start": "07:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Echelon Front: подкаст, консалтинг, книги", "en": "Echelon Front: podcast, consulting, books" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с командой", "en": "Lunch, team correspondence" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Встречи с клиентами, запись подкаста", "en": "Client meetings, podcast recording" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Время с детьми и Хелен", "en": "Time with kids and Helen" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Семейный ужин", "en": "Family dinner" } },
+      { "start": "20:00", "end": "21:00", "type": "comms", "label": { "ru": "Личные сообщения друзьям и боевым братьям", "en": "Personal messages to friends and brothers-in-arms" } },
+      { "start": "21:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Виллинк — образец «дисциплина равно свобода». Подъём в 4:30, тренировка до восхода, никаких отвлечений. Деловая переписка — обеденный час, всё что не ответил тогда — ждёт следующего дня. Личное общение — час после ужина перед коротким сном. Никаких зумов вечером, никаких чатов в выходные.",
+      "en": "Willink is the textbook of 'discipline equals freedom.' Wake at 4:30, workout before sunrise, no distractions. Business correspondence — the lunch hour, anything unanswered waits until the next day. Personal communication — an hour after dinner before short sleep. No evening Zooms, no weekend chats."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты с командой Echelon Front", "en": "Lunch hour — work chats with the Echelon Front team" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — сообщения друзьям и боевым братьям", "en": "An hour after dinner — messages to friends and brothers-in-arms" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Дисциплина равно свобода.", "en": "Discipline equals freedom." },
+    { "ru": "Хорошо. Что бы ни случилось — твой ответ должен быть «хорошо». Не получил повышение? Хорошо — буду работать дальше. Сорвалась сделка? Хорошо — найдётся лучше.", "en": "Good. Whatever happens — your response is 'Good.' Didn't get the promotion? Good — more time to work. Deal fell through? Good — there's a better one coming." },
+    { "ru": "Лидер обязан брать на себя крайнюю ответственность за всё, что происходит в его команде. Все провалы — твои.", "en": "On any team, in any organization, all responsibility for success and failure rests with the leader." },
+    { "ru": "Не существует плохих команд. Есть только плохие лидеры.", "en": "There are no bad teams, only bad leaders." },
+    { "ru": "Победа достигается до того, как враг с тобой встретится. На тренировке.", "en": "Victory is won before the battle. In the training." }
+  ]
+}

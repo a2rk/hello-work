@@ -1,0 +1,60 @@
+{
+  "id": "hugo-victor",
+  "order": 57,
+  "name": { "ru": "Виктор Гюго", "en": "Victor Hugo" },
+  "fullName": { "ru": "Виктор Мари Гюго", "en": "Victor Marie Hugo" },
+  "yearsOfLife": "1802–1885",
+  "era": "19th_century",
+  "field": "writer",
+  "tags": ["novelist", "poet", "romanticism", "exile", "prolific"],
+  "nationality": "FR",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Главный французский писатель XIX века, автор «Собора Парижской Богоматери» и «Отверженных» — романа, который писал 17 лет и который перевернул общественную мысль о бедности. Сын генерала Наполеона. В 14 лет писал стихи лучше, чем большинство взрослых поэтов. В 1851 году открыто выступил против Наполеона III и был выслан из Франции на 19 лет на остров Гернси — там и написал «Отверженных» в кабинете на крыше своего дома. Был помешан на дисциплине: чтобы заставить себя работать, отдавал слуге всю одежду и оставался в студии голым, пока не закончит главу. Просыпался в 6, писал до полудня, потом ванна с холодной водой на крыше — даже зимой.",
+    "en": "France's leading 19th-century writer, author of The Hunchback of Notre-Dame and Les Misérables — a novel he worked on for 17 years that reshaped public thinking about poverty. Son of one of Napoleon's generals. At 14 he wrote better poetry than most grown poets. In 1851 he publicly opposed Napoleon III and was exiled from France for 19 years to the island of Guernsey — there he wrote Les Misérables in a rooftop study. He was obsessed with discipline: to force himself to work, he gave his servant all his clothes and stayed naked in the study until he finished a chapter. Woke at 6, wrote until noon, then a cold-water bath on the roof — even in winter."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Victor Hugo", "author": "Graham Robb", "url": "https://wwnorton.com/books/9780393318999" },
+    { "type": "book", "title": "Victor Hugo's Things Seen", "author": "Victor Hugo", "url": "https://www.gutenberg.org/files/15155/15155-h/15155-h.htm" },
+    { "type": "article", "title": "Daily Rituals: Victor Hugo", "author": "Mason Currey", "url": "https://knopfdoubleday.com/book/daily-rituals/" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:00", "end": "07:00", "type": "morning_routine", "label": { "ru": "Подъём, кофе, два сырых яйца", "en": "Wake, coffee, two raw eggs" } },
+      { "start": "07:00", "end": "11:00", "type": "deep_work", "label": { "ru": "Письмо в кабинете на крыше (Hauteville House)", "en": "Writing in the rooftop study (Hauteville House)" } },
+      { "start": "11:00", "end": "12:00", "type": "morning_routine", "label": { "ru": "Холодная ванна на крыше — даже зимой", "en": "Cold-water bath on the roof — even in winter" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с издателями", "en": "Lunch, correspondence with publishers" } },
+      { "start": "13:00", "end": "15:00", "type": "leisure_and_reflection", "label": { "ru": "Прогулка по утёсам Гернси", "en": "Walking the Guernsey cliffs" } },
+      { "start": "15:00", "end": "19:00", "type": "deep_work", "label": { "ru": "Дневная сессия письма + посетители", "en": "Afternoon writing + visitors" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с семьёй и Жюльеттой Друэ", "en": "Dinner with family and Juliette Drouet" } },
+      { "start": "21:00", "end": "22:00", "type": "comms", "label": { "ru": "Личные письма, поэзия", "en": "Personal letters, poetry" } },
+      { "start": "22:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение", "en": "Reading" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Гюго прожил жизнь по строгому ритуалу — 17 лет письма «Отверженных» возможны только при таком режиме. Деловая переписка с парижскими издателями — обеденный час, главное окно. Личное общение — час после ужина, письма Жюльетте Друэ (любовнице 50 лет) и детям. Утренний кабинет — священное место.",
+      "en": "Hugo lived by a strict ritual — 17 years writing Les Misérables is only possible with this regimen. Business correspondence with Paris publishers — the lunch hour, the main window. Personal communication — an hour after dinner, letters to Juliette Drouet (his lover for 50 years) and children. The morning study was sacred."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — переписка с парижскими издателями", "en": "Lunch hour — correspondence with Paris publishers" } },
+      { "start": "21:00", "end": "22:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — письма Жюльетте и детям", "en": "An hour after dinner — letters to Juliette and the children" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Ничто не могущественнее идеи, время которой пришло.", "en": "Nothing is more powerful than an idea whose time has come." },
+    { "ru": "Жизнь — это цветок, для которого любовь — мёд.", "en": "Life is the flower for which love is the honey." },
+    { "ru": "У того, кто страдает за идеи, есть будущее. У того, кто страдает за деньги, — нет.", "en": "Have courage for the great sorrows of life and patience for the small ones." },
+    { "ru": "Музыка выражает то, что нельзя сказать словами и о чём невозможно молчать.", "en": "Music expresses that which cannot be said and on which it is impossible to be silent." },
+    { "ru": "Нет ничего более ужасного, чем активная глупость.", "en": "Even the darkest night will end and the sun will rise." }
+  ]
+}

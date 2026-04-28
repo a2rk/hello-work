@@ -1,0 +1,60 @@
+{
+  "id": "nadella-satya",
+  "order": 23,
+  "name": { "ru": "Сатья Наделла", "en": "Satya Nadella" },
+  "fullName": { "ru": "Сатья Нараяна Наделла", "en": "Satya Narayana Nadella" },
+  "yearsOfLife": "1967–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["microsoft", "ceo", "empathy", "growth_mindset", "ai"],
+  "nationality": "US/IN",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "СЕО Microsoft с 2014 года. Принял компанию в стагнации после Гейтса и Балмера и за десять лет вывел её в лидеры облака и AI — её капитализация выросла в 11 раз. Родился в Хайдарабаде, играл в крикет в школе, приехал в Америку в 21 год учиться. Каждое утро читает поэзию (любимый — Руми), играет в крикет по выходным. На вопрос, в чём его секрет управления 220 000 человек, отвечает одним словом: «эмпатия». Когда родился сын с ДЦП — это перевернуло его понимание лидерства навсегда.",
+    "en": "CEO of Microsoft since 2014. He took over a stagnating company after Gates and Ballmer, and in ten years made it the leader in cloud and AI — its valuation grew 11x. Born in Hyderabad, he played cricket in school and came to America at 21 to study. Reads poetry every morning (favorite: Rumi), plays cricket on weekends. Asked his secret to leading 220,000 people, he answers in one word: empathy. When his son was born with cerebral palsy — it changed his understanding of leadership forever."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Hit Refresh", "author": "Satya Nadella", "url": "https://www.harpercollins.com/products/hit-refresh-satya-nadella" },
+    { "type": "interview", "title": "Satya Nadella on the Lex Fridman Podcast", "author": "Lex Fridman", "url": "https://lexfridman.com/satya-nadella" },
+    { "type": "article", "title": "Inside Satya Nadella's daily routine", "author": "GeekWire", "url": "https://www.geekwire.com/satya-nadella-day-in-the-life" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:00", "end": "06:30", "type": "morning_routine", "label": { "ru": "Подъём, чай, медитация", "en": "Wake, tea, meditation" } },
+      { "start": "06:30", "end": "07:00", "type": "meal_and_read", "label": { "ru": "Чтение поэзии (Руми, Кабир)", "en": "Reading poetry (Rumi, Kabir)" } },
+      { "start": "07:00", "end": "08:00", "type": "leisure_and_reflection", "label": { "ru": "Завтрак с семьёй", "en": "Breakfast with family" } },
+      { "start": "08:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Стратегические встречи, продукт", "en": "Strategic meetings, product" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с командой", "en": "Lunch, team correspondence" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Встречи: облако, AI, бизнес-юниты", "en": "Meetings: cloud, AI, business units" } },
+      { "start": "18:00", "end": "19:00", "type": "morning_routine", "label": { "ru": "Крикет / прогулка", "en": "Cricket / walk" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Семейный ужин, время с сыном и дочерьми", "en": "Family dinner, time with son and daughters" } },
+      { "start": "21:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение книг, прослушивание музыки", "en": "Reading books, listening to music" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Наделла — единственный лидер в коллекции, кто начинает день не с почты, а с поэзии. Утренний час — для тишины и стихов. Рабочие чаты — обеденный час, всегда в одно время. Личное общение — час с семьёй после крикета и до ужина. Вечер с семьёй и книгами — без устройств.",
+      "en": "Nadella is the only leader in the collection who starts the day with poetry, not email. The morning hour is for silence and verse. Work chats — the lunch hour, always at the same time. Personal communication — an hour with family between cricket and dinner. Evenings with family and books — device-free."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты с командой Microsoft", "en": "Lunch hour — work chats with the Microsoft team" } },
+      { "start": "19:00", "end": "20:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час с семьёй — личные сообщения и звонки близким", "en": "An hour with family — personal messages and calls to loved ones" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Будь учеником, а не всезнайкой. Каждый раз начинай с понимания, что не понимаешь.", "en": "Be a learn-it-all, not a know-it-all." },
+    { "ru": "Самые длинные расстояния в этой жизни — между головой и сердцем.", "en": "The longest distance you'll ever travel is the distance between your head and your heart." },
+    { "ru": "Эмпатия — самое недооценённое качество лидера.", "en": "Empathy is the most undervalued trait in a leader." },
+    { "ru": "Каждый человек, с которым ты сталкиваешься, ведёт битву, о которой ты ничего не знаешь.", "en": "Everybody you meet is fighting a battle you know nothing about." },
+    { "ru": "Успех может скрыть слабости, провал — выявляет всё.", "en": "Success can cause people to unlearn the habits that made them successful." }
+  ]
+}

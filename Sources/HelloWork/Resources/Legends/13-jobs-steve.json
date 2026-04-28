@@ -1,0 +1,155 @@
+{
+  "id": "jobs-steve",
+  "order": 13,
+  "name": {
+    "ru": "Стив Джобс",
+    "en": "Steve Jobs"
+  },
+  "fullName": {
+    "ru": "Стивен Пол Джобс",
+    "en": "Steven Paul Jobs"
+  },
+  "yearsOfLife": "1955–2011",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["apple", "design", "founder", "minimalism", "perfectionist"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Сооснователь Apple, NeXT и Pixar. Усыновлённый ребёнок из Маунтин-Вью, бросил колледж после первого семестра, спал на полу у друзей и питался яблоками с фермы — и через 5 лет создал компанию, которая перевернёт мир. Носил одну и ту же чёрную водолазку, ездил на Mercedes без номеров, парковался на местах для инвалидов и проводил все важные встречи на ходу — ходьба прочищала ему голову. Собрал первый iPhone, зная, что у него рак, и работал до последних недель жизни.",
+    "en": "Co-founder of Apple, NeXT, and Pixar. An adopted child from Mountain View who dropped out of college after one semester, slept on friends' floors, and ate apples from a farm — five years later he built the company that would change the world. Wore the same black turtleneck, drove a Mercedes with no plates, parked in disabled spots, and held every important meeting on foot — walking cleared his mind. Built the first iPhone while knowing he had cancer, and worked until the final weeks of his life."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Steve Jobs",
+      "author": "Walter Isaacson",
+      "url": "https://www.simonandschuster.com/books/Steve-Jobs/Walter-Isaacson/9781451648539"
+    },
+    {
+      "type": "interview",
+      "title": "Stanford Commencement Address 2005",
+      "author": "Steve Jobs",
+      "url": "https://news.stanford.edu/2005/06/12/youve-got-find-love-jobs-says/"
+    },
+    {
+      "type": "article",
+      "title": "Steve Jobs and the art of the walking meeting",
+      "author": "The New Yorker",
+      "url": "https://www.newyorker.com/business/currency/steve-jobs-walking-meetings"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "06:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "06:00",
+        "end": "07:00",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, медитация дзен, душ", "en": "Wake, zen meditation, shower" }
+      },
+      {
+        "start": "07:00",
+        "end": "08:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Завтрак (фрукты), вопрос: «Если бы это был мой последний день?»", "en": "Breakfast (fruit), morning question: 'If today were my last day?'" }
+      },
+      {
+        "start": "08:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Apple: продуктовые ревью, дизайн", "en": "Apple: product reviews, design" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "comms",
+        "label": { "ru": "Обед, walking meetings", "en": "Lunch, walking meetings" }
+      },
+      {
+        "start": "13:00",
+        "end": "18:00",
+        "type": "deep_work",
+        "label": { "ru": "Pixar / NeXT / Apple — встречи и решения", "en": "Pixar / NeXT / Apple — meetings and decisions" }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Дорога домой, мысли", "en": "Drive home, thinking" }
+      },
+      {
+        "start": "19:00",
+        "end": "21:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Семейный ужин (без техники за столом)", "en": "Family dinner (no tech at the table)" }
+      },
+      {
+        "start": "21:00",
+        "end": "24:00",
+        "type": "deep_work",
+        "label": { "ru": "Чтение, стратегия, ночные звонки", "en": "Reading, strategy, late-night calls" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Джобс ненавидел email, не пользовался Twitter и считал бессмысленную переписку врагом продукта. Он принимал решения лично — на ходу. Slack-окно у него — обед, когда он шёл на walking meeting и мог быстро отвечать. Личные сообщения — короткое окно между ужином и поздней работой. Ужин с семьёй — священен, никаких устройств.",
+      "en": "Jobs hated email, didn't use Twitter, and considered pointless correspondence the enemy of product. He made decisions in person — on foot. His Slack window was lunch, when he walked into walking meetings and could reply on the move. Personal messages got a short window between dinner and late work. Family dinner was sacred — no devices."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Walking meeting час — рабочие чаты разбираются на ходу",
+          "en": "Walking meeting hour — work chats handled on the move"
+        }
+      },
+      {
+        "start": "21:00",
+        "end": "21:30",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Полчаса после семейного ужина — короткие сообщения близким",
+          "en": "Half an hour after family dinner — short messages to loved ones"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 90
+  },
+
+  "quotes": [
+    {
+      "ru": "Ваше время ограничено. Не тратьте его на чужую жизнь.",
+      "en": "Your time is limited, so don't waste it living someone else's life."
+    },
+    {
+      "ru": "Оставайтесь голодными. Оставайтесь безумными.",
+      "en": "Stay hungry. Stay foolish."
+    },
+    {
+      "ru": "Качество важнее количества. Один home run лучше двух дублей.",
+      "en": "Quality is much better than quantity. One home run is much better than two doubles."
+    },
+    {
+      "ru": "Инновация — это то, что отличает лидера от догоняющего.",
+      "en": "Innovation distinguishes between a leader and a follower."
+    },
+    {
+      "ru": "Простота — это высшая форма утончённости.",
+      "en": "Simplicity is the ultimate sophistication."
+    }
+  ]
+}

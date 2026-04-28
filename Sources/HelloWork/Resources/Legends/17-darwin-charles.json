@@ -1,0 +1,185 @@
+{
+  "id": "darwin-charles",
+  "order": 17,
+  "name": {
+    "ru": "Чарльз Дарвин",
+    "en": "Charles Darwin"
+  },
+  "fullName": {
+    "ru": "Чарльз Роберт Дарвин",
+    "en": "Charles Robert Darwin"
+  },
+  "yearsOfLife": "1809–1882",
+  "era": "industrial",
+  "field": "inventor_scientist",
+  "tags": ["biology", "evolution", "discipline", "introvert", "deep_work"],
+  "nationality": "GB",
+  "avatarUrl": null,
+  "intensity": 3,
+
+  "bio": {
+    "ru": "Английский натуралист, автор теории эволюции — человек, переписавший биологию одной книгой. В 22 года отправился в 5-летнее кругосветное путешествие на «Бигле», собрал десятки тысяч образцов, и потом 23 года не торопясь, шаг за шагом, выписывал из них «Происхождение видов». Жил в загородном доме в Дауне, страдал хронической болезнью желудка и работал всего 4–5 часов в день — но в этих часах был настолько сосредоточен, что обогнал всех современников. Доказательство, что выносливость в долгом забеге обыгрывает спринт.",
+    "en": "English naturalist, author of the theory of evolution — the man who rewrote biology with a single book. At 22 he set off on a 5-year voyage on the Beagle, collected tens of thousands of specimens, then spent 23 unhurried years extracting On the Origin of Species from them. Lived in his country house at Down, suffered from chronic stomach illness, and worked only 4–5 hours a day — but in those hours he was so focused that he outpaced every contemporary. Proof that endurance in the long run beats the sprint."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Charles Darwin: The Power of Place",
+      "author": "Janet Browne",
+      "url": "https://press.princeton.edu/books/charles-darwin-power-of-place"
+    },
+    {
+      "type": "article",
+      "title": "Charles Darwin's daily walk: the Sandwalk at Down House",
+      "author": "English Heritage",
+      "url": "https://www.english-heritage.org.uk/visit/places/home-of-charles-darwin-down-house/"
+    },
+    {
+      "type": "book",
+      "title": "Daily Rituals: How Artists Work",
+      "author": "Mason Currey",
+      "url": "https://knopfdoubleday.com/book/daily-rituals/"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "07:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "07:00",
+        "end": "07:45",
+        "type": "morning_routine",
+        "label": { "ru": "Прогулка перед завтраком (Sandwalk)", "en": "Walk before breakfast (the Sandwalk)" }
+      },
+      {
+        "start": "07:45",
+        "end": "08:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Завтрак в одиночестве", "en": "Breakfast alone" }
+      },
+      {
+        "start": "08:00",
+        "end": "09:30",
+        "type": "deep_work",
+        "label": { "ru": "Работа №1 — самые трудные мысли", "en": "Work session 1 — the hardest thinking" }
+      },
+      {
+        "start": "09:30",
+        "end": "10:30",
+        "type": "comms",
+        "label": { "ru": "Чтение писем + ответы (1500 писем в год!)", "en": "Reading letters + replying (1,500 letters/year!)" }
+      },
+      {
+        "start": "10:30",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Работа №2 — продолжение", "en": "Work session 2 — continued" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Прогулка с собакой по Sandwalk", "en": "Walk with the dog on the Sandwalk" }
+      },
+      {
+        "start": "13:00",
+        "end": "14:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Обед с семьёй", "en": "Lunch with family" }
+      },
+      {
+        "start": "14:00",
+        "end": "15:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Отдых на диване, газеты", "en": "Resting on the sofa, newspapers" }
+      },
+      {
+        "start": "15:00",
+        "end": "16:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Сон/дрёма", "en": "Nap" }
+      },
+      {
+        "start": "16:00",
+        "end": "17:30",
+        "type": "deep_work",
+        "label": { "ru": "Работа №3 — последний рывок", "en": "Work session 3 — final push" }
+      },
+      {
+        "start": "17:30",
+        "end": "19:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Время с детьми и женой", "en": "Time with kids and wife" }
+      },
+      {
+        "start": "19:00",
+        "end": "22:30",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Ужин, музыка, нарды с Эммой", "en": "Dinner, music, backgammon with Emma" }
+      },
+      {
+        "start": "22:30",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Дарвин — святой пример того, что великое создаётся не количеством часов, а ритмом. Он работал всего три сессии по 1.5 часа в день — но в эти часы его не существовало для мира. Письма (1500 в год!) разбирал в одно утреннее окно, всегда в одно и то же время. Личное общение — после ужина с женой, нарды и музыка. Никаких ночных подвигов — Дарвин знал, что выносливость важнее интенсивности.",
+      "en": "Darwin is the saintly proof that greatness comes not from hours but from rhythm. He worked only three sessions of 1.5 hours each — but in those hours he didn't exist for the world. Letters (1,500 a year!) got handled in one morning window, always at the same time. Personal contact — after-dinner backgammon and music with his wife. No late-night heroics — Darwin knew endurance beats intensity."
+    },
+    "allowedSlots": [
+      {
+        "start": "09:30",
+        "end": "10:30",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Утренний час переписки между двумя рабочими сессиями",
+          "en": "Morning correspondence hour between the two work sessions"
+        }
+      },
+      {
+        "start": "17:30",
+        "end": "18:30",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Час с семьёй после последней рабочей сессии — личные сообщения",
+          "en": "An hour with family after the last work session — personal messages"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Не самый сильный выживает и не самый умный, а тот, кто лучше всех приспосабливается к изменениям.",
+      "en": "It is not the strongest of the species that survives, nor the most intelligent, but the one most responsive to change."
+    },
+    {
+      "ru": "Человек, который осмеливается потратить впустую один час времени, ещё не открыл цену жизни.",
+      "en": "A man who dares to waste one hour of time has not discovered the value of life."
+    },
+    {
+      "ru": "Невежество чаще порождает уверенность, чем знание.",
+      "en": "Ignorance more frequently begets confidence than does knowledge."
+    },
+    {
+      "ru": "В долгой истории человечества побеждают те, кто научился сотрудничать и импровизировать эффективнее всех.",
+      "en": "In the long history of humankind those who learned to collaborate and improvise most effectively have prevailed."
+    },
+    {
+      "ru": "Если бы я снова мог прожить свою жизнь, я бы установил себе правило читать стихи и слушать музыку хотя бы раз в неделю.",
+      "en": "If I had to live my life again, I would have made a rule to read some poetry and listen to some music at least once every week."
+    }
+  ]
+}

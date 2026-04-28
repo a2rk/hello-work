@@ -1,0 +1,59 @@
+{
+  "id": "stephenson-neal",
+  "order": 59,
+  "name": { "ru": "Нил Стивенсон", "en": "Neal Stephenson" },
+  "fullName": { "ru": "Нил Таунсенд Стивенсон", "en": "Neal Town Stephenson" },
+  "yearsOfLife": "1959–",
+  "era": "modern",
+  "field": "writer",
+  "tags": ["cyberpunk", "novelist", "metaverse", "anti_email", "deep_work"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Главный научно-фантастический писатель современности, автор «Лавины» (где он впервые описал «метаверс» в 1992 году — за 30 лет до Цукерберга), «Криптономикона», «Анафема» и «Семиевия». Сын учёного-физика, вырос в окружении академических библиотек. Первый консультант Безоса в Blue Origin — помогал проектировать ракеты. Прославился не только книгами по 1000 страниц, но и эссе «Почему я плохой корреспондент» — манифестом о том, почему он не отвечает на email и тем более не ходит на интервью: «Если бы я отвечал каждому, я бы написал ноль романов». Защищает своё время как военную базу.",
+    "en": "Today's leading science fiction writer, author of Snow Crash (where he first described the 'metaverse' in 1992 — 30 years before Zuckerberg), Cryptonomicon, Anathem, and Seveneves. Son of a physicist, raised among academic libraries. First consultant to Bezos at Blue Origin — helped design rockets. Famous not only for 1,000-page novels but for his essay 'Why I Am a Bad Correspondent' — a manifesto about why he doesn't reply to email and definitely doesn't do interviews: 'If I replied to everyone I'd have written zero novels.' Defends his time like a military base."
+  },
+
+  "sources": [
+    { "type": "article", "title": "Why I Am a Bad Correspondent", "author": "Neal Stephenson", "url": "https://www.nealstephenson.com/why-i-am-a-bad-correspondent.html" },
+    { "type": "interview", "title": "Neal Stephenson on the Tim Ferriss Show", "author": "Tim Ferriss", "url": "https://tim.blog/neal-stephenson" },
+    { "type": "book", "title": "Some Remarks: Essays and Other Writing", "author": "Neal Stephenson", "url": "https://www.harpercollins.com/products/some-remarks-neal-stephenson" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "08:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "08:00", "end": "09:00", "type": "morning_routine", "label": { "ru": "Подъём, кофе, без новостей и телефона", "en": "Wake, coffee, no news, no phone" } },
+      { "start": "09:00", "end": "13:00", "type": "deep_work", "label": { "ru": "Письмо в полной тишине — главный блок дня", "en": "Writing in total silence — the main block of the day" } },
+      { "start": "13:00", "end": "14:00", "type": "leisure_and_reflection", "label": { "ru": "Обед", "en": "Lunch" } },
+      { "start": "14:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Ресёрч: исторические архивы, физика, криптография", "en": "Research: historical archives, physics, cryptography" } },
+      { "start": "17:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Время с семьёй, прогулка", "en": "Family time, walk" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин дома", "en": "Dinner at home" } },
+      { "start": "20:00", "end": "21:00", "type": "comms", "label": { "ru": "Личные сообщения близким", "en": "Personal messages to those close" } },
+      { "start": "21:00", "end": "22:00", "type": "comms", "label": { "ru": "Минимальная переписка с агентом и редактором", "en": "Minimal correspondence with agent and editor" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Стивенсон — образец того, как защищать своё время. Он один из немногих писателей, кто публично объяснил, что переписка убивает книги. Деловая переписка с агентом и редактором — час перед сном, в режиме «отвечаю один раз в день, коротко». Личное общение — час после ужина с семьёй. Утро — без чатов, без email, без интервью, без всего. Только письмо.",
+      "en": "Stephenson is a model of how to defend your time. He's one of the few writers who has publicly explained that correspondence kills books. Business correspondence with agent and editor — an hour before sleep, in 'reply once a day, briefly' mode. Personal communication — an hour after dinner with family. Morning — no chats, no email, no interviews, nothing. Just writing."
+    },
+    "allowedSlots": [
+      { "start": "21:00", "end": "22:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час перед сном — короткие ответы агенту и редактору", "en": "An hour before sleep — short replies to agent and editor" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные сообщения семье", "en": "An hour after dinner — personal messages to family" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Если бы я отвечал на все письма — я бы написал ноль романов.", "en": "If I were to write back to all the people who write to me, I would do nothing else." },
+    { "ru": "Я могу быть либо плохим корреспондентом, либо хорошим писателем. Я выбрал второе.", "en": "I'd rather be a bad correspondent than a bad novelist." },
+    { "ru": "Длинные периоды глубокой концентрации — единственный способ создать что-то сложное.", "en": "Long periods of uninterrupted concentration are the only way to create something complex." },
+    { "ru": "Хорошая книга требует тысячи часов внимания. Плохая — требует ноль.", "en": "Good writing takes thousands of hours of attention. Bad writing takes zero." },
+    { "ru": "Каждое уведомление — это маленькое прерывание твоей лучшей работы.", "en": "Every notification is a small interruption of your best work." }
+  ]
+}

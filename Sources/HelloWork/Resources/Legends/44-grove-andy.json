@@ -1,0 +1,60 @@
+{
+  "id": "grove-andy",
+  "order": 44,
+  "name": { "ru": "Энди Гроув", "en": "Andy Grove" },
+  "fullName": { "ru": "Андраш Иштван Гроф", "en": "András István Gróf" },
+  "yearsOfLife": "1936–2016",
+  "era": "20th_century",
+  "field": "tech_entrepreneur",
+  "tags": ["intel", "semiconductors", "okr", "paranoid", "self_made"],
+  "nationality": "US/HU",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "СЕО Intel в 1987–1998 годах, человек, который превратил полудохлую компанию в мирового монополиста процессоров. Родился в Будапеште в еврейской семье — пережил Холокост, прятался в подвалах от нацистов, потом — от советских танков в 1956-м. Бежал в Австрию пешком через границу в 20 лет, не зная ни слова по-английски, через полгода поступил в City College of New York на физический факультет с отличием. В Intel в самый страшный кризис 1985 года, когда японцы убивали бизнес памяти, он принял решение «перестать делать память и начать делать процессоры» — и спас компанию. Главная книга: «Только параноики выживают». Спал 6 часов, был известен fанатичной требовательностью.",
+    "en": "CEO of Intel from 1987 to 1998, the man who turned a half-dying company into a global processor monopoly. Born in Budapest to a Jewish family — survived the Holocaust hiding in basements from Nazis, then from Soviet tanks in 1956. Escaped to Austria on foot at 20 with no English, got into City College of New York's physics department six months later. At Intel during the brutal 1985 crisis, when the Japanese were killing the memory business, he made the call to 'stop making memory and start making processors' — and saved the company. His main book: Only the Paranoid Survive. Slept 6 hours, was famous for fanatical demands."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Only the Paranoid Survive", "author": "Andy Grove", "url": "https://www.penguinrandomhouse.com/books/only-the-paranoid-survive" },
+    { "type": "book", "title": "High Output Management", "author": "Andy Grove", "url": "https://www.penguinrandomhouse.com/books/high-output-management" },
+    { "type": "book", "title": "Andy Grove: The Life and Times of an American", "author": "Richard S. Tedlow", "url": "https://www.penguinrandomhouse.com/books/andy-grove-life-times" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:00", "end": "07:00", "type": "morning_routine", "label": { "ru": "Подъём, плавание (для спины)", "en": "Wake, swimming (for his back)" } },
+      { "start": "07:00", "end": "08:00", "type": "meal_and_read", "label": { "ru": "Завтрак, газеты, обзор Intel data", "en": "Breakfast, newspapers, Intel data review" } },
+      { "start": "08:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Intel HQ: ревью бизнеса, OKR-разборы", "en": "Intel HQ: business reviews, OKR discussions" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с менеджерами", "en": "Lunch, manager correspondence" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Встречи: продуктовые планы, фабрики", "en": "Meetings: product plans, fabs" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Дорога домой", "en": "Drive home" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с Евой", "en": "Dinner with Eva" } },
+      { "start": "20:00", "end": "21:00", "type": "comms", "label": { "ru": "Личные письма, звонки", "en": "Personal letters, calls" } },
+      { "start": "21:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение книг по физике и менеджменту", "en": "Reading physics and management books" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Гроув известен как изобретатель OKR-методики и автор «open door»-офиса в Intel. Все коммуникации идут в чётких окнах. Рабочая переписка — обеденный час, никакого «всегда онлайн». Личное общение — час после ужина перед чтением. Параноик в работе, дисциплинирован в личном.",
+      "en": "Grove is known as the inventor of the OKR method and the 'open door' office at Intel. All communications run in strict windows. Work correspondence — lunch hour, no 'always-on.' Personal communication — an hour after dinner before reading. Paranoid in work, disciplined in personal life."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты с менеджерами Intel", "en": "Lunch hour — work chats with Intel managers" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные сообщения и письма", "en": "An hour after dinner — personal messages and letters" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Только параноики выживают.", "en": "Only the paranoid survive." },
+    { "ru": "Плохие компании рушатся в кризисе. Хорошие — выживают. Великие — становятся лучше.", "en": "Bad companies are destroyed by crisis. Good companies survive them. Great companies are improved by them." },
+    { "ru": "Если ты сегодня не делаешь то, что сделает тебя великим завтра — ты уже мёртв.", "en": "Success breeds complacency. Complacency breeds failure. Only the paranoid survive." },
+    { "ru": "Легче изменить компанию, чем людей в компании.", "en": "There is at least one point in the history of any company when you have to change dramatically to rise to the next level of performance." },
+    { "ru": "Лучший способ предсказать будущее — изобрести его. Лучший способ изобрести его — слушать пользователей.", "en": "Let chaos reign, then rein in chaos." }
+  ]
+}

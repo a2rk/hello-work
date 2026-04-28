@@ -1,0 +1,173 @@
+{
+  "id": "bach-johann",
+  "order": 9,
+  "name": {
+    "ru": "Иоганн Себастьян Бах",
+    "en": "Johann Sebastian Bach"
+  },
+  "fullName": {
+    "ru": "Иоганн Себастьян Бах",
+    "en": "Johann Sebastian Bach"
+  },
+  "yearsOfLife": "1685–1750",
+  "era": "baroque",
+  "field": "composer",
+  "tags": ["music", "composer", "organist", "father_of_20", "religious", "polymath"],
+  "nationality": "DE",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Немецкий композитор, отец европейской музыки. Написал больше 1100 произведений — кантаты, фуги, страсти, концерты — и при этом успел стать отцом 20 детей. Осиротел в 10 лет, ходил пешком 400 км, чтобы послушать другого органиста. Каждую неделю писал по новой кантате для церкви — потому что так требовал контракт. На вопрос «как у вас получается такая гениальная музыка?» отвечал: «Я был обязан быть трудолюбивым. Кто будет одинаково трудолюбив — добьётся того же».",
+    "en": "German composer, the father of European music. Wrote over 1,100 works — cantatas, fugues, passions, concertos — while raising 20 children. Orphaned at 10, he once walked 250 miles to hear another organist play. Wrote a new cantata for church every single week because his contract demanded it. Asked how he created such genius music, he answered: 'I was obliged to be industrious. Whoever is equally industrious will succeed equally well.'"
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Johann Sebastian Bach: The Learned Musician",
+      "author": "Christoph Wolff",
+      "url": "https://wwnorton.com/books/Johann-Sebastian-Bach/"
+    },
+    {
+      "type": "book",
+      "title": "Bach: Music in the Castle of Heaven",
+      "author": "John Eliot Gardiner",
+      "url": "https://www.penguin.co.uk/books/56781/bach-by-john-eliot-gardiner/"
+    },
+    {
+      "type": "article",
+      "title": "How Bach composed a cantata every week",
+      "author": "BBC Music Magazine",
+      "url": "https://www.classical-music.com/composers/bach-cantatas-weekly"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "04:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "04:00",
+        "end": "05:00",
+        "type": "morning_routine",
+        "label": { "ru": "Молитва, план дня", "en": "Prayer, plan for the day" }
+      },
+      {
+        "start": "05:00",
+        "end": "08:00",
+        "type": "deep_work",
+        "label": { "ru": "Композиция в тишине", "en": "Composing in silence" }
+      },
+      {
+        "start": "08:00",
+        "end": "09:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Завтрак с большой семьёй", "en": "Breakfast with the large family" }
+      },
+      {
+        "start": "09:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Репетиции с хором мальчиков", "en": "Rehearsal with boys' choir" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Семейный обед (20 детей за столом)", "en": "Family lunch (20 kids at the table)" }
+      },
+      {
+        "start": "13:00",
+        "end": "16:00",
+        "type": "deep_work",
+        "label": { "ru": "Преподавание ученикам, частные уроки", "en": "Teaching pupils, private lessons" }
+      },
+      {
+        "start": "16:00",
+        "end": "18:00",
+        "type": "deep_work",
+        "label": { "ru": "Композиция: подготовка кантаты к воскресной службе", "en": "Composing: preparing the Sunday cantata" }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "type": "comms",
+        "label": { "ru": "Письма патронам, переговоры по нотам", "en": "Letters to patrons, score negotiations" }
+      },
+      {
+        "start": "19:00",
+        "end": "20:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Ужин с семьёй", "en": "Dinner with family" }
+      },
+      {
+        "start": "20:00",
+        "end": "22:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Музицирование с детьми и учениками", "en": "Music-making with kids and pupils" }
+      },
+      {
+        "start": "22:00",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "У Баха была огромная семья и он был фантастически социальным — но всё это упаковано в строгое расписание. Личное общение — обеденный час с женой и 20 детьми. Деловая переписка с патронами и церковью — короткое вечернее окно перед ужином. Утро и обе композиторские сессии — абсолютная тишина: тогда он слышал музыку.",
+      "en": "Bach had a huge family and was deeply social — but all of it fit into a strict schedule. Personal communication — the lunch hour with his wife and 20 children. Business correspondence with patrons and the church — a short evening window before dinner. Mornings and both composing sessions were absolute silence: that's when he heard the music."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Семейный обед — главное окно для близких и друзей",
+          "en": "Family lunch — the main window for loved ones and friends"
+        }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Час перед ужином — деловые письма патронам и издателям",
+          "en": "An hour before dinner — business letters to patrons and publishers"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Я был обязан быть трудолюбивым. Кто будет одинаково трудолюбив — добьётся того же.",
+      "en": "I was obliged to be industrious. Whoever is equally industrious will succeed equally well."
+    },
+    {
+      "ru": "В этом нет ничего особенного. Нужно просто нажимать правильные клавиши в правильное время — а инструмент играет сам.",
+      "en": "There's nothing remarkable about it. All one has to do is hit the right keys at the right time and the instrument plays itself."
+    },
+    {
+      "ru": "Цель и конечный смысл всякой музыки — слава Бога и обновление души.",
+      "en": "The aim and final end of all music should be none other than the glory of God and the refreshment of the soul."
+    },
+    {
+      "ru": "Где живёт благоговейная музыка, там Бог всегда рядом со Своим милостивым присутствием.",
+      "en": "Where there is devotional music, God is always at hand with His gracious presence."
+    },
+    {
+      "ru": "Особая задача музыки — двигать сердце.",
+      "en": "It's the special province of music to move the heart."
+    }
+  ]
+}

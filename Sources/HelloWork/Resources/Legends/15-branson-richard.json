@@ -1,0 +1,167 @@
+{
+  "id": "branson-richard",
+  "order": 15,
+  "name": {
+    "ru": "Ричард Брэнсон",
+    "en": "Richard Branson"
+  },
+  "fullName": {
+    "ru": "Сэр Ричард Чарльз Николас Брэнсон",
+    "en": "Sir Richard Charles Nicholas Branson"
+  },
+  "yearsOfLife": "1950–",
+  "era": "modern",
+  "field": "industrialist",
+  "tags": ["virgin", "founder", "adventurer", "early_riser", "self_made"],
+  "nationality": "GB",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Основатель Virgin Group — империи из 400+ компаний: авиалинии, музыка, поезда, космос, банки. С дислексией и провальной школой бросил учёбу в 16 лет, открыл студенческий журнал, потом музыкальный лейбл с Sex Pistols в каталоге, потом Virgin Atlantic — потому что попал на отменённый рейс и решил, что сам сделает лучше. Просыпается в 5 утра на своём острове в Карибском море, играет в теннис, плавает километр в океане, потом работает — и считает, что секрет жизни в одном слове: «попробуй».",
+    "en": "Founder of the Virgin Group — an empire of 400+ companies: airlines, music, trains, space, banks. Dyslexic and a school failure, he dropped out at 16, started a student magazine, then a music label with the Sex Pistols on the roster, then Virgin Atlantic — because he got bumped from a cancelled flight and decided he could do it better. Wakes at 5 AM on his Caribbean island, plays tennis, swims a kilometer in the ocean, then gets to work — and believes life's secret is one word: 'try.'"
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Losing My Virginity",
+      "author": "Richard Branson",
+      "url": "https://www.penguinrandomhouse.com/books/losing-my-virginity"
+    },
+    {
+      "type": "article",
+      "title": "Richard Branson's morning routine",
+      "author": "Virgin.com",
+      "url": "https://www.virgin.com/branson-family/richard-branson-blog/my-morning-routine"
+    },
+    {
+      "type": "interview",
+      "title": "Richard Branson on Tim Ferriss Show",
+      "author": "Tim Ferriss",
+      "url": "https://tim.blog/richard-branson"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "05:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "05:00",
+        "end": "06:00",
+        "type": "morning_routine",
+        "label": { "ru": "Теннис на острове Некер", "en": "Tennis on Necker Island" }
+      },
+      {
+        "start": "06:00",
+        "end": "07:00",
+        "type": "morning_routine",
+        "label": { "ru": "Плавание в океане 1 км", "en": "Ocean swim, 1 km" }
+      },
+      {
+        "start": "07:00",
+        "end": "08:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Завтрак с семьёй, чтение писем", "en": "Family breakfast, reading mail" }
+      },
+      {
+        "start": "08:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Звонки с СЕО Virgin-компаний, стратегия", "en": "Calls with Virgin company CEOs, strategy" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "comms",
+        "label": { "ru": "Обед с командой и переписка", "en": "Lunch with the team and correspondence" }
+      },
+      {
+        "start": "13:00",
+        "end": "18:00",
+        "type": "deep_work",
+        "label": { "ru": "Встречи, новые проекты, инвестиции", "en": "Meetings, new ventures, investments" }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Закат, прогулка с семьёй", "en": "Sunset, walk with family" }
+      },
+      {
+        "start": "19:00",
+        "end": "21:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Ужин с гостями (на острове всегда кто-то)", "en": "Dinner with guests (always someone on the island)" }
+      },
+      {
+        "start": "21:00",
+        "end": "23:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Чтение, дневник", "en": "Reading, journaling" }
+      },
+      {
+        "start": "23:00",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Брэнсон управляет 400 компаниями через делегирование и личные звонки — он не сидит в чатах целыми днями. Утро (тренировка + завтрак) свободно от телефонов вообще. Рабочая переписка — обеденный час, когда вокруг команда. Личное общение — час на закате с семьёй и гостями. Брэнсон верит: если ты не можешь оставить телефон, ты плохо построил бизнес.",
+      "en": "Branson runs 400 companies through delegation and personal calls — he doesn't sit in chats all day. Mornings (workout + breakfast) are completely phone-free. Work correspondence — the lunch hour with the team around. Personal communication — an hour at sunset with family and guests. Branson believes: if you can't put down the phone, you've built your business badly."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Обеденный час с командой — переписка с СЕО Virgin-компаний",
+          "en": "Lunch hour with the team — correspondence with Virgin CEOs"
+        }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Закатный час — личные сообщения друзьям и семье",
+          "en": "Sunset hour — personal messages to friends and family"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Если кто-то предлагает тебе шанс — соглашайся, а потом учись делать.",
+      "en": "If somebody offers you an amazing opportunity but you are not sure you can do it, say yes — then learn how to do it later."
+    },
+    {
+      "ru": "Бизнес — это не сиденье в офисе. Это люди, идеи и приключения.",
+      "en": "Business opportunities are like buses, there's always another one coming."
+    },
+    {
+      "ru": "Тренируйся каждый день — и ты получишь четыре дополнительных продуктивных часа.",
+      "en": "Working out gives me at least four extra hours of productive time every day."
+    },
+    {
+      "ru": "Не учись бизнесу — учись жизни. Бизнес сам приложится.",
+      "en": "Don't think about what you can get. Think about what you can give."
+    },
+    {
+      "ru": "К чёрту, давай попробуем.",
+      "en": "Screw it, let's do it."
+    }
+  ]
+}

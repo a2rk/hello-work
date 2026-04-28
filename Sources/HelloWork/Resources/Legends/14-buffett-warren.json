@@ -1,0 +1,161 @@
+{
+  "id": "buffett-warren",
+  "order": 14,
+  "name": {
+    "ru": "Уоррен Баффет",
+    "en": "Warren Buffett"
+  },
+  "fullName": {
+    "ru": "Уоррен Эдвард Баффет",
+    "en": "Warren Edward Buffett"
+  },
+  "yearsOfLife": "1930–",
+  "era": "modern",
+  "field": "industrialist",
+  "tags": ["investor", "berkshire", "reading", "self_made", "long_term_thinking"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "СЕО Berkshire Hathaway, человек, превративший $9 800 в $150 миллиардов за 70 лет — самый успешный инвестор в истории. В 6 лет продавал жвачку соседям, в 11 купил первую акцию, в 16 заработал больше, чем зарабатывал его отец. До сих пор живёт в том же доме в Омахе, который купил в 1958 году за $31 500. Читает 5–6 часов в день — 500 страниц. Говорит, что секрет инвестиций тот же, что и секрет жизни: «Вкладывайся туда, где сложный процент сделает работу за тебя».",
+    "en": "CEO of Berkshire Hathaway, the man who turned $9,800 into $150 billion over 70 years — the greatest investor in history. Sold gum to neighbors at 6, bought his first stock at 11, earned more than his father by 16. Still lives in the same Omaha house he bought in 1958 for $31,500. Reads 5–6 hours a day — 500 pages. Says the secret to investing is the same as the secret to life: 'Plant yourself somewhere compound interest can do the work for you.'"
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "The Snowball: Warren Buffett and the Business of Life",
+      "author": "Alice Schroeder",
+      "url": "https://www.bantamdell.com/snowball-buffett"
+    },
+    {
+      "type": "interview",
+      "title": "Warren Buffett: 'I read 500 pages a day'",
+      "author": "CNBC",
+      "url": "https://www.cnbc.com/warren-buffett-reading-habit"
+    },
+    {
+      "type": "article",
+      "title": "A day in the life of Warren Buffett",
+      "author": "Forbes",
+      "url": "https://www.forbes.com/warren-buffett-daily-routine"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "06:45",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "06:45",
+        "end": "07:30",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, заезд в McDonald's за завтраком ($3.17)", "en": "Wake, drive to McDonald's for breakfast ($3.17)" }
+      },
+      {
+        "start": "07:30",
+        "end": "08:30",
+        "type": "meal_and_read",
+        "label": { "ru": "Завтрак + Wall Street Journal, Coca-Cola", "en": "Breakfast + Wall Street Journal, Coca-Cola" }
+      },
+      {
+        "start": "08:30",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Чтение отчётов, балансов, аналитики", "en": "Reading reports, balance sheets, analysis" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "comms",
+        "label": { "ru": "Обед, ежедневный звонок Чарли Мангеру", "en": "Lunch, daily call with Charlie Munger" }
+      },
+      {
+        "start": "13:00",
+        "end": "17:00",
+        "type": "deep_work",
+        "label": { "ru": "Чтение продолжается + редкие звонки СЕО портфельных компаний", "en": "Reading continues + occasional calls with portfolio CEOs" }
+      },
+      {
+        "start": "17:00",
+        "end": "18:00",
+        "type": "comms",
+        "label": { "ru": "Короткие звонки и личная переписка", "en": "Short calls and personal correspondence" }
+      },
+      {
+        "start": "18:00",
+        "end": "19:30",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Ужин дома, разговоры с женой", "en": "Dinner at home, conversation with wife" }
+      },
+      {
+        "start": "19:30",
+        "end": "23:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Партия в бридж онлайн (3 раза в неделю с Гейтсом)", "en": "Online bridge (3x a week with Gates)" }
+      },
+      {
+        "start": "23:00",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Баффет — святой пример того, как «не делать». Календарь у него почти пустой: ноль встреч, ноль созвонов без причины, ноль email-чатов в реальном времени. Главный канал коммуникации — ежедневный звонок Чарли Мангеру в обед. Личные сообщения он смотрит вечером, когда работа сделана. До обеда — только чтение и тишина.",
+      "en": "Buffett is a saintly example of 'don't do it.' His calendar is almost empty: zero meetings, zero calls without reason, zero real-time email chats. His main communication channel is the daily lunch call with Charlie Munger. He checks personal messages in the evening, after the work is done. Before lunch — only reading and silence."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Обеденный созвон с Мангером — главное окно для рабочих обсуждений",
+          "en": "Lunch call with Munger — the main window for work conversations"
+        }
+      },
+      {
+        "start": "17:00",
+        "end": "18:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Час перед ужином — личные звонки и сообщения близким",
+          "en": "An hour before dinner — personal calls and messages to loved ones"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Разница между успешными людьми и очень успешными людьми в том, что вторые говорят «нет» почти всему.",
+      "en": "The difference between successful people and very successful people is that very successful people say 'no' to almost everything."
+    },
+    {
+      "ru": "Кто-то сидит в тени сегодня, потому что кто-то посадил дерево много лет назад.",
+      "en": "Someone is sitting in the shade today because someone planted a tree a long time ago."
+    },
+    {
+      "ru": "Цена — это то, что вы платите. Стоимость — это то, что вы получаете.",
+      "en": "Price is what you pay. Value is what you get."
+    },
+    {
+      "ru": "Риск приходит к тому, кто не знает, что делает.",
+      "en": "Risk comes from not knowing what you're doing."
+    },
+    {
+      "ru": "Лучшее вложение, которое можно сделать — в самого себя.",
+      "en": "The best investment you can make is in yourself."
+    }
+  ]
+}

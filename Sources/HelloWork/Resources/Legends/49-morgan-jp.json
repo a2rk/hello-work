@@ -1,0 +1,58 @@
+{
+  "id": "morgan-jp",
+  "order": 49,
+  "name": { "ru": "Дж. П. Морган", "en": "J. P. Morgan" },
+  "fullName": { "ru": "Джон Пирпонт Морган", "en": "John Pierpont Morgan" },
+  "yearsOfLife": "1837–1913",
+  "era": "19th_century",
+  "field": "industrialist",
+  "tags": ["banking", "wall_street", "finance", "art_collector", "tycoon"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Главный банкир Америки рубежа XIX–XX веков. В 1893 году лично спас правительство США от банкротства, дав стране заём золотом. В 1907-м, во время банковской паники, остановил кризис тем, что собрал крупнейших банкиров в своей библиотеке, запер их и не выпускал, пока они не договорились об общем плане спасения — Федеральной резервной системы тогда ещё не было. Сын банкира из Хартфорда, унаследовал бизнес отца и превратил его в финансовую империю, объединил американские железные дороги, создал US Steel — первую компанию стоимостью больше миллиарда. Коллекционировал старинные книги и Рембрандтов. Считал, что характер важнее денег: «Я даю кредит за репутацию, а не за залог».",
+    "en": "America's leading banker at the turn of the 19th–20th centuries. In 1893 he personally saved the US government from bankruptcy by lending the country gold. In 1907, during the banking panic, he stopped the crisis by gathering the biggest bankers in his library, locking them in, and refusing to let them out until they agreed on a rescue plan — the Federal Reserve didn't exist yet. Son of a Hartford banker, he inherited his father's business and turned it into a financial empire, consolidated America's railroads, and created US Steel — the first billion-dollar company. He collected ancient books and Rembrandts. Believed character matters more than money: 'I lend on reputation, not collateral.'"
+  },
+
+  "sources": [
+    { "type": "book", "title": "Morgan: American Financier", "author": "Jean Strouse", "url": "https://www.penguinrandomhouse.com/books/morgan-american-financier" },
+    { "type": "book", "title": "The House of Morgan", "author": "Ron Chernow", "url": "https://www.penguinrandomhouse.com/books/the-house-of-morgan" },
+    { "type": "article", "title": "How J.P. Morgan stopped the Panic of 1907", "author": "Federal Reserve Bank of New York", "url": "https://www.newyorkfed.org/aboutthefed/panic-1907" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "08:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "08:00", "end": "09:00", "type": "meal_and_read", "label": { "ru": "Обильный завтрак, газеты", "en": "Hearty breakfast, newspapers" } },
+      { "start": "09:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Корнер на углу Уолл-стрит и Брод (его офис)", "en": "The Corner at Wall and Broad (his office)" } },
+      { "start": "12:00", "end": "13:30", "type": "comms", "label": { "ru": "Длинный обед с банкирами в Union Club", "en": "Long lunch with bankers at the Union Club" } },
+      { "start": "13:30", "end": "17:00", "type": "deep_work", "label": { "ru": "Переговоры, эмиссии акций, ревью кредитов", "en": "Negotiations, share issues, credit reviews" } },
+      { "start": "17:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Коллекция искусства / партия в whist", "en": "Art collection / game of whist" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с семьёй или гостями", "en": "Dinner with family or guests" } },
+      { "start": "21:00", "end": "22:00", "type": "comms", "label": { "ru": "Личные письма дочери Энн", "en": "Personal letters to daughter Anne" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Морган управлял половиной американской экономики через личные встречи и обеды — он не верил в письма, верил в глаза человека напротив. Деловой обед с банкирами — главное окно для рабочих чатов, длилось 1.5 часа в Union Club. Личные сообщения — час перед сном, дочери Энн и близким.",
+      "en": "Morgan ran half the American economy through personal meetings and lunches — he didn't trust letters, he trusted the eyes of the man across the table. The business lunch with bankers was his main work-chat window, 1.5 hours at the Union Club. Personal messages — an hour before sleep, to his daughter Anne and his closest people."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:30", "appliesTo": ["work_messengers"], "rationale": { "ru": "Длинный обед в Union Club — переговоры с банкирами", "en": "Long Union Club lunch — negotiations with bankers" } },
+      { "start": "21:00", "end": "22:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час перед сном — личные письма дочери и друзьям", "en": "An hour before sleep — personal letters to daughter and friends" } }
+    ],
+    "totalAllowedMinutes": 150
+  },
+
+  "quotes": [
+    { "ru": "Человек обычно даёт два повода для своих действий — хороший и настоящий.", "en": "A man always has two reasons for doing anything — a good reason and the real reason." },
+    { "ru": "Я даю кредит за характер, а не за залог.", "en": "The first thing is character, before money or anything else." },
+    { "ru": "Никто не может одолжить тебе ничего ценнее, чем твоя репутация.", "en": "No problem can be solved until it is reduced to some simple form." },
+    { "ru": "Если тебе нужно спрашивать — ты не можешь себе это позволить.", "en": "If you have to ask, you can't afford it." },
+    { "ru": "Делай свою работу, делай её хорошо, и сама работа будет лучшей рекламой.", "en": "Go as far as you can see; when you get there, you'll be able to see farther." }
+  ]
+}

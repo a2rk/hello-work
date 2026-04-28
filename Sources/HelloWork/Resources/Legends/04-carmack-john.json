@@ -1,0 +1,143 @@
+{
+  "id": "carmack-john",
+  "order": 4,
+  "name": {
+    "ru": "Джон Кармак",
+    "en": "John Carmack"
+  },
+  "fullName": {
+    "ru": "Джон Д. Кармак II",
+    "en": "John D. Carmack II"
+  },
+  "yearsOfLife": "1970–",
+  "era": "modern",
+  "field": "software_engineer",
+  "tags": ["gamedev", "vr", "graphics", "agi", "open_source", "self_taught"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Сооснователь id Software, отец Doom, Quake и Wolfenstein 3D. В 14 лет вломился в школу за компьютерами Apple II и попал в исправительный центр. В 21 написал движок, который изменил геймдев навсегда. Двенадцать лет тянул id в режиме «60–80 часов в неделю на пицце и Diet Coke». Потом ушёл в Oculus, поднял VR-индустрию и в 50 лет основал Keen Technologies — теперь строит AGI в одиночку из своего дома. Его подход: «фокус и тяжёлая работа — единственный реальный ключ».",
+    "en": "Co-founder of id Software, father of Doom, Quake, and Wolfenstein 3D. At 14 he broke into a school to steal Apple II computers and ended up in a juvenile facility. At 21 he wrote the engine that changed gamedev forever. Spent twelve years grinding 60–80 hour weeks on pizza and Diet Coke. Later joined Oculus and pulled VR into the mainstream; at 50 he founded Keen Technologies — now building AGI solo from his home office. His mantra: 'focused, hard work is the real key to success.'"
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Masters of Doom",
+      "author": "David Kushner",
+      "url": "https://www.davidkushner.com/book/masters-of-doom/"
+    },
+    {
+      "type": "interview",
+      "title": "John Carmack on Lex Fridman Podcast",
+      "author": "Lex Fridman",
+      "url": "https://lexfridman.com/john-carmack/"
+    },
+    {
+      "type": "article",
+      "title": "John Carmack's .plan files archive",
+      "author": "Garage Games",
+      "url": "https://garbagecollected.org/2017/10/27/john-carmacks-quake-plan-files/"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "04:00",
+        "type": "deep_work",
+        "label": { "ru": "Самый продуктивный кодинг ночи", "en": "Peak coding session of the night" }
+      },
+      {
+        "start": "04:00",
+        "end": "12:00",
+        "type": "sleep",
+        "label": { "ru": "Сон (он сова)", "en": "Sleep (he's a night owl)" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, завтрак", "en": "Wake, breakfast" }
+      },
+      {
+        "start": "13:00",
+        "end": "19:00",
+        "type": "deep_work",
+        "label": { "ru": "Дневная инженерка / ресёрч", "en": "Afternoon engineering / research" }
+      },
+      {
+        "start": "19:00",
+        "end": "20:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Семейный ужин", "en": "Family dinner" }
+      },
+      {
+        "start": "20:00",
+        "end": "23:00",
+        "type": "deep_work",
+        "label": { "ru": "Вечерняя сессия кода", "en": "Evening coding session" }
+      },
+      {
+        "start": "23:00",
+        "end": "24:00",
+        "type": "comms",
+        "label": { "ru": "Twitter, форумы, ответы коллегам", "en": "Twitter, forums, replies to peers" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Кармак — сова и интроверт. Утром его в принципе нет онлайн (он спит). Личные мессенджеры открывает после семейного ужина — короткий час с близкими. Рабочие чаты, ревью кода, ответы в Twitter — поздно ночью, когда вся работа на день уже сделана и можно поговорить с миром.",
+      "en": "Carmack is a night owl and an introvert. He's simply not online in the morning (he's asleep). Personal messengers open after family dinner — a short hour with loved ones. Work chats, code reviews, Twitter replies — late at night, after the day's work is already done and he can engage with the world."
+    },
+    "allowedSlots": [
+      {
+        "start": "19:00",
+        "end": "20:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Один час с семьёй и близкими между сессиями кода",
+          "en": "One hour with family and close friends between coding sessions"
+        }
+      },
+      {
+        "start": "23:00",
+        "end": "23:30",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Полчаса в Twitter и рабочих чатах после вечернего push'а — выгрузить мысли в мир",
+          "en": "Thirty minutes on Twitter and work chats after the evening push — dump thoughts to the world"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 90
+  },
+
+  "quotes": [
+    {
+      "ru": "Сфокусированная, тяжёлая работа — единственный реальный ключ к успеху.",
+      "en": "Focused, hard work is the real key to success."
+    },
+    {
+      "ru": "В информационную эпоху барьеров просто нет. Барьеры ты ставишь сам.",
+      "en": "In the information age, the barriers just aren't there. The barriers are self-imposed."
+    },
+    {
+      "ru": "Я всегда считал, что куда лучше быть «производителем», чем «потребителем».",
+      "en": "I have always thought there's a lot to be said for being a 'producer' rather than a 'consumer.'"
+    },
+    {
+      "ru": "Если ты не падаешь — значит, ты едешь недостаточно жёстко.",
+      "en": "If you're not falling down, you're not skiing hard enough."
+    },
+    {
+      "ru": "Если у тебя весь мир — потенциальный рынок, у софта самый высокий экономический градиент среди всех продуктов.",
+      "en": "With the entire world being your potential market, software has the highest economic gradient of any product."
+    }
+  ]
+}

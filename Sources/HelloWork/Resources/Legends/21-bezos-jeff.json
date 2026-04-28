@@ -1,0 +1,59 @@
+{
+  "id": "bezos-jeff",
+  "order": 21,
+  "name": { "ru": "Джефф Безос", "en": "Jeff Bezos" },
+  "fullName": { "ru": "Джеффри Престон Безос", "en": "Jeffrey Preston Bezos" },
+  "yearsOfLife": "1964–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["amazon", "blue_origin", "founder", "long_term_thinking", "self_made"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Основатель Amazon и Blue Origin. В 1994 году бросил престижную работу в хедж-фонде, погрузил всё имущество в фургон и поехал в Сиэтл писать бизнес-план онлайн-книжного магазина по дороге. Через 27 лет Amazon стоит триллион. Безос — один из немногих фанатов «8 часов сна»: говорит, что одно качественное решение в день стоит дороже сотни плохих, а качество решений ниже без сна. Не ставит встречи раньше 10:00, важные решения принимает только до полудня, после — рутина и спорт.",
+    "en": "Founder of Amazon and Blue Origin. In 1994 he quit a prestigious hedge-fund job, packed everything into a van, and drove to Seattle writing the business plan for an online bookstore along the way. Twenty-seven years later Amazon is worth a trillion. Bezos is one of the rare champions of 8 hours of sleep: he says one quality decision a day is worth more than a hundred bad ones, and the quality drops without sleep. No meetings before 10:00, important decisions only before noon — afterwards comes routine and exercise."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Invent and Wander: The Collected Writings of Jeff Bezos", "author": "Jeff Bezos / Walter Isaacson", "url": "https://hbr.org/books/invent-and-wander" },
+    { "type": "interview", "title": "Jeff Bezos at the Economic Club of Washington", "author": "David Rubenstein", "url": "https://www.economicclub.org/events/jeff-bezos" },
+    { "type": "article", "title": "Jeff Bezos prioritizes 8 hours of sleep", "author": "CNBC", "url": "https://www.cnbc.com/jeff-bezos-sleep-habits" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "07:00", "type": "sleep", "label": { "ru": "Сон (8 часов — обязательно)", "en": "Sleep (8 hours — non-negotiable)" } },
+      { "start": "07:00", "end": "08:00", "type": "morning_routine", "label": { "ru": "Подъём, кофе, завтрак с детьми", "en": "Wake, coffee, breakfast with kids" } },
+      { "start": "08:00", "end": "10:00", "type": "meal_and_read", "label": { "ru": "Газеты, посуда (он сам моет!)", "en": "Newspapers, washing dishes (he does it himself!)" } },
+      { "start": "10:00", "end": "12:00", "type": "deep_work", "label": { "ru": "High IQ decisions — самые важные решения дня", "en": "High IQ decisions — the day's most important calls" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка", "en": "Lunch, correspondence" } },
+      { "start": "13:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Встречи 1:1, ревью команд", "en": "1:1s, team reviews" } },
+      { "start": "17:00", "end": "18:30", "type": "morning_routine", "label": { "ru": "Спортзал, силовая", "en": "Gym, strength training" } },
+      { "start": "18:30", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Семейный ужин, время с детьми", "en": "Family dinner, time with kids" } },
+      { "start": "21:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение фантастики и мемуаров", "en": "Reading sci-fi and memoirs" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Безос строит свой день вокруг качественных решений. Утро (10:00–12:00) — только high-IQ-decisions, никаких чатов. Рабочая переписка — обеденный час. После 17:00 у него правило: «никаких важных решений», поэтому личные сообщения он смотрит спокойно вечером перед чтением.",
+      "en": "Bezos designs his day around quality decisions. Mornings (10:00–12:00) are reserved for high-IQ decisions — no chats. Work correspondence — lunch hour. After 17:00 his rule kicks in: 'no important decisions,' so he checks personal messages calmly in the evening before reading."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты в одно окно", "en": "Lunch hour — work chats in one window" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час с семьёй и друзьями перед чтением", "en": "An hour with family and friends before reading" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Если ты работаешь, чтобы получить то, что хотел в прошлом — ты не делаешь то, что нужно сделать сейчас.", "en": "If you double the number of experiments you do per year, you're going to double your inventiveness." },
+    { "ru": "Я принимаю в день три хороших решения. Большего не требуется.", "en": "If I make three good decisions a day, that is enough." },
+    { "ru": "Будь упрям в видении и гибок в деталях.", "en": "Be stubborn on vision but flexible on details." },
+    { "ru": "Твой бренд — это то, что говорят о тебе люди, когда тебя нет в комнате.", "en": "Your brand is what other people say about you when you're not in the room." },
+    { "ru": "Жизнь слишком коротка, чтобы тусоваться с людьми, которые не находят в тебе ресурс.", "en": "Life's too short to hang out with people who aren't resourceful." }
+  ]
+}

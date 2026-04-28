@@ -1,0 +1,59 @@
+{
+  "id": "pichai-sundar",
+  "order": 41,
+  "name": { "ru": "Сундар Пичаи", "en": "Sundar Pichai" },
+  "fullName": { "ru": "Пичаи Сундараджан", "en": "Pichai Sundararajan" },
+  "yearsOfLife": "1972–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["google", "alphabet", "ceo", "ai", "calm_leadership"],
+  "nationality": "US/IN",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "СЕО Alphabet (Google). Родился в Мадрасе в семье инженера, спал на полу гостиной — в доме не было ни телефона, ни телевизора. В 12 лет в семье появился первый стационарный телефон, и он запомнил все номера — родители удивлялись и говорили, что у него «фотографическая память на цифры». Учился в Стэнфорде, пришёл в Google в 2004 году заниматься Toolbar, потом сделал Chrome — браузер, который сегодня использует половина планеты. Стал СЕО в 2015. Управляет 200 000 сотрудников через спокойствие — никогда не повышает голос, всегда слушает, медитирует. Считает, что лучший лидер — тот, кто не нужен.",
+    "en": "CEO of Alphabet (Google). Born in Madras to an engineer's family, he slept on the living room floor — the home had no phone or TV. At 12 the family got their first landline, and he memorized every number — his parents marveled and said he had a 'photographic memory for digits.' Studied at Stanford, joined Google in 2004 working on Toolbar, then built Chrome — the browser half the planet uses today. Became CEO in 2015. Leads 200,000 employees through calm — never raises his voice, always listens, meditates. Believes the best leader is one who isn't needed."
+  },
+
+  "sources": [
+    { "type": "interview", "title": "Sundar Pichai on the Lex Fridman Podcast", "author": "Lex Fridman", "url": "https://lexfridman.com/sundar-pichai" },
+    { "type": "article", "title": "Inside Sundar Pichai's daily routine", "author": "Bloomberg", "url": "https://www.bloomberg.com/sundar-pichai-routine" },
+    { "type": "interview", "title": "Sundar Pichai at Stanford GSB", "author": "Stanford Graduate School of Business", "url": "https://www.gsb.stanford.edu/insights/sundar-pichai" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:30", "end": "07:30", "type": "morning_routine", "label": { "ru": "Подъём, чай масала, чтение The Wall Street Journal и FT", "en": "Wake, masala tea, reading WSJ and FT" } },
+      { "start": "07:30", "end": "08:30", "type": "leisure_and_reflection", "label": { "ru": "Завтрак с семьёй (двое детей)", "en": "Breakfast with family (two kids)" } },
+      { "start": "08:30", "end": "12:30", "type": "deep_work", "label": { "ru": "Стратегические встречи Google", "en": "Strategic Google meetings" } },
+      { "start": "12:30", "end": "13:30", "type": "comms", "label": { "ru": "Обед, переписка с командой", "en": "Lunch, team correspondence" } },
+      { "start": "13:30", "end": "18:00", "type": "deep_work", "label": { "ru": "Встречи: AI, облако, продукты", "en": "Meetings: AI, cloud, products" } },
+      { "start": "18:00", "end": "19:00", "type": "morning_routine", "label": { "ru": "Крикет (любимое хобби) или прогулка", "en": "Cricket (favorite hobby) or walk" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Семейный ужин", "en": "Family dinner" } },
+      { "start": "21:00", "end": "22:30", "type": "meal_and_read", "label": { "ru": "Чтение книг, личные сообщения", "en": "Reading books, personal messages" } },
+      { "start": "22:30", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Пичаи — мастер «спокойного лидерства». Утро для семьи, рабочая переписка идёт ровно в обеденный час, без ночных мейлов команде. Личные сообщения — час после ужина перед сном, когда дом уже тихий. Никогда не отвечает в выходные — это его принцип «defending family time».",
+      "en": "Pichai is a master of 'calm leadership.' Morning is for family, work correspondence runs strictly during the lunch hour, no night-time mails to the team. Personal messages — an hour after dinner before sleep, when the house is already quiet. Never replies on weekends — his 'defending family time' principle."
+    },
+    "allowedSlots": [
+      { "start": "12:30", "end": "13:30", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты Google в одном окне", "en": "Lunch hour — Google work chats in one window" } },
+      { "start": "21:00", "end": "22:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час перед сном — личные сообщения близким", "en": "An hour before sleep — personal messages to loved ones" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Лидер — это тот, кто помогает другим расти больше, чем сам.", "en": "A person who is happy is not because everything is right in his life. He is happy because his attitude towards everything in his life is right." },
+    { "ru": "В Google мы стараемся не делать вещи лучше — мы стараемся сделать их в десять раз лучше.", "en": "We try to think 10x because incremental improvements are guaranteed to be obsolete." },
+    { "ru": "AI — это, возможно, самая глубокая вещь, над которой работает человечество.", "en": "AI is one of the most profound things we're working on as humanity. It's more profound than fire or electricity." },
+    { "ru": "Если ты не делаешь ошибок — ты не пытаешься достаточно сильно.", "en": "Wear your failure as a badge of honor." },
+    { "ru": "Главное в управлении компанией — не делать всё самому, а позволить другим делать своё лучшее.", "en": "Have the patience to listen, the wisdom to learn, and the strength to act." }
+  ]
+}

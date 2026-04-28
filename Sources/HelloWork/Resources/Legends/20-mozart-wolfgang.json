@@ -1,0 +1,161 @@
+{
+  "id": "mozart-wolfgang",
+  "order": 20,
+  "name": {
+    "ru": "Вольфганг Амадей Моцарт",
+    "en": "Wolfgang Amadeus Mozart"
+  },
+  "fullName": {
+    "ru": "Иоганн Хризостом Вольфганг Теофил Моцарт",
+    "en": "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+  },
+  "yearsOfLife": "1756–1791",
+  "era": "classical",
+  "field": "composer",
+  "tags": ["music", "composer", "prodigy", "vienna", "prolific"],
+  "nationality": "AT",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Австрийский композитор, написавший 626 произведений за 35 лет жизни. Сочинил первый менуэт в 5 лет, выступал перед королями Европы в 7, написал первую оперу в 11. Покинул Зальцбург и работодателя-епископа в 25, чтобы как первый в истории «вольный композитор» жить в Вене своим трудом. Работал в режиме маньяка: уроки до обеда, концерты по вечерам, композиция глубокой ночью. Жене писал письма с шутками, сыновьям — нежные фразы, а финансовые проблемы решал, сочиняя ещё одну симфонию. Умер в 35 в нищете, оставив человечеству музыку, которая будет звучать вечно.",
+    "en": "Austrian composer who wrote 626 works in 35 years of life. Composed his first minuet at 5, performed before the kings of Europe at 7, wrote his first opera at 11. Left Salzburg and his employer-archbishop at 25 to become history's first 'freelance composer,' living in Vienna by his own work. Worked in maniac mode: lessons until lunch, concerts in the evening, composition deep into the night. He wrote his wife letters full of jokes, his sons tender phrases, and solved his financial problems by composing yet another symphony. Died at 35 in poverty, leaving humanity music that will sound forever."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Mozart: A Life",
+      "author": "Maynard Solomon",
+      "url": "https://www.harpercollins.com/products/mozart-a-life-maynard-solomon"
+    },
+    {
+      "type": "book",
+      "title": "The Letters of Mozart and His Family",
+      "author": "Wolfgang Amadeus Mozart",
+      "url": "https://www.gutenberg.org/ebooks/5307"
+    },
+    {
+      "type": "article",
+      "title": "Mozart's daily routine in Vienna",
+      "author": "Classic FM",
+      "url": "https://www.classicfm.com/composers/mozart/daily-routine-vienna"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "01:00",
+        "type": "deep_work",
+        "label": { "ru": "Композиция в ночной тишине", "en": "Composing in the night's silence" }
+      },
+      {
+        "start": "01:00",
+        "end": "06:00",
+        "type": "sleep",
+        "label": { "ru": "Сон (5 часов — больше времени жалко)", "en": "Sleep (5 hours — more would be a waste)" }
+      },
+      {
+        "start": "06:00",
+        "end": "07:00",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, причёска у парикмахера", "en": "Wake, hairdresser styling his hair" }
+      },
+      {
+        "start": "07:00",
+        "end": "09:00",
+        "type": "deep_work",
+        "label": { "ru": "Композиция: свежая голова", "en": "Composing: fresh mind" }
+      },
+      {
+        "start": "09:00",
+        "end": "13:00",
+        "type": "deep_work",
+        "label": { "ru": "Уроки ученицам аристократкам (это деньги)", "en": "Lessons to aristocratic students (it's the money)" }
+      },
+      {
+        "start": "13:00",
+        "end": "14:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Обед в обществе, шутки, сплетни", "en": "Lunch in company, jokes, gossip" }
+      },
+      {
+        "start": "14:00",
+        "end": "17:00",
+        "type": "deep_work",
+        "label": { "ru": "Репетиции с музыкантами", "en": "Rehearsals with musicians" }
+      },
+      {
+        "start": "17:00",
+        "end": "18:00",
+        "type": "comms",
+        "label": { "ru": "Письма патронам, импресарио", "en": "Letters to patrons, impresarios" }
+      },
+      {
+        "start": "18:00",
+        "end": "21:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Концерт или ужин у аристократов", "en": "Concert or dinner at the aristocrats'" }
+      },
+      {
+        "start": "21:00",
+        "end": "24:00",
+        "type": "deep_work",
+        "label": { "ru": "Ночная композиция — самое ценное время", "en": "Night composing — the most precious time" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Моцарт был полной противоположностью Баха: яркий, шумный, тусовщик. Но и у него были железные правила. Композиция шла в двух «тихих» окнах — раннее утро и поздняя ночь. Личное общение — обед в обществе, потом ужин на приёме. Деловая переписка с патронами и импресарио — короткое окно вечером перед выходом в свет. Ночь после полуночи была для самой важной музыки.",
+      "en": "Mozart was Bach's complete opposite: brilliant, loud, a partygoer. But he had iron rules too. Composition happened in two 'quiet' windows — early morning and late night. Personal communication — lunch in company, then dinner at receptions. Business correspondence with patrons and impresarios — a short evening window before going out. The hours after midnight were for his most important music."
+    },
+    "allowedSlots": [
+      {
+        "start": "13:00",
+        "end": "14:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Обед в обществе — главное окно для друзей и семьи",
+          "en": "Lunch in company — the main window for friends and family"
+        }
+      },
+      {
+        "start": "17:00",
+        "end": "18:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Час перед концертом — переписка с патронами и импресарио",
+          "en": "An hour before the concert — correspondence with patrons and impresarios"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Никто не работал так усердно над композицией, как я. Невозможно назвать ни одного известного мастера, чьи работы я не изучал бы прилежно и многократно.",
+      "en": "Nobody has applied himself to the study of composition as I have. There is not one famous master whose works I have not studied repeatedly and diligently."
+    },
+    {
+      "ru": "Я обращаюсь не к публике, а к каждому отдельному человеку.",
+      "en": "I write as a sow piddles."
+    },
+    {
+      "ru": "Меньше говорить, больше думать. Тогда работа получится.",
+      "en": "The shorter way to do many things is to do only one thing at a time."
+    },
+    {
+      "ru": "Ни высокий ум, ни воображение, ни оба вместе не делают гения. Любовь, любовь, любовь — вот душа гения.",
+      "en": "Neither a lofty degree of intelligence nor imagination nor both together go to the making of genius. Love, love, love, that is the soul of genius."
+    },
+    {
+      "ru": "Когда я полностью один с собой — лучшие мысли приходят мне в голову.",
+      "en": "When I am, as it were, completely myself, entirely alone — it is on such occasions that my ideas flow best and most abundantly."
+    }
+  ]
+}

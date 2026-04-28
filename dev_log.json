@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.10.6",
+    "date": "2026-04-28",
+    "customMessage": "TASK-L05: 60 JSON-файлов легенд перенесены в Resources/Legends/. Package.swift переключён на explicit list ресурсов с .copy для Legends (сохраняет subdir tree).",
+    "main": "Bundle structure: HelloWork_HelloWork.bundle/Legends/01-franklin-benjamin.json и т.д. .process('Resources') flat'ил файлы — поэтому переключились на .process('Resources/Media.xcassets') + .copy('Resources/Legends'). Engine .app вырос с 6.9 до 7.6 MB — разница это 60 JSON.",
+    "points": [
+      "60 JSON в Sources/HelloWork/Resources/Legends/",
+      "Package.swift: explicit resources list",
+      ".copy сохраняет subdir структуру в bundle"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.6/HelloWork-0.10.6.dmg"
+  },
+  {
     "version": "0.10.5",
     "date": "2026-04-28",
     "customMessage": "TASK-L04 verified: LegendsLibrary handles empty/missing/corrupt cases. Build чистый.",

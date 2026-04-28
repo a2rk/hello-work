@@ -1,0 +1,59 @@
+{
+  "id": "collison-patrick",
+  "order": 42,
+  "name": { "ru": "Патрик Коллисон", "en": "Patrick Collison" },
+  "fullName": { "ru": "Патрик Коллисон", "en": "Patrick Collison" },
+  "yearsOfLife": "1988–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["stripe", "founder", "polymath", "reading", "ireland"],
+  "nationality": "IE/US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Сооснователь и СЕО Stripe — компании, которая делает приём платежей в интернете. Сегодня Stripe обрабатывает $1 триллион транзакций в год и стоит $70 миллиардов. Родился в маленькой деревне в графстве Лимерик, Ирландия. В 16 лет выиграл Всеирландский конкурс юных учёных, написав свой собственный язык программирования на Lisp. Бросил MIT в 19, чтобы с младшим братом Джоном основать Stripe в 2010 году. Один из самых начитанных людей в Кремниевой долине — читает 100+ книг в год. Дружит с историками, биологами, физиками, ведёт публичный список читаемых книг и регулярно жертвует на изучение «прогресса как такового».",
+    "en": "Co-founder and CEO of Stripe — the company that handles internet payments. Today Stripe processes $1 trillion in transactions a year and is valued at $70 billion. Born in a tiny village in County Limerick, Ireland. At 16 he won the All-Ireland Young Scientist Award by writing his own Lisp programming language. Dropped out of MIT at 19 to found Stripe with his younger brother John in 2010. One of Silicon Valley's most well-read people — reads 100+ books a year. Friends with historians, biologists, physicists, keeps a public reading list, and regularly funds research into 'progress' as a field."
+  },
+
+  "sources": [
+    { "type": "interview", "title": "Patrick Collison on the Tim Ferriss Show", "author": "Tim Ferriss", "url": "https://tim.blog/patrick-collison" },
+    { "type": "article", "title": "Patrick Collison's bookshelf", "author": "patrickcollison.com", "url": "https://patrickcollison.com/bookshelf" },
+    { "type": "article", "title": "We Need a New Science of Progress", "author": "Patrick Collison & Tyler Cowen", "url": "https://www.theatlantic.com/ideas/archive/2019/07/we-need-new-science-progress" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:30", "end": "07:30", "type": "morning_routine", "label": { "ru": "Подъём, кофе, утреннее чтение", "en": "Wake, coffee, morning reading" } },
+      { "start": "07:30", "end": "08:00", "type": "meal_and_read", "label": { "ru": "Завтрак, обзор Stripe metrics", "en": "Breakfast, Stripe metrics review" } },
+      { "start": "08:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Code review, продуктовая стратегия", "en": "Code review, product strategy" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка с командой", "en": "Lunch, team correspondence" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Встречи 1:1, стратегические сессии", "en": "1:1s, strategy sessions" } },
+      { "start": "18:00", "end": "19:00", "type": "morning_routine", "label": { "ru": "Спорт / прогулка", "en": "Exercise / walk" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с друзьями (часто учёные, историки)", "en": "Dinner with friends (often scientists, historians)" } },
+      { "start": "21:00", "end": "23:30", "type": "meal_and_read", "label": { "ru": "Чтение книг (100+ в год)", "en": "Reading books (100+ a year)" } },
+      { "start": "23:30", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Коллисон выстраивает день вокруг чтения и писания — он считает, что хороший СЕО должен быть полиматом. Утреннее чтение — священно, без чатов. Рабочая переписка — обеденный час с командой. Личное общение — ужины с интеллектуалами и часовое окно перед чтением.",
+      "en": "Collison structures his day around reading and writing — he believes a good CEO must be a polymath. Morning reading is sacred, no chats. Work correspondence — lunch hour with the team. Personal communication — dinners with intellectuals and an hour window before reading."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты со Stripe", "en": "Lunch hour — Stripe work chats" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час за ужином — личные сообщения друзьям и семье", "en": "Dinner hour — personal messages to friends and family" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Если ты не читаешь — ты не растёшь. Реально, физически, нейронно.", "en": "Reading is the closest thing we have to time travel." },
+    { "ru": "Прогресс — это не данность. Это редкая, хрупкая, исторически случайная штука.", "en": "Progress is not automatic. It is rare, fragile, and historically contingent." },
+    { "ru": "Лучшие основатели — это те, кто читал слишком много книг.", "en": "The best founders are people who read too many books." },
+    { "ru": "Когда мы запускали Stripe, я не верил, что мы построим компанию на $100 миллиардов. Я просто хотел, чтобы платежи работали хорошо.", "en": "We didn't start Stripe to build a $100 billion company. We just wanted payments to work well." },
+    { "ru": "Самые ценные навыки СЕО — терпение, любопытство и способность не отвлекаться.", "en": "The most valuable skills of a CEO are patience, curiosity, and the ability to not get distracted." }
+  ]
+}

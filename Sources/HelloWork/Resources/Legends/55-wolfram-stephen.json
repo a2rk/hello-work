@@ -1,0 +1,58 @@
+{
+  "id": "wolfram-stephen",
+  "order": 55,
+  "name": { "ru": "Стивен Вольфрам", "en": "Stephen Wolfram" },
+  "fullName": { "ru": "Стивен Вольфрам", "en": "Stephen Wolfram" },
+  "yearsOfLife": "1959–",
+  "era": "modern",
+  "field": "inventor_scientist",
+  "tags": ["mathematica", "wolfram_alpha", "computational", "polymath", "remote_work"],
+  "nationality": "GB/US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Создатель Mathematica и Wolfram Alpha. В 14 лет издал свою первую научную статью по физике, в 16 написал первый учебник по физике частиц, в 20 защитил докторскую в Caltech. В 1986 году в 27 лет основал Wolfram Research и создал Mathematica — программу, которая с тех пор стоит на компьютерах учёных и инженеров всего мира. В 2002 году выпустил книгу «A New Kind of Science», в которой утверждает, что Вселенная — это вычисление. Знаменит тем, что 30+ лет работает удалённо из дома, ведёт публичную «персональную аналитику» — графики каждой минуты своего дня — и считает, что главное преимущество в науке сегодня — иметь свои инструменты.",
+    "en": "Creator of Mathematica and Wolfram Alpha. Published his first physics paper at 14, wrote his first particle-physics textbook at 16, defended his PhD at Caltech at 20. In 1986, at 27, he founded Wolfram Research and built Mathematica — software now sitting on the computers of scientists and engineers worldwide. In 2002 he released A New Kind of Science, arguing the universe is computation. Famous for working from home for 30+ years, keeping public 'personal analytics' — graphs of every minute of his day — and believing the main scientific advantage today is owning your own tools."
+  },
+
+  "sources": [
+    { "type": "article", "title": "The Personal Analytics of My Life", "author": "Stephen Wolfram", "url": "https://writings.stephenwolfram.com/2012/03/the-personal-analytics-of-my-life/" },
+    { "type": "book", "title": "A New Kind of Science", "author": "Stephen Wolfram", "url": "https://www.wolframscience.com/" },
+    { "type": "interview", "title": "Stephen Wolfram on the Lex Fridman Podcast", "author": "Lex Fridman", "url": "https://lexfridman.com/stephen-wolfram" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "08:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "08:00", "end": "09:00", "type": "morning_routine", "label": { "ru": "Подъём, кофе, утренний обзор данных", "en": "Wake, coffee, morning data review" } },
+      { "start": "09:00", "end": "12:30", "type": "deep_work", "label": { "ru": "Глубокая работа: Mathematica, теория", "en": "Deep work: Mathematica, theory" } },
+      { "start": "12:30", "end": "13:30", "type": "comms", "label": { "ru": "Обед, переписка с командой", "en": "Lunch, team correspondence" } },
+      { "start": "13:30", "end": "19:00", "type": "deep_work", "label": { "ru": "Видеовстречи с командой (он работает только удалённо)", "en": "Video calls with the team (he only works remotely)" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с семьёй", "en": "Dinner with family" } },
+      { "start": "20:00", "end": "21:00", "type": "comms", "label": { "ru": "Личные звонки и сообщения", "en": "Personal calls and messages" } },
+      { "start": "21:00", "end": "23:30", "type": "deep_work", "label": { "ru": "Поздняя работа: новые проекты, эссе в блог", "en": "Late work: new projects, blog essays" } },
+      { "start": "23:30", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Вольфрам — пионер удалённой работы: 30+ лет управляет компанией из дома и ведёт идеально структурированный день. Деловая переписка с командой — обеденный час. Личные сообщения — час после ужина с семьёй. Поздний вечер для эссе и новых проектов — это время самой интересной мысли.",
+      "en": "Wolfram is a pioneer of remote work: 30+ years running his company from home and keeping a meticulously structured day. Business correspondence with the team — the lunch hour. Personal messages — an hour after dinner with family. Late evening for essays and new projects — that's when the most interesting thinking happens."
+    },
+    "allowedSlots": [
+      { "start": "12:30", "end": "13:30", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты с командой Wolfram Research", "en": "Lunch hour — work chats with Wolfram Research team" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные сообщения семье и друзьям", "en": "An hour after dinner — personal messages to family and friends" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Лучшее, что можно сделать в жизни — построить инструменты, которыми будут пользоваться другие.", "en": "The best thing you can do in life is build tools that other people will use." },
+    { "ru": "Вселенная — это вычисление. И значит, её можно понять.", "en": "Computation is the most powerful idea humans have ever had." },
+    { "ru": "Я веду логи всего, что делаю, с 1989 года. И я обнаружил удивительные паттерны в собственной жизни.", "en": "I've been keeping logs of everything I do since 1989. I've discovered surprising patterns in my own life." },
+    { "ru": "Удалённая работа — это не пандемийный тренд. Это естественный способ работать для тех, кто ценит концентрацию.", "en": "Remote work isn't a pandemic trend. It's the natural way to work if you value focus." },
+    { "ru": "Простые правила могут породить бесконечную сложность. Это самая красивая идея в науке.", "en": "Simple rules can generate infinite complexity. That's the most beautiful idea in science." }
+  ]
+}

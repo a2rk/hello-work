@@ -1,0 +1,59 @@
+{
+  "id": "torvalds-linus",
+  "order": 24,
+  "name": { "ru": "Линус Торвальдс", "en": "Linus Torvalds" },
+  "fullName": { "ru": "Линус Бенедикт Торвальдс", "en": "Linus Benedict Torvalds" },
+  "yearsOfLife": "1969–",
+  "era": "modern",
+  "field": "software_engineer",
+  "tags": ["linux", "git", "open_source", "kernel", "self_taught"],
+  "nationality": "FI/US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Создатель Linux и Git — двух систем, на которых сегодня работают 96% серверов мира, все смартфоны на Android, все суперкомпьютеры и Международная космическая станция. В 21 год, будучи студентом в Хельсинки, он за лето написал ядро операционной системы и выложил в интернет с фразой «just a hobby, won't be big and professional». 35 лет работает из дома, носит сандалии с носками, не любит митинги, считает, что хороший код — это «taste». Управляет тысячами разработчиков ядра через mailing list — ноль звонков, ноль зумов.",
+    "en": "Creator of Linux and Git — two systems that today run 96% of the world's servers, every Android phone, every supercomputer, and the International Space Station. At 21, while a student in Helsinki, he wrote an operating system kernel over a summer and posted it online with the words 'just a hobby, won't be big and professional.' For 35 years he's worked from home, wears sandals with socks, hates meetings, believes good code is 'taste.' Manages thousands of kernel developers through a mailing list — zero calls, zero Zooms."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Just for Fun: The Story of an Accidental Revolutionary", "author": "Linus Torvalds, David Diamond", "url": "https://www.harpercollins.com/products/just-for-fun-linus-torvalds" },
+    { "type": "interview", "title": "Linus Torvalds on the Lex Fridman Podcast", "author": "Lex Fridman", "url": "https://lexfridman.com/linus-torvalds" },
+    { "type": "article", "title": "How Linus Torvalds works", "author": "The Linux Foundation", "url": "https://www.linuxfoundation.org/blog/linus-torvalds-work" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "08:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "08:00", "end": "09:00", "type": "morning_routine", "label": { "ru": "Подъём, кофе, новости Linux Kernel Mailing List", "en": "Wake, coffee, Linux Kernel Mailing List news" } },
+      { "start": "09:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Pull request reviews, мейнтейнинг ядра", "en": "Pull request reviews, kernel maintenance" } },
+      { "start": "12:00", "end": "13:00", "type": "leisure_and_reflection", "label": { "ru": "Обед дома", "en": "Lunch at home" } },
+      { "start": "13:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Кодинг, мерж в master, разбор багов", "en": "Coding, merging into master, bug triage" } },
+      { "start": "17:00", "end": "18:00", "type": "morning_routine", "label": { "ru": "Прогулка с семьёй или дайвинг", "en": "Walk with family or scuba diving" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Семейный ужин", "en": "Family dinner" } },
+      { "start": "19:00", "end": "22:00", "type": "leisure_and_reflection", "label": { "ru": "Время с дочерьми и женой", "en": "Time with daughters and wife" } },
+      { "start": "22:00", "end": "23:30", "type": "meal_and_read", "label": { "ru": "Чтение, иногда поздний кодинг", "en": "Reading, occasionally late coding" } },
+      { "start": "23:30", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Торвальдс — пример того, как можно управлять тысячами людей без единого зума. Вся его рабочая коммуникация — асинхронный mailing list, который он разбирает в одно конкретное окно перед обедом. Личные сообщения — после прогулки с семьёй, перед ужином. Утро (после кофе) и весь рабочий блок до 17:00 — глубокая тишина с кодом.",
+      "en": "Torvalds is proof you can lead thousands without a single Zoom. All his work communication is async via mailing list, which he triages in one specific window before lunch. Personal messages — after a walk with family, before dinner. Morning (after coffee) and the work block until 17:00 — deep silence with code."
+    },
+    "allowedSlots": [
+      { "start": "11:00", "end": "12:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час разбора kernel mailing list перед обедом", "en": "An hour of triaging the kernel mailing list before lunch" } },
+      { "start": "17:00", "end": "18:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Прогулка с семьёй — личное общение в реальном мире и в чатах", "en": "Walk with family — personal communication, both real-world and chats" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Talk is cheap. Show me the code.", "en": "Talk is cheap. Show me the code." },
+    { "ru": "У меня действительно нет видения. У меня просто есть очень много мнений.", "en": "I don't really have a vision. I just have a lot of opinions." },
+    { "ru": "Я хотел сделать что-то, на что я бы хотел смотреть. И теперь это используют миллионы.", "en": "I'm doing a (free) operating system, just a hobby, won't be big and professional." },
+    { "ru": "Хорошие программисты заботятся о структурах данных и их связях. Плохие — о коде.", "en": "Bad programmers worry about the code. Good programmers worry about data structures and their relationships." },
+    { "ru": "Дай мне в руки контроль и я предпочту делать сложные вещи правильно — даже если на это уйдёт больше времени.", "en": "Given enough eyeballs, all bugs are shallow." }
+  ]
+}

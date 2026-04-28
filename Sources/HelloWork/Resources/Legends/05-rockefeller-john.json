@@ -1,0 +1,167 @@
+{
+  "id": "rockefeller-john",
+  "order": 5,
+  "name": {
+    "ru": "Джон Рокфеллер",
+    "en": "John D. Rockefeller"
+  },
+  "fullName": {
+    "ru": "Джон Дэвисон Рокфеллер-старший",
+    "en": "John Davison Rockefeller Sr."
+  },
+  "yearsOfLife": "1839–1937",
+  "era": "19th_century",
+  "field": "industrialist",
+  "tags": ["oil", "monopoly", "self_made", "philanthropy", "founder"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Первый миллиардер в истории. Основатель Standard Oil, контролировавшего 90% американской нефтепереработки. Сын мошенника и лжецелителя, сбежавшего из дома, с 16 лет работал бухгалтером за 50 центов в день и записывал каждую копейку в свою «Бухгалтерскую книгу А». Никогда не повышал голос, никогда не торопился, никогда не пил. Просыпался в 6:00 каждый день и работал ровно столько, сколько считал нужным — а потом дожил до 97 лет, раздав половину состояния.",
+    "en": "The first billionaire in history. Founder of Standard Oil, which controlled 90% of American oil refining. Son of a con-man and a fake healer who abandoned the family, he worked as a bookkeeper from age 16 for 50 cents a day and recorded every penny in his 'Ledger A.' Never raised his voice, never rushed, never drank. Rose at 6:00 every morning and worked exactly as long as he saw fit — then lived to 97 after giving away half his fortune."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Titan: The Life of John D. Rockefeller, Sr.",
+      "author": "Ron Chernow",
+      "url": "https://www.penguinrandomhouse.com/books/120290/titan-by-ron-chernow/"
+    },
+    {
+      "type": "book",
+      "title": "Random Reminiscences of Men and Events",
+      "author": "John D. Rockefeller",
+      "url": "https://www.gutenberg.org/ebooks/3328"
+    },
+    {
+      "type": "article",
+      "title": "John D. Rockefeller's habits and routines",
+      "author": "Forbes",
+      "url": "https://www.forbes.com/sites/erikkain/john-d-rockefeller-routines"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "06:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "06:00",
+        "end": "07:00",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, молитва, завтрак", "en": "Wake, prayer, breakfast" }
+      },
+      {
+        "start": "07:00",
+        "end": "08:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Чтение газет и счетов", "en": "Reading papers and accounts" }
+      },
+      {
+        "start": "08:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Офис: переговоры, решения по покупкам", "en": "Office: negotiations, acquisition decisions" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "comms",
+        "label": { "ru": "Обед, разбор переписки", "en": "Lunch, going through correspondence" }
+      },
+      {
+        "start": "13:00",
+        "end": "17:00",
+        "type": "deep_work",
+        "label": { "ru": "Встречи с менеджерами, ревью трестов", "en": "Manager meetings, trust reviews" }
+      },
+      {
+        "start": "17:00",
+        "end": "18:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Прогулка / гольф", "en": "Walk / golf" }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Семейный ужин", "en": "Family dinner" }
+      },
+      {
+        "start": "19:00",
+        "end": "21:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Чтение Библии, разбор «Книги А»", "en": "Bible reading, reviewing 'Ledger A'" }
+      },
+      {
+        "start": "21:00",
+        "end": "22:00",
+        "type": "deep_work",
+        "label": { "ru": "Финальный обзор счетов дня", "en": "Final review of the day's books" }
+      },
+      {
+        "start": "22:00",
+        "end": "24:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Рокфеллер вёл бизнес через переписку — он буквально не любил говорить. Деловые письма читал и отвечал в обед, методично, по одному. Личное общение жёстко ограничивал — час перед ужином с семьёй, и всё. Утро и большие рабочие блоки — абсолютная тишина. Ни одного решения он не принимал в спешке.",
+      "en": "Rockefeller ran his empire through letters — he genuinely disliked talking. He answered business correspondence at lunch, one at a time, methodically. Personal communication was tightly capped — one hour before family dinner, that's it. Mornings and the deep work blocks were absolute silence. He never made a decision in a hurry."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Обеденный разбор переписки — каждое письмо обработано, ни одного непрочитанного",
+          "en": "Lunchtime correspondence sweep — every letter processed, none left unread"
+        }
+      },
+      {
+        "start": "17:00",
+        "end": "18:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Час прогулки после офиса — единственное время для личных разговоров",
+          "en": "An hour walking after the office — the only window for personal conversations"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Не бойся отказаться от хорошего ради великого.",
+      "en": "Don't be afraid to give up the good to go for the great."
+    },
+    {
+      "ru": "Секрет успеха — делать обычные вещи необычайно хорошо.",
+      "en": "The secret to success is to do the common things uncommonly well."
+    },
+    {
+      "ru": "Я не знаю качества, более существенного для успеха, чем настойчивость. Она преодолевает почти всё.",
+      "en": "I do not think that there is any other quality so essential to success of any kind as the quality of perseverance. It overcomes almost everything, even nature."
+    },
+    {
+      "ru": "Если хочешь добиться успеха — иди новой тропой, а не по проторённой дороге чужих побед.",
+      "en": "If you want to succeed you should strike out on new paths, rather than travel the worn paths of accepted success."
+    },
+    {
+      "ru": "Лучший способ заработать — покупать, когда на улицах течёт кровь.",
+      "en": "The way to make money is to buy when blood is running in the streets."
+    }
+  ]
+}

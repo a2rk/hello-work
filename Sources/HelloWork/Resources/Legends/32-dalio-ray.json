@@ -1,0 +1,61 @@
+{
+  "id": "dalio-ray",
+  "order": 32,
+  "name": { "ru": "Рэй Далио", "en": "Ray Dalio" },
+  "fullName": { "ru": "Рэймонд Томас Далио", "en": "Raymond Thomas Dalio" },
+  "yearsOfLife": "1949–",
+  "era": "modern",
+  "field": "industrialist",
+  "tags": ["bridgewater", "hedge_fund", "meditation", "principles", "self_made"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Основатель Bridgewater Associates — самого крупного хедж-фонда в мире, под управлением которого $150 миллиардов. Сын джазового музыканта из Куинса, в 12 лет купил свою первую акцию на чаевые с гольф-клуба, в 26 — основал Bridgewater из своей двухкомнатной квартиры в Нью-Йорке. В 1982 году чуть не разорился полностью — это сделало его одержимым «принципами»: 200+ правил, по которым он управляет жизнью и компанией. Каждый день медитирует Transcendental Meditation 2 раза по 20 минут. Считает, что главная сила — это «радикальная открытость» и способность смотреть правде в глаза, даже когда она бьёт.",
+    "en": "Founder of Bridgewater Associates — the world's largest hedge fund, managing $150 billion. Son of a jazz musician from Queens, he bought his first stock at 12 with golf-caddy tips, founded Bridgewater at 26 from his two-bedroom New York apartment. In 1982 he nearly went bankrupt — that made him obsessed with 'principles': 200+ rules by which he runs his life and company. Meditates Transcendental Meditation twice a day, 20 minutes each. He believes the main force is 'radical open-mindedness' and the ability to face the truth even when it hurts."
+  },
+
+  "sources": [
+    { "type": "book", "title": "Principles: Life and Work", "author": "Ray Dalio", "url": "https://www.simonandschuster.com/books/Principles/Ray-Dalio/9781501124020" },
+    { "type": "interview", "title": "Ray Dalio on the Tim Ferriss Show", "author": "Tim Ferriss", "url": "https://tim.blog/ray-dalio" },
+    { "type": "article", "title": "Ray Dalio's daily TM practice", "author": "TM.org", "url": "https://www.tm.org/blog/people/ray-dalio-meditation/" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "06:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "06:00", "end": "06:30", "type": "morning_routine", "label": { "ru": "Подъём, медитация TM (20 минут)", "en": "Wake, TM meditation (20 minutes)" } },
+      { "start": "06:30", "end": "07:30", "type": "meal_and_read", "label": { "ru": "Завтрак, чтение макроэкономических отчётов", "en": "Breakfast, reading macro reports" } },
+      { "start": "07:30", "end": "08:30", "type": "morning_routine", "label": { "ru": "Спорт: эллиптический тренажёр + плавание", "en": "Exercise: elliptical + swimming" } },
+      { "start": "08:30", "end": "12:00", "type": "deep_work", "label": { "ru": "Bridgewater: встречи команды, дискуссии", "en": "Bridgewater: team meetings, debates" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка", "en": "Lunch, correspondence" } },
+      { "start": "13:00", "end": "17:30", "type": "deep_work", "label": { "ru": "Investment committee, ревью позиций", "en": "Investment committee, position reviews" } },
+      { "start": "17:30", "end": "17:50", "type": "morning_routine", "label": { "ru": "Вторая медитация TM (20 минут)", "en": "Second TM meditation (20 minutes)" } },
+      { "start": "17:50", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Время с семьёй", "en": "Family time" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин дома", "en": "Dinner at home" } },
+      { "start": "21:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение, journaling по принципам", "en": "Reading, journaling on principles" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Далио организовал день вокруг двух медитаций — одна утром перед работой, одна вечером перед семьёй. Это его «чистка кэша». Рабочая переписка — обеденный час. Личное общение — час между второй медитацией и ужином, когда мозг свеж и эмоциональный фон ровный. Утренние часы и весь рабочий блок — без отвлечений на чаты.",
+      "en": "Dalio organized his day around two meditations — one in the morning before work, one in the evening before family time. That's his cache flush. Work correspondence — lunch hour. Personal communication — an hour between the second meditation and dinner, when the mind is fresh and emotions are level. Mornings and the entire work block — no chat distractions."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты Bridgewater", "en": "Lunch hour — Bridgewater work chats" } },
+      { "start": "17:50", "end": "18:50", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после второй медитации — личные сообщения в спокойном состоянии", "en": "An hour after the second meditation — personal messages in a calm state" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Боль + рефлексия = прогресс.", "en": "Pain + Reflection = Progress." },
+    { "ru": "Радикальная открытость и радикальная прозрачность — основа всякого роста.", "en": "Radical open-mindedness and radical transparency are invaluable for rapid learning and effective change." },
+    { "ru": "Тот, кто прав — тот, у кого факты, а не тот, у кого власть.", "en": "He who lives by the crystal ball will eat shattered glass." },
+    { "ru": "Не позволяй гордости мешать тебе учиться у каждого встречного.", "en": "If you're not failing, you're not pushing your limits, and if you're not pushing your limits, you're not maximizing your potential." },
+    { "ru": "Принцип превращает один опыт в шаблон, который можно применять снова и снова.", "en": "Principles are smart ways of dealing with the realities of life, learned from your experiences and the experiences of others." }
+  ]
+}

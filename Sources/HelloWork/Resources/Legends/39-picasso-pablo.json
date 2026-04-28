@@ -1,0 +1,57 @@
+{
+  "id": "picasso-pablo",
+  "order": 39,
+  "name": { "ru": "Пабло Пикассо", "en": "Pablo Picasso" },
+  "fullName": { "ru": "Пабло Диего Хосе Франсиско де Паула Хуан Непомусено Мария де лос Ремедиос Сиприано де ла Сантисима Тринидад Руис-и-Пикассо", "en": "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso" },
+  "yearsOfLife": "1881–1973",
+  "era": "20th_century",
+  "field": "composer",
+  "tags": ["painter", "cubism", "prolific", "modern_art", "spain"],
+  "nationality": "ES/FR",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Самый плодовитый художник в истории — оставил после себя более 50 000 работ: 13 500 картин, 100 000 гравюр, 34 000 иллюстраций, 300 скульптур. Сын учителя рисования из Малаги, в 9 лет писал лучше отца, в 13 лет был принят в Школу изящных искусств в Барселоне без вступительных. Перевернул живопись XX века, изобретя кубизм с Жоржем Браком — а потом за свою долгую жизнь (91 год!) прошёл через 7 разных стилей. Был совой: спал до полудня, работал в студии до глубокой ночи. Считал, что вдохновение — это не дар, а привычка: «Вдохновение существует — но оно должно застать тебя за работой».",
+    "en": "The most prolific artist in history — leaving behind over 50,000 works: 13,500 paintings, 100,000 prints, 34,000 illustrations, 300 sculptures. Son of an art teacher from Málaga, at 9 he painted better than his father, at 13 he was admitted to Barcelona's School of Fine Arts without entrance exams. Overthrew 20th-century painting by inventing Cubism with Georges Braque — then over his long life (91 years!) moved through 7 different styles. A night owl: slept until noon, worked in his studio late into the night. He believed inspiration isn't a gift but a habit: 'Inspiration exists — but it has to find you working.'"
+  },
+
+  "sources": [
+    { "type": "book", "title": "A Life of Picasso", "author": "John Richardson", "url": "https://www.penguinrandomhouse.com/series/PWP/a-life-of-picasso" },
+    { "type": "book", "title": "Conversations with Picasso", "author": "Brassaï", "url": "https://press.uchicago.edu/conversations-with-picasso" },
+    { "type": "article", "title": "Picasso's daily routine", "author": "Tate Modern", "url": "https://www.tate.org.uk/art/artists/pablo-picasso/picasso-routine" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "03:00", "type": "deep_work", "label": { "ru": "Студия: ночная работа (его главные часы)", "en": "Studio: night session (his peak hours)" } },
+      { "start": "03:00", "end": "11:00", "type": "sleep", "label": { "ru": "Сон (поздно ложится, поздно встаёт)", "en": "Sleep (late to bed, late to rise)" } },
+      { "start": "11:00", "end": "12:00", "type": "morning_routine", "label": { "ru": "Подъём, завтрак в постели, газеты", "en": "Wake, breakfast in bed, newspapers" } },
+      { "start": "12:00", "end": "15:00", "type": "leisure_and_reflection", "label": { "ru": "Длинный обед с гостями, друзьями (Кокто, Сартр, Хемингуэй)", "en": "Long lunch with guests and friends (Cocteau, Sartre, Hemingway)" } },
+      { "start": "15:00", "end": "16:00", "type": "comms", "label": { "ru": "Беседы с галеристами, посетителями", "en": "Conversations with gallerists, visitors" } },
+      { "start": "16:00", "end": "19:00", "type": "deep_work", "label": { "ru": "Студия: дневная сессия", "en": "Studio: afternoon session" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин в обществе или дома с Жаклин", "en": "Dinner in company or at home with Jacqueline" } },
+      { "start": "21:00", "end": "24:00", "type": "deep_work", "label": { "ru": "Студия: вечерняя сессия", "en": "Studio: evening session" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Пикассо был чистой противоположностью утренних гениев — его пиковые часы шли с 21:00 до 03:00 ночи. Дневной обед — главное окно общения, до 3 часов с друзьями и музами. Деловая переписка с галеристами и арт-дилерами — час после обеда, перед уходом в студию. Утра у него нет — он спит. Картины — это ночь.",
+      "en": "Picasso was the pure opposite of morning geniuses — his peak hours ran from 21:00 to 03:00. The midday lunch was his main window of contact — up to 3 hours with friends and muses. Business correspondence with gallerists and art dealers — an hour after lunch, before retreating to the studio. He doesn't have a morning — he's asleep. Paintings are the night."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Длинный обед с друзьями — час личного общения", "en": "Long lunch with friends — an hour of personal contact" } },
+      { "start": "15:00", "end": "16:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Час перед студией — переписка с галеристами и дилерами", "en": "An hour before the studio — correspondence with gallerists and dealers" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Вдохновение существует, но оно должно застать тебя за работой.", "en": "Inspiration exists, but it has to find you working." },
+    { "ru": "Каждый ребёнок — художник. Проблема в том, чтобы остаться художником, когда вырастешь.", "en": "Every child is an artist. The problem is how to remain an artist once we grow up." },
+    { "ru": "Хорошие художники копируют. Великие — крадут.", "en": "Good artists copy, great artists steal." },
+    { "ru": "Действие — основа любого успеха.", "en": "Action is the foundational key to all success." },
+    { "ru": "Я делаю всегда то, что не умею делать. Так я учусь.", "en": "I am always doing that which I cannot do, in order that I may learn how to do it." }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "graham-paul",
+  "order": 26,
+  "name": { "ru": "Пол Грэм", "en": "Paul Graham" },
+  "fullName": { "ru": "Пол Грэм", "en": "Paul Graham" },
+  "yearsOfLife": "1964–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["y_combinator", "essayist", "lisp", "investor", "founder"],
+  "nationality": "US/GB",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Сооснователь Y Combinator — самого влиятельного акселератора стартапов в истории, через который прошли Airbnb, Stripe, Dropbox, Reddit, Coinbase и ещё 4000 компаний с общей капитализацией более триллиона. До YC написал на Lisp первый веб-магазин Viaweb и продал его Yahoo за $50 млн. Параллельно стал главным интернет-эссеистом своего поколения — его тексты «Maker's Schedule» и «Do Things That Don't Scale» читают как библию каждый фаундер. Главная идея жизни: время «созидателя» нельзя резать на встречи, иначе он не построит ничего великого.",
+    "en": "Co-founder of Y Combinator — the most influential startup accelerator in history, which produced Airbnb, Stripe, Dropbox, Reddit, Coinbase, and 4,000 other companies worth over a trillion dollars combined. Before YC he wrote Viaweb in Lisp — the first web store — and sold it to Yahoo for $50 million. In parallel he became the internet's most-read essayist of his generation — his pieces 'Maker's Schedule' and 'Do Things That Don't Scale' are read like scripture by every founder. His central idea: a maker's time cannot be sliced into meetings, or he'll never build anything great."
+  },
+
+  "sources": [
+    { "type": "article", "title": "Maker's Schedule, Manager's Schedule", "author": "Paul Graham", "url": "http://paulgraham.com/makersschedule.html" },
+    { "type": "article", "title": "How to Do Great Work", "author": "Paul Graham", "url": "http://paulgraham.com/greatwork.html" },
+    { "type": "article", "title": "Paul Graham essays archive", "author": "Paul Graham", "url": "http://paulgraham.com/articles.html" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "07:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "07:00", "end": "08:00", "type": "morning_routine", "label": { "ru": "Подъём, чай, завтрак с детьми", "en": "Wake, tea, breakfast with kids" } },
+      { "start": "08:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Maker's time: эссе, код, мысли", "en": "Maker's time: essays, code, thinking" } },
+      { "start": "12:00", "end": "13:00", "type": "meal_and_read", "label": { "ru": "Обед", "en": "Lunch" } },
+      { "start": "13:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Manager's time: офис-хаусы YC, фаундеры", "en": "Manager's time: YC office hours, founders" } },
+      { "start": "17:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Время с детьми (он ушёл из YC ради этого)", "en": "Time with kids (he stepped down from YC for this)" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Семейный ужин с Джессикой и сыновьями", "en": "Family dinner with Jessica and sons" } },
+      { "start": "21:00", "end": "23:00", "type": "deep_work", "label": { "ru": "Вечернее письмо: новые эссе", "en": "Evening writing: new essays" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Грэм буквально написал концепцию maker/manager schedule, которой пользуется индустрия. У него утро — священное «время создателя», ноль встреч и ноль чатов. После обеда начинается «время менеджера», когда работают фаундеры и переписка. Личное время с детьми — отдельный блок, как самый важный в дне.",
+      "en": "Graham literally wrote the maker/manager schedule concept the industry uses. His mornings are sacred 'maker's time' — zero meetings, zero chats. After lunch begins 'manager's time' for founders and correspondence. Time with the kids — a separate block treated as the day's most important."
+    },
+    "allowedSlots": [
+      { "start": "13:00", "end": "14:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Manager's time — рабочие чаты с фаундерами", "en": "Manager's time — work chats with founders" } },
+      { "start": "17:00", "end": "18:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час перед временем с детьми — личные сообщения друзьям", "en": "An hour before kid-time — personal messages to friends" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Делай вещи, которые не масштабируются.", "en": "Do things that don't scale." },
+    { "ru": "Одна встреча в середине дня может разрушить продуктивность всего дня создателя.", "en": "A single meeting can blow a whole afternoon, by breaking it into two pieces each too small to do anything hard in." },
+    { "ru": "Чтобы сделать великую работу, нужно сначала много работать. Поверхностные часы не считаются.", "en": "To do great work, you need to work hard. There's no way around the hours." },
+    { "ru": "Самые продуктивные люди работают сосредоточенно по 4 часа в день. Но эти 4 часа — священны.", "en": "The most productive people work in concentrated bursts of 4 hours. But those 4 hours are sacred." },
+    { "ru": "Большие открытия делают любопытные. Просто будь тем, кто всё время удивляется.", "en": "The way to discover startup ideas is not to try to think of startup ideas. It's to look for problems, preferably problems you have yourself." }
+  ]
+}

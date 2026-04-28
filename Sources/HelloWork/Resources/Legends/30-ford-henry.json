@@ -1,0 +1,59 @@
+{
+  "id": "ford-henry",
+  "order": 30,
+  "name": { "ru": "Генри Форд", "en": "Henry Ford" },
+  "fullName": { "ru": "Генри Форд", "en": "Henry Ford" },
+  "yearsOfLife": "1863–1947",
+  "era": "industrial",
+  "field": "industrialist",
+  "tags": ["automobile", "assembly_line", "self_made", "founder", "engineering"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Основатель Ford Motor Company, изобретатель массового производства. Сын фермера из Мичигана, в 16 лет ушёл из дома пешком в Детройт работать механиком — отец считал это позором. Первый автомобиль собрал в сарае в 33 года, не смог вытащить — пришлось разбирать стену. Создал Model T — первый автомобиль для среднего класса — и платил рабочим $5 в день, что было в 2 раза выше нормы. Это сделало рабочих первыми покупателями его машин и запустило американский средний класс. Спал 4 часа, ел овсянку, гулял каждое утро по полю — и не верил, что нужно делать ничего больше.",
+    "en": "Founder of Ford Motor Company, inventor of mass production. Son of a Michigan farmer, at 16 he walked to Detroit to work as a mechanic — his father considered it a disgrace. Built his first car in a shed at 33, couldn't get it out — had to break down a wall. Created the Model T — the first car for the middle class — and paid his workers $5 a day, twice the going rate. That made his workers the first buyers of his cars and launched the American middle class. Slept 4 hours a night, ate oatmeal, walked through a field every morning — and didn't believe he needed to do anything more."
+  },
+
+  "sources": [
+    { "type": "book", "title": "My Life and Work", "author": "Henry Ford", "url": "https://www.gutenberg.org/ebooks/7213" },
+    { "type": "book", "title": "The People's Tycoon: Henry Ford and the American Century", "author": "Steven Watts", "url": "https://www.penguinrandomhouse.com/the-peoples-tycoon" },
+    { "type": "article", "title": "Henry Ford's $5-a-day workday", "author": "Detroit Historical Society", "url": "https://detroithistorical.org/learn/encyclopedia-of-detroit/five-dollar-day" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "05:00", "type": "sleep", "label": { "ru": "Сон (4–5 часов)", "en": "Sleep (4–5 hours)" } },
+      { "start": "05:00", "end": "06:00", "type": "morning_routine", "label": { "ru": "Подъём, прогулка по полю фермы", "en": "Wake, walk through the farm field" } },
+      { "start": "06:00", "end": "07:00", "type": "meal_and_read", "label": { "ru": "Завтрак (овсянка), газеты", "en": "Breakfast (oatmeal), newspapers" } },
+      { "start": "07:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Фабрика River Rouge: walking the floor", "en": "River Rouge factory: walking the floor" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед с инженерами + переписка", "en": "Lunch with engineers + correspondence" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Решения по производству, переговоры с поставщиками", "en": "Production decisions, supplier negotiations" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин дома с Кларой", "en": "Dinner at home with Clara" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Граммофон, танцы (он любил кадриль)", "en": "Phonograph, dancing (he loved square dancing)" } },
+      { "start": "21:00", "end": "22:00", "type": "meal_and_read", "label": { "ru": "Чтение", "en": "Reading" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Форд управлял империей через присутствие на цеху — он буквально ходил по фабрике каждый день и видел проблемы своими глазами. Утренние 5 часов на заводе — никаких бумаг, только работа руками и наблюдение. Деловая переписка — час за обедом с инженерами. Личное общение — после ужина дома с женой Кларой за граммофоном.",
+      "en": "Ford ran his empire through floor presence — he literally walked the factory every day and saw the problems with his own eyes. Five morning hours at the plant — no paperwork, just hands-on work and observation. Business correspondence — an hour at lunch with engineers. Personal communication — after dinner at home with his wife Clara by the phonograph."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обед с инженерами — переписка по делам", "en": "Lunch with engineers — business correspondence" } },
+      { "start": "18:00", "end": "19:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Ужин с Кларой — личное общение и письма", "en": "Dinner with Clara — personal contact and letters" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Веришь ты, что можешь — или веришь, что не можешь. Ты прав в обоих случаях.", "en": "Whether you think you can, or you think you can't — you're right." },
+    { "ru": "Качество — это делать всё правильно, даже когда никто не смотрит.", "en": "Quality means doing it right when no one is looking." },
+    { "ru": "Если бы я спрашивал людей, чего они хотят — они бы ответили: «Лошадь побыстрее».", "en": "If I had asked people what they wanted, they would have said faster horses." },
+    { "ru": "Неудача — это просто возможность начать снова, на этот раз умнее.", "en": "Failure is simply the opportunity to begin again, this time more intelligently." },
+    { "ru": "Никто не подведёт, если он окружён работой, которая его поглощает.", "en": "Nothing is particularly hard if you divide it into small jobs." }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "shannon-claude",
+  "order": 46,
+  "name": { "ru": "Клод Шеннон", "en": "Claude Shannon" },
+  "fullName": { "ru": "Клод Элвуд Шеннон", "en": "Claude Elwood Shannon" },
+  "yearsOfLife": "1916–2001",
+  "era": "20th_century",
+  "field": "software_engineer",
+  "tags": ["information_theory", "mit", "bell_labs", "polymath", "playful"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Отец теории информации. В 1948 году одной статьёй создал науку о цифровой передаче данных — без неё нет ни интернета, ни Wi-Fi, ни сжатия видео, ни криптографии. Магистерскую диссертацию защитил в 21 год — её называют «возможно, самой важной диссертацией всех времён». Работал в Bell Labs и MIT. В свободное время был чудаком высочайшего класса: жонглировал, ездил на одноколёсном велосипеде по коридорам с шахматной доской под мышкой, построил «Бесполезную машину», которая выключает сама себя, и первый шахматный компьютер. Считал, что серьёзная работа должна быть смешной — иначе не получится ничего великого.",
+    "en": "Father of information theory. In 1948, in a single paper, he created the science of digital data transmission — without it there's no internet, Wi-Fi, video compression, or cryptography. Defended his master's thesis at 21 — they call it 'possibly the most important thesis of all time.' Worked at Bell Labs and MIT. In his free time he was a top-tier eccentric: juggled, rode a unicycle through hallways with a chessboard under his arm, built the 'Ultimate Machine' that turns itself off, and the first chess computer. He believed serious work has to be playful — or you won't make anything great."
+  },
+
+  "sources": [
+    { "type": "article", "title": "A Mathematical Theory of Communication", "author": "Claude Shannon", "url": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf" },
+    { "type": "book", "title": "A Mind at Play: How Claude Shannon Invented the Information Age", "author": "Jimmy Soni, Rob Goodman", "url": "https://www.simonandschuster.com/books/A-Mind-at-Play" },
+    { "type": "article", "title": "Creative Thinking by Claude Shannon", "author": "Bell Labs lecture", "url": "https://gwern.net/doc/cs/algorithm/1952-shannon.pdf" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "07:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "07:30", "end": "08:30", "type": "morning_routine", "label": { "ru": "Подъём, кофе с Бетти", "en": "Wake, coffee with Betty" } },
+      { "start": "08:30", "end": "12:00", "type": "deep_work", "label": { "ru": "Bell Labs / MIT: математика, теория", "en": "Bell Labs / MIT: math, theory" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед в кафетерии Bell Labs", "en": "Lunch in Bell Labs cafeteria" } },
+      { "start": "13:00", "end": "17:00", "type": "deep_work", "label": { "ru": "Эксперименты, статьи, шахматные машины", "en": "Experiments, papers, chess machines" } },
+      { "start": "17:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Жонглирование, моноцикл, игрушки в гараже", "en": "Juggling, unicycle, gadgets in his garage" } },
+      { "start": "19:00", "end": "20:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин дома", "en": "Dinner at home" } },
+      { "start": "20:00", "end": "22:00", "type": "leisure_and_reflection", "label": { "ru": "Шахматы, кларнет, личные сообщения", "en": "Chess, clarinet, personal messages" } },
+      { "start": "22:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Шеннон умел играть и работать одновременно. Деловая переписка с математиками — обеденный час в кафетерии Bell Labs (легендарная культура столовой). Личное общение — вечером после игр в гараже, перед сном. Главное правило: «Если работа перестаёт быть весёлой — найди другую задачу».",
+      "en": "Shannon knew how to play and work at the same time. Business correspondence with mathematicians — lunch hour in the Bell Labs cafeteria (legendary canteen culture). Personal communication — evenings after garage tinkering, before sleep. His main rule: 'If the work stops being fun, find another problem.'"
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обед в кафетерии Bell Labs — рабочая переписка", "en": "Lunch in the Bell Labs cafeteria — work correspondence" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час перед сном — личные сообщения друзьям", "en": "An hour before sleep — personal messages to friends" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Информация — это устранение неопределённости.", "en": "Information is the resolution of uncertainty." },
+    { "ru": "Сложные задачи решаются проще, если ты ищешь подобия и аналогии.", "en": "I just wondered how things were put together." },
+    { "ru": "Игрушка, которая выключает сама себя — лучшее изобретение моей жизни.", "en": "The Ultimate Machine that turns itself off — my finest invention." },
+    { "ru": "Не работай слишком долго над одной идеей. Если она не получается за пару дней — отложи её и сделай что-то лёгкое.", "en": "If you don't make any mistakes, you're not learning anything." },
+    { "ru": "Мне нравится играть в шахматы с компьютером, который я построил. Я обычно проигрываю.", "en": "I visualize a time when we will be to robots what dogs are to humans, and I'm rooting for the machines." }
+  ]
+}

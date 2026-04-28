@@ -1,0 +1,155 @@
+{
+  "id": "gates-bill",
+  "order": 11,
+  "name": {
+    "ru": "Билл Гейтс",
+    "en": "Bill Gates"
+  },
+  "fullName": {
+    "ru": "Уильям Генри Гейтс III",
+    "en": "William Henry Gates III"
+  },
+  "yearsOfLife": "1955–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["microsoft", "philanthropy", "reading", "founder", "polymath"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Сооснователь Microsoft, человек, посадивший компьютер на каждый стол планеты. Сделал первую программу в 13 лет, бросил Гарвард, чтобы написать MS-DOS, а к 31 году стал миллиардером. До сих пор читает по 50 книг в год и дважды в год уезжает в одиночество в лесной коттедж — это «Think Weeks», неделя без людей, без связи, с пачкой бумаг и Diet Coke. Внутри Microsoft этот ритуал породил Internet Explorer, Tablet PC и десяток других продуктов.",
+    "en": "Co-founder of Microsoft, the man who put a computer on every desk on the planet. Wrote his first program at 13, dropped out of Harvard to write MS-DOS, became a billionaire at 31. He still reads 50 books a year and twice a year disappears into a forest cabin — 'Think Weeks,' a week with no people, no connectivity, just a stack of papers and Diet Coke. Inside Microsoft this ritual gave birth to Internet Explorer, the Tablet PC, and a dozen other products."
+  },
+
+  "sources": [
+    {
+      "type": "book",
+      "title": "Source Code: My Beginnings",
+      "author": "Bill Gates",
+      "url": "https://www.penguinrandomhouse.com/books/bill-gates-source-code"
+    },
+    {
+      "type": "article",
+      "title": "Bill Gates' Think Week: how a CEO unplugs",
+      "author": "Wall Street Journal",
+      "url": "https://www.wsj.com/articles/bill-gates-think-week"
+    },
+    {
+      "type": "interview",
+      "title": "Bill Gates on his daily reading habit",
+      "author": "GatesNotes",
+      "url": "https://www.gatesnotes.com/Books"
+    }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      {
+        "start": "00:00",
+        "end": "01:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Поздняя книга перед сном", "en": "Late-night book before sleep" }
+      },
+      {
+        "start": "01:00",
+        "end": "07:00",
+        "type": "sleep",
+        "label": { "ru": "Сон", "en": "Sleep" }
+      },
+      {
+        "start": "07:00",
+        "end": "08:00",
+        "type": "morning_routine",
+        "label": { "ru": "Подъём, тренажёр + новости", "en": "Wake, treadmill + news" }
+      },
+      {
+        "start": "08:00",
+        "end": "12:00",
+        "type": "deep_work",
+        "label": { "ru": "Встречи фонда / технические разборы", "en": "Foundation meetings / technical reviews" }
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "type": "comms",
+        "label": { "ru": "Обед, переписка", "en": "Lunch, correspondence" }
+      },
+      {
+        "start": "13:00",
+        "end": "18:00",
+        "type": "deep_work",
+        "label": { "ru": "Стратегия, ревью грантов, продуктовые сессии", "en": "Strategy, grant reviews, product sessions" }
+      },
+      {
+        "start": "18:00",
+        "end": "19:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Семейный ужин", "en": "Family dinner" }
+      },
+      {
+        "start": "19:00",
+        "end": "20:00",
+        "type": "leisure_and_reflection",
+        "label": { "ru": "Бридж или теннис с друзьями", "en": "Bridge or tennis with friends" }
+      },
+      {
+        "start": "20:00",
+        "end": "24:00",
+        "type": "meal_and_read",
+        "label": { "ru": "Чтение книг (50 книг в год)", "en": "Reading books (50 a year)" }
+      }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Гейтс — мастер «глубокой работы» через чтение. Утро и большой рабочий блок защищает от шума. Рабочая переписка — один час за обедом. Личное общение — короткое окно после семейного ужина, потом он уходит в книги до полуночи. Дважды в год — целая «Think Week» полного отключения от мира.",
+      "en": "Gates is a master of 'deep work' through reading. He guards mornings and the deep work block from noise. Work correspondence — one hour over lunch. Personal communication — a short window after family dinner, then he disappears into books until midnight. Twice a year — a full 'Think Week' completely disconnected from the world."
+    },
+    "allowedSlots": [
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "appliesTo": ["work_messengers"],
+        "rationale": {
+          "ru": "Обеденный час — все рабочие чаты разбираются за один заход",
+          "en": "Lunch hour — all work chats handled in one pass"
+        }
+      },
+      {
+        "start": "19:00",
+        "end": "20:00",
+        "appliesTo": ["personal_messengers"],
+        "rationale": {
+          "ru": "Час с друзьями и семьёй между ужином и чтением",
+          "en": "An hour with friends and family between dinner and reading"
+        }
+      }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    {
+      "ru": "Большинство людей переоценивают, что могут сделать за год, и недооценивают, что могут сделать за десять.",
+      "en": "Most people overestimate what they can do in one year and underestimate what they can do in ten years."
+    },
+    {
+      "ru": "Я нанимаю ленивого человека на сложную работу. Он найдёт лёгкий способ сделать её.",
+      "en": "I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it."
+    },
+    {
+      "ru": "Успех — паршивый учитель. Он соблазняет умных людей думать, что они не могут проиграть.",
+      "en": "Success is a lousy teacher. It seduces smart people into thinking they can't lose."
+    },
+    {
+      "ru": "Жизнь несправедлива. Привыкни.",
+      "en": "Life is not fair, get used to it."
+    },
+    {
+      "ru": "Чтение — это всё ещё главный способ, которым я узнаю новое и проверяю своё понимание.",
+      "en": "Reading is still the main way that I both learn new things and test my understanding."
+    }
+  ]
+}

@@ -185,7 +185,7 @@ HelloWork/Sources/HelloWork/
 
 - [x] **TASK-L04 [verify]** — TASK-L03  → released as v0.10.5
 
-- [ ] **TASK-L05 [impl]** — Перенос 60 JSON: `legens_module/*.json` → `HelloWork/Sources/HelloWork/Resources/Legends/*.json`. Регистрация в `Package.swift` (`.process("Resources")` уже стоит — должно подхватить, верифицировать).
+- [x] **TASK-L05 [impl]** — Перенос 60 JSON: `legens_module/*.json` → `HelloWork/Sources/HelloWork/Resources/Legends/*.json`. Регистрация в `Package.swift` (`.process("Resources")` уже стоит — должно подхватить, верифицировать).  → released as v0.10.6
   - Файлы: `Resources/Legends/01-...json` ... `60-...json`. Старая папка `legens_module/` в корне — удаляется.
   - Acceptance: `swift build` ≥ 60 файлов вошли в bundle; LegendsLibrary.all.count == 60 на старте.
 

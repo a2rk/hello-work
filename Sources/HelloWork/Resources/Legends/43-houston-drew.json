@@ -1,0 +1,59 @@
+{
+  "id": "houston-drew",
+  "order": 43,
+  "name": { "ru": "Дрю Хьюстон", "en": "Drew Houston" },
+  "fullName": { "ru": "Эндрю Уильям Хьюстон", "en": "Andrew William Houston" },
+  "yearsOfLife": "1983–",
+  "era": "modern",
+  "field": "tech_entrepreneur",
+  "tags": ["dropbox", "founder", "mit", "y_combinator", "self_made"],
+  "nationality": "US",
+  "avatarUrl": null,
+  "intensity": 4,
+
+  "bio": {
+    "ru": "Сооснователь и СЕО Dropbox. В 2007 году ехал в автобусе из Бостона в Нью-Йорк, забыл флешку дома и за 4-часовую поездку написал прототип сервиса, который автоматически синхронизирует файлы между компьютерами. Это превратилось в Dropbox с 700 миллионами пользователей. Закончил MIT по computer science, в 24 поступил в Y Combinator, в 31 вывел компанию на IPO стоимостью $9 миллиардов. Свободное время тратит на покер высокого уровня (играет в World Series), машинное обучение и чтение биографий лидеров. Считает, что лучший лайфхак — научиться меньше отвлекаться и делать одну вещь долго.",
+    "en": "Co-founder and CEO of Dropbox. In 2007 he was riding a bus from Boston to New York, forgot his USB stick at home, and during the 4-hour ride wrote a prototype of a service that automatically syncs files between computers. That became Dropbox with 700 million users. Got his computer science degree at MIT, joined Y Combinator at 24, took the company public at 31 with a $9 billion valuation. Spends free time on high-level poker (plays World Series), machine learning, and reading leadership biographies. He believes the best life hack is learning to get distracted less and do one thing for a long time."
+  },
+
+  "sources": [
+    { "type": "article", "title": "MIT Commencement Speech", "author": "Drew Houston", "url": "https://news.mit.edu/2013/commencement-address-houston" },
+    { "type": "interview", "title": "Drew Houston on the Tim Ferriss Show", "author": "Tim Ferriss", "url": "https://tim.blog/drew-houston" },
+    { "type": "article", "title": "Inside Dropbox's evolution under Drew Houston", "author": "Forbes", "url": "https://www.forbes.com/drew-houston-dropbox" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "07:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "07:00", "end": "08:00", "type": "morning_routine", "label": { "ru": "Подъём, тренировка", "en": "Wake, workout" } },
+      { "start": "08:00", "end": "08:30", "type": "meal_and_read", "label": { "ru": "Завтрак, обзор данных", "en": "Breakfast, data review" } },
+      { "start": "08:30", "end": "12:00", "type": "deep_work", "label": { "ru": "Глубокая работа: продукт, AI/ML стратегия", "en": "Deep work: product, AI/ML strategy" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, рабочая переписка", "en": "Lunch, work correspondence" } },
+      { "start": "13:00", "end": "18:00", "type": "deep_work", "label": { "ru": "Встречи команд, ревью", "en": "Team meetings, reviews" } },
+      { "start": "18:00", "end": "19:00", "type": "morning_routine", "label": { "ru": "Прогулка / спорт", "en": "Walk / exercise" } },
+      { "start": "19:00", "end": "21:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с друзьями или партнёршей", "en": "Dinner with friends or partner" } },
+      { "start": "21:00", "end": "23:00", "type": "meal_and_read", "label": { "ru": "Чтение биографий, иногда покер", "en": "Reading biographies, sometimes poker" } },
+      { "start": "23:00", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Хьюстон — пример классического сбалансированного айти-СЕО. Утренний deep work блок защищён от чатов. Рабочая переписка — обеденный час. Личные сообщения — час между ужином и чтением, когда мозг расслабленный, но ясный.",
+      "en": "Houston is the textbook balanced tech CEO. The morning deep work block is protected from chats. Work correspondence — lunch hour. Personal messages — an hour between dinner and reading, when the mind is relaxed but clear."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — рабочие чаты Dropbox", "en": "Lunch hour — Dropbox work chats" } },
+      { "start": "20:00", "end": "21:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час за ужином — личные сообщения близким", "en": "Dinner hour — personal messages to loved ones" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Не нужно решать большую задачу сразу. Нужно решить следующий шаг — и так каждый день.", "en": "You don't have to solve the whole problem at once. Just solve the next step." },
+    { "ru": "Лучший хак продуктивности — научиться не отвлекаться.", "en": "The best productivity hack is learning to not get distracted." },
+    { "ru": "Самое лучшее, что я сделал в 24 года — нашёл соавтора умнее меня.", "en": "The best thing I did at 24 was find a co-founder smarter than me." },
+    { "ru": "Если что-то раздражает тебя каждый день — это, возможно, бизнес.", "en": "If something is bugging you every day, that's probably a business." },
+    { "ru": "Великие основатели не отличаются IQ. Они отличаются способностью продолжать делать, когда другие сдаются.", "en": "Great founders don't differ in IQ. They differ in the ability to keep going when others quit." }
+  ]
+}

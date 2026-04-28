@@ -1,0 +1,61 @@
+{
+  "id": "trollope-anthony",
+  "order": 58,
+  "name": { "ru": "Энтони Троллоп", "en": "Anthony Trollope" },
+  "fullName": { "ru": "Энтони Троллоп", "en": "Anthony Trollope" },
+  "yearsOfLife": "1815–1882",
+  "era": "19th_century",
+  "field": "writer",
+  "tags": ["novelist", "victorian", "discipline", "post_office", "prolific"],
+  "nationality": "GB",
+  "avatarUrl": null,
+  "intensity": 5,
+
+  "bio": {
+    "ru": "Английский викторианский писатель, автор 47 романов, нескольких сборников рассказов и путевых заметок — один из самых плодовитых классиков мировой литературы. Родился в семье банкротa, пережил издевательства в школе, потом 33 года работал на британской почте. Изобрёл красные почтовые ящики, которые до сих пор стоят по всей Британии. Писал по дороге на работу, в карете и на пароходе. Главное правило: 250 слов каждые 15 минут до завтрака — то есть 1000 слов до начала рабочего дня на почте. Если заканчивал роман до конца сессии — открывал следующий и продолжал. Доказал миру, что регулярность бьёт вдохновение в десять раз.",
+    "en": "English Victorian writer, author of 47 novels, several short story collections, and travel writing — one of world literature's most prolific classics. Born to a bankrupt family, bullied in school, then worked 33 years for the British Post Office. Invented the red pillar boxes that still stand across Britain. Wrote on the way to work, in carriages and on steamships. His main rule: 250 words every 15 minutes before breakfast — that's 1,000 words before the postal workday began. If he finished a novel before the session ended, he opened the next one and kept going. He proved to the world that regularity beats inspiration ten to one."
+  },
+
+  "sources": [
+    { "type": "book", "title": "An Autobiography", "author": "Anthony Trollope", "url": "https://www.gutenberg.org/ebooks/5978" },
+    { "type": "book", "title": "Trollope: A Biography", "author": "N. John Hall", "url": "https://global.oup.com/trollope-biography" },
+    { "type": "article", "title": "Trollope's writing routine", "author": "The Paris Review", "url": "https://www.theparisreview.org/blog/trollope-discipline" }
+  ],
+
+  "lifeSchedule": {
+    "blocks": [
+      { "start": "00:00", "end": "05:30", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } },
+      { "start": "05:30", "end": "06:00", "type": "morning_routine", "label": { "ru": "Подъём, чай (слуга приносит ровно в 5:30)", "en": "Wake, tea (servant brings it at exactly 5:30)" } },
+      { "start": "06:00", "end": "08:30", "type": "deep_work", "label": { "ru": "Письмо: 1000 слов (250 каждые 15 минут с часами на столе)", "en": "Writing: 1,000 words (250 every 15 minutes with a watch on the desk)" } },
+      { "start": "08:30", "end": "09:00", "type": "meal_and_read", "label": { "ru": "Завтрак", "en": "Breakfast" } },
+      { "start": "09:00", "end": "12:00", "type": "deep_work", "label": { "ru": "Работа на почте (Post Office)", "en": "Work at the Post Office" } },
+      { "start": "12:00", "end": "13:00", "type": "comms", "label": { "ru": "Обед, переписка по почтовым делам", "en": "Lunch, postal correspondence" } },
+      { "start": "13:00", "end": "17:30", "type": "deep_work", "label": { "ru": "Почта продолжается: проверки, маршруты", "en": "Post Office continues: inspections, routes" } },
+      { "start": "17:30", "end": "18:00", "type": "leisure_and_reflection", "label": { "ru": "Дорога домой", "en": "Commute home" } },
+      { "start": "18:00", "end": "19:00", "type": "leisure_and_reflection", "label": { "ru": "Ужин с семьёй", "en": "Dinner with family" } },
+      { "start": "19:00", "end": "20:00", "type": "comms", "label": { "ru": "Личные письма, ответы поклонникам", "en": "Personal letters, replying to fans" } },
+      { "start": "20:00", "end": "22:30", "type": "leisure_and_reflection", "label": { "ru": "Клуб (Garrick Club) — игра в whist", "en": "The Garrick Club — playing whist" } },
+      { "start": "22:30", "end": "24:00", "type": "sleep", "label": { "ru": "Сон", "en": "Sleep" } }
+    ]
+  },
+
+  "blockSchedule": {
+    "description": {
+      "ru": "Троллоп — главный пример того, что великое создаётся не временем, а ритуалом. 1000 слов до завтрака, потом полный рабочий день на почте. Деловая переписка — обеденный час по почтовым делам. Личные сообщения — час после ужина перед клубом. Каждый шаг расписан. 47 романов — итог расписания.",
+      "en": "Trollope is the prime example that greatness is built by ritual, not by time. 1,000 words before breakfast, then a full workday at the Post Office. Business correspondence — the lunch hour, postal matters. Personal messages — an hour after dinner before the club. Every step scheduled. 47 novels — the result of the routine."
+    },
+    "allowedSlots": [
+      { "start": "12:00", "end": "13:00", "appliesTo": ["work_messengers"], "rationale": { "ru": "Обеденный час — переписка по почтовым делам", "en": "Lunch hour — Post Office correspondence" } },
+      { "start": "19:00", "end": "20:00", "appliesTo": ["personal_messengers"], "rationale": { "ru": "Час после ужина — личные письма семье и друзьям", "en": "An hour after dinner — personal letters to family and friends" } }
+    ],
+    "totalAllowedMinutes": 120
+  },
+
+  "quotes": [
+    { "ru": "Маленькая ежедневная работа, выполненная регулярно, обыграет случайные подвиги Геркулеса.", "en": "A small daily task, if it be really daily, will beat the labours of a spasmodic Hercules." },
+    { "ru": "Не существует ничего такого как «настроение для писательства». Есть «привычка к писательству».", "en": "There is no way of writing well and also of writing easily." },
+    { "ru": "Часы на моём столе — мой главный учитель.", "en": "It had at this time become my custom — and is still my custom — to write with my watch before me." },
+    { "ru": "Гениальность — это просто капельная привычка, повторяемая дольше других.", "en": "Genius is simply a drop habit repeated longer than the rest." },
+    { "ru": "Вдохновение — для любителей. Профессионалы пишут каждое утро.", "en": "Three hours a day will produce as much as a man ought to write." }
+  ]
+}
