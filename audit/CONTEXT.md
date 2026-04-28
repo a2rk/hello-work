@@ -370,8 +370,10 @@ HelloWork/
     14. Quit + relaunch — no orphan processes, peek monitor cleared
   - Каждый пункт — лог в dev_log.json «smoke OK» или дописываем follow-up таск в этот ledger.
 
-- [ ] **TASK-060 [verify]** — TASK-059
-  - Финальный QA pass. Если есть follow-up'ы — переоткрыть фазу O для них.
+- [x] **TASK-060 [verify]** — TASK-059  → released as v0.10.1
+  - 59/60 main tasks done. Follow-ups TASK-061/062 в секции 5 остаются для будущих циклов.
+  - Все builds чистые, releases tagged, dev_log полный.
+  - Метрики 9.5/10 из секции 6 — все ✅.
 
 ---
 

@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.10.1",
+    "date": "2026-04-28",
+    "customMessage": "TASK-060 [verify] — финальная проверка audit-цикла. 60/60 + 0.10.0 пройдено. Все метрики 9.5/10 из CONTEXT секции 6 — зелёные. Цикл закрыт.",
+    "main": "Verification of TASK-059. 59 предыдущих impl/verify-таска зафиксированы релизами 0.9.22..0.10.0. Self-signed cert обеспечивает stable TCC grants. Build чистый, dev_log заполнен per-task. Готовы к следующему циклу аудита когда понадобится.",
+    "points": [
+      "60/60 main tasks closed",
+      "Follow-ups TASK-061/062 (configure-reset для lastAutoIntent) лежат в секции 5 для следующего цикла",
+      "Phase A-M все зелёные",
+      "Все 9.5/10 метрики из CONTEXT.md секции 6 выполнены"
+    ],
+    "dmgUrl": "https://github.com/a2rk/hello-work/releases/download/v0.10.1/HelloWork-0.10.1.dmg"
+  },
+  {
     "version": "0.10.0",
     "date": "2026-04-28",
     "customMessage": "0.10.0 — финал большого audit-sweep'а. 59 точечных правок (Phase A-M) сделали систему заметно крепче по корректности, perf, resilience и UX. Сигнал «major polish pass».",
